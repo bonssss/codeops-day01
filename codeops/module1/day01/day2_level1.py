@@ -1,3 +1,5 @@
+# level 1 varibales and datatypes
+
 full_name="Bonsa Dealegn"
 age=25
 # in cm
