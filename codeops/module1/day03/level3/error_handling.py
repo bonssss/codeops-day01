@@ -9,3 +9,5 @@ except ValueError:
     print("Error: Please enter valid numbers.")
 except ZeroDivisionError:
     print("Error: Division by zero is not allowed.")
+finally:
+     print("Calculation attempt completed.")
