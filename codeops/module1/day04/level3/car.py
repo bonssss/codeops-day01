@@ -37,4 +37,14 @@ class Car:
     
 car= Car(100,0)
 car.accelerate()
+print("speed:",car.speed)
+
+car.brake()
+print("speed:",car.speed)
+print("fuel: ",car.fuel)
+
+
+car.refuel(100)
 print("speed: ",car.speed)
+print("fuel: ",car.fuel)
+
