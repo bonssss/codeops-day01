@@ -12,3 +12,15 @@ print(x)
 remove=x.popleft()
 print(remove)
 print(x)
+
+
+# stack
+stack=[]
+
+stack.append(5)
+stack.append(2)
+stack.append(6)
+print(stack)
+
+stack.pop()
+print(stack)
