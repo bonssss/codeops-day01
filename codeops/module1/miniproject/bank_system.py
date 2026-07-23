@@ -3,6 +3,14 @@ from typing import List
 import os
 
 
+# This bank system demonstrates OOP concepts and design patterns:
+# - Abstraction: Account and NotificationObserver define abstract behaviors.
+# - Encapsulation: Account balance is managed via a property.
+# - Inheritance: SavingsAccount, CurrentAccount, and FixedDepositAccount extend Account.
+# - Polymorphism: Different account types override common methods.
+# - Singleton: BankConfig provides shared bank rules.
+# - Factory: AccountFactory creates account objects by type.
+# - Observer: SmsNotifier and AuditLogObserver react to large withdrawals.
 class InputValidator:
     @staticmethod
     def get_float(message, default=None):
@@ -25,6 +33,7 @@ class InputValidator:
 
 
 class BankConfig:
+    # Singleton pattern: only one shared configuration object exists.
     _instance = None
 
     def __init__(self):
@@ -45,17 +54,20 @@ class BankConfig:
 
 
 class NotificationObserver(ABC):
+    # Observer pattern interface for notifications about account events.
     @abstractmethod
     def update(self, account, amount):
         pass
 
 
 class SmsNotifier(NotificationObserver):
+    # Concrete observer that sends an SMS-like message.
     def update(self, account, amount):
         print(f"SMS alert: Large withdrawal of {amount} from account {account.number}")
 
 
 class AuditLogObserver(NotificationObserver):
+    # Concrete observer that logs withdrawal events to a file.
     def __init__(self, log_file="audit_log.txt"):
         self.log_file = log_file
         self.entries = []
@@ -69,6 +81,8 @@ class AuditLogObserver(NotificationObserver):
 
 
 class Account(ABC):
+    # Abstract base class for all accounts.
+    # Encapsulates common behavior and forces subclasses to implement account-specific interest rules.
     def __init__(self, owner, number, balance=0.0):
         self.owner = owner
         self.number = number
@@ -129,6 +143,7 @@ class Account(ABC):
 
 
 class SavingsAccount(Account):
+    # Concrete savings account with interest calculation.
     def __init__(self, owner, number, balance, rate=None):
         super().__init__(owner, number, balance)
         self.rate = rate if rate is not None else BankConfig.get_instance().interest_rate
@@ -147,6 +162,7 @@ class SavingsAccount(Account):
 
 
 class CurrentAccount(Account):
+    # Concrete account type with overdraft support.
     def __init__(self, owner, number, balance, overdraft_limit=None):
         super().__init__(owner, number, balance)
         self.overdraft_limit = overdraft_limit if overdraft_limit is not None else BankConfig.get_instance().overdraft_limit
@@ -173,6 +189,7 @@ class CurrentAccount(Account):
 
 
 class FixedDepositAccount(SavingsAccount):
+    # Specialized savings account with a fixed deposit period.
     def __init__(self, owner, number, balance, rate=None, years=1):
         super().__init__(owner, number, balance, rate)
         self.years = years
@@ -183,6 +200,7 @@ class FixedDepositAccount(SavingsAccount):
 
 
 class AccountFactory:
+    # Factory pattern: instantiate different account classes based on account type.
     @staticmethod
     def create_account(account_type, owner, number, balance, config):
         normalized = account_type.lower()
@@ -196,6 +214,7 @@ class AccountFactory:
 
 
 class BankService:
+    # Service layer separates business logic from user interaction.
     def __init__(self):
         self.accounts: List[Account] = []
         self._config = BankConfig.get_instance()
