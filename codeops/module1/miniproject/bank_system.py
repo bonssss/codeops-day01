@@ -4,6 +4,13 @@ from dataclasses import dataclass
 import os
 
 
+@dataclass
+class Transaction:
+    amount: float
+    date: str
+    type: str
+
+
 # This bank system demonstrates OOP concepts and design patterns:
 # - Abstraction: Account and NotificationObserver define abstract behaviors.
 # - Encapsulation: Account balance is managed via a property.
@@ -31,6 +38,20 @@ class InputValidator:
                 return int(input(message))
             except ValueError:
                 print("Invalid input. Please enter an integer.")
+
+
+class AccountRegistry(dict):
+    """Dictionary-like container that also supports integer indexing for tests and simple iteration."""
+
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            if key < 0:
+                raise IndexError("Index cannot be negative.")
+            values = list(self.values())
+            if key >= len(values):
+                raise IndexError("Account index out of range.")
+            return values[key]
+        return super().__getitem__(key)
 
 
 class BankConfig:
@@ -230,6 +251,9 @@ class DepositCommand(Command):
         self.account_number = account_number
         self.amount = amount
 
+    def __repr__(self):
+        return f"DepositCommand(account={self.account_number}, amount={self.amount})"
+
     def execute(self, service: 'BankService'):
         acct = service.find_account(self.account_number)
         if acct is None:
@@ -247,6 +271,9 @@ class WithdrawCommand(Command):
     def __init__(self, account_number: str, amount: float):
         self.account_number = account_number
         self.amount = amount
+
+    def __repr__(self):
+        return f"WithdrawCommand(account={self.account_number}, amount={self.amount})"
 
     def execute(self, service: 'BankService'):
         acct = service.find_account(self.account_number)
@@ -298,10 +325,11 @@ class BankService:
 
     def __init__(self):
         # Dictionary mapping account number -> Account (O(1) average ops)
-        self.accounts: dict[str, Account] = {}
+        self.accounts: dict[str, Account] = AccountRegistry()
         self._config = BankConfig.get_instance()
         # Stack to record transactions for undo support (LIFO)
         self.history = Stack()
+        self.transactions: List[Transaction] = []
 
     def find_account(self, number):
         # O(1) average-case dictionary lookup
@@ -355,6 +383,93 @@ class BankService:
         # return view of accounts (values)
         return list(self.accounts.values())
 
+    def add_transaction(self, amount: float, date: str, txn_type: str):
+        if amount <= 0:
+            raise ValueError("Transaction amount must be positive.")
+        if not date.strip():
+            raise ValueError("Date is required.")
+        normalized_type = txn_type.strip().lower()
+        if normalized_type not in {"deposit", "withdraw"}:
+            raise ValueError("Transaction type must be deposit or withdraw.")
+        self.transactions.append(Transaction(amount=amount, date=date.strip(), type=normalized_type))
+
+    def calculate_total_balance(self) -> float:
+        def recurse(index: int) -> float:
+            if index >= len(self.transactions):
+                return 0.0
+            txn = self.transactions[index]
+            delta = txn.amount if txn.type == "deposit" else -txn.amount
+            return delta + recurse(index + 1)
+
+        return recurse(0)
+
+    def sort_transactions(self, field: str = "amount") -> List[Transaction]:
+        if field not in {"amount", "date"}:
+            raise ValueError("Field must be amount or date.")
+
+        def merge_sort(items: List[Transaction]) -> List[Transaction]:
+            if len(items) <= 1:
+                return items
+            middle = len(items) // 2
+            left = merge_sort(items[:middle])
+            right = merge_sort(items[middle:])
+            return merge(left, right, field)
+
+        def merge(left: List[Transaction], right: List[Transaction], sort_field: str) -> List[Transaction]:
+            merged: List[Transaction] = []
+            left_index = right_index = 0
+            while left_index < len(left) and right_index < len(right):
+                left_value = getattr(left[left_index], sort_field)
+                right_value = getattr(right[right_index], sort_field)
+                if left_value <= right_value:
+                    merged.append(left[left_index])
+                    left_index += 1
+                else:
+                    merged.append(right[right_index])
+                    right_index += 1
+            merged.extend(left[left_index:])
+            merged.extend(right[right_index:])
+            return merged
+
+        return merge_sort(self.transactions[:])
+
+    def linear_search_transaction(self, value: float, field: str = "amount") -> Optional[Transaction]:
+        if field not in {"amount", "date"}:
+            raise ValueError("Field must be amount or date.")
+        for transaction in self.transactions:
+            if getattr(transaction, field) == value:
+                return transaction
+        return None
+
+    def binary_search_transaction(self, value: float, transactions: List[Transaction], field: str = "amount") -> Optional[Transaction]:
+        if field not in {"amount", "date"}:
+            raise ValueError("Field must be amount or date.")
+
+        def recurse(left: int, right: int) -> Optional[Transaction]:
+            if left > right:
+                return None
+            middle = (left + right) // 2
+            current = transactions[middle]
+            current_value = getattr(current, field)
+            if current_value == value:
+                return current
+            if value < current_value:
+                return recurse(left, middle - 1)
+            return recurse(middle + 1, right)
+
+        return recurse(0, len(transactions) - 1)
+
+    def generate_report_above_threshold(self, threshold: float) -> List[str]:
+        def recurse(index: int, report: List[str]) -> List[str]:
+            if index >= len(self.transactions):
+                return report
+            transaction = self.transactions[index]
+            if transaction.amount > threshold:
+                report.append(f"{transaction.date}: {transaction.type} -> {transaction.amount}")
+            return recurse(index + 1, report)
+
+        return recurse(0, [])
+
     def performance_notes(self) -> str:
         return (
             "Dict vs List: dict gives O(1) average lookup; list would be O(n).\n"
@@ -382,6 +497,7 @@ def main():
         print("5. Show All Accounts")
         print("6. Apply Interest to Savings Accounts")
         print("7. Update Bank Rules")
+        print("8. Bank Transaction Analyzer")
         print("0. Exit")
 
         choice = input("Choose option: ")
@@ -407,7 +523,7 @@ def main():
                 if txn is None:
                     print("No transactions to undo.")
                 else:
-                    print(f"Undid transaction: {txn}")
+                    print(f"Reverted  last transaction for account {txn.account_number}.")
 
             elif choice == "3":
                 number = input("Account Number: ").strip()
@@ -443,6 +559,59 @@ def main():
                 config.overdraft_limit = get_float("New overdraft limit: ", default=config.overdraft_limit)
                 config.large_withdrawal_threshold = get_float("Large withdrawal threshold: ", default=config.large_withdrawal_threshold)
                 print("Bank rules updated.")
+
+            elif choice == "8":
+                while True:
+                    print("\n===== BANK TRANSACTION ANALYZER =====")
+                    print("1. Add transaction")
+                    print("2. Show total balance")
+                    print("3. Sort transactions")
+                    print("4. Search transaction")
+                    print("5. Generate report above threshold")
+                    print("0. Back")
+                    analyzer_choice = input("Choose option: ").strip()
+                    if analyzer_choice == "1":
+                        amount = get_float("Amount: ")
+                        date = input("Date (YYYY-MM-DD): ").strip()
+                        txn_type = input("Type (deposit/withdraw): ").strip()
+                        service.add_transaction(amount, date, txn_type)
+                        print("Transaction added.")
+                    elif analyzer_choice == "2":
+                        print(f"Total balance: {service.calculate_total_balance()}")
+                    elif analyzer_choice == "3":
+                        field = input("Sort by (amount/date): ").strip().lower()
+                        sorted_transactions = service.sort_transactions(field)
+                        print("Sorted transactions:")
+                        for txn in sorted_transactions:
+                            print(f"- {txn.date} | {txn.type} | {txn.amount}")
+                    elif analyzer_choice == "4":
+                        value = get_float("Value to search: ")
+                        field = input("Search field (amount/date): ").strip().lower()
+                        if field == "date":
+                            result = service.linear_search_transaction(value, field)
+                            print("Linear search result:", result)
+                            sorted_transactions = service.sort_transactions(field)
+                            result = service.binary_search_transaction(value, sorted_transactions, field)
+                            print("Binary search result:", result)
+                        else:
+                            result = service.linear_search_transaction(value, field)
+                            print("Linear search result:", result)
+                            sorted_transactions = service.sort_transactions(field)
+                            result = service.binary_search_transaction(value, sorted_transactions, field)
+                            print("Binary search result:", result)
+                    elif analyzer_choice == "5":
+                        threshold = get_float("Threshold: ")
+                        report = service.generate_report_above_threshold(threshold)
+                        if report:
+                            print("Transactions above threshold:")
+                            for line in report:
+                                print(line)
+                        else:
+                            print("No transactions above the threshold.")
+                    elif analyzer_choice == "0":
+                        break
+                    else:
+                        print("Invalid option.")
 
             elif choice == "0":
                 print("Thank you for using Addis Bank.")
