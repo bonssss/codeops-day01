@@ -1,9 +1,16 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import Final, List, Optional
 from dataclasses import dataclass
 from collections import deque
 import heapq
 import os
+
+
+ACCOUNT_NOT_FOUND_MESSAGE: Final[str] = "Account not found."
+INVALID_FIELD_MESSAGE: Final[str] = "Field must be amount or date."
+CHOOSE_OPTION_PROMPT: Final[str] = "Choose option: "
+ACCOUNT_NUMBER_PROMPT: Final[str] = "Account Number: "
+INVALID_OPTION_MESSAGE: Final[str] = "Invalid option."
 
 
 @dataclass
@@ -66,6 +73,9 @@ class BankConfig:
     _instance = None
 
     def __init__(self):
+        self._apply_defaults()
+
+    def _apply_defaults(self):
         self.interest_rate = 0.10
         self.overdraft_limit = 1000.0
         self.large_withdrawal_threshold = 500.0
@@ -77,9 +87,7 @@ class BankConfig:
         return cls._instance
 
     def reset(self):
-        self.interest_rate = 0.10
-        self.overdraft_limit = 1000.0
-        self.large_withdrawal_threshold = 500.0
+        self._apply_defaults()
 
 
 class NotificationObserver(ABC):
@@ -331,7 +339,7 @@ class CustomerGraph:
         if start_name not in self.adjacency:
             self.adjacency.setdefault(start_name, set())
 
-        visited = set([start_name])
+        visited = {start_name}
         queue = deque([start_name])
         connected: List[str] = []
         while queue:
@@ -445,13 +453,13 @@ class DepositCommand(Command):
     def execute(self, service: 'BankService'):
         acct = service.find_account(self.account_number)
         if acct is None:
-            raise ValueError("Account not found.")
+            raise ValueError(ACCOUNT_NOT_FOUND_MESSAGE)
         acct.deposit(self.amount)
 
     def undo(self, service: 'BankService'):
         acct = service.find_account(self.account_number)
         if acct is None:
-            raise ValueError("Account not found.")
+            raise ValueError(ACCOUNT_NOT_FOUND_MESSAGE)
         acct.withdraw(self.amount)
 
 
@@ -466,13 +474,13 @@ class WithdrawCommand(Command):
     def execute(self, service: 'BankService'):
         acct = service.find_account(self.account_number)
         if acct is None:
-            raise ValueError("Account not found.")
+            raise ValueError(ACCOUNT_NOT_FOUND_MESSAGE)
         acct.withdraw(self.amount)
 
     def undo(self, service: 'BankService'):
         acct = service.find_account(self.account_number)
         if acct is None:
-            raise ValueError("Account not found.")
+            raise ValueError(ACCOUNT_NOT_FOUND_MESSAGE)
         acct.deposit(self.amount)
 
 
@@ -578,7 +586,7 @@ class BankService:
     def deposit(self, number, amount):
         account = self.find_account(number)
         if account is None:
-            raise ValueError("Account not found.")
+            raise ValueError(ACCOUNT_NOT_FOUND_MESSAGE)
         # Use Command pattern: create, execute, and record command
         cmd = DepositCommand(number, amount)
         cmd.execute(self)
@@ -587,7 +595,7 @@ class BankService:
     def withdraw(self, number, amount):
         account = self.find_account(number)
         if account is None:
-            raise ValueError("Account not found.")
+            raise ValueError(ACCOUNT_NOT_FOUND_MESSAGE)
         # Use Command pattern: create, execute, and record command
         cmd = WithdrawCommand(number, amount)
         cmd.execute(self)
@@ -634,7 +642,7 @@ class BankService:
 
     def sort_transactions(self, field: str = "amount") -> List[Transaction]:
         if field not in {"amount", "date"}:
-            raise ValueError("Field must be amount or date.")
+            raise ValueError(INVALID_FIELD_MESSAGE)
 
         def merge_sort(items: List[Transaction]) -> List[Transaction]:
             if len(items) <= 1:
@@ -664,7 +672,7 @@ class BankService:
 
     def linear_search_transaction(self, value: float, field: str = "amount") -> Optional[Transaction]:
         if field not in {"amount", "date"}:
-            raise ValueError("Field must be amount or date.")
+            raise ValueError(INVALID_FIELD_MESSAGE)
         for transaction in self.transactions:
             if getattr(transaction, field) == value:
                 return transaction
@@ -672,7 +680,7 @@ class BankService:
 
     def binary_search_transaction(self, value: float, transactions: List[Transaction], field: str = "amount") -> Optional[Transaction]:
         if field not in {"amount", "date"}:
-            raise ValueError("Field must be amount or date.")
+            raise ValueError(INVALID_FIELD_MESSAGE)
 
         def recurse(left: int, right: int) -> Optional[Transaction]:
             if left > right:
@@ -715,6 +723,255 @@ def get_int(message):
     return InputValidator.get_int(message)
 
 
+def handle_make_transaction(service):
+    number = input(ACCOUNT_NUMBER_PROMPT).strip()
+    acct = service.find_account(number)
+    if acct is None:
+        print(ACCOUNT_NOT_FOUND_MESSAGE)
+        return None
+
+    action = input("Action (deposit/withdraw): ").strip().lower()
+    amount = get_float("Amount: ")
+    action_handlers = {
+        "deposit": lambda: service.deposit(number, amount),
+        "withdraw": lambda: service.withdraw(number, amount),
+    }
+    handler = action_handlers.get(action)
+    if handler is None:
+        print("Unknown action")
+        return None
+    handler()
+    return None
+
+
+def handle_undo_transaction(service):
+    txn = service.undo_last_transaction()
+    if txn is None:
+        print("No transactions to undo.")
+    else:
+        print(f"Reverted  last transaction for account {txn.account_number}.")
+    return False
+
+
+def handle_search_account(service):
+    number = input(ACCOUNT_NUMBER_PROMPT).strip()
+    account = service.find_account(number)
+    if account is None:
+        print(ACCOUNT_NOT_FOUND_MESSAGE)
+    else:
+        account.statement()
+    return False
+
+
+def handle_create_account(service):
+    owner = input("Owner: ").strip()
+    number = input(ACCOUNT_NUMBER_PROMPT).strip()
+    acct_type = input("Type (savings/current/fixed): ").strip().lower()
+    balance = get_float("Initial Balance: ")
+    account = service.create_account(acct_type, owner, number, balance)
+    print(f"Account {account.number} created.")
+    return False
+
+
+def handle_show_accounts(service):
+    all_accts = service.show_all_accounts()
+    if not all_accts:
+        print("No accounts.")
+    else:
+        for account in all_accts:
+            account.statement()
+    return False
+
+
+def handle_apply_interest(service):
+    service.apply_interest_to_all()
+    print("Interest applied.")
+    return False
+
+
+def handle_update_bank_rules(service):
+    config = BankConfig.get_instance()
+    config.interest_rate = get_float("New interest rate (e.g. 0.08): ", default=config.interest_rate)
+    config.overdraft_limit = get_float("New overdraft limit: ", default=config.overdraft_limit)
+    config.large_withdrawal_threshold = get_float("Large withdrawal threshold: ", default=config.large_withdrawal_threshold)
+    print("Bank rules updated.")
+    return False
+
+
+def handle_exit(service):
+    print("Thank you for using Addis Bank.")
+    return True
+
+
+def handle_transaction_choice(service, choice):
+    handlers = {
+        "1": handle_make_transaction,
+        "2": handle_undo_transaction,
+        "3": handle_search_account,
+        "4": handle_create_account,
+        "5": handle_show_accounts,
+        "6": handle_apply_interest,
+        "7": handle_update_bank_rules,
+        "8": lambda svc: (run_network_menu(svc), False)[1],
+        "9": lambda svc: (run_analyzer_menu(svc), False)[1],
+        "0": handle_exit,
+    }
+    handler = handlers.get(choice)
+    if handler is None:
+        print(INVALID_OPTION_MESSAGE)
+        return False
+    return handler(service)
+
+
+def handle_add_branch_or_employee(service):
+    entity_type = input("Add (branch/employee): ").strip().lower()
+    name = input("Name: ").strip()
+    parent_name = input("Parent name (leave empty for root): ").strip() or None
+    if entity_type == "branch":
+        service.add_branch(name, parent_name)
+        print("Branch added.")
+    elif entity_type == "employee":
+        service.add_employee(name, parent_name)
+        print("Employee added.")
+    else:
+        print("Invalid entity type.")
+
+
+def handle_add_transfer_connection(service):
+    source = input("From customer: ").strip()
+    target = input("To customer: ").strip()
+    service.add_transfer_connection(source, target)
+    print("Transfer connection added.")
+
+
+def handle_show_connected_customers(service):
+    customer = input("Start customer: ").strip()
+    connected = service.get_connected_customers(customer)
+    if connected:
+        print("Connected customers:", ", ".join(connected))
+    else:
+        print("No connected customers found.")
+
+
+def handle_add_urgent_transaction(service):
+    description = input("Transaction description: ").strip()
+    priority = get_int("Priority (higher number = higher priority): ")
+    service.add_urgent_transaction(description, priority)
+    print("Urgent transaction added.")
+
+
+def handle_process_highest_priority(service):
+    txn = service.process_highest_priority_transaction()
+    if txn is None:
+        print("No urgent transactions pending.")
+    else:
+        print(f"Processed: {txn.description} (priority {txn.priority})")
+
+
+def handle_search_bst_account(service):
+    number = input("Account number: ").strip()
+    account = service.search_account_in_bst(number)
+    if account is None:
+        print(ACCOUNT_NOT_FOUND_MESSAGE)
+    else:
+        account.statement()
+
+
+def run_network_menu(service):
+    while True:
+        print("\n===== ADDIS BANK NETWORK & PRIORITY SYSTEM =====")
+        print("1. Add new branch / employee (Tree)")
+        print("2. Add money transfer connection (Graph)")
+        print("3. Show all connected customers using BFS/DFS")
+        print("4. Add urgent transaction (Heap)")
+        print("5. Process highest priority transaction")
+        print("6. Search for customer account in BST")
+        print("0. Back")
+        network_choice = input(CHOOSE_OPTION_PROMPT).strip()
+        handlers = {
+            "1": handle_add_branch_or_employee,
+            "2": handle_add_transfer_connection,
+            "3": handle_show_connected_customers,
+            "4": handle_add_urgent_transaction,
+            "5": handle_process_highest_priority,
+            "6": handle_search_bst_account,
+        }
+        if network_choice == "0":
+            break
+        handler = handlers.get(network_choice)
+        if handler is None:
+            print(INVALID_OPTION_MESSAGE)
+            continue
+        handler(service)
+
+
+def handle_add_transaction(service):
+    amount = get_float("Amount: ")
+    date = input("Date (YYYY-MM-DD): ").strip()
+    txn_type = input("Type (deposit/withdraw): ").strip()
+    service.add_transaction(amount, date, txn_type)
+    print("Transaction added.")
+
+
+def handle_show_total_balance(service):
+    print(f"Total balance: {service.calculate_total_balance()}")
+
+
+def handle_sort_transactions(service):
+    field = input("Sort by (amount/date): ").strip().lower()
+    sorted_transactions = service.sort_transactions(field)
+    print("Sorted transactions:")
+    for txn in sorted_transactions:
+        print(f"- {txn.date} | {txn.type} | {txn.amount}")
+
+
+def handle_search_transaction(service):
+    value = get_float("Value to search: ")
+    field = input("Search field (amount/date): ").strip().lower()
+    result = service.linear_search_transaction(value, field)
+    print("Linear search result:", result)
+    sorted_transactions = service.sort_transactions(field)
+    result = service.binary_search_transaction(value, sorted_transactions, field)
+    print("Binary search result:", result)
+
+
+def handle_generate_report(service):
+    threshold = get_float("Threshold: ")
+    report = service.generate_report_above_threshold(threshold)
+    if report:
+        print("Transactions above threshold:")
+        for line in report:
+            print(line)
+    else:
+        print("No transactions above the threshold.")
+
+
+def run_analyzer_menu(service):
+    while True:
+        print("\n===== BANK TRANSACTION ANALYZER =====")
+        print("1. Add transaction")
+        print("2. Show total balance")
+        print("3. Sort transactions")
+        print("4. Search transaction")
+        print("5. Generate report above threshold")
+        print("0. Back")
+        analyzer_choice = input(CHOOSE_OPTION_PROMPT).strip()
+        handlers = {
+            "1": handle_add_transaction,
+            "2": handle_show_total_balance,
+            "3": handle_sort_transactions,
+            "4": handle_search_transaction,
+            "5": handle_generate_report,
+        }
+        if analyzer_choice == "0":
+            break
+        handler = handlers.get(analyzer_choice)
+        if handler is None:
+            print(INVALID_OPTION_MESSAGE)
+            continue
+        handler(service)
+
+
 def main():
     service = BankService()
     while True:
@@ -730,183 +987,12 @@ def main():
         print("9. Bank Transaction Analyzer")
         print("0. Exit")
 
-        choice = input("Choose option: ")
+        choice = input(CHOOSE_OPTION_PROMPT)
 
         try:
-            if choice == "1":
-                number = input("Account Number: ").strip()
-                acct = service.find_account(number)
-                if acct is None:
-                    print("Account not found.")
-                    continue
-                action = input("Action (deposit/withdraw): ").strip().lower()
-                amount = get_float("Amount: ")
-                if action == "deposit":
-                    service.deposit(number, amount)
-                elif action == "withdraw":
-                    service.withdraw(number, amount)
-                else:
-                    print("Unknown action")
-
-            elif choice == "2":
-                txn = service.undo_last_transaction()
-                if txn is None:
-                    print("No transactions to undo.")
-                else:
-                    print(f"Reverted  last transaction for account {txn.account_number}.")
-
-            elif choice == "3":
-                number = input("Account Number: ").strip()
-                account = service.find_account(number)
-                if account is None:
-                    print("Account not found.")
-                else:
-                    account.statement()
-
-            elif choice == "4":
-                owner = input("Owner: ").strip()
-                number = input("Account Number: ").strip()
-                acct_type = input("Type (savings/current/fixed): ").strip().lower()
-                balance = get_float("Initial Balance: ")
-                account = service.create_account(acct_type, owner, number, balance)
-                print(f"Account {account.number} created.")
-
-            elif choice == "5":
-                all_accts = service.show_all_accounts()
-                if not all_accts:
-                    print("No accounts.")
-                else:
-                    for account in all_accts:
-                        account.statement()
-
-            elif choice == "6":
-                service.apply_interest_to_all()
-                print("Interest applied.")
-
-            elif choice == "7":
-                config = BankConfig.get_instance()
-                config.interest_rate = get_float("New interest rate (e.g. 0.08): ", default=config.interest_rate)
-                config.overdraft_limit = get_float("New overdraft limit: ", default=config.overdraft_limit)
-                config.large_withdrawal_threshold = get_float("Large withdrawal threshold: ", default=config.large_withdrawal_threshold)
-                print("Bank rules updated.")
-
-            elif choice == "8":
-                while True:
-                    print("\n===== ADDIS BANK NETWORK & PRIORITY SYSTEM =====")
-                    print("1. Add new branch / employee (Tree)")
-                    print("2. Add money transfer connection (Graph)")
-                    print("3. Show all connected customers using BFS/DFS")
-                    print("4. Add urgent transaction (Heap)")
-                    print("5. Process highest priority transaction")
-                    print("6. Search for customer account in BST")
-                    print("0. Back")
-                    network_choice = input("Choose option: ").strip()
-                    if network_choice == "1":
-                        entity_type = input("Add (branch/employee): ").strip().lower()
-                        name = input("Name: ").strip()
-                        parent_name = input("Parent name (leave empty for root): ").strip() or None
-                        if entity_type == "branch":
-                            service.add_branch(name, parent_name)
-                            print("Branch added.")
-                        elif entity_type == "employee":
-                            service.add_employee(name, parent_name)
-                            print("Employee added.")
-                        else:
-                            print("Invalid entity type.")
-                    elif network_choice == "2":
-                        source = input("From customer: ").strip()
-                        target = input("To customer: ").strip()
-                        service.add_transfer_connection(source, target)
-                        print("Transfer connection added.")
-                    elif network_choice == "3":
-                        customer = input("Start customer: ").strip()
-                        connected = service.get_connected_customers(customer)
-                        if connected:
-                            print("Connected customers:", ", ".join(connected))
-                        else:
-                            print("No connected customers found.")
-                    elif network_choice == "4":
-                        description = input("Transaction description: ").strip()
-                        priority = get_int("Priority (higher number = higher priority): ")
-                        service.add_urgent_transaction(description, priority)
-                        print("Urgent transaction added.")
-                    elif network_choice == "5":
-                        txn = service.process_highest_priority_transaction()
-                        if txn is None:
-                            print("No urgent transactions pending.")
-                        else:
-                            print(f"Processed: {txn.description} (priority {txn.priority})")
-                    elif network_choice == "6":
-                        number = input("Account number: ").strip()
-                        account = service.search_account_in_bst(number)
-                        if account is None:
-                            print("Account not found.")
-                        else:
-                            account.statement()
-                    elif network_choice == "0":
-                        break
-                    else:
-                        print("Invalid option.")
-
-            elif choice == "9":
-                while True:
-                    print("\n===== BANK TRANSACTION ANALYZER =====")
-                    print("1. Add transaction")
-                    print("2. Show total balance")
-                    print("3. Sort transactions")
-                    print("4. Search transaction")
-                    print("5. Generate report above threshold")
-                    print("0. Back")
-                    analyzer_choice = input("Choose option: ").strip()
-                    if analyzer_choice == "1":
-                        amount = get_float("Amount: ")
-                        date = input("Date (YYYY-MM-DD): ").strip()
-                        txn_type = input("Type (deposit/withdraw): ").strip()
-                        service.add_transaction(amount, date, txn_type)
-                        print("Transaction added.")
-                    elif analyzer_choice == "2":
-                        print(f"Total balance: {service.calculate_total_balance()}")
-                    elif analyzer_choice == "3":
-                        field = input("Sort by (amount/date): ").strip().lower()
-                        sorted_transactions = service.sort_transactions(field)
-                        print("Sorted transactions:")
-                        for txn in sorted_transactions:
-                            print(f"- {txn.date} | {txn.type} | {txn.amount}")
-                    elif analyzer_choice == "4":
-                        value = get_float("Value to search: ")
-                        field = input("Search field (amount/date): ").strip().lower()
-                        if field == "date":
-                            result = service.linear_search_transaction(value, field)
-                            print("Linear search result:", result)
-                            sorted_transactions = service.sort_transactions(field)
-                            result = service.binary_search_transaction(value, sorted_transactions, field)
-                            print("Binary search result:", result)
-                        else:
-                            result = service.linear_search_transaction(value, field)
-                            print("Linear search result:", result)
-                            sorted_transactions = service.sort_transactions(field)
-                            result = service.binary_search_transaction(value, sorted_transactions, field)
-                            print("Binary search result:", result)
-                    elif analyzer_choice == "5":
-                        threshold = get_float("Threshold: ")
-                        report = service.generate_report_above_threshold(threshold)
-                        if report:
-                            print("Transactions above threshold:")
-                            for line in report:
-                                print(line)
-                        else:
-                            print("No transactions above the threshold.")
-                    elif analyzer_choice == "0":
-                        break
-                    else:
-                        print("Invalid option.")
-
-            elif choice == "0":
-                print("Thank you for using Addis Bank.")
+            should_exit = handle_transaction_choice(service, choice)
+            if should_exit:
                 break
-
-            else:
-                print("Invalid option.")
         except ValueError as error:
             print(f"Error: {error}")
 
