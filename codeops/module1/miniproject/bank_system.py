@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 from dataclasses import dataclass
+from collections import deque
+import heapq
 import os
 
 
@@ -20,6 +22,8 @@ class Transaction:
 # - Factory: AccountFactory creates account objects by type.
 # - Observer: SmsNotifier and AuditLogObserver react to large withdrawals.
 class InputValidator:
+    # This helper class shows modular programming and reusability.
+    # It keeps input validation logic in one place so the main program stays clean.
     @staticmethod
     def get_float(message, default=None):
         while True:
@@ -41,7 +45,9 @@ class InputValidator:
 
 
 class AccountRegistry(dict):
-    """Dictionary-like container that also supports integer indexing for tests and simple iteration."""
+    """Dictionary-like container that also supports integer indexing for tests and simple iteration.
+    This shows how custom data structures can extend built-in ones for a specific purpose.
+    """
 
     def __getitem__(self, key):
         if isinstance(key, int):
@@ -56,6 +62,7 @@ class AccountRegistry(dict):
 
 class BankConfig:
     # Singleton pattern: only one shared configuration object exists.
+    # Purpose: ensure all account behavior uses the same bank rules (interest, overdraft, thresholds).
     _instance = None
 
     def __init__(self):
@@ -77,6 +84,7 @@ class BankConfig:
 
 class NotificationObserver(ABC):
     # Observer pattern interface for notifications about account events.
+    # Purpose: allow different modules (SMS, audit log) to react when an account event happens.
     @abstractmethod
     def update(self, account, amount):
         pass
@@ -104,7 +112,9 @@ class AuditLogObserver(NotificationObserver):
 
 class Account(ABC):
     # Abstract base class for all accounts.
-    # Encapsulates common behavior and forces subclasses to implement account-specific interest rules.
+    # Purpose: demonstrate abstraction and encapsulation.
+    # Abstraction hides the common account behavior behind a single interface,
+    # while encapsulation keeps balance and account state protected inside the class.
     def __init__(self, owner, number, balance=0.0):
         self.owner = owner
         self.number = number
@@ -165,7 +175,8 @@ class Account(ABC):
 
 
 class SavingsAccount(Account):
-    # Concrete savings account with interest calculation.
+    # Inheritance and polymorphism example.
+    # Purpose: reuse the common Account behavior while customizing savings-specific logic.
     def __init__(self, owner, number, balance, rate=None):
         super().__init__(owner, number, balance)
         self.rate = rate if rate is not None else BankConfig.get_instance().interest_rate
@@ -184,7 +195,8 @@ class SavingsAccount(Account):
 
 
 class CurrentAccount(Account):
-    # Concrete account type with overdraft support.
+    # Another inheritance example with custom behavior.
+    # Purpose: show that different account types can override the same methods differently.
     def __init__(self, owner, number, balance, overdraft_limit=None):
         super().__init__(owner, number, balance)
         self.overdraft_limit = overdraft_limit if overdraft_limit is not None else BankConfig.get_instance().overdraft_limit
@@ -223,6 +235,7 @@ class FixedDepositAccount(SavingsAccount):
 
 class AccountFactory:
     # Factory pattern: instantiate different account classes based on account type.
+    # Purpose: centralize account creation and keep the main code simple and flexible.
     @staticmethod
     def create_account(account_type, owner, number, balance, config):
         normalized = account_type.lower()
@@ -236,7 +249,182 @@ class AccountFactory:
 
 
 # Command pattern: encapsulate transactions so undo is robust
+class TreeNode:
+    # Tree data structure node.
+    # Purpose: represent a branch or employee in the bank hierarchy.
+    def __init__(self, name: str, node_type: str = "branch"):
+        self.name = name
+        self.node_type = node_type
+        self.children: List[TreeNode] = []
+
+    def add_child(self, child: "TreeNode"):
+        self.children.append(child)
+
+
+class BranchTree:
+    """Simple tree for bank branches and employees.
+    Purpose: model a hierarchy such as main branch -> regional branch -> employee.
+    This demonstrates the Tree concept and how parent-child relationships are stored.
+    - Insert/find: O(n) in the worst case, O(h) on a balanced tree-like structure.
+    """
+
+    def __init__(self):
+        self.root: Optional[TreeNode] = None
+
+    def add_node(self, name: str, node_type: str = "branch", parent_name: Optional[str] = None):
+        if not name.strip():
+            raise ValueError("Name is required.")
+        if self.root is None:
+            if parent_name is not None and parent_name.strip():
+                raise ValueError("Root node cannot have a parent.")
+            self.root = TreeNode(name.strip(), node_type)
+            return self.root
+
+        if parent_name is None or not parent_name.strip():
+            parent = self.root
+        else:
+            parent = self.find_node(parent_name.strip())
+
+        if parent is None:
+            raise ValueError("Parent node not found.")
+        if parent is None:
+            raise ValueError("Parent node not found.")
+        child = TreeNode(name.strip(), node_type)
+        parent.add_child(child)
+        return child
+
+    def find_node(self, name: str) -> Optional[TreeNode]:
+        if self.root is None:
+            return None
+        stack = [self.root]
+        while stack:
+            current = stack.pop()
+            if current.name.lower() == name.lower():
+                return current
+            stack.extend(reversed(current.children))
+        return None
+
+
+class CustomerGraph:
+    """Adjacency-list graph for customer transfer relationships.
+    Purpose: model how customers are connected in a money-transfer network.
+    This demonstrates the Graph concept and BFS/DFS traversal for finding connected customers.
+    - Add connection: O(1) average-case
+    - BFS/DFS traversal: O(V + E)
+    """
+
+    def __init__(self):
+        self.adjacency: dict[str, set[str]] = {}
+
+    def add_connection(self, source: str, target: str):
+        source_name = source.strip()
+        target_name = target.strip()
+        if not source_name or not target_name:
+            raise ValueError("Both customer names are required.")
+        self.adjacency.setdefault(source_name, set()).add(target_name)
+        self.adjacency.setdefault(target_name, set()).add(source_name)
+
+    def get_connected_nodes(self, start: str) -> List[str]:
+        if not start.strip():
+            raise ValueError("Start customer is required.")
+        start_name = start.strip()
+        if start_name not in self.adjacency:
+            self.adjacency.setdefault(start_name, set())
+
+        visited = set([start_name])
+        queue = deque([start_name])
+        connected: List[str] = []
+        while queue:
+            current = queue.popleft()
+            for neighbor in self.adjacency[current]:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append(neighbor)
+                    connected.append(neighbor)
+        return connected
+
+
+class UrgentTransaction:
+    def __init__(self, description: str, priority: int):
+        self.description = description
+        self.priority = priority
+
+
+class PriorityHeap:
+    """Min-heap wrapper used to process urgent work by highest priority.
+    Purpose: manage urgent transactions so the most important item is handled first.
+    This demonstrates the Heap data structure and priority-based processing.
+    - Push/pop: O(log n)
+    """
+
+    def __init__(self):
+        self._heap: List[tuple[int, int, str, int]] = []
+        self._counter = 0
+
+    def add(self, description: str, priority: int):
+        if not description.strip():
+            raise ValueError("Description is required.")
+        self._counter += 1
+        heapq.heappush(self._heap, (-priority, self._counter, description.strip(), priority))
+
+    def pop_highest(self) -> Optional[UrgentTransaction]:
+        if not self._heap:
+            return None
+        _, _, description, priority = heapq.heappop(self._heap)
+        return UrgentTransaction(description, priority)
+
+
+class BSTNode:
+    def __init__(self, account_number: str, account):
+        self.account_number = account_number
+        self.account = account
+        self.left: Optional["BSTNode"] = None
+        self.right: Optional["BSTNode"] = None
+
+
+class AccountBST:
+    """Binary search tree for account-number lookup.
+    Purpose: store accounts in a searchable structure so account numbers can be found quickly.
+    This demonstrates the BST concept and searching by key.
+    - Insert/search: O(h), where h is tree height; worst case O(n)
+    """
+
+    def __init__(self):
+        self.root: Optional[BSTNode] = None
+
+    def insert(self, account_number: str, account):
+        if self.root is None:
+            self.root = BSTNode(account_number, account)
+            return
+
+        current = self.root
+        while True:
+            if account_number < current.account_number:
+                if current.left is None:
+                    current.left = BSTNode(account_number, account)
+                    return
+                current = current.left
+            else:
+                if current.right is None:
+                    current.right = BSTNode(account_number, account)
+                    return
+                current = current.right
+
+    def search(self, account_number: str) -> Optional[object]:
+        current = self.root
+        while current is not None:
+            if account_number == current.account_number:
+                return current.account
+            if account_number < current.account_number:
+                current = current.left
+            else:
+                current = current.right
+        return None
+
+
 class Command(ABC):
+    # Command pattern base class.
+    # Purpose: wrap actions like deposit or withdraw so they can be executed and undone later.
     @abstractmethod
     def execute(self, service):
         pass
@@ -316,6 +504,8 @@ class Stack:
 
 class BankService:
     # Service layer separates business logic from user interaction.
+    # Purpose: keep the program organized by moving core operations into one class.
+    # This also shows how multiple concepts (OOP, data structures, and design patterns) can be combined.
     """Service layer using a dictionary for accounts and a stack for transaction history.
 
     Data structure choices and time complexity:
@@ -330,6 +520,44 @@ class BankService:
         # Stack to record transactions for undo support (LIFO)
         self.history = Stack()
         self.transactions: List[Transaction] = []
+        self.branch_tree = BranchTree()
+        self.customer_graph = CustomerGraph()
+        self.priority_heap = PriorityHeap()
+        self.account_bst = AccountBST()
+
+    def _rebuild_account_bst(self):
+        # O(n) to rebuild the BST after account changes.
+        self.account_bst = AccountBST()
+        for number, account in self.accounts.items():
+            self.account_bst.insert(number, account)
+
+    def add_branch(self, name: str, parent_name: Optional[str] = None):
+        # O(n) worst-case traversal to find the parent in the branch tree.
+        return self.branch_tree.add_node(name, "branch", parent_name)
+
+    def add_employee(self, name: str, parent_name: Optional[str] = None):
+        # O(n) worst-case traversal to find the parent in the branch tree.
+        return self.branch_tree.add_node(name, "employee", parent_name)
+
+    def add_transfer_connection(self, source: str, target: str):
+        # O(1) average-case adjacency insertion for each new connection.
+        self.customer_graph.add_connection(source, target)
+
+    def get_connected_customers(self, start: str) -> List[str]:
+        # O(V + E) for breadth-first traversal over the transfer graph.
+        return self.customer_graph.get_connected_nodes(start)
+
+    def add_urgent_transaction(self, description: str, priority: int):
+        # O(log n) to insert into the priority heap.
+        self.priority_heap.add(description, priority)
+
+    def process_highest_priority_transaction(self) -> Optional[UrgentTransaction]:
+        # O(log n) to remove the highest-priority item from the heap.
+        return self.priority_heap.pop_highest()
+
+    def search_account_in_bst(self, number: str):
+        # O(h) lookup in the binary search tree; worst case O(n).
+        return self.account_bst.search(number)
 
     def find_account(self, number):
         # O(1) average-case dictionary lookup
@@ -344,6 +572,7 @@ class BankService:
         account.attach_observer(AuditLogObserver())
         # O(1) insertion
         self.accounts[number] = account
+        self._rebuild_account_bst()
         return account
 
     def deposit(self, number, amount):
@@ -497,7 +726,8 @@ def main():
         print("5. Show All Accounts")
         print("6. Apply Interest to Savings Accounts")
         print("7. Update Bank Rules")
-        print("8. Bank Transaction Analyzer")
+        print("8. Addis Bank Network & Priority System")
+        print("9. Bank Transaction Analyzer")
         print("0. Exit")
 
         choice = input("Choose option: ")
@@ -561,6 +791,64 @@ def main():
                 print("Bank rules updated.")
 
             elif choice == "8":
+                while True:
+                    print("\n===== ADDIS BANK NETWORK & PRIORITY SYSTEM =====")
+                    print("1. Add new branch / employee (Tree)")
+                    print("2. Add money transfer connection (Graph)")
+                    print("3. Show all connected customers using BFS/DFS")
+                    print("4. Add urgent transaction (Heap)")
+                    print("5. Process highest priority transaction")
+                    print("6. Search for customer account in BST")
+                    print("0. Back")
+                    network_choice = input("Choose option: ").strip()
+                    if network_choice == "1":
+                        entity_type = input("Add (branch/employee): ").strip().lower()
+                        name = input("Name: ").strip()
+                        parent_name = input("Parent name (leave empty for root): ").strip() or None
+                        if entity_type == "branch":
+                            service.add_branch(name, parent_name)
+                            print("Branch added.")
+                        elif entity_type == "employee":
+                            service.add_employee(name, parent_name)
+                            print("Employee added.")
+                        else:
+                            print("Invalid entity type.")
+                    elif network_choice == "2":
+                        source = input("From customer: ").strip()
+                        target = input("To customer: ").strip()
+                        service.add_transfer_connection(source, target)
+                        print("Transfer connection added.")
+                    elif network_choice == "3":
+                        customer = input("Start customer: ").strip()
+                        connected = service.get_connected_customers(customer)
+                        if connected:
+                            print("Connected customers:", ", ".join(connected))
+                        else:
+                            print("No connected customers found.")
+                    elif network_choice == "4":
+                        description = input("Transaction description: ").strip()
+                        priority = get_int("Priority (higher number = higher priority): ")
+                        service.add_urgent_transaction(description, priority)
+                        print("Urgent transaction added.")
+                    elif network_choice == "5":
+                        txn = service.process_highest_priority_transaction()
+                        if txn is None:
+                            print("No urgent transactions pending.")
+                        else:
+                            print(f"Processed: {txn.description} (priority {txn.priority})")
+                    elif network_choice == "6":
+                        number = input("Account number: ").strip()
+                        account = service.search_account_in_bst(number)
+                        if account is None:
+                            print("Account not found.")
+                        else:
+                            account.statement()
+                    elif network_choice == "0":
+                        break
+                    else:
+                        print("Invalid option.")
+
+            elif choice == "9":
                 while True:
                     print("\n===== BANK TRANSACTION ANALYZER =====")
                     print("1. Add transaction")
