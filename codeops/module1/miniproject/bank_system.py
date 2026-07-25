@@ -13,7 +13,7 @@ ACCOUNT_NUMBER_PROMPT: Final[str] = "Account Number: "
 INVALID_OPTION_MESSAGE: Final[str] = "Invalid option."
 
 
-@dataclass
+@dataclass 
 class Transaction:
     amount: float
     date: str
