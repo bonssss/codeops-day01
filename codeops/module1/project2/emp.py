@@ -33,7 +33,7 @@ class ftemployee(employee):
 
 class ptemployee(employee):
      def __init__(self, emId, name, salary, hours):
-        super.__init__(emId, name, salary) 
+        super().__init__(emId, name, salary) 
         self.hours = hours
 
      def calculate_salary(self):
@@ -41,5 +41,5 @@ class ptemployee(employee):
 
 abe = ftemployee("xyz0102", "abebe", 10000)
 abe.display()
-# alemu = ptemployee("xyz0104", "alemu", 2000, 40)
-# alemu.display()
+alemu = ptemployee("xyz0104", "alemu", 2000, 40)
+alemu.display()
