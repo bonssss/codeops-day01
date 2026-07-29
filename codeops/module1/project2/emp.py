@@ -39,7 +39,10 @@ class ptemployee(employee):
      def calculate_salary(self):
          return self.__sal * self.hours
 
-abe = ftemployee("xyz0102", "abebe", 10000)
-abe.display()
-alemu = ptemployee("xyz0104", "alemu", 2000, 40)
-alemu.display()
+# abe = ftemployee("xyz0102", "abebe", 10000)
+# abe.display()
+# alemu = ptemployee("xyz0104", "alemu", 2000, 40)
+# alemu.display()
+
+for i in range(1,10):
+    print(i)
