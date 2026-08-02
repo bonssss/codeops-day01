@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habesha Eatery - Home & Reservations</title>
+    <meta name="description" content="Welcome to Habesha Eatery. Book your reservation online and explore our authentic Ethiopian menu.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Habesha Eatery</h1>
+    </header> 
+    
+    <nav aria-label="Main navigation">
+        <ul>
+            <li><a href="index.html" aria-current="page">Reservations</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav> 
+    
+    <main>
+        <section>
+            <h2>Make a Reservation</h2>
+            <form action="/reserve" method="post">
+                <div>
+                    <label for="res-name">Name:</label>
+                    <input type="text" id="res-name" name="name" required placeholder="Enter your name">
+                </div>
+                <div>
+                    <label for="res-date">Date:</label>
+                    <input type="date" id="res-date" name="date" required>
+                </div>
+                <div>
+                    <label for="res-time">Time:</label>
+                    <input type="time" id="res-time" name="time" required>
+                </div>
+                <div>
+                    <label for="res-guests">Number of Guests:</label>
+                    <input type="number" id="res-guests" name="guests" min="1" max="20" required>
+                </div>
+                <button type="submit">Reserve</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Our Menu</h2>
+            <table border="1">
+                <caption>Habesha Eatery Menu with Prices in ETB</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price (ETB)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Doro Wat</td>
+                        <td>Spicy chicken stew with a hard-boiled egg</td>
+                        <td>450</td>
+                    </tr>
+                    <tr>
+                        <td>Shiro</td>
+                        <td>Chickpea stew seasoned with spices</td>
+                        <td>250</td>
+                    </tr>
+                    <tr>
+                        <td>Kitfo</td>
+                        <td>Minced raw beef marinated in mitmita</td>
+                        <td>600</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Experience Habesha Eatery</h2>
+            <div class="media-block">
+                <!-- Media block -->
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" title="Habesha Eatery Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+    </main> 
+    
+    <footer>
+        <p>&copy; 2024 Habesha Eatery. All rights reserved.</p>
+    </footer> 
+</body>
+</html>
