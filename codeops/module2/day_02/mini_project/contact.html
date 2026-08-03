@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habesha Eatery - Contact & Hours</title>
+    <meta name="description" content="Get in touch with Habesha Eatery. View our contact details, location, and opening hours.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Contact Habesha Eatery</h1>
+    </header> 
+    
+    <nav aria-label="Main navigation">
+        <ul>
+            <li><a href="index.html">Reservations</a></li>
+            <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+    </nav> 
+    
+    <main> 
+        <section>
+            <h2>Send us a Message</h2>
+            <form action="/contact" method="post"> 
+                <div>
+                    <label for="name">Name:</label> 
+                    <input id="name" name="name" type="text" required placeholder="Enter your name"> 
+                </div>
+                <div>
+                    <label for="email">Email:</label> 
+                    <input id="email" name="email" type="email" required placeholder="Enter your email"> 
+                </div>
+                <div>
+                    <label for="message">Message:</label> 
+                    <textarea id="message" name="message" rows="4" required placeholder="Enter your message"></textarea> 
+                </div>
+                <button type="submit">Send Message</button> 
+            </form> 
+        </section>
+
+        <section>
+            <h2>Opening Hours</h2>
+            <table border="1">
+                <caption>Habesha Eatery Weekly Schedule</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Day</th>
+                        <th scope="col">Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monday - Friday</td>
+                        <td>11:00 AM - 10:00 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Saturday</td>
+                        <td>12:00 PM - 11:00 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Sunday</td>
+                        <td>Closed</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main> 
+    
+    <footer>
+        <p>&copy; 2024 Habesha Eatery. All rights reserved.</p>
+    </footer> 
+</body>
+</html>
