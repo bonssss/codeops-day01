@@ -1,0 +1,70 @@
+
+:root{
+    --primary-color: lightgray;
+    --secondary-color: #8db49e;
+    --font-family: 'Helvetica Neue', sans-serif;
+}
+body{
+    background-color: lightgray;
+    font-family: Arial, sans-serif;
+    margin: auto;
+    padding: 0;
+}
+header{
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: center;
+    padding: 20px;
+
+}
+p{
+    color:blue;
+    font-size:16px;
+    background-color: antiquewhite;
+    margin: 10px;
+    padding: auto;
+}
+#p3{
+    color: red;
+    font-size: 20px;
+    background-color: antiquewhite;
+    margin: 10px;
+    padding: auto;
+}
+.cls{
+    color: green;
+    font-size: 18px;
+    background-color: antiquewhite;
+    margin: 10px;
+    padding: auto;
+}
+.long{
+    border-color: aquamarine;
+    border-width: 2px;
+    border-style: dotted;
+    border-radius: 10px;
+    background-color: #8db49e;
+    margin: 100px;
+    padding: 100px;
+}
+.long:hover{
+    background-color: #3c7756;
+    color: white;
+}
+.long::before{
+    content: "This is a long paragraph. ";
+    font-weight: bold;
+}
+img{
+    max-width: 500px;
+     height: 500px;
+     border-radius: 50%;
+     align-items: center;
+     object-fit: cover;
+}
+footer{
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
