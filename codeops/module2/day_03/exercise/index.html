@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3 Exercises</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>CodeOps Module 2 - Day 3 Exercises</h1>
+    </header>
+
+    <main>
+        <!-- Exercise 1: Custom Button -->
+        <section class="exercise-1">
+            <h2>Exercise 1: Custom Properties Button</h2>
+            <button class="custom-btn">Styled Button</button>
+        </section>
+
+        <!-- Exercise 2: Box Model -->
+        <section class="exercise-2">
+            <h2>Exercise 2: Box Model Card</h2>
+            <div class="card content-box-card">Content Box Card (Rendered width &gt; 300px)</div>
+            <div class="card border-box-card">Border Box Card (Exactly 300px)</div>
+        </section>
+
+        <!-- Exercise 3: Specificity -->
+        <section class="exercise-3">
+            <h2>Exercise 3: Specificity</h2>
+            <p class="spec-class" id="spec-id">This paragraph is targeted by element (0,0,1), class (0,1,0), and ID (1,0,0). ID wins!</p>
+            <div class="explanation">
+                <p>Explanation:</p>
+                <ul>
+                    <li><code>p { color: blue; }</code> - Element selector. Specificity: 0,0,1</li>
+                    <li><code>.spec-class { color: green; }</code> - Class selector. Specificity: 0,1,0</li>
+                    <li><code>#spec-id { color: red; }</code> - ID selector. Specificity: 1,0,0 (Highest, this color wins)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Exercise 4: Ethiopian Airlines Schedule Table -->
+        <section class="exercise-4">
+            <h2>Exercise 4: Ethiopian Airlines Schedule</h2>
+            <table class="flight-schedule">
+                <thead>
+                    <tr>
+                        <th>Flight Number</th>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ET 500</td>
+                        <td>Addis Ababa (ADD)</td>
+                        <td>Washington, D.C. (IAD)</td>
+                        <td>22:30</td>
+                        <td>08:40</td>
+                    </tr>
+                    <tr>
+                        <td>ET 501</td>
+                        <td>Washington, D.C. (IAD)</td>
+                        <td>Addis Ababa (ADD)</td>
+                        <td>10:45</td>
+                        <td>07:15</td>
+                    </tr>
+                    <tr>
+                        <td>ET 704</td>
+                        <td>Addis Ababa (ADD)</td>
+                        <td>Paris (CDG)</td>
+                        <td>00:15</td>
+                        <td>06:30</td>
+                    </tr>
+                    <tr>
+                        <td>ET 705</td>
+                        <td>Paris (CDG)</td>
+                        <td>Addis Ababa (ADD)</td>
+                        <td>22:15</td>
+                        <td>06:05</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Exercise 5: Color Palette Conversion -->
+        <section class="exercise-5">
+            <h2>Exercise 5: HSL Color Palette</h2>
+            <div class="palette">
+                <div class="swatch swatch-1">Color 1</div>
+                <div class="swatch swatch-2">Color 2</div>
+                <div class="swatch swatch-3">Color 3</div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

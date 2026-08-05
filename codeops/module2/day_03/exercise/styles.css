@@ -1,0 +1,167 @@
+/* Core Variables & Reset */
+:root {
+    --primary-color: #074188;
+    --secondary-color: #ea3370;
+    --accent-color: #a86289;
+    --text-color: #333;
+    --bg-color: #f5f5f5;
+    
+    /* Exercise 1 custom properties */
+    --ex1-color-1: #3498db;
+    --ex1-color-2: #ffffff;
+    --ex1-spacing: 1.5rem;
+    --ex1-font: 'Courier New', Courier, monospace;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+main {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+section {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #ddd;
+}
+
+/* ========================================= */
+/* Exercise 1: Custom Button                 */
+/* ========================================= */
+.custom-btn {
+    background-color: var(--ex1-color-1);
+    color: var(--ex1-color-2);
+    padding: var(--ex1-spacing);
+    font-family: var(--ex1-font);
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ========================================= */
+/* Exercise 2: Box Model                     */
+/* ========================================= */
+.card {
+    width: 300px;
+    padding: 24px;
+    border: 2px solid var(--primary-color);
+    margin-bottom: 1rem;
+    background-color: white;
+}
+
+.content-box-card {
+    box-sizing: content-box;
+    /* Rendered width: 300px (width) + 48px (padding) + 4px (border) = 352px */
+}
+
+.border-box-card {
+    box-sizing: border-box;
+    /* Rendered width: 300px exactly */
+}
+
+/* ========================================= */
+/* Exercise 3: Specificity                   */
+/* ========================================= */
+p {
+    color: blue; /* Specificity: 0, 0, 1 */
+}
+
+.spec-class {
+    color: green; /* Specificity: 0, 1, 0 */
+}
+
+#spec-id {
+    color: red; /* Specificity: 1, 0, 0 (Wins!) */
+}
+
+.explanation ul, .explanation p {
+    color: var(--text-color); /* reset to normal */
+}
+
+/* ========================================= */
+/* Exercise 4: Table Styling                 */
+/* ========================================= */
+.flight-schedule {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: white;
+}
+
+.flight-schedule th, .flight-schedule td {
+    padding: 12px 15px; /* Comfortable cell padding */
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.flight-schedule thead tr {
+    background-color: #006000; /* Ethiopian Airlines green-ish */
+    color: white;
+    font-weight: bold;
+}
+
+.flight-schedule tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Zebra rows */
+}
+
+/* ========================================= */
+/* Exercise 5: HSL Color Palette             */
+/* ========================================= */
+.palette {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.swatch {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.swatch-1 {
+    /* Hex: #e74c3c, RGB: rgb(231, 76, 60) */
+    background-color: hsl(4, 76%, 57%);
+}
+.swatch-1:hover {
+    background-color: hsl(4, 76%, 67%); /* Lighter */
+}
+
+.swatch-2 {
+    /* Hex: #2980b9, RGB: rgb(41, 128, 185) */
+    background-color: hsl(204, 64%, 44%);
+}
+.swatch-2:hover {
+    background-color: hsl(204, 64%, 54%); /* Lighter */
+}
+
+.swatch-3 {
+    /* Hex: #f1c40f, RGB: rgb(241, 196, 15) */
+    background-color: hsl(48, 89%, 50%);
+}
+.swatch-3:hover {
+    background-color: hsl(48, 89%, 60%); /* Lighter */
+}
