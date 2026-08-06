@@ -1,0 +1,98 @@
+:root{
+    --primary-color: rgb(15, 9, 26);
+    --secondary-color: antiquewhite;
+    --text-color: aliceblue;
+    --section1-color: rgb(239, 241, 184);
+    --section2-color: rgb(184, 241, 239);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header{
+    background-color: var(--primary-color);
+    text-align: center;
+    padding: 20px;
+    color: var(--text-color);
+    position: sticky;
+    top: 0;
+}
+
+.main{
+    background-color: var(--secondary-color);
+    padding: 20px;
+}
+.section-1{
+    background-color: var(--section1-color);
+    padding: 20px;
+}
+
+.section-2{
+    background-color: var(--section2-color);
+    padding: 20px;
+}
+.card{
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--primary-color);
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.card:hover{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border-color: var(--secondary-color);
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+
+.footer{
+    background-color: var(--primary-color);
+    text-align: center;
+    padding: 20px;
+    color: var(--text-color);
+}
+
+.my-footer{
+    background-color: var(--primary-color);
+    text-align: center;
+    padding: 20px;
+    color: var(--text-color);
+    transition: background-color 1s ease, color 0.3s ease, border-radius 0.3s ease;
+}
+.my-footer:hover{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    cursor: pointer;
+    border-radius: 10px;
+    transform: translate(2px);
+}
+
+@media (min-width: 480px) {
+    .section1-content,
+    .section2-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+}
+@media (min-width: 768px) {
+    .section1-content,
+    .section2-content {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media (min-width: 1024px) {
+    .section1-content,
+    .section2-content {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
