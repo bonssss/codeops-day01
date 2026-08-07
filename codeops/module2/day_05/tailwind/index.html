@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="min-h-screen bg-slate-950 text-white flex items-center justify-center px-6">
+    <div class="text-center">
+      <div class="relative mx-auto h-72 w-72 rounded-full border-[16px] border-cyan-300/80 shadow-[0_0_80px_rgba(34,211,238,0.35)] globe-spin md:h-96 md:w-96">
+        <div class="absolute inset-4 rounded-full bg-cyan-500"></div>
+        <div class="absolute inset-0 rounded-full border-[10px] border-white/20"></div>
+        <div class="absolute inset-6 rounded-full border border-white/20"></div>
+        <div class="absolute left-1/2 top-1/2 h-28 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/25 md:h-36"></div>
+      </div>
+      <p class="mt-6 text-lg font-semibold tracking-wide text-slate-200">Rotating globe</p>
+    </div>
+
+    <style>
+      @keyframes rotate-globe {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      .globe-spin {
+        animation: rotate-globe 6s linear infinite;
+      }
+    </style>
+  </body>
+</html>

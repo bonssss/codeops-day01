@@ -1,0 +1,62 @@
+:root {
+    --brand: hsl(212, 68%, 33%);
+    --brand-hover: hsl(212, 68%, 45%);
+    --space: 16px;
+    --radius: 10px;
+    --background-color: hsl(212, 68%, 95%);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    line-height: 1.6;
+    background-color: var(--background-color);
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 360px;
+    margin: 40px auto;
+    padding: var(--space);
+    border: 1px solid #E2E8F0;
+    border-radius: var(--radius);
+    text-align: center;
+    background-color: antiquewhite;
+}
+.heading{
+    color: var(--brand);
+    
+}
+
+.heading::before {
+    content: "☕ ";
+}
+
+.tagline{
+    color: var(--brand);
+    font-weight: bold;
+    
+}
+.description{
+    color: var(--brand);
+}
+.btn {
+    margin-top: var(--space);
+    padding: var(--space);
+    background: var(--brand);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    
+}
+
+.btn:hover {
+    background: var(--brand-hover);
+    cursor: pointer;
+}
