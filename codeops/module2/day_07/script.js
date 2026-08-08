@@ -16,13 +16,13 @@ function calculateSum() {
     document.getElementById('result').textContent = "The result is: " + result;
 }
 
-// hello accepts VAT as first parameter: hello(vat, ...values).
+// Rest function 
 
-function hello(vat = 0.15, ...values) {
-    // if (typeof vat === 'number' && vat > 1) {
-    //     values = [vat, ...values];
-    //     vat = 0.15;
-    // }
+ function hello(vat = 0.15, ...values) {
+    if (typeof vat === 'number' && vat > 1) {
+        values = [vat, ...values];
+        vat = 0.15;
+    }
     let sum = 0;
     for (const value of values) {
         sum += Number(value) || 0;
