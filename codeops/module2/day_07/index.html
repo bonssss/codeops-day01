@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="flex justify-center items-center  flex-col gap-4 border-2 border-gray-300 p-4 rounded-lg shadow-lg bg-gray-300">
+      <h1 class="text-green-500 font-bold text-xl">Sum Calculator</h1>
+      <input type="number" id="num1" placeholder="Enter first number" class="rounded-lg border border-gray-300 p-2" />
+      <input type="number" id="num2" placeholder="Enter second number" class="rounded-lg border border-gray-300 p-2" />
+      <button class="bg-green-500 text-white py-2 px-4 rounded cursor-pointer" onclick="calculateSum()">
+        Calculate Sum
+      </button>
+      <h2 id="result" class="text-green-500 font-bold text-lg"></h2>
+    </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
