@@ -23,7 +23,7 @@ greet(customers);
 
 // 4. Take a customer object and produce an updated copy with spread that changes the city and adds a phone field — without mutating the original. 
 
-const updateedcustomer= {...customers,city:"Bahirdar",phone:0912345678}
+const updateedcustomer= {...customers,city:"Bahirdar",phone:"0912345678"}
 
 console.log(updateedcustomer);
 console.log(customers); 
