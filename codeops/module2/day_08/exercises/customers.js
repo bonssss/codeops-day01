@@ -7,18 +7,19 @@ const customers =[
     { name:"Taye",city:"adama",balance:1500},
 ]
 
-for (const [key, value] of customers.entries()){
-    console.log(`key: ${key}, value: ${JSON.stringify(value)}`);
-    
-} 
+for (const customer of customers) {
+    for (const [key, value] of Object.entries(customer)) {
+        console.log(`key: ${key}, value: ${value}`);
+    }
+}
 
 
 // 3. Destructure name and city from a customer in one line, then write a function greet({ name }) that uses parameter destructuring. 
-const [name,city,...others] = customers;
+const {name,city}= customers[0];
 
-console.log(customers[0].name);
-console.log(customers[1].name);
-console.log(others);
+console.log(name);
+// console.log(customers[1].name);
+// console.log(others);
 
 function greet({name}){
     console.log(`Hello ${name}`);
