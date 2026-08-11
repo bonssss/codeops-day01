@@ -11,3 +11,17 @@ for (const [key, value] of customers.entries()){
     console.log(`key: ${key}, value: ${JSON.stringify(value)}`);
     
 } 
+
+
+// 3. Destructure name and city from a customer in one line, then write a function greet({ name }) that uses parameter destructuring. 
+const [name,city,...others] = customers;
+
+console.log(customers[0].name);
+console.log(customers[1].name);
+console.log(others);
+
+function greet({name}){
+    console.log(`Hello ${name}`);
+}
+
+greet(customers[0]);
