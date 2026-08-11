@@ -1,0 +1,19 @@
+--- Total By Type ---
+Total Debit: 3000
+Total Credit: 2000
+
+--- Formatted Receipts ---
+Receipt: Abel paid 100 ETB
+Receipt: Bini paid 100 ETB
+Receipt: Bekele paid 200 ETB
+Receipt: Girma paid 300 ETB
+Receipt: Abebe paid 400 ETB
+Receipt: Dereje paid 500 ETB
+Receipt: Tsegaye paid 600 ETB
+Receipt: Mulu paid 300 ETB
+Receipt: Lidetu paid 1200 ETB
+Receipt: Niguse paid 1300 ETB
+
+--- Updated Transaction (Immutable) ---
+Original: { id: 1, customer: 'Abel', amount: 100, type: 'debit' }
+Updated: { id: 1, customer: 'Abel', amount: 12345, type: 'debit' }
