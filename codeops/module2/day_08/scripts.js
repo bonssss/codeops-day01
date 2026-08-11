@@ -70,3 +70,42 @@ console.log(result);
 
 
 // // 
+
+
+// restructure
+
+const fruits =['orange','banana','apple','avocado']
+
+const [first,second]=fruits;
+console.log(first);
+console.log(second);
+
+
+const [first2,second2, ...rest2] = fruits;
+
+console.log(first2);
+console.log(second2);
+console.log(rest2);
+
+
+// spread operator
+
+const arr1 = [1,2,3]
+const arr2 = [4,5,6]
+const arr3 = [...arr1, ...arr2]
+console.log(arr3);
+
+const order =["tibs","kitfo","firfir"]
+const newOrder = ["doro wat", ...order, "shiro"]
+console.log(newOrder);
+
+
+const user ={
+    name:"bonsa",
+    age:24,
+    city:"addis ababa"
+}
+
+const updateuser={...user,age:25}
+console.log(user);
+console.log(updateuser);
