@@ -42,26 +42,19 @@
 // console.log(loyaltyPoints.balance());
 
 function createLoyaltyPointsModule() {
+    // 1. The balance is kept entirely private using this closure.
     let balance = 0;
 
-    // Pure calculation functions (kept separate)
-    function calculateEarn(amount, rule) {
-        switch (rule) {
-            case "holiday":
-                return amount * 2;
-            case "normal":
-            default:
-                return amount;
-        }
-    }
-
-    function calculateRedeem(balance, amount) {
-        return balance >= amount ? balance - amount : balance;
+    // Pure calculation function for redemption (kept separate)
+    function calculateRedeem(currentBalance, amount) {
+        return currentBalance >= amount ? currentBalance - amount : currentBalance;
     }
 
     return {
-        earn: function (amount, rule = "normal") {
-            balance += calculateEarn(amount, rule);
+        // 2. Higher-order function implementation: 
+        
+        earn: function (amount, earnRuleFn = (amt) => amt / 10) { // Default: 1 point per 10 ETB
+            balance += earnRuleFn(amount);
         },
         redeem: function (amount) {
             balance = calculateRedeem(balance, amount);
@@ -72,10 +65,36 @@ function createLoyaltyPointsModule() {
     };
 }
  
-const loyaltyPoints = createLoyaltyPointsModule();
-loyaltyPoints.earn(100);
-loyaltyPoints.earn(50, "holiday");
-console.log(loyaltyPoints.balance()); 
-loyaltyPoints.redeem(50);
-console.log(loyaltyPoints.balance()); 
 
+
+// Define our pure earn rules outside the module
+const normalRule = (amount) => amount / 10;
+const holidayRule = (amount) => (amount / 10) * 2;
+
+// 1. Create two independent cards from the factory
+const card1 = createLoyaltyPointsModule();
+const card2 = createLoyaltyPointsModule();
+
+console.log("=== Card 1 ===");
+// Earning with the default rule
+card1.earn(100); 
+console.log("Balance after 100 ETB (normal):", card1.balance()); 
+
+// Earning with the swapped-in holiday rule (Higher-order function)
+card1.earn(100, holidayRule); 
+console.log("Balance after 100 ETB (holiday):", card1.balance()); 
+
+// Redeeming
+card1.redeem(25);
+console.log("Balance after redeeming 25:", card1.balance()); // 5
+
+// Attempting to redeem below zero
+card1.redeem(10);
+console.log("Attempted to redeem 10 (refused):", card1.balance()); // 5
+
+
+console.log("\n=== Card 2 ===");
+// Proving independence
+console.log("Card 2 initial balance:", card2.balance()); // 0
+card2.earn(500, holidayRule);
+console.log("Card 2 balance after 500 ETB (holiday):", card2.balance()); // 100
