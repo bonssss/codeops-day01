@@ -38,3 +38,26 @@ div.appendChild(btn);
 div.addEventListener('click', (event) => {
     console.log('Div listener fired! Target:', event.target);
 })
+
+
+// 4. Build a list of items each with a delete button, and remove any item using a single delegated
+// listener on the parent.
+
+const list = document.getElementById('myList2');
+
+const items = ['item1', 'item2', 'item3', 'item4', 'item5'];
+
+items.forEach((item) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = item;
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'delete';
+    listItem.appendChild(deleteBtn);
+    list.appendChild(listItem);
+})
+
+list.addEventListener('click', (event) => {
+    if (event.target.tagName === 'BUTTON') {
+        event.target.parentElement.remove();
+    }
+})
