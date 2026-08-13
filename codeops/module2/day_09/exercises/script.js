@@ -61,3 +61,18 @@ list.addEventListener('click', (event) => {
         event.target.parentElement.remove();
     }
 })
+
+// 5. Add a form with one text input; on submit, preventDefault, read input.value, append it to a list,
+// and clear the field.
+
+const form = document.querySelector('form');
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+  const name = document.getElementById('name');
+  const listItem = document.createElement('li');
+  listItem.textContent = name.value;
+  document.getElementById('myList').appendChild(listItem);
+  name.value = '';
+  name.focus();
+})
