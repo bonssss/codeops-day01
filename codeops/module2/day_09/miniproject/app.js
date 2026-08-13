@@ -24,18 +24,20 @@ form.addEventListener("submit", (e) => {
 // Create and append the new row
 function addRow(name, price) {
     const li = document.createElement("li");
+    li.className = "flex justify-between items-center p-3 border-b border-gray-200 last:border-0 hover:bg-gray-100 cursor-pointer transition-colors group";
     
     // Store price in data attribute so we can easily calculate the total later
     li.dataset.price = price;
     
     // Create text span
     const span = document.createElement("span");
+    span.className = "text-lg font-medium text-gray-800 transition-all";
     span.textContent = `${name} - ${price} ETB`;
     
     // Create delete button
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
-    deleteBtn.classList.add("delete");
+    deleteBtn.className = "delete bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100";
     
     // Append to list item
     li.appendChild(span);

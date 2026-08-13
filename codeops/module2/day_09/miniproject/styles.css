@@ -1,0 +1,7 @@
+.bought {
+    background-color: #f9fafb !important; /* bg-gray-50 */
+}
+.bought span {
+    text-decoration: line-through;
+    color: #9ca3af; /* text-gray-400 */
+}
