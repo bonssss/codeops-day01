@@ -27,16 +27,18 @@
 // })
 
 
-const order = new Promise((resolve, reject) => {
-const ok = false;
+const getorder = (id)=> new Promise((resolve, reject) => {
+const ok = true;
 if (ok) resolve({ id: 7, total: 240 });
 else reject(new Error("kitchen closed"));
 });
 
-order.then((res)=>{
-    console.log(res)
+
+getorder(7)
+.then(order=>{
+    console.log(order.total)
 })
-.catch((err)=>{
+.catch(err=>{
     console.log(err)
 })
 .finally(()=>{
