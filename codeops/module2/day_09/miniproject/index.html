@@ -5,43 +5,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Addis Market shopping list</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#" class="nav-link">Home</a></li>
-                <li><a href="#" class="nav-link">Add items</a></li>
-                <li><a href="#" class="nav-link">View items</a></li>
-                <li><a href="#" class="nav-link">Clear items</a></li>
+<body class="font-sans">
+    <header class="flex flex-col sm:flex-row justify-between items-center p-4 shadow-xl sm:p-6 gap-4 sm:gap-0">
+        <h1 class="text-2xl font-bold text-blue-600">Addis Market</h1>
+        <nav class="w-full sm:w-auto">
+            <ul class="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-6">
+                <li><a href="#" class="hover:text-blue-600 hover:underline transition-colors font-medium text-gray-700">Home</a></li>
+                <li><a href="#" class="hover:text-blue-600 hover:underline transition-colors font-medium text-gray-700">Add items</a></li>
+                <li><a href="#" class="hover:text-blue-600 hover:underline transition-colors font-medium text-gray-700">View items</a></li>
+                <li><a href="#" class="hover:text-blue-600 hover:underline transition-colors font-medium text-gray-700">Clear items</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <section id="hero">
-            <h1>Addis Market shopping list</h1>
-            <p>Manage your shopping list efficiently</p>
+    <main class="max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10">
+        <section id="hero" class="text-center py-8">
+            <h1 class="text-3xl sm:text-4xl font-bold mb-3 text-blue-600">Addis Market shopping list</h1>
+            <p class="text-lg text-gray-500">Manage your shopping list efficiently</p>
         </section>
-        <section>
-            <h2>Your shopping items</h2>
-            <ul id="shopping-list"></ul>
-            <p><strong>Total: </strong><span id="total-amount">0</span> ETB</p>
+        <section class="mb-8 bg-slate-50 rounded-xl p-5 sm:p-6 shadow-md border border-gray-100">
+            <h2 class="text-xl sm:text-2xl font-bold text-blue-600 mb-4">Your shopping items</h2>
+            <ul id="shopping-list" >
+
+            </ul>
+            <p class="text-lg font-medium text-gray-700"><strong>Total: </strong><span id="total-amount" class="text-lg font-medium text-gray-700">0</span> ETB</p>
         </section>
-        <section>
-            <h2 id="form-title">Add items</h2>
-            <form id="shopping-form">
-                <label for="item-name">Item name</label>
-                <input type="text" id="item-name" placeholder="Enter item name" required>
-                <label for="price">price</label>
-                <input type="number" id="price" placeholder="Enter item price" required>
-                <button type="submit">Add item</button>
+        <section class="mb-8 bg-slate-50 rounded-xl p-5 sm:p-6 shadow-md border border-gray-100">
+            <h2 id="form-title" class="text-xl sm:text-2xl font-bold text-blue-600 mb-4">Add items</h2>
+            <form id="shopping-form" class="space-y-4">
+                <label for="item-name" class="block text-lg font-medium text-gray-700">Item name</label>
+                <input type="text" id="item-name" class="border border-gray-300 rounded-md p-2 w-full" placeholder="Enter item name" required>
+                <label for="price" class="block text-lg font-medium text-gray-700">price</label>
+                <input type="number" id="price" class="border border-gray-300 rounded-md p-2 w-full" placeholder="Enter item price" required>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Add item</button>
             </form>
         </section>
     </main>
 
-    <footer>
+    <footer class="flex justify-center p-6 text-gray-500 text-sm mt-auto border-t border-gray-200">
         All rights reserved &copy; 2026 Addis Market
     </footer>
 
