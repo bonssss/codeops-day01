@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addis Market shopping list</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link">Add items</a></li>
+                <li><a href="#" class="nav-link">View items</a></li>
+                <li><a href="#" class="nav-link">Clear items</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="hero">
+            <h1>Addis Market shopping list</h1>
+            <p>Manage your shopping list efficiently</p>
+        </section>
+        <section>
+            <h2>Your shopping items</h2>
+            <ul id="shopping-list"></ul>
+            <p><strong>Total: </strong><span id="total-amount">0</span> ETB</p>
+        </section>
+        <section>
+            <h2 id="form-title">Add items</h2>
+            <form id="shopping-form">
+                <label for="item-name">Item name</label>
+                <input type="text" id="item-name" placeholder="Enter item name" required>
+                <label for="price">price</label>
+                <input type="number" id="price" placeholder="Enter item price" required>
+                <button type="submit">Add item</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        All rights reserved &copy; 2026 Addis Market
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
