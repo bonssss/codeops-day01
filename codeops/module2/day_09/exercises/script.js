@@ -20,3 +20,21 @@ cities.forEach((city) => {
     listItem.textContent = city;
     document.getElementById('myList').appendChild(listItem);
 })
+
+// 3. Add a click listener to a button that logs event.target, then wrap the button in a div with its own
+// listener and observe bubbling.
+
+const btn = document.getElementById('btn');
+
+btn.addEventListener('click', (event) => {
+    // Log the event.target as requested
+    console.log('Button listener fired! Target:', event.target);
+})
+
+const div = document.createElement('div');
+document.body.appendChild(div);
+div.appendChild(btn); 
+
+div.addEventListener('click', (event) => {
+    console.log('Div listener fired! Target:', event.target);
+})
