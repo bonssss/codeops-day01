@@ -83,3 +83,58 @@ async function fetch404Url() {
     }
 }
 fetch404Url();
+
+
+// 4. Fetch a list from a public API and use Promise.all to fetch details for the first two items in 
+// parallel. 
+
+async function fetchPosts() {
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const data = await res.json();
+    const posts = data.slice(0, 2);
+    
+    const details = await Promise.all(
+        posts.map(post => fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}`)) // 👈
+    );
+    
+    const detailData = await Promise.all(
+        details.map(detail => detail.json())
+    );
+    
+    console.log(detailData);
+}
+
+fetchPosts();
+
+
+// 5. Build a tiny page that shows "Loading…", then either the fetched data or an error message — 
+// all three states visible by toggling the network.
+const stat = document.querySelector("#status");
+
+async function fetchStatus() {
+    try {
+        stat.innerHTML = "Loading...";
+        
+        const res = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+        if (!res.ok) {
+            throw new Error(`HTTP Error: ${res.status}`);
+        }
+        
+        const data = await res.json();
+        
+        // Use stat.innerHTML instead of data.innerHTML since data is a JSON object, not a DOM element
+        stat.innerHTML = `
+            <h3>Data found</h3>
+            <h4>${data.title}</h4>
+            <p>${data.body}</p>
+        `;
+    } catch (error) {
+        // data is not defined in this catch block, so we must use stat.innerHTML
+        stat.innerHTML = `
+            <h3>Error</h3>
+            <p>${error.message}</p>
+        `;
+    }
+}
+
+fetchStatus();
