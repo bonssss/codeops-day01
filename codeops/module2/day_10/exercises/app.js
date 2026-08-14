@@ -83,3 +83,25 @@ async function fetch404Url() {
     }
 }
 fetch404Url();
+
+
+// 4. Fetch a list from a public API and use Promise.all to fetch details for the first two items in 
+// parallel. 
+
+async function fetchPosts() {
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const data = await res.json();
+    const posts = data.slice(0, 2);
+    
+    const details = await Promise.all(
+        posts.map(post => fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}`)) // 👈
+    );
+    
+    const detailData = await Promise.all(
+        details.map(detail => detail.json())
+    );
+    
+    console.log(detailData);
+}
+
+fetchPosts();
