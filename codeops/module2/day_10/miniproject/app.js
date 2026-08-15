@@ -1,41 +1,50 @@
-const countryInput = document.querySelector("#country-input");// DOM Elements
+// DOM Elements
+const countryInput = document.getElementById("country-input");
 const searchBtn = document.getElementById("search-btn");
-const pokemonInput = document.getElementById("pokemon-input");
 const loadingIndicator = document.getElementById("loading");
-const pokemonContainer = document.getElementById("pokemon-container");
+const countryContainer = document.getElementById("country-container");
 
-// Fetch Pokemon Data from PokeAPI
-async function fetchPokemon(pokemonName) {
+// Fetch Country Data from RestCountries API (via proxy to bypass CORS)
+async function fetchCountry(countryName) {
     // Show Loading
     loadingIndicator.classList.remove("hidden");
-    pokemonContainer.innerHTML = ""; // clear previous results
+    countryContainer.innerHTML = ""; // clear previous results
 
     try {
-        // PokeAPI requires lower case names
-        const formattedName = pokemonName.toLowerCase().trim();
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${formattedName}`);
+        const formattedName = countryName.trim();
+        
+        // Using the proxy API endpoint provided to bypass CORS
+        const response = await fetch(`https://api.restcountries.com/countries/v5?q=${formattedName}`, {
+            headers: { 'Authorization': `Bearer ${typeof API_KEY !== 'undefined' ? API_KEY : ''}` }
+        });
 
         // Handle network/HTTP errors
         if (!response.ok) {
             if (response.status === 404) {
-                throw new Error("Pokémon not found! Please check your spelling.");
+                throw new Error("Country not found! Please check your spelling.");
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }
         }
 
         const data = await response.json();
-        renderPokemon(data);
+        
+        // Check if data exists
+        if (!data.data || !data.data.objects || data.data.objects.length === 0) {
+            throw new Error("Country not found! Please check your spelling.");
+        }
+        
+        // The API returns an object with a data array, we take the first match
+        renderCountry(data.data.objects[0]);
 
     } catch (error) {
         // Display Error
         console.error("Fetch error:", error);
         
-        // Handle generic network error (e.g. offline)
         if (error.message === "Failed to fetch") {
-            pokemonContainer.innerHTML = `<p class="error">Network Error: Could not reach the server.</p>`;
+            countryContainer.innerHTML = `<p class="error">Network Error: Could not reach the server.</p>`;
         } else {
-            pokemonContainer.innerHTML = `<p class="error">${error.message}</p>`;
+            countryContainer.innerHTML = `<p class="error">${error.message}</p>`;
         }
 
     } finally {
@@ -44,70 +53,77 @@ async function fetchPokemon(pokemonName) {
     }
 }
 
-// Render Pokemon into the DOM
-function renderPokemon(pokemon) {
-    pokemonContainer.innerHTML = ""; // Clear just in case
+// Render Country into the DOM
+function renderCountry(country) {
+    countryContainer.innerHTML = ""; // Clear just in case
 
-    // 1. Create Sprite Image
-    const sprite = document.createElement("img");
-    sprite.src = pokemon.sprites.front_default || pokemon.sprites.other["official-artwork"].front_default;
-    sprite.alt = `Sprite of ${pokemon.name}`;
-    sprite.style.width = "150px";
+    // 1. Create Flag Image
+    const flag = document.createElement("img");
+    flag.src = (country.flag && (country.flag.url_svg || country.flag.url_png)) || "";
+    flag.alt = `Flag of ${country.names.common}`;
+    flag.style.width = "200px";
+    flag.style.border = "1px solid #ccc";
 
     // 2. Create Name Title
     const nameEl = document.createElement("h2");
-    // Capitalize first letter
-    nameEl.textContent = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+    nameEl.textContent = country.names.common;
 
     // 3. Create Details List
     const list = document.createElement("ul");
     list.classList.add("details-list");
 
-    // Height (in decimeters, convert to meters)
-    const heightItem = document.createElement("li");
-    heightItem.innerHTML = `<strong>Height:</strong> ${(pokemon.height / 10).toFixed(1)} m`;
+    // Capital
+    const capitalItem = document.createElement("li");
+    const capital = country.capitals && country.capitals.length > 0 ? country.capitals.map(c => c.name).join(", ") : "N/A";
+    capitalItem.innerHTML = `<strong>Capital:</strong> ${capital}`;
 
-    // Weight (in hectograms, convert to kg)
-    const weightItem = document.createElement("li");
-    weightItem.innerHTML = `<strong>Weight:</strong> ${(pokemon.weight / 10).toFixed(1)} kg`;
+    // Population (formatted with commas)
+    const populationItem = document.createElement("li");
+    const populationFormatted = country.population ? country.population.toLocaleString() : "N/A";
+    populationItem.innerHTML = `<strong>Population:</strong> ${populationFormatted}`;
 
-    // Types
-    const typesItem = document.createElement("li");
-    const typeNames = pokemon.types.map(t => t.type.name).join(", ");
-    typesItem.innerHTML = `<strong>Types:</strong> ${typeNames}`;
+    // Region
+    const regionItem = document.createElement("li");
+    regionItem.innerHTML = `<strong>Region:</strong> ${country.region}`;
 
-    // Base Experience
-    const expItem = document.createElement("li");
-    expItem.innerHTML = `<strong>Base XP:</strong> ${pokemon.base_experience}`;
+    // Currencies
+    const currencyItem = document.createElement("li");
+    let currencyList = "N/A";
+    if (country.currencies && country.currencies.length > 0) {
+        currencyList = country.currencies
+            .map(c => `${c.name} (${c.symbol})`)
+            .join(", ");
+    }
+    currencyItem.innerHTML = `<strong>Currencies:</strong> ${currencyList}`;
 
     // Assemble List
-    list.appendChild(heightItem);
-    list.appendChild(weightItem);
-    list.appendChild(typesItem);
-    list.appendChild(expItem);
+    list.appendChild(capitalItem);
+    list.appendChild(populationItem);
+    list.appendChild(regionItem);
+    list.appendChild(currencyItem);
 
     // Append everything to the container
-    pokemonContainer.appendChild(sprite);
-    pokemonContainer.appendChild(nameEl);
-    pokemonContainer.appendChild(list);
+    if (flag.src) countryContainer.appendChild(flag);
+    countryContainer.appendChild(nameEl);
+    countryContainer.appendChild(list);
 }
 
 // Event Listeners
 searchBtn.addEventListener("click", () => {
-    const query = pokemonInput.value.trim();
+    const query = countryInput.value.trim();
     if (query !== "") {
-        fetchPokemon(query);
+        fetchCountry(query);
     }
 });
 
-pokemonInput.addEventListener("keypress", (e) => {
+countryInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
-        const query = pokemonInput.value.trim();
+        const query = countryInput.value.trim();
         if (query !== "") {
-            fetchPokemon(query);
+            fetchCountry(query);
         }
     }
 });
 
-// Default Load (e.g. Pikachu)
-fetchPokemon("pikachu");
+// Default Load (Ethiopia)
+fetchCountry("Ethiopia");
