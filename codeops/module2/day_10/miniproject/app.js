@@ -1,4 +1,3 @@
-// DOM Elements
 const countryInput = document.getElementById("country-input");
 const searchBtn = document.getElementById("search-btn");
 const loadingIndicator = document.getElementById("loading");
@@ -18,7 +17,6 @@ async function fetchCountry(countryName) {
             headers: { 'Authorization': `Bearer ${typeof API_KEY !== 'undefined' ? API_KEY : ''}` }
         });
 
-        // Handle network/HTTP errors
         if (!response.ok) {
             if (response.status === 404) {
                 throw new Error("Country not found! Please check your spelling.");
@@ -28,17 +26,13 @@ async function fetchCountry(countryName) {
         }
 
         const data = await response.json();
-        
-        // Check if data exists
-        if (!data.data || !data.data.objects || data.data.objects.length === 0) {
+                if (!data.data || !data.data.objects || data.data.objects.length === 0) {
             throw new Error("Country not found! Please check your spelling.");
         }
         
-        // The API returns an object with a data array, we take the first match
         renderCountry(data.data.objects[0]);
 
     } catch (error) {
-        // Display Error
         console.error("Fetch error:", error);
         
         if (error.message === "Failed to fetch") {
@@ -48,31 +42,25 @@ async function fetchCountry(countryName) {
         }
 
     } finally {
-        // Remove Loading Indicator
         loadingIndicator.classList.add("hidden");
     }
 }
 
-// Render Country into the DOM
 function renderCountry(country) {
-    countryContainer.innerHTML = ""; // Clear just in case
+    countryContainer.innerHTML = ""; 
 
-    // 1. Create Flag Image
     const flag = document.createElement("img");
     flag.src = (country.flag && (country.flag.url_svg || country.flag.url_png)) || "";
     flag.alt = `Flag of ${country.names.common}`;
     flag.style.width = "200px";
     flag.style.border = "1px solid #ccc";
 
-    // 2. Create Name Title
     const nameEl = document.createElement("h2");
     nameEl.textContent = country.names.common;
 
-    // 3. Create Details List
     const list = document.createElement("ul");
     list.classList.add("details-list");
 
-    // Capital
     const capitalItem = document.createElement("li");
     const capital = country.capitals && country.capitals.length > 0 ? country.capitals.map(c => c.name).join(", ") : "N/A";
     capitalItem.innerHTML = `<strong>Capital:</strong> ${capital}`;
