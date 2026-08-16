@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 11 Exercises</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            padding: 2rem;
+        }
+        body.dark-theme {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        .controls {
+            margin: 1rem 0;
+            display: flex;
+            gap: 1rem;
+        }
+        button, select {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        body.dark-theme button, body.dark-theme select {
+            background-color: #333;
+            color: #fff;
+            border-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Module 2 Day 11 Exercises</h1>
+
+    <div class="controls">
+        <button id="theme-toggle">Toggle Theme</button>
+        <select id="language-select">
+            <option value="English">English</option>
+            <option value="Amharic">Amharic</option>
+        </select>
+    </div>
+
+    <p id="greeting-text">Hello World!</p>
+
+    <script src="app.js"></script>
+</body>
+</html>
