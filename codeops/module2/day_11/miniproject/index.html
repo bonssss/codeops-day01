@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2 Day 11 Mini Project</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head> 
+<body class="bg-gray-400 min-h-screen flex justify-center items-center p-4 font-sans text-gray-800">
+    <div class="bg-white/95 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-2xl w-full max-w-md text-center">
+        <h1 class="text-3xl font-extrabold mb-8 text-gray-900">Mini Project Signup</h1>
+
+        <form action="" class="flex flex-col gap-6 text-left">
+            <div class="flex flex-col gap-2">
+                <label for="name" class="font-semibold text-gray-700">Name</label>
+                <input type="text" id="name" placeholder="Enter your name" class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all outline-none bg-gray-50 focus:bg-white">
+            </div>
+            
+            <div class="flex flex-col gap-2">
+                <label for="phone" class="font-semibold text-gray-700">Phone (+251 or 09)</label>
+                <input type="text" id="phone" placeholder="0912345678" class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all outline-none bg-gray-50 focus:bg-white">
+            </div>
+            
+            <button type="submit" class="mt-2 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-indigo-500/30 transition-all active:scale-[0.98] cursor-pointer">
+                Complete Signup
+            </button>
+        </form>
+        
+        <div id="error" class="text-red-500 font-bold mt-6 min-h-[24px]"></div>
+        <div id="count" class="text-green-600 font-bold mt-2 text-lg"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
