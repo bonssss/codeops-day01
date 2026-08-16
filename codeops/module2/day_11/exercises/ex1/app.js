@@ -1,3 +1,6 @@
+
+// 1. Add a language or theme toggle to an earlier project and make it remember the choice with 
+// localStorage (save on change, restore on load).
 const themeToggleBtn = document.getElementById('theme-toggle');
 
 const savedTheme = localStorage.getItem('theme');
