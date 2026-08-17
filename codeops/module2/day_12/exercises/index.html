@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birr Watch</title>
+    <!-- Modern Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <header class="header">
+            <h1>Birr Watch</h1>
+            <p>Live ETB Exchange Rates</p>
+        </header>
+        
+        <div id="status-container" class="status-container">
+            <p id="status" class="status-message">Loading rates...</p>
+        </div>
+
+        <main class="main-content" id="main-content" style="display: none;">
+            <form id="convert-form" class="convert-form">
+                <div class="input-group">
+                    <label for="amount">Amount (ETB)</label>
+                    <input type="number" id="amount" name="amount" min="0.01" step="0.01" value="1" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="currency">Convert To</label>
+                    <div class="select-wrapper">
+                        <select id="currency" name="currency"></select>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" id="convert-btn" class="btn btn-primary">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        Convert
+                    </button>
+                    <button type="button" id="watch-btn" class="btn btn-secondary" title="Add to Watchlist">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </button>
+                </div>
+            </form>
+
+            <div class="result-container">
+                <p class="result-label">Conversion Result</p>
+                <p id="result" class="result-value">Enter an amount</p>
+            </div>
+            
+            <div class="watchlist-section">
+                <div class="watchlist-header">
+                    <h2>Watchlist</h2>
+                    <span class="live-badge">LIVE</span>
+                </div>
+                <ul id="watchlist" class="watchlist">
+                    <!-- Watchlist items rendered here -->
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
