@@ -1,20 +1,15 @@
-# Birr Watch Mini-Project
+# Day 12 Exercises: Birr Watch
 
-**Birr Watch** is a single-page web application that loads live Ethiopian Birr (ETB) exchange rates from a public API, allows you to convert ETB amounts into other global currencies, and lets you save your favorite currency conversions to a persisted watchlist.
+This folder contains the completed implementation for the Module 2, Day 12 Exercises. 
 
-## Features
-- **Live Rates**: Automatically loads real-time ETB exchange rates on startup.
-- **Conversion Engine**: Converts any valid ETB amount into over 150 supported currencies.
-- **Watchlist**: Save specific currencies to a "Live Watchlist" that automatically updates when you change the base amount.
-- **State Persistence**: Your watchlist and last selected currency are saved to your browser's local storage and restored automatically when you return or reload the page.
-- **State-Driven UI**: Built using a strict, modern `state -> render -> events` architecture loop.
+The application was built incrementally by following and completing all 6 assigned exercise milestones:
 
-## API Usage
-This application fetches live exchange rate data from the free and open Exchange Rates API:
-`https://open.er-api.com/v6/latest/ETB`
+1. **Scaffold**: Created `index.html` with empty containers for the status, conversion form, result, currency select dropdown, and watchlist `<ul>`. The state object was declared in `app.js`.
+2. **Mocking State**: Implemented the core `render()` function against fake, hard-coded rates (e.g., `{ USD: 0.0177, KES: 2.29 }`) to confirm the dropdown fills correctly before touching the network.
+3. **Live API Integration**: Replaced the fake data by implementing `loadRates()`. Fetched the live endpoint (`https://open.er-api.com/v6/latest/ETB`), verified `res.ok`, stored `data.rates` into state, and added proper loading/error UI messages.
+4. **Wiring the Form**: Added `preventDefault`, read and validated the amount input using `Number()`, looked up the current rate from the state, and rendered a formatted conversion result line.
+5. **Watchlist Features**: Added an 'Add' button (with guards against duplicate entries), implemented `renderWatchlist()` completely driven by state, and attached a delegated click listener to remove rows using their `data-c` attribute.
+6. **Local Storage Persistence**: Implemented `save()` and `load()` functions utilizing `localStorage`, calling them from `init()` to ensure the selected currency and watchlist survive full page reloads.
 
 ## How to Run
-This app is built with pure HTML, CSS, and JavaScript with no build steps or dependencies. 
-
-**One step to open it:**
-Simply open the `index.html` file in any modern web browser. (Double click `index.html` or drag it into a browser tab).
+This is a pure Vanilla JS/HTML/CSS application. Simply open `index.html` in any modern web browser to see it in action. No build steps are required.
