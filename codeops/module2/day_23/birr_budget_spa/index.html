@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birr Budget - SPA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Using FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">B</div>
+                <h2>Birr Budget</h2>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="btn-primary" id="openAddModalBtn">Add Transaction +</button>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <section class="hero">
+            <div class="hero-left">
+                <div class="illustration-placeholder wallet-placeholder">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+            </div>
+            <div class="hero-center">
+                <h1>Birr Budget</h1>
+                <p>Track your income and expenses in ETB,<br>see totals, and manage your budget easily.</p>
+                <button class="btn-primary btn-large">Get Started &rarr;</button>
+            </div>
+            <div class="hero-right">
+                <div class="illustration-placeholder chart-placeholder">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-content">
+            <div class="top-cards">
+                <!-- Budget Overview -->
+                <div class="card budget-overview">
+                    <div class="card-header">
+                        <div class="card-icon blue"><i class="fa-solid fa-chart-pie"></i></div>
+                        <h3>Budget Overview</h3>
+                    </div>
+                    <div class="balance-card">
+                        <div class="balance-info">
+                            <p class="label">Remaining Balance</p>
+                            <h2><span id="remainingBalance">0</span> <span>ETB</span></h2>
+                            <p class="sub-label">Income - Expenses</p>
+                        </div>
+                        <div class="savings-rate">
+                            <div class="progress-ring">
+                                <span class="rate-value" id="savingsRate">0%</span>
+                                <span class="rate-label">Savings Rate</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-box income">
+                            <div class="stat-icon"><i class="fa-solid fa-arrow-up"></i></div>
+                            <div class="stat-info">
+                                <p class="label">Total Income</p>
+                                <h4><span id="totalIncome">0</span> <span>ETB</span></h4>
+                                <p class="sub-label">This Month</p>
+                            </div>
+                        </div>
+                        <div class="stat-box expenses">
+                            <div class="stat-icon"><i class="fa-solid fa-arrow-down"></i></div>
+                            <div class="stat-info">
+                                <p class="label">Total Expenses</p>
+                                <h4><span id="totalExpenses">0</span> <span>ETB</span></h4>
+                                <p class="sub-label">This Month</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expenses List -->
+                <div class="card expenses-list">
+                    <div class="card-header">
+                        <div class="card-icon red"><i class="fa-solid fa-wallet"></i></div>
+                        <h3>Expenses</h3>
+                    </div>
+                    <div class="expense-items" id="expenseItemsContainer">
+                        <!-- Dynamically populated by JS -->
+                        <p class="text-muted">Loading expenses...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="card recent-transactions">
+                <div class="card-header">
+                    <div class="card-icon blue"><i class="fa-solid fa-list-ul"></i></div>
+                    <h3>Recent Transactions</h3>
+                    <a href="#" class="view-all">View All &gt;</a>
+                </div>
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionListContainer">
+                        <!-- Dynamically populated by JS -->
+                        <tr><td colspan="6" class="text-center text-muted">Loading transactions...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add Transaction Modal -->
+    <div class="modal-overlay" id="addModalOverlay"></div>
+    <div class="modal" id="addModal">
+        <div class="modal-header">
+            <h2>Add New Transaction</h2>
+            <button class="close-modal" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form id="addTransactionForm">
+            <div class="form-group">
+                <label for="transDescription">Description</label>
+                <input type="text" id="transDescription" required placeholder="e.g., Groceries">
+            </div>
+            <div class="form-group">
+                <label for="transAmount">Amount (ETB)</label>
+                <input type="number" id="transAmount" required min="1" placeholder="e.g., 500">
+            </div>
+            <div class="form-group">
+                <label for="transType">Type</label>
+                <select id="transType" required>
+                    <option value="expense">Expense</option>
+                    <option value="income">Income</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="transCategory">Category</label>
+                <select id="transCategory" required>
+                    <option value="Food">Food</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Others">Others</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Freelance">Freelance</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="transDate">Date</label>
+                <input type="date" id="transDate" required>
+            </div>
+            <button type="submit" class="btn-primary w-100">Add Transaction</button>
+        </form>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="logo">
+                    <div class="logo-icon">B</div>
+                    <h2>Birr Budget</h2>
+                </div>
+                <p>Smart money management<br>made simple.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-col contact-col">
+                <h3>Contact Us</h3>
+                <p><i class="fa-regular fa-envelope"></i> info@birrbudget.com</p>
+                <p><i class="fa-solid fa-phone"></i> +251 9XX XXX XXX</p>
+                <p><i class="fa-solid fa-location-dot"></i> Addis Ababa, Ethiopia</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Birr Budget SPA. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
