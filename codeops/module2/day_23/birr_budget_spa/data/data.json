@@ -1,0 +1,53 @@
+{
+    "transactions": [
+        {
+            "id": 1,
+            "date": "May 16, 2025",
+            "description": "Salary",
+            "type": "income",
+            "category": "Salary",
+            "amount": 25000
+        },
+        {
+            "id": 2,
+            "date": "May 16, 2025",
+            "description": "Supermarket",
+            "type": "expense",
+            "category": "Food",
+            "amount": 1200
+        },
+        {
+            "id": 3,
+            "date": "May 15, 2025",
+            "description": "Bus Fare",
+            "type": "expense",
+            "category": "Transport",
+            "amount": 800
+        },
+        {
+            "id": 4,
+            "date": "May 15, 2025",
+            "description": "Internet Bill",
+            "type": "expense",
+            "category": "Utilities",
+            "amount": 500
+        },
+        {
+            "id": 5,
+            "date": "May 14, 2025",
+            "description": "Freelance Work",
+            "type": "income",
+            "category": "Freelance",
+            "amount": 5000
+        }
+    ],
+    "categories": [
+        { "name": "Food", "color": "red", "icon": "fa-utensils" },
+        { "name": "Transport", "color": "yellow", "icon": "fa-bus" },
+        { "name": "Housing", "color": "blue", "icon": "fa-house" },
+        { "name": "Utilities", "color": "green", "icon": "fa-bolt" },
+        { "name": "Others", "color": "purple", "icon": "fa-ellipsis" },
+        { "name": "Salary", "color": "green", "icon": "fa-briefcase" },
+        { "name": "Freelance", "color": "green", "icon": "fa-laptop" }
+    ]
+}

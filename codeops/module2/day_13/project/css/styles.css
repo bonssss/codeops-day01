@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.header-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-flex h2 {
+    margin: 0;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+    position: relative;
+}
+
+nav a:hover {
+    color: #007bff;
+}
+
+.hero{
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero h1{
+    font-size: 3rem;
+    margin: 0;
+}
+
+.hero p{
+    font-size: 1.2rem;
+    margin: 1rem 0;
+}
+
+.hero button{
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #2d83df;
+    color: #fff;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.hero button:hover{
+    background-color: #007bff;
+}
+
+.contact-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.contact-container h2{
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+.contact-container form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+.contact-container form label{
+    font-size: 1rem;
+}
+
+.contact-container form input{
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+}
+
+.contact-container form button{
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.contact-container form button:hover{
+    background-color: #468dd5;
+}
+
+footer{
+    background-color: #5096cc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+footer p{
+    font-size: 1rem;
+    margin: 0;
+}
