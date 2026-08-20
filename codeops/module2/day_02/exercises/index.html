@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2 Day 2 Exercises</title>
+</head>
+
+<body>
+    <h1>Module 2 Day 2 Exercises</h1>
+    <h2>Registration form</h2>
+    <!-- Using POST method because registration involves creating a new record and sending sensitive data (like passwords) securely -->
+    <form action="" method="POST">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required placeholder="enter your name">
+        
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="enter your email">
+        
+        <label for="phone">Phone</label>
+        <!-- Phone is validated to +251 and 9 digits using the pattern attribute -->
+        <input type="tel" id="phone" name="phone" pattern="\+251\d{9}" required placeholder="+251xxxxxxxxx" title="Phone number must start with +251 followed by 9 digits">
+        
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required placeholder="enter your password">
+        
+        <label for="branch">Branch</label>
+        <select name="branch" id="branch" required>
+            <option value="">Select a branch</option>
+            <option value="Bole">Bole</option>
+            <option value="Kazanchis">Kazanchis</option>
+            <option value="Piassa">Piassa</option>
+        </select>
+        
+        <input type="submit" value="Submit">
+    </form>
+
+
+</body>
+
+</html>
