@@ -15,7 +15,7 @@ header {
     padding: 1rem;
 }
 
-.header-flex{
+.header-container{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,10 +24,26 @@ header {
     margin: 0 auto;
 }
 
-.header-flex h2 {
+.header-container .logo h2 {
     margin: 0;
 }
-
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.logo-icon{
+    height: 40px;
+    width: 40px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
 nav ul {
     display: flex;
     list-style: none;
@@ -77,6 +93,134 @@ nav a:hover {
 .hero button:hover{
     background-color: #007bff;
 }
+
+.budget-overview {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.budget-overview h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.top-card-container {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.card-left {
+    flex: 1.2;
+    background: linear-gradient(135deg, #007bff 0%, #00d2ff 100%);
+    border-radius: 16px;
+    padding: 2.5rem;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-left:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 123, 255, 0.35);
+}
+
+.card-left-icon {
+    height: 40px;
+    width: 40px;
+    background-color: #fff;
+    color: #007bff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.card-left-content {
+    text-align: center;
+}
+
+.card-left-content h3 {
+    font-size: 1.4rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.card-left-content p {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card-right-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-right-content:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-right-content h3 {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin: 0;
+    font-weight: 500;
+}
+
+.card-right-content p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: #343a40;
+}
+
+.card-right-content:nth-child(1) p {
+    color: #28a745;
+}
+
+.card-right-content:nth-child(2) p {
+    color: #dc3545;
+}
+
+.card-right-content:nth-child(3) p {
+    color: #f39c12;
+}
+
+@media (max-width: 768px) {
+    .top-card-container {
+        flex-direction: column;
+    }
+}
+
 
 .contact-container{
     display: flex;
@@ -135,4 +279,350 @@ footer{
 footer p{
     font-size: 1rem;
     margin: 0;
+}
+
+
+/* --- Add Transaction Section Styles --- */
+.transaction-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    margin-top: 1rem;
+}
+
+.transaction-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+/* Make the form look like a modern card */
+.transaction-form {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* Soft, premium shadow */
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Gives space between each input group */
+}
+
+/* Stack the label on top of the input */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #555;
+}
+
+/* Style the inputs and select boxes */
+.form-group input, 
+.form-group select {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease; /* Smooth transition for hover/focus */
+    font-family: inherit;
+    background-color: #fcfcfc;
+}
+
+/* Cool glowing effect when you click inside an input */
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15); 
+    background-color: #fff;
+}
+
+/* Style the submit button */
+.transaction-form button {
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+/* Button hover and click animations */
+.transaction-form button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+   
+
+.card-right-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-right-content:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-right-content h3 {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin: 0;
+    font-weight: 500;
+}
+
+.card-right-content p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: #343a40;
+}
+
+.card-right-content:nth-child(1) p {
+    color: #28a745;
+}
+
+.card-right-content:nth-child(2) p {
+    color: #dc3545;
+}
+
+.card-right-content:nth-child(3) p {
+    color: #f39c12;
+}
+
+@media (max-width: 768px) {
+    .top-card-container {
+        flex-direction: column;
+    }
+}
+
+
+.contact-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.contact-container h2{
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+.contact-container form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+.contact-container form label{
+    font-size: 1rem;
+}
+
+.contact-container form input{
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+}
+
+.contact-container form button{
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.contact-container form button:hover{
+    background-color: #468dd5;
+}
+
+footer{
+    background-color: #5096cc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+footer p{
+    font-size: 1rem;
+    margin: 0;
+}
+
+
+/* --- Add Transaction Section Styles --- */
+.transaction-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    margin-top: 1rem;
+}
+
+.transaction-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+/* Make the form look like a modern card */
+.transaction-form {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* Soft, premium shadow */
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Gives space between each input group */
+}
+
+/* Stack the label on top of the input */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #555;
+}
+
+/* Style the inputs and select boxes */
+.form-group input, 
+.form-group select {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease; /* Smooth transition for hover/focus */
+    font-family: inherit;
+    background-color: #fcfcfc;
+}
+
+/* Cool glowing effect when you click inside an input */
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15); 
+    background-color: #fff;
+}
+
+/* Style the submit button */
+.transaction-form button {
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+/* Button hover and click animations */
+.transaction-form button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.transaction-form button:active {
+    transform: translateY(2px); /* Makes the button look pushed down */
+}
+
+/* --- Recent Transactions Section --- */
+.transaction-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    margin-top: 1rem;
+}
+
+.transaction-list {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.transaction-table th,
+.transaction-table td {
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.transaction-table th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.transaction-table tr {
+    transition: background-color 0.2s ease;
+}
+
+.transaction-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.transaction-table td {
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.transaction-table td:first-child {
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.income-amount {
+    color: #28a745 !important;
+    font-weight: 700 !important;
+}
+
+.expense-amount {
+    color: #dc3545 !important;
+    font-weight: 700 !important;
 }

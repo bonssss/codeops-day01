@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +9,24 @@
 </head>
 
 <body>
-    <header>
-        <div class="header-flex">
-       <h2>Budget App</h2>
-    
-        <nav class="nav-link">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+    <header class="main-header">
+        <div class="header-container">
+
+            <div class="logo">
+                <div class="logo-icon">B</div>
+                <h2>Budget App</h2>
+            </div>
+
+
+            <nav class="nav-link">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+
+            <button class="btn-primary" id="getStartedBtn">Get Started</button>
         </div>
     </header>
 
@@ -28,13 +36,83 @@
             <p>Track your expenses and manage your budget</p>
             <button>Get Started</button>
         </section>
-        <section>
-            <h2>About</h2>
-            <p>This is the about page</p>
+        <section class="budget-overview">
+            <h2>Budget Overview</h2>
+            <div class="top-card-container">
+                <div class="card-left">
+                    
+                    <div class="card-left-content">
+                        <h3>Total Income</h3>
+                        <p id="incomeDisplay">$0.00</p>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <div class="card-right-content">
+                        <h3>Remaining Balance</h3>
+                        <p id="balanceDisplay">$0.00</p>
+                    </div>
+                    <div class="card-right-content">
+                        <h3>Total Expenses</h3>
+                        <p id="expenseDisplay">$0.00</p>
+                    </div>
+                    <div class="card-right-content">
+                        <h3>Saving Rate</h3>
+                        <p id="savingRateDisplay">0%</p>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
         </section>
-        <section>
-            <h2>Contact</h2>
-            <p>This is the contact page</p>
+        <section class="transaction-section">
+            <h2>Add new Transaction</h2>
+            <form action="" class="transaction-form" id="transactionForm">
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select id="type" required>
+                        <option value="">Select Type</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" required placeholder="Enter description">
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" required placeholder="Enter amount">
+                </div>
+                 <div class="form-group">
+                    <label for="date"> Date  </label>
+                    <input type="date" id="date" required placeholder="Enter date">
+                </div>
+                <button type="submit">Add Transaction</button>
+            </form>
+
+        </section>
+        <section class="transaction-section">
+            <h2>Recent Transactions</h2>
+            <div class="transaction-list">
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionList">
+                        
+                    </tbody>
+                </table>
+            </div>
         </section>
 
     </main>
@@ -46,9 +124,10 @@
             <p>phone:05341234567</p>
             <p>website:https://example.com</p>
         </div>
-        </div>
+
     </footer>
-    
+
     <script src="./js/app.js"></script>
 </body>
+
 </html>
