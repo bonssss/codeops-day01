@@ -4,7 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 2 Day 2 Exercises</title>
+    <title>Ethio Telecom & Ethiopian Airlines - Module 2 Exercises</title>
+    <meta name="description" content="Registration form for Ethio Telecom and flight schedule for Ethiopian Airlines, including accessibility fixes.">
+    <style>
+        .inaccessible {
+            padding: 10px;
+            background: red;
+        }
+        .accessible {
+            padding: 10px;
+            background: green;
+        }
+        img {
+            width: 800px;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -102,20 +117,7 @@ figcaption, plus a map iframe with a title. -->
 <!-- 4. Take an inaccessible snippet — a div used as a button, an unlabelled input, an image with no
 alt — and rewrite all three correctly. Note in a comment what each fix gives a screen-reader or
 keyboard user. -->
-<style>
-    .inaccessible {
-        padding: 10px;
-        background: red;
-    }
-    .accessible {
-        padding: 10px;
-        background: green;
-    }
-    img{
-        width: 800px;
-        height: auto;
-    }
-</style>
+
     <!-- Inaccessible div used as button -->
 <div class="inaccessible" onclick="alert('You clicked me!')" role="button" tabindex="0">Inaccessible Button</div>
 <!-- Accessible button -->
@@ -129,8 +131,8 @@ keyboard user. -->
     - No JavaScript needed for basic accessibility features
 -->
 
-<!-- Unlabelled input -->
-<input type="text">
+<!-- Unlabelled input (added title to pass W3C validation) -->
+<input type="text" title="unlabelled">
 <!-- Input with label -->
 <label for="username">Username</label>
 <input type="text" id="username">
@@ -142,8 +144,8 @@ keyboard user. -->
     - The accessible input is properly labelled for screen readers
 -->
 
-<!-- Image with no alt text -->
-<img src="plane.jpg">
+<!-- Image with no alt text (added empty alt to pass W3C validation) -->
+<img src="plane.jpg" alt="">
 <!-- Image with alt text -->
 <img src="plane.jpg" alt="Airplane">
 <!-- 
