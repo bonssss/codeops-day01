@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise 4 - Full Page Grid Template Areas Layout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       Exercise 4: Full Page Grid Template Areas Implementation
+       ========================================================= */
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #151d30;
+      --card-border: #232f48;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-cyan: #06b6d4;
+      --accent-amber: #f59e0b;
+      --accent-green: #10b981;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Page-level Grid Container using grid-template-areas */
+    .page-layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-areas:
+        "header  header"
+        "sidebar main"
+        "footer  footer";
+      grid-template-columns: 260px 1fr;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    /* 1. Header Area */
+    .layout-header {
+      grid-area: header;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-bottom: 1px solid var(--card-border);
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      background: linear-gradient(135deg, var(--primary), var(--accent-cyan));
+      padding: 0.4rem 0.6rem;
+      border-radius: 8px;
+    }
+
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    /* 2. Sidebar Area */
+    .layout-sidebar {
+      grid-area: sidebar;
+      background: #0f172a;
+      border-right: 1px solid var(--card-border);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding-left: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background: rgba(59, 130, 246, 0.15);
+      color: #ffffff;
+      border-left: 3px solid var(--primary);
+    }
+
+    .sidebar-info-box {
+      margin-top: auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-info-box h5 {
+      color: var(--accent-cyan);
+      margin-bottom: 0.35rem;
+    }
+
+    /* 3. Main Area */
+    .layout-main {
+      grid-area: main;
+      background: var(--bg-color);
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .main-hero {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .main-hero h1 {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .main-hero p {
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .grid-info-badge {
+      display: inline-block;
+      margin-top: 0.75rem;
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+
+    .stat-card .label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-card .value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-card .change {
+      font-size: 0.8rem;
+      color: var(--accent-green);
+    }
+
+    .content-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .content-box h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .content-box p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    /* 4. Footer Area */
+    .layout-footer {
+      grid-area: footer;
+      background: #090d16;
+      border-top: 1px solid var(--card-border);
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    .back-btn {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .back-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* =========================================================
+       REQUIRED MEDIA QUERY: Single Column Collapse Under 700px
+       ========================================================= */
+    @media (max-width: 700px) {
+      .page-layout {
+        grid-template-areas:
+          "header"
+          "sidebar"
+          "main"
+          "footer";
+        grid-template-columns: 1fr;
+      }
+
+      .layout-header,
+      .layout-footer {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+      }
+
+      .layout-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .layout-main {
+        padding: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Full Page Layout with Grid Template Areas -->
+  <div class="page-layout">
+
+    <!-- Area 1: Header -->
+    <header class="layout-header">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-icon">⚡</span>
+        <span>CodeOps Cloud Center</span>
+      </a>
+      <div class="header-status">
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>East Africa Cluster (ADD-1): Healthy</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Area 2: Sidebar -->
+    <aside class="layout-sidebar">
+      <div>
+        <div class="sidebar-section-title">Navigation (Sidebar)</div>
+        <ul class="sidebar-nav">
+          <li><a href="#" class="active">📊 Overview</a></li>
+          <li><a href="#">🖥️ Instances</a></li>
+          <li><a href="#">📦 Storage</a></li>
+          <li><a href="#">🔒 Firewalls</a></li>
+          <li><a href="#">⚙️ Settings</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-info-box">
+        <h5>Grid Area Notice</h5>
+        <p>This panel is assigned to <code>grid-area: sidebar</code> in the CSS definition.</p>
+      </div>
+    </aside>
+
+    <!-- Area 3: Main -->
+    <main class="layout-main">
+      <div class="main-hero">
+        <h1>Exercise 4: Full Page Grid Template Areas</h1>
+        <p>This layout uses CSS Grid Template Areas with 4 distinct zones: <code>header</code>, <code>sidebar</code>, <code>main</code>, and <code>footer</code>.</p>
+        <span class="grid-info-badge">Responsive Breakpoint: @media (max-width: 700px)</span>
+      </div>
+
+      <div class="cards-grid">
+        <div class="stat-card">
+          <div class="label">Total Compute Clusters</div>
+          <div class="value">24 Active</div>
+          <div class="change">▲ 100% capacity</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="label">API Response Time</div>
+          <div class="value">14.2 ms</div>
+          <div class="change">▲ 4.1% faster</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="label">Network Traffic</div>
+          <div class="value">18.6 TB</div>
+          <div class="change">Addis Ababa Datacenter</div>
+        </div>
+      </div>
+
+      <div class="content-box">
+        <h3>How It Works</h3>
+        <p>On viewports wider than 700px, the grid uses two columns (<code>260px 1fr</code>) with header and footer spanning both columns. When resized below 700px, the media query triggers, collapsing all 4 areas into a single full-width column (<code>grid-template-columns: 1fr</code>).</p>
+        <a href="index.html" class="back-btn">← Return to All Exercises Showcase</a>
+      </div>
+    </main>
+
+    <!-- Area 4: Footer -->
+    <footer class="layout-footer">
+      <p>&copy; 2026 CodeOps Course • Module 2 Day 4 Exercise 4 Solution</p>
+      <a href="index.html" class="back-btn">Back to Main Exercises Hub</a>
+    </footer>
+
+  </div>
+
+</body>
+</html>

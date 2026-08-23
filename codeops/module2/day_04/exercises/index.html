@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 2 Day 4 Exercises - Flexbox & Grid Mastery</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Hero Header -->
+  <header class="page-hero">
+    <div class="hero-badge">Module 2 • Day 4</div>
+    <h1>CSS Layouts: Flexbox &amp; Grid Exercises</h1>
+    <p class="hero-subtitle">Interactive exercises drilling Flexbox navigation, responsive card rows, auto-fit photo galleries, grid-template-areas page layout, and relative/absolute positioned badges.</p>
+    <nav class="quick-nav">
+      <a href="#exercise-1">1. Flexbox Navbar</a>
+      <a href="#exercise-2">2. Flex Cards Row</a>
+      <a href="#exercise-3">3. Grid Auto-Fit Gallery</a>
+      <a href="#exercise-4">4. Grid Template Areas</a>
+      <a href="#exercise-5">5. Absolute Badge Card</a>
+    </nav>
+  </header>
+
+  <main class="exercises-wrapper">
+
+    <!-- ==========================================
+         EXERCISE 1: Flexbox Navbar
+         ========================================== -->
+    <section id="exercise-1" class="exercise-section">
+      <div class="section-header">
+        <div class="exercise-num">Exercise 01</div>
+        <h2>Flexbox Navigation Bar</h2>
+        <p class="exercise-desc">
+          Built with Flexbox: logo on the left, three navigation links plus an action button on the right, vertically centered using <code>align-items: center</code> and horizontally distributed with <code>justify-content: space-between</code>.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <nav class="ex1-navbar" id="ex1-navbar">
+          <!-- Logo on the left -->
+          <a href="#" class="ex1-logo">
+            <span class="logo-icon">⚡</span>
+            <span class="logo-text">Code<strong>Ops</strong></span>
+          </a>
+
+          <!-- Three links + button on the right -->
+          <div class="ex1-nav-right">
+            <ul class="ex1-links">
+              <li><a href="#" class="nav-link active">Home</a></li>
+              <li><a href="#" class="nav-link">Courses</a></li>
+              <li><a href="#" class="nav-link">Community</a></li>
+            </ul>
+            <button class="ex1-btn" type="button">Get Started</button>
+          </div>
+        </nav>
+      </div>
+
+      <div class="code-preview">
+        <span class="code-tag">Key CSS Rules</span>
+        <pre><code>.ex1-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ex1-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         EXERCISE 2: Row of Four Cards (flex: 1 & flex-wrap)
+         ========================================== -->
+    <section id="exercise-2" class="exercise-section">
+      <div class="section-header">
+        <div class="exercise-num">Exercise 02</div>
+        <h2>Equal-Width Flex Cards with Auto Reflow</h2>
+        <p class="exercise-desc">
+          Four cards with <code>flex: 1</code> so they equally share the available row width. The parent container has <code>flex-wrap: wrap</code> and a <code>gap</code> so cards gracefully reflow onto new rows when the screen narrows.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="ex2-card-row" id="ex2-card-container">
+          <div class="ex2-card">
+            <div class="card-icon blue">🚀</div>
+            <span class="card-tag">DevOps</span>
+            <h3>CI/CD Pipelines</h3>
+            <p>Automate testing, build artifacts, and deploy services seamlessly with GitHub Actions and Docker.</p>
+            <a href="#" class="card-link">Explore Module →</a>
+          </div>
+
+          <div class="ex2-card">
+            <div class="card-icon purple">🧩</div>
+            <span class="card-tag">Frontend</span>
+            <h3>CSS Grid &amp; Flex</h3>
+            <p>Master two-dimensional layouts, responsive auto-fitting grids, and modern layout algorithms.</p>
+            <a href="#" class="card-link">Explore Module →</a>
+          </div>
+
+          <div class="ex2-card">
+            <div class="card-icon emerald">☁️</div>
+            <span class="card-tag">Cloud</span>
+            <h3>Cloud Native Ops</h3>
+            <p>Architect robust microservices with Kubernetes clusters, monitoring, and auto-scaling telemetry.</p>
+            <a href="#" class="card-link">Explore Module →</a>
+          </div>
+
+          <div class="ex2-card">
+            <div class="card-icon amber">🛡️</div>
+            <span class="card-tag">Security</span>
+            <h3>DevSecOps &amp; IAM</h3>
+            <p>Integrate static code analysis, secret management, vulnerability scanners, and compliance checks.</p>
+            <a href="#" class="card-link">Explore Module →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-preview">
+        <span class="code-tag">Key CSS Rules</span>
+        <pre><code>.ex2-card-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+.ex2-card {
+  flex: 1;
+  min-width: 220px; /* Ensures clean wrapping on smaller viewports */
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         EXERCISE 3: Grid Photo Gallery (repeat(auto-fit, minmax(200px, 1fr)))
+         ========================================== -->
+    <section id="exercise-3" class="exercise-section">
+      <div class="section-header">
+        <div class="exercise-num">Exercise 03</div>
+        <h2>Responsive Photo Gallery (Grid Auto-Fit)</h2>
+        <p class="exercise-desc">
+          Created with CSS Grid using <code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))</code>. Resize your browser window or container to watch column count adapt dynamically without media queries.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="ex3-gallery" id="ex3-gallery">
+          <figure class="gallery-item">
+            <div class="img-wrapper">
+              <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&auto=format&fit=crop&q=80" alt="Serene Alpine Mountain Lake" loading="lazy">
+              <div class="img-overlay"><span>Alpine Dawn</span></div>
+            </div>
+            <figcaption>
+              <h4>Lake Reflection</h4>
+              <p>Natural Wilderness</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <div class="img-wrapper">
+              <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&auto=format&fit=crop&q=80" alt="Starry Night over Mountain Range" loading="lazy">
+              <div class="img-overlay"><span>Starry Summit</span></div>
+            </div>
+            <figcaption>
+              <h4>Stargazing Peaks</h4>
+              <p>Night Sky Wonder</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <div class="img-wrapper">
+              <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&auto=format&fit=crop&q=80" alt="Foggy Forest Valley" loading="lazy">
+              <div class="img-overlay"><span>Misty Woods</span></div>
+            </div>
+            <figcaption>
+              <h4>Foggy Woodland</h4>
+              <p>Emerald Valley</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <div class="img-wrapper">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80" alt="Tropical Turquoise Ocean Beach" loading="lazy">
+              <div class="img-overlay"><span>Tropical Breeze</span></div>
+            </div>
+            <figcaption>
+              <h4>Azure Coastline</h4>
+              <p>Tropical Paradise</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <div class="img-wrapper">
+              <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop&q=80" alt="Majestic High Rocky Mountain Peaks" loading="lazy">
+              <div class="img-overlay"><span>High Altitude</span></div>
+            </div>
+            <figcaption>
+              <h4>Rocky Highlands</h4>
+              <p>Alps Expedition</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <div class="img-wrapper">
+              <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=600&auto=format&fit=crop&q=80" alt="Golden Hour Desert Sand Dunes" loading="lazy">
+              <div class="img-overlay"><span>Golden Sand</span></div>
+            </div>
+            <figcaption>
+              <h4>Sahara Dunes</h4>
+              <p>Desert Sunset</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="code-preview">
+        <span class="code-tag">Key CSS Rules</span>
+        <pre><code>.ex3-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         EXERCISE 4: Full Page Grid Template Areas + Media Query
+         ========================================== -->
+    <section id="exercise-4" class="exercise-section">
+      <div class="section-header">
+        <div class="exercise-num">Exercise 04</div>
+        <h2>Grid Template Areas Page Layout</h2>
+        <p class="exercise-desc">
+          Structured with named grid areas (<code>header</code>, <code>sidebar</code>, <code>main</code>, and <code>footer</code>). Features an active <code>@media (max-width: 700px)</code> query that collapses the 2-column layout into a single column.
+        </p>
+      </div>
+
+      <div class="layout-actions">
+        <a href="page-layout.html" target="_blank" class="standalone-link">
+          Open Standalone Full-Page Layout Demo ↗
+        </a>
+      </div>
+
+      <!-- Live interactive mock viewport preview -->
+      <div class="demo-box grid-layout-box">
+        <div class="ex4-page-grid" id="ex4-layout">
+          <header class="grid-header">
+            <div class="area-tag">header</div>
+            <div class="header-inner">
+              <div class="site-title">🌐 Ethiopian Cloud Ops Dashboard</div>
+              <div class="user-pill">Admin Mode</div>
+            </div>
+          </header>
+
+          <aside class="grid-sidebar">
+            <div class="area-tag">sidebar</div>
+            <h4 class="sidebar-title">Navigation</h4>
+            <ul class="sidebar-menu">
+              <li class="active"><a href="#!">📊 Analytics</a></li>
+              <li><a href="#!">🖥️ EC2 Servers</a></li>
+              <li><a href="#!">🗄️ S3 Storage</a></li>
+              <li><a href="#!">⚙️ System Config</a></li>
+              <li><a href="#!">🔔 Alerts (3)</a></li>
+            </ul>
+          </aside>
+
+          <main class="grid-main">
+            <div class="area-tag">main</div>
+            <div class="main-content-header">
+              <h3>System Overview &amp; Health Metrics</h3>
+              <p>Real-time telemetry and resource allocation for East Africa Cloud Zone (ADD-1).</p>
+            </div>
+            <div class="mini-metrics-grid">
+              <div class="metric-card">
+                <span class="m-label">Server Uptime</span>
+                <span class="m-value">99.98%</span>
+              </div>
+              <div class="metric-card">
+                <span class="m-label">Network Throughput</span>
+                <span class="m-value">1.4 Gbps</span>
+              </div>
+              <div class="metric-card">
+                <span class="m-label">Active Nodes</span>
+                <span class="m-value">32 Running</span>
+              </div>
+            </div>
+          </main>
+
+          <footer class="grid-footer">
+            <div class="area-tag">footer</div>
+            <p>&copy; 2026 CodeOps Ethiopia • Grid-Template-Areas Demonstration</p>
+          </footer>
+        </div>
+      </div>
+
+      <div class="code-preview">
+        <span class="code-tag">Key CSS Rules</span>
+        <pre><code>/* Multi-Column Desktop Grid */
+.ex4-page-grid {
+  display: grid;
+  grid-template-areas:
+    "header  header"
+    "sidebar main"
+    "footer  footer";
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: auto 1fr auto;
+}
+
+/* Single-Column Collapse under 700px */
+@media (max-width: 700px) {
+  .ex4-page-grid {
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main"
+      "footer";
+    grid-template-columns: 1fr;
+  }
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         EXERCISE 5: Product Card with "ETB Sale" Circular Badge
+         ========================================== -->
+    <section id="exercise-5" class="exercise-section">
+      <div class="section-header">
+        <div class="exercise-num">Exercise 05</div>
+        <h2>Product Card with "ETB Sale" Circular Badge</h2>
+        <p class="exercise-desc">
+          Using <code>position: relative</code> on the product card container and <code>position: absolute</code> to pin a vibrant, circular <strong>"ETB Sale"</strong> badge precisely to the top-right corner.
+        </p>
+      </div>
+
+      <div class="demo-box cards-showcase-box">
+        <div class="products-grid">
+          
+          <!-- Product Card 1 -->
+          <article class="ex5-product-card">
+            <!-- Pin circular ETB Sale badge to top-right corner -->
+            <div class="etb-sale-badge" aria-label="ETB Sale Special Discount">
+              <span class="badge-text-top">ETB</span>
+              <span class="badge-text-bold">SALE</span>
+              <span class="badge-text-sub">-25%</span>
+            </div>
+
+            <div class="product-media">
+              <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80" alt="Yirgacheffe Specialty Ethiopian Coffee Beans">
+              <span class="category-badge">Specialty Coffee</span>
+            </div>
+
+            <div class="product-body">
+              <div class="product-rating">★★★★★ <span>(4.9 • 128 reviews)</span></div>
+              <h3 class="product-name">Yirgacheffe Roast (Single Origin)</h3>
+              <p class="product-desc">Authentic Ethiopian organic washed heirloom beans with floral bergamot notes and lemon zest finish.</p>
+              
+              <div class="product-footer">
+                <div class="price-box">
+                  <span class="original-price">1,200 ETB</span>
+                  <span class="sale-price">899 ETB</span>
+                </div>
+                <button class="buy-btn" type="button">Add to Cart</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Product Card 2 -->
+          <article class="ex5-product-card">
+            <!-- Pin circular ETB Sale badge to top-right corner -->
+            <div class="etb-sale-badge badge-glow" aria-label="ETB Sale Hot Deal">
+              <span class="badge-text-top">ETB</span>
+              <span class="badge-text-bold">SALE</span>
+              <span class="badge-text-sub">HOT</span>
+            </div>
+
+            <div class="product-media">
+              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80" alt="Premium Wireless Headphones">
+              <span class="category-badge">Electronics</span>
+            </div>
+
+            <div class="product-body">
+              <div class="product-rating">★★★★★ <span>(4.8 • 94 reviews)</span></div>
+              <h3 class="product-name">Noise-Cancelling Studio Pro</h3>
+              <p class="product-desc">Hi-Res lossless audio with 40-hour battery life, active hybrid noise cancellation, and ergonomic ear cushions.</p>
+              
+              <div class="product-footer">
+                <div class="price-box">
+                  <span class="original-price">6,500 ETB</span>
+                  <span class="sale-price">4,850 ETB</span>
+                </div>
+                <button class="buy-btn" type="button">Add to Cart</button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <div class="code-preview">
+        <span class="code-tag">Key CSS Rules</span>
+        <pre><code>/* Relative container */
+.ex5-product-card {
+  position: relative;
+}
+
+/* Absolute circular badge pinned to top-right corner */
+.etb-sale-badge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <p><strong>CodeOps Module 2 Day 4 Exercises</strong> • Prepared for IBT SW Course</p>
+      <p>Demonstrating Flexbox, CSS Grid, Media Queries, and Relative/Absolute Positioning.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
