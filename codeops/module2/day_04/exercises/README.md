@@ -98,11 +98,8 @@ module2/day_04/exercises/
 
 ## How to Run & Verify
 
-1. Open `index.html` in any browser or run a local web server:
-   ```bash
-   # Using VS Code Live Server or Python http.server
-   python -m http.server 8000
-   ```
+1. Open `index.html` in any browser 
+
 2. Resize the browser window:
    - Observe the card row (Ex 2) wrapping cleanly.
    - Observe the photo gallery columns (Ex 3) dynamically reflowing with `auto-fit`.
