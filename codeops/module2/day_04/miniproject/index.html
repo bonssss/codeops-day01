@@ -1,36 +1,399 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethiopian Airlines Booking Page</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethiopian Airlines - Flight Booking &amp; Deals Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header></header>
-    <main>
-        <aside>
-            <div>
-                <h1>flights from</h1>
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+
+  <!-- App Page Skeleton (CSS Grid with grid-template-areas) -->
+  <div class="app">
+
+    <!-- ========================================================
+         1. HEADER AREA (Grid Area: header, Position: sticky)
+         ======================================================== -->
+    <header class="app-header">
+      <nav class="navbar-flex">
+        <!-- Logo / Brand on Left -->
+        <a href="#" class="brand-logo">
+          <div class="logo-emblem">✈️</div>
+          <div class="brand-text">
+            <span class="brand-name">ETHIOPIAN</span>
+            <span class="brand-tagline">THE NEW SPIRIT OF AFRICA • STAR ALLIANCE</span>
+          </div>
+        </a>
+
+        <!-- Main Navigation Links (Flexbox) -->
+        <ul class="nav-menu-flex" id="nav-menu">
+          <li><a href="#" class="nav-item active">Book Flight</a></li>
+          <li><a href="#" class="nav-item">Manage Booking</a></li>
+          <li><a href="#" class="nav-item">Flight Status</a></li>
+          <li><a href="#" class="nav-item">ShebaMiles</a></li>
+        </ul>
+
+        <!-- Right Side Utility & CTA (Flexbox) -->
+        <div class="nav-actions-flex">
+          <div class="currency-pill">
+            <span class="flag">🇪🇹</span>
+            <span>ETB / EN</span>
+          </div>
+          <button type="button" class="btn-shebamiles">ShebaMiles Sign In</button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- ========================================================
+         2. SIDEBAR / FILTER PANEL (Grid Area: sidebar)
+         ======================================================== -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header-flex">
+        <div class="sidebar-title-block">
+          <span class="filter-icon">⚙️</span>
+          <h3>Filter Flights</h3>
+        </div>
+        <button type="button" class="btn-reset">Reset All</button>
+      </div>
+
+      <!-- Search Summary Mini Card -->
+      <div class="route-summary-card">
+        <div class="route-badge">Round Trip</div>
+        <div class="route-airports-flex">
+          <div class="airport-node">
+            <span class="city-code">ADD</span>
+            <span class="city-name">Addis Ababa</span>
+          </div>
+          <div class="route-arrow">✈️ ➔</div>
+          <div class="airport-node">
+            <span class="city-code">DXB</span>
+            <span class="city-name">Dubai Intl</span>
+          </div>
+        </div>
+        <div class="route-dates">📅 24 Aug 2026 • 1 Passenger (Economy)</div>
+      </div>
+
+      <div class="sidebar-filters-wrapper">
+        <!-- Filter Group: Stops -->
+        <div class="filter-group">
+          <h4 class="filter-title">Stops</h4>
+          <div class="filter-options-stack">
+            <label class="filter-checkbox-flex">
+              <input type="checkbox" checked>
+              <span class="custom-chk"></span>
+              <span class="chk-label">Direct Flights Only</span>
+              <span class="chk-count">(4)</span>
+            </label>
+            <label class="filter-checkbox-flex">
+              <input type="checkbox">
+              <span class="custom-chk"></span>
+              <span class="chk-label">1 Stop (via NBO)</span>
+              <span class="chk-count">(2)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Filter Group: Departure Time -->
+        <div class="filter-group">
+          <h4 class="filter-title">Departure Time (ADD)</h4>
+          <div class="time-chips-flex">
+            <button type="button" class="time-chip active">Morning<br><span>06:00-12:00</span></button>
+            <button type="button" class="time-chip">Afternoon<br><span>12:00-18:00</span></button>
+            <button type="button" class="time-chip">Night<br><span>18:00-00:00</span></button>
+          </div>
+        </div>
+
+        <!-- Filter Group: Cabin Class -->
+        <div class="filter-group">
+          <h4 class="filter-title">Cabin Class</h4>
+          <div class="filter-options-stack">
+            <label class="filter-checkbox-flex">
+              <input type="radio" name="cabin" checked>
+              <span class="custom-chk radio"></span>
+              <span class="chk-label">Economy Class</span>
+            </label>
+            <label class="filter-checkbox-flex">
+              <input type="radio" name="cabin">
+              <span class="custom-chk radio"></span>
+              <span class="chk-label">Cloud Nine (Business)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ShebaMiles Promo Box -->
+      <div class="shebamiles-promo-box">
+        <div class="promo-badge">ShebaMiles Club</div>
+        <p>Earn up to <strong>1,850 Tier Miles</strong> on this booking with Ethiopian Airlines.</p>
+      </div>
+    </aside>
+
+    <!-- ========================================================
+         3. MAIN CONTENT AREA (Grid Area: main)
+         ======================================================== -->
+    <main class="app-main">
+
+      <!-- Breadcrumbs & Quick Search Banner (Flexbox) -->
+      <section class="search-banner-flex">
+        <div class="banner-title-block">
+          <h2>Addis Ababa (ADD) ➔ Dubai (DXB)</h2>
+          <p>Showing 4 available flights for Monday, August 24, 2026</p>
+        </div>
+        <div class="sort-toolbar-flex">
+          <span class="sort-label">Sort by:</span>
+          <select class="sort-select" aria-label="Sort flight results">
+            <option>Cheapest Fare First</option>
+            <option>Shortest Duration</option>
+            <option>Earliest Departure</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Flight Results List (Flexbox & Relative/Absolute positioning) -->
+      <section class="flights-list">
+
+        <!-- Flight Result Card 1 (Features Absolute Badge) -->
+        <article class="flight-card">
+          <!-- Absolutely positioned badge anchored to relative card parent -->
+          <div class="et-badge deal-badge">
+            <span class="badge-tag">BEST VALUE</span>
+            <span class="badge-sub">ETB Sale</span>
+          </div>
+
+          <div class="flight-card-body-flex">
+            <!-- Airline Info -->
+            <div class="carrier-col-flex">
+              <div class="carrier-icon">🇪🇹</div>
+              <div class="carrier-details">
+                <span class="flight-no">ET 600</span>
+                <span class="aircraft-type">Boeing 787-9 Dreamliner</span>
+              </div>
             </div>
-        </aside>
-        <section>
-            <div class="hero">
-                <img src="" alt="">
+
+            <!-- Route Timeline -->
+            <div class="schedule-timeline-flex">
+              <div class="time-block origin">
+                <span class="flight-time">08:15</span>
+                <span class="flight-city">ADD (Bole Intl)</span>
+              </div>
+
+              <div class="flight-duration-diagram">
+                <span class="duration-text">4h 15m</span>
+                <div class="flight-line">
+                  <span class="line-dot start"></span>
+                  <span class="plane-icon">✈</span>
+                  <span class="line-dot end"></span>
+                </div>
+                <span class="direct-label">Non-stop Direct</span>
+              </div>
+
+              <div class="time-block dest">
+                <span class="flight-time">13:30</span>
+                <span class="flight-city">DXB (Terminal 1)</span>
+              </div>
             </div>
-            <div>
-                <p>title</p>
-                <button>book</button>
+
+            <!-- Pricing & Action -->
+            <div class="price-action-flex">
+              <div class="price-info">
+                <span class="price-sub">Starting from</span>
+                <span class="price-amount">24,850 ETB</span>
+                <span class="price-notes">Includes taxes &amp; baggage</span>
+              </div>
+              <button type="button" class="btn-select-flight">Select Flight</button>
             </div>
-        </section>
+          </div>
+        </article>
+
+        <!-- Flight Result Card 2 -->
+        <article class="flight-card">
+          <!-- Absolutely positioned badge anchored to relative card parent -->
+          <div class="et-badge bonus-badge">
+            <span class="badge-tag">+500 MILES</span>
+            <span class="badge-sub">Bonus Deal</span>
+          </div>
+
+          <div class="flight-card-body-flex">
+            <!-- Airline Info -->
+            <div class="carrier-col-flex">
+              <div class="carrier-icon">🇪🇹</div>
+              <div class="carrier-details">
+                <span class="flight-no">ET 602</span>
+                <span class="aircraft-type">Airbus A350-900</span>
+              </div>
+            </div>
+
+            <!-- Route Timeline -->
+            <div class="schedule-timeline-flex">
+              <div class="time-block origin">
+                <span class="flight-time">15:40</span>
+                <span class="flight-city">ADD (Bole Intl)</span>
+              </div>
+
+              <div class="flight-duration-diagram">
+                <span class="duration-text">4h 20m</span>
+                <div class="flight-line">
+                  <span class="line-dot start"></span>
+                  <span class="plane-icon">✈</span>
+                  <span class="line-dot end"></span>
+                </div>
+                <span class="direct-label">Non-stop Direct</span>
+              </div>
+
+              <div class="time-block dest">
+                <span class="flight-time">21:00</span>
+                <span class="flight-city">DXB (Terminal 1)</span>
+              </div>
+            </div>
+
+            <!-- Pricing & Action -->
+            <div class="price-action-flex">
+              <div class="price-info">
+                <span class="price-sub">Starting from</span>
+                <span class="price-amount">27,200 ETB</span>
+                <span class="price-notes">Includes 2x 23kg Bags</span>
+              </div>
+              <button type="button" class="btn-select-flight">Select Flight</button>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- ========================================================
+           RESPONSIVE CARD GRID: repeat(auto-fit, minmax(240px, 1fr))
+           Special Destination Fares from Addis Ababa
+           ======================================================== -->
+      <section class="deals-section">
+        <div class="deals-header-flex">
+          <div>
+            <h3>Trending Destinations from Bole International</h3>
+            <p>Special seasonal promotional fares across the Ethiopian network.</p>
+          </div>
+          <span class="auto-fit-tag">CSS Grid: repeat(auto-fit, minmax(240px, 1fr))</span>
+        </div>
+
+        <div class="cards-auto-fit-grid">
+          
+          <div class="deal-card">
+            <div class="deal-media">
+              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500&auto=format&fit=crop&q=80" alt="Dubai Skyline" loading="lazy">
+              <span class="card-chip">Middle East</span>
+            </div>
+            <div class="deal-body">
+              <h4>Dubai, UAE</h4>
+              <p class="dest-code">ADD ➔ DXB • Daily Direct</p>
+              <div class="deal-foot-flex">
+                <span class="fare">From <strong>24,850 ETB</strong></span>
+                <a href="#" class="deal-link">Book Now →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="deal-card">
+            <div class="deal-media">
+              <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=500&auto=format&fit=crop&q=80" alt="Paris Eiffel Tower" loading="lazy">
+              <span class="card-chip">Europe</span>
+            </div>
+            <div class="deal-body">
+              <h4>Paris, France</h4>
+              <p class="dest-code">ADD ➔ CDG • 5x Weekly</p>
+              <div class="deal-foot-flex">
+                <span class="fare">From <strong>48,900 ETB</strong></span>
+                <a href="#" class="deal-link">Book Now →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="deal-card">
+            <div class="deal-media">
+              <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=500&auto=format&fit=crop&q=80" alt="London Tower Bridge" loading="lazy">
+              <span class="card-chip">United Kingdom</span>
+            </div>
+            <div class="deal-body">
+              <h4>London Heathrow, UK</h4>
+              <p class="dest-code">ADD ➔ LHR • Daily Direct</p>
+              <div class="deal-foot-flex">
+                <span class="fare">From <strong>52,400 ETB</strong></span>
+                <a href="#" class="deal-link">Book Now →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="deal-card">
+            <div class="deal-media">
+              <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=500&auto=format&fit=crop&q=80" alt="Nairobi Wildlife & City" loading="lazy">
+              <span class="card-chip">East Africa</span>
+            </div>
+            <div class="deal-body">
+              <h4>Nairobi, Kenya</h4>
+              <p class="dest-code">ADD ➔ NBO • 4x Daily</p>
+              <div class="deal-foot-flex">
+                <span class="fare">From <strong>18,300 ETB</strong></span>
+                <a href="#" class="deal-link">Book Now →</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
     </main>
-    <footer></footer>
-    
+
+    <!-- ========================================================
+         4. FOOTER AREA (Grid Area: footer)
+         ======================================================== -->
+    <footer class="app-footer">
+      <div class="footer-top-grid">
+        <div class="footer-col">
+          <h5>About Ethiopian</h5>
+          <ul>
+            <li><a href="#">Company Profile</a></li>
+            <li><a href="#">Fleet &amp; Cabin</a></li>
+            <li><a href="#">Star Alliance Network</a></li>
+            <li><a href="#">Media Center</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Services &amp; Help</h5>
+          <ul>
+            <li><a href="#">Online Check-in</a></li>
+            <li><a href="#">Baggage Guidelines</a></li>
+            <li><a href="#">Special Assistance</a></li>
+            <li><a href="#">Contact Addis Ababa HQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>ShebaMiles Program</h5>
+          <ul>
+            <li><a href="#">Join ShebaMiles</a></li>
+            <li><a href="#">Tier Benefits &amp; Upgrades</a></li>
+            <li><a href="#">Claim Missing Miles</a></li>
+            <li><a href="#">Partner Airlines</a></li>
+          </ul>
+        </div>
+        <div class="footer-col brand-col">
+          <div class="et-flag-strip">
+            <span class="green"></span><span class="yellow"></span><span class="red"></span>
+          </div>
+          <p class="footer-bio">Ethiopian Airlines is the leading African aviation group, serving 130+ international destinations across 5 continents.</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom-flex">
+        <p>&copy; 2026 Ethiopian Airlines Group. All rights reserved. • Rebuilt for CodeOps Module 2 Day 4 Mini-Project.</p>
+        <div class="footer-links-flex">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Conditions of Carriage</a>
+          <a href="#">Cookie Preferences</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
 </body>
 </html>
