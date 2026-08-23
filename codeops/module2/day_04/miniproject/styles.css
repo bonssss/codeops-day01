@@ -5,9 +5,10 @@
 
 /* --- Custom Variables & Ethiopian Airlines Palette --- */
 :root {
-  --et-green-dark: #0d3b26;
+  --et-green-dark: #091a13;
   --et-green-primary: #125938;
   --et-green-light: #1b7a4e;
+  --et-green-hover: #178351;
   --et-gold-primary: #f59e0b;
   --et-gold-accent: #fbbf24;
   --et-red-accent: #dc2626;
@@ -77,7 +78,7 @@ button, select, input {
    ========================================================= */
 .app {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 310px 1fr;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header  header"
@@ -94,7 +95,7 @@ button, select, input {
   grid-area: header;
   position: sticky;
   top: 0;
-  z-index: 100; /* Stays above scrolling content */
+  z-index: 100; /* Stays visible when scrolling */
   background: linear-gradient(135deg, #091a13 0%, #0d281a 100%);
   border-bottom: 2px solid #1a4d33;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
@@ -107,18 +108,20 @@ button, select, input {
   padding: 0.9rem 2rem;
   max-width: 1500px;
   margin: 0 auto;
+  gap: 1.5rem;
 }
 
 .brand-logo {
   display: flex;
   align-items: center;
   gap: 0.85rem;
+  flex-shrink: 0;
 }
 
 .logo-emblem {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   background: linear-gradient(135deg, var(--et-gold-primary), #d97706);
-  padding: 0.35rem 0.65rem;
+  padding: 0.3rem 0.6rem;
   border-radius: var(--radius-md);
   box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
 }
@@ -129,7 +132,7 @@ button, select, input {
 }
 
 .brand-name {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   color: #ffffff;
@@ -137,25 +140,28 @@ button, select, input {
 }
 
 .brand-tagline {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   color: var(--et-gold-accent);
 }
 
 .nav-menu-flex {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .nav-item {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  padding: 0.4rem 0.75rem;
+  padding: 0.4rem 0.85rem;
   border-radius: var(--radius-sm);
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .nav-item:hover,
@@ -165,13 +171,16 @@ button, select, input {
 }
 
 .nav-item.active {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--et-gold-accent);
   border-bottom: 2px solid var(--et-gold-primary);
 }
 
 .nav-actions-flex {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.85rem;
+  flex-shrink: 0;
 }
 
 .currency-pill {
@@ -182,7 +191,7 @@ button, select, input {
   font-weight: 600;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 0.35rem 0.75rem;
+  padding: 0.4rem 0.75rem;
   border-radius: var(--radius-full);
 }
 
@@ -197,6 +206,7 @@ button, select, input {
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
   transition: transform 0.2s ease, filter 0.2s ease;
+  white-space: nowrap;
 }
 
 .btn-shebamiles:hover {
@@ -224,10 +234,20 @@ button, select, input {
   align-items: center;
 }
 
-.sidebar-header-flex h3 {
+.sidebar-title-block {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sidebar-title-block h3 {
   font-size: 1.1rem;
   font-weight: 700;
   color: #ffffff;
+}
+
+.filter-icon {
+  font-size: 1.1rem;
 }
 
 .btn-reset {
@@ -302,7 +322,13 @@ button, select, input {
   margin-top: 0.5rem;
 }
 
-/* Filter Groups */
+/* Sidebar Filters Stack */
+.sidebar-filters-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
 .filter-group {
   display: flex;
   flex-direction: column;
@@ -310,11 +336,17 @@ button, select, input {
 }
 
 .filter-title {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.filter-options-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .filter-checkbox-flex {
@@ -324,7 +356,7 @@ button, select, input {
   font-size: 0.875rem;
   color: var(--text-primary);
   cursor: pointer;
-  padding: 0.35rem 0;
+  padding: 0.25rem 0;
 }
 
 .filter-checkbox-flex input {
@@ -339,6 +371,7 @@ button, select, input {
   background: var(--bg-card);
   position: relative;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .filter-checkbox-flex input:checked + .custom-chk {
@@ -379,7 +412,7 @@ button, select, input {
   color: var(--text-secondary);
   padding: 0.5rem 0.2rem;
   border-radius: var(--radius-sm);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   cursor: pointer;
   text-align: center;
@@ -387,7 +420,7 @@ button, select, input {
 }
 
 .time-chip span {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   color: var(--text-muted);
 }
 
@@ -443,10 +476,11 @@ button, select, input {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 1.25rem 1.5rem;
+  gap: 1rem;
 }
 
 .banner-title-block h2 {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 800;
   color: #ffffff;
 }
@@ -460,6 +494,7 @@ button, select, input {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-shrink: 0;
 }
 
 .sort-label {
@@ -476,6 +511,7 @@ button, select, input {
   outline: none;
   cursor: pointer;
 }
+
 
 /* =========================================================
    5. FLIGHT RESULTS LIST (Requirement 5: Relative + Absolute)
@@ -551,7 +587,7 @@ button, select, input {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  min-width: 170px;
+  min-width: 160px;
 }
 
 .carrier-icon {
@@ -591,7 +627,7 @@ button, select, input {
 }
 
 .flight-time {
-  font-size: 1.5rem;
+  font-size: 1.45rem;
   font-weight: 800;
   color: #ffffff;
   font-family: 'Fira Code', monospace;
@@ -606,7 +642,7 @@ button, select, input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 140px;
+  min-width: 130px;
 }
 
 .duration-text {
@@ -636,7 +672,6 @@ button, select, input {
 .plane-icon {
   font-size: 0.85rem;
   color: var(--et-gold-primary);
-  transform: rotate(0deg);
 }
 
 .direct-label {
@@ -652,7 +687,7 @@ button, select, input {
   align-items: center;
   gap: 1.5rem;
   text-align: right;
-  min-width: 220px;
+  min-width: 210px;
   justify-content: flex-end;
 }
 
@@ -667,7 +702,7 @@ button, select, input {
 }
 
 .price-amount {
-  font-size: 1.45rem;
+  font-size: 1.4rem;
   font-weight: 800;
   color: var(--et-gold-accent);
 }
@@ -680,14 +715,15 @@ button, select, input {
 .btn-select-flight {
   background: linear-gradient(135deg, var(--et-green-primary), var(--et-green-light));
   color: #ffffff;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
-  padding: 0.75rem 1.3rem;
+  padding: 0.75rem 1.25rem;
   border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(18, 89, 56, 0.4);
   transition: transform 0.2s ease, filter 0.2s ease;
+  white-space: nowrap;
 }
 
 .btn-select-flight:hover {
@@ -710,6 +746,7 @@ button, select, input {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 1rem;
 }
 
 .deals-header-flex h3 {
@@ -731,6 +768,7 @@ button, select, input {
   border: 1px solid rgba(245, 158, 11, 0.3);
   padding: 0.25rem 0.6rem;
   border-radius: var(--radius-sm);
+  white-space: nowrap;
 }
 
 /* CSS Grid with repeat(auto-fit, minmax(240px, 1fr)) */
@@ -920,8 +958,34 @@ button, select, input {
 
 
 /* =========================================================
-   8. SINGLE MEDIA QUERY (Requirement 6: Collapse to 1 column on mobile)
+   8. RESPONSIVE BREAKPOINTS: Tablet & Mobile
    ========================================================= */
+
+/* Tablet Optimization (701px - 1024px) */
+@media (max-width: 1024px) {
+  .app {
+    grid-template-columns: 260px 1fr;
+  }
+  
+  .navbar-flex {
+    padding: 0.75rem 1.25rem;
+  }
+  
+  .nav-menu-flex {
+    gap: 0.4rem;
+  }
+  
+  .nav-item {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.82rem;
+  }
+  
+  .flight-card-body-flex {
+    gap: 1rem;
+  }
+}
+
+/* Mobile Single-Column Collapse (≤ 700px - Core Requirement) */
 @media (max-width: 700px) {
   /* Restack grid areas into a single column */
   .app {
@@ -933,11 +997,11 @@ button, select, input {
     grid-template-columns: 1fr;
   }
 
-  /* Sticky header mobile adjustments */
+  /* 1. Responsive Sticky Navbar on Mobile */
   .navbar-flex {
     flex-direction: column;
     gap: 0.85rem;
-    padding: 1rem;
+    padding: 0.85rem 1rem;
     align-items: stretch;
     text-align: center;
   }
@@ -949,28 +1013,51 @@ button, select, input {
   .nav-menu-flex {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.6rem;
+    gap: 0.4rem;
+  }
+
+  .nav-item {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.6rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-full);
   }
 
   .nav-actions-flex {
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
   }
 
-  /* Sidebar adjustment */
+  /* 2. Responsive Sidebar on Mobile */
   .app-sidebar {
     border-right: none;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+    padding: 1.25rem;
+    gap: 1.25rem;
   }
 
-  /* Main content mobile adjustments */
+  /* Organize filters in a clean 2-column grid on mobile */
+  .sidebar-filters-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  /* 3. Main Content & Flight Cards on Mobile */
   .app-main {
     padding: 1.25rem;
+    gap: 1.5rem;
   }
 
   .search-banner-flex {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+  }
+
+  .flight-card {
+    padding: 1.25rem;
   }
 
   .flight-card-body-flex {
@@ -985,6 +1072,7 @@ button, select, input {
 
   .schedule-timeline-flex {
     justify-content: space-between;
+    width: 100%;
   }
 
   .price-action-flex {
@@ -994,12 +1082,18 @@ button, select, input {
     text-align: left;
     border-top: 1px dashed var(--border-color);
     padding-top: 1rem;
+    min-width: unset;
   }
 
   .deals-header-flex {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+  }
+
+  /* 4. Responsive Footer on Mobile */
+  .app-footer {
+    padding: 2rem 1.25rem 1.5rem;
   }
 
   .footer-bottom-flex {
@@ -1011,5 +1105,35 @@ button, select, input {
   .footer-links-flex {
     flex-wrap: wrap;
     justify-content: center;
+  }
+}
+
+/* Extra Small Phones (≤ 480px) */
+@media (max-width: 480px) {
+  .brand-name {
+    font-size: 1.15rem;
+  }
+
+  .brand-tagline {
+    font-size: 0.55rem;
+  }
+
+  .flight-time {
+    font-size: 1.25rem;
+  }
+
+  .flight-duration-diagram {
+    min-width: 90px;
+  }
+
+  .price-action-flex {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .btn-select-flight {
+    width: 100%;
+    text-align: center;
   }
 }

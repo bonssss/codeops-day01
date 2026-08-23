@@ -29,7 +29,7 @@
         </a>
 
         <!-- Main Navigation Links (Flexbox) -->
-        <ul class="nav-menu-flex">
+        <ul class="nav-menu-flex" id="nav-menu">
           <li><a href="#" class="nav-item active">Book Flight</a></li>
           <li><a href="#" class="nav-item">Manage Booking</a></li>
           <li><a href="#" class="nav-item">Flight Status</a></li>
@@ -52,7 +52,10 @@
          ======================================================== -->
     <aside class="app-sidebar">
       <div class="sidebar-header-flex">
-        <h3>Filter Flights</h3>
+        <div class="sidebar-title-block">
+          <span class="filter-icon">⚙️</span>
+          <h3>Filter Flights</h3>
+        </div>
         <button type="button" class="btn-reset">Reset All</button>
       </div>
 
@@ -70,49 +73,55 @@
             <span class="city-name">Dubai Intl</span>
           </div>
         </div>
-        <div class="route-dates">24 Aug 2026 • 1 Passenger (Economy)</div>
+        <div class="route-dates">📅 24 Aug 2026 • 1 Passenger (Economy)</div>
       </div>
 
-      <!-- Filter Group: Stops -->
-      <div class="filter-group">
-        <h4 class="filter-title">Stops</h4>
-        <label class="filter-checkbox-flex">
-          <input type="checkbox" checked>
-          <span class="custom-chk"></span>
-          <span class="chk-label">Direct Flights Only</span>
-          <span class="chk-count">(4)</span>
-        </label>
-        <label class="filter-checkbox-flex">
-          <input type="checkbox">
-          <span class="custom-chk"></span>
-          <span class="chk-label">1 Stop (via Nairobi)</span>
-          <span class="chk-count">(2)</span>
-        </label>
-      </div>
-
-      <!-- Filter Group: Departure Time -->
-      <div class="filter-group">
-        <h4 class="filter-title">Departure Time from ADD</h4>
-        <div class="time-chips-flex">
-          <button type="button" class="time-chip active">Morning<br><span>06:00-12:00</span></button>
-          <button type="button" class="time-chip">Afternoon<br><span>12:00-18:00</span></button>
-          <button type="button" class="time-chip">Night<br><span>18:00-00:00</span></button>
+      <div class="sidebar-filters-wrapper">
+        <!-- Filter Group: Stops -->
+        <div class="filter-group">
+          <h4 class="filter-title">Stops</h4>
+          <div class="filter-options-stack">
+            <label class="filter-checkbox-flex">
+              <input type="checkbox" checked>
+              <span class="custom-chk"></span>
+              <span class="chk-label">Direct Flights Only</span>
+              <span class="chk-count">(4)</span>
+            </label>
+            <label class="filter-checkbox-flex">
+              <input type="checkbox">
+              <span class="custom-chk"></span>
+              <span class="chk-label">1 Stop (via NBO)</span>
+              <span class="chk-count">(2)</span>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <!-- Filter Group: Cabin Class -->
-      <div class="filter-group">
-        <h4 class="filter-title">Cabin Experience</h4>
-        <label class="filter-checkbox-flex">
-          <input type="radio" name="cabin" checked>
-          <span class="custom-chk radio"></span>
-          <span class="chk-label">Economy Class</span>
-        </label>
-        <label class="filter-checkbox-flex">
-          <input type="radio" name="cabin">
-          <span class="custom-chk radio"></span>
-          <span class="chk-label">Cloud Nine (Business)</span>
-        </label>
+        <!-- Filter Group: Departure Time -->
+        <div class="filter-group">
+          <h4 class="filter-title">Departure Time (ADD)</h4>
+          <div class="time-chips-flex">
+            <button type="button" class="time-chip active">Morning<br><span>06:00-12:00</span></button>
+            <button type="button" class="time-chip">Afternoon<br><span>12:00-18:00</span></button>
+            <button type="button" class="time-chip">Night<br><span>18:00-00:00</span></button>
+          </div>
+        </div>
+
+        <!-- Filter Group: Cabin Class -->
+        <div class="filter-group">
+          <h4 class="filter-title">Cabin Class</h4>
+          <div class="filter-options-stack">
+            <label class="filter-checkbox-flex">
+              <input type="radio" name="cabin" checked>
+              <span class="custom-chk radio"></span>
+              <span class="chk-label">Economy Class</span>
+            </label>
+            <label class="filter-checkbox-flex">
+              <input type="radio" name="cabin">
+              <span class="custom-chk radio"></span>
+              <span class="chk-label">Cloud Nine (Business)</span>
+            </label>
+          </div>
+        </div>
       </div>
 
       <!-- ShebaMiles Promo Box -->
