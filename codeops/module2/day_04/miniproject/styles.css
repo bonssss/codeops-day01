@@ -1,27 +1,1015 @@
+/* =========================================================
+   Ethiopian Airlines Booking & Deals Interface - Mini-Project
+   Module 2 • Day 4 • Full Stack Software Development
+   ========================================================= */
+
+/* --- Custom Variables & Ethiopian Airlines Palette --- */
+:root {
+  --et-green-dark: #0d3b26;
+  --et-green-primary: #125938;
+  --et-green-light: #1b7a4e;
+  --et-gold-primary: #f59e0b;
+  --et-gold-accent: #fbbf24;
+  --et-red-accent: #dc2626;
+  
+  --bg-app: #0a1118;
+  --bg-sidebar: #0f1822;
+  --bg-card: #152230;
+  --bg-card-hover: #1b2a3b;
+  --border-color: #213346;
+  --border-light: #2e4660;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* --- Global Reset --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button, select, input {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* =========================================================
+   1. GRID PAGE SKELETON (Requirement 1: grid-template-areas)
+   ========================================================= */
 .app {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    grid-template-areas:
-        "header header"
-        "sidebar main"
-        "footer footer";
-    min-height: 100vh;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header  header"
+    "sidebar main"
+    "footer  footer";
+  min-height: 100vh;
 }
 
-.app>header {
-    grid-area: header;
-    position: sticky;
-    top: 0;
+/* =========================================================
+   2. STICKY HEADER (Requirement 4: Sticky Element)
+   Flexbox components inside (Requirement 2)
+   ========================================================= */
+.app-header {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 100; /* Stays above scrolling content */
+  background: linear-gradient(135deg, #091a13 0%, #0d281a 100%);
+  border-bottom: 2px solid #1a4d33;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-.cards {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.navbar-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 2rem;
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.logo-emblem {
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, var(--et-gold-primary), #d97706);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.brand-tagline {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--et-gold-accent);
+}
+
+.nav-menu-flex {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-item {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-item.active {
+  border-bottom: 2px solid var(--et-gold-primary);
+}
+
+.nav-actions-flex {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.currency-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.btn-shebamiles {
+  background: linear-gradient(135deg, var(--et-gold-primary), #d97706);
+  color: #0b130f;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn-shebamiles:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+
+/* =========================================================
+   3. SIDEBAR / FILTER PANEL (Grid Area: sidebar)
+   ========================================================= */
+.app-sidebar {
+  grid-area: sidebar;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebar-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-header-flex h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.btn-reset {
+  background: none;
+  border: none;
+  color: var(--et-gold-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  text-decoration: underline;
+}
+
+/* Route Summary Mini Card */
+.route-summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+
+.route-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(18, 89, 56, 0.4);
+  color: #6ee7b7;
+  border: 1px solid #1b7a4e;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.75rem;
+}
+
+.route-airports-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.airport-node {
+  display: flex;
+  flex-direction: column;
+}
+
+.city-code {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-family: 'Fira Code', monospace;
+}
+
+.city-name {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.route-arrow {
+  color: var(--et-gold-primary);
+  font-size: 0.9rem;
+}
+
+.route-dates {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-top: 1px dashed var(--border-color);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Filter Groups */
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.filter-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter-checkbox-flex {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0.35rem 0;
+}
+
+.filter-checkbox-flex input {
+  display: none;
+}
+
+.custom-chk {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-light);
+  border-radius: 4px;
+  background: var(--bg-card);
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.filter-checkbox-flex input:checked + .custom-chk {
+  background: var(--et-green-primary);
+  border-color: var(--et-green-light);
+}
+
+.filter-checkbox-flex input:checked + .custom-chk::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.custom-chk.radio {
+  border-radius: 50%;
+}
+
+.chk-count {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.time-chips-flex {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+}
+
+.time-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.5rem 0.2rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.time-chip span {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.time-chip:hover,
+.time-chip.active {
+  background: rgba(18, 89, 56, 0.3);
+  border-color: var(--et-green-light);
+  color: #ffffff;
+}
+
+.shebamiles-promo-box {
+  background: linear-gradient(135deg, #132219 0%, #1e3527 100%);
+  border: 1px solid #234f37;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-top: auto;
+}
+
+.promo-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--et-gold-accent);
+  margin-bottom: 0.35rem;
+}
+
+.shebamiles-promo-box p {
+  font-size: 0.8rem;
+  color: #d1fae5;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   4. MAIN CONTENT AREA (Grid Area: main)
+   ========================================================= */
+.app-main {
+  grid-area: main;
+  background-color: var(--bg-app);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow-y: auto;
+}
+
+/* Breadcrumb & Sort Banner (Flexbox) */
+.search-banner-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+}
+
+.banner-title-block h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.banner-title-block p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.sort-toolbar-flex {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sort-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.sort-select {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: pointer;
+}
+
+/* =========================================================
+   5. FLIGHT RESULTS LIST (Requirement 5: Relative + Absolute)
+   ========================================================= */
+.flights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Relative Container */
+.flight-card {
+  position: relative; /* REQUIRED: Anchor parent for absolute badge */
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.flight-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Absolutely Positioned Badge */
+.et-badge {
+  position: absolute; /* REQUIRED: Anchored to relative parent */
+  top: -10px;
+  right: 24px;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.deal-badge {
+  background: linear-gradient(135deg, var(--et-red-accent), #b91c1c);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.bonus-badge {
+  background: linear-gradient(135deg, var(--et-gold-primary), #d97706);
+  color: #0d1a12;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.badge-sub {
+  font-size: 0.65rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* Flight Card Body (Flexbox) */
+.flight-card-body-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.carrier-col-flex {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 170px;
+}
+
+.carrier-icon {
+  font-size: 1.8rem;
+}
+
+.carrier-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.flight-no {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-family: 'Fira Code', monospace;
+}
+
+.aircraft-type {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Route Timeline (Flexbox) */
+.schedule-timeline-flex {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.time-block {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.flight-time {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-family: 'Fira Code', monospace;
+}
+
+.flight-city {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.flight-duration-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 140px;
+}
+
+.duration-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.flight-line {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.line-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--et-gold-primary);
+  border-radius: 50%;
+}
+
+.plane-icon {
+  font-size: 0.85rem;
+  color: var(--et-gold-primary);
+  transform: rotate(0deg);
+}
+
+.direct-label {
+  font-size: 0.7rem;
+  color: var(--et-green-light);
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+/* Price & Action (Flexbox) */
+.price-action-flex {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: right;
+  min-width: 220px;
+  justify-content: flex-end;
+}
+
+.price-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.price-amount {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--et-gold-accent);
+}
+
+.price-notes {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.btn-select-flight {
+  background: linear-gradient(135deg, var(--et-green-primary), var(--et-green-light));
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.75rem 1.3rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(18, 89, 56, 0.4);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn-select-flight:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+
+
+/* =========================================================
+   6. RESPONSIVE CARD GRID (Requirement 3: repeat(auto-fit, minmax(...)))
+   ========================================================= */
+.deals-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.deals-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.deals-header-flex h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.deals-header-flex p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.auto-fit-tag {
+  font-size: 0.75rem;
+  font-family: 'Fira Code', monospace;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--et-gold-primary);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+/* CSS Grid with repeat(auto-fit, minmax(240px, 1fr)) */
+.cards-auto-fit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.deal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.deal-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-card);
+}
+
+.deal-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.deal-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.deal-card:hover .deal-media img {
+  transform: scale(1.06);
+}
+
+.card-chip {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(10, 17, 24, 0.85);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+.deal-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.deal-body h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+}
+
+.dest-code {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.deal-foot-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.75rem;
+}
+
+.fare {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.fare strong {
+  color: var(--et-gold-accent);
+  font-size: 0.95rem;
+}
+
+.deal-link {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--et-gold-primary);
+}
+
+.deal-link:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   7. FOOTER AREA (Grid Area: footer)
+   ========================================================= */
+.app-footer {
+  grid-area: footer;
+  background: #070d14;
+  border-top: 1px solid var(--border-color);
+  padding: 3rem 2rem 1.5rem;
+}
+
+.footer-top-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto 2.5rem;
+}
+
+.footer-col h5 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-col a {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.footer-col a:hover {
+  color: var(--et-gold-primary);
+}
+
+.brand-col .et-flag-strip {
+  display: flex;
+  height: 6px;
+  width: 90px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.et-flag-strip .green { flex: 1; background: #078930; }
+.et-flag-strip .yellow { flex: 1; background: #fcdd09; }
+.et-flag-strip .red { flex: 1; background: #da121a; }
+
+.footer-bio {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.footer-bottom-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.footer-links-flex {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links-flex a:hover {
+  color: var(--text-primary);
+}
+
+
+/* =========================================================
+   8. SINGLE MEDIA QUERY (Requirement 6: Collapse to 1 column on mobile)
+   ========================================================= */
 @media (max-width: 700px) {
-    .app {
-        grid-template-columns: 1fr;
-    }
+  /* Restack grid areas into a single column */
+  .app {
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main"
+      "footer";
+    grid-template-columns: 1fr;
+  }
+
+  /* Sticky header mobile adjustments */
+  .navbar-flex {
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1rem;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .brand-logo {
+    justify-content: center;
+  }
+
+  .nav-menu-flex {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .nav-actions-flex {
+    justify-content: center;
+  }
+
+  /* Sidebar adjustment */
+  .app-sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  /* Main content mobile adjustments */
+  .app-main {
+    padding: 1.25rem;
+  }
+
+  .search-banner-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .flight-card-body-flex {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.25rem;
+  }
+
+  .carrier-col-flex {
+    justify-content: flex-start;
+  }
+
+  .schedule-timeline-flex {
+    justify-content: space-between;
+  }
+
+  .price-action-flex {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 1rem;
+  }
+
+  .deals-header-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .footer-bottom-flex {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .footer-links-flex {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
