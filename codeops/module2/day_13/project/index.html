@@ -34,7 +34,10 @@
         <section class="hero">
             <h1>Budget App</h1>
             <p>Track your expenses and manage your budget</p>
-            <button>Get Started</button>
+            <div class="hero-buttons">
+                <button id="heroGetStartedBtn" class="btn-primary">Get Started</button>
+                <button id="heroAddBtn" class="btn-secondary">+ Add Transaction</button>
+            </div>
         </section>
         <section class="budget-overview">
             <h2>Budget Overview</h2>
@@ -68,34 +71,40 @@
 
 
         </section>
-        <section class="transaction-section">
-            <h2>Add new Transaction</h2>
-            <form action="" class="transaction-form" id="transactionForm">
-                <div class="form-group">
-                    <label for="type">Type</label>
-                    <select id="type" required>
-                        <option value="">Select Type</option>
-                        <option value="income">Income</option>
-                        <option value="expense">Expense</option>
-                    </select>
+        <!-- Modal Pop-up for Add Transaction -->
+        <div class="modal-backdrop" id="transactionModal" style="display: none;">
+            <div class="modal-container">
+                <div class="form-header">
+                    <h2>Add new Transaction</h2>
+                    <button type="button" class="btn-close" id="closeFormBtn" title="Close modal">&times;</button>
                 </div>
+                <div id="formNotification" class="notification-box" style="display: none;"></div>
+                <form action="" class="transaction-form" id="transactionForm">
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select id="type" required>
+                            <option value="">Select Type</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input type="text" id="description" required placeholder="Enter description">
-                </div>
-                <div class="form-group">
-                    <label for="amount">Amount</label>
-                    <input type="number" id="amount" required placeholder="Enter amount">
-                </div>
-                 <div class="form-group">
-                    <label for="date"> Date  </label>
-                    <input type="date" id="date" required placeholder="Enter date">
-                </div>
-                <button type="submit">Add Transaction</button>
-            </form>
-
-        </section>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" required placeholder="Enter description">
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="number" id="amount" step="0.01" min="0.01" required placeholder="Enter amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required placeholder="Enter date">
+                    </div>
+                    <button type="submit" class="btn-primary">Add Transaction</button>
+                </form>
+            </div>
+        </div>
         <section class="transaction-section">
             <h2>Recent Transactions</h2>
             <div class="transaction-list">
@@ -116,15 +125,45 @@
         </section>
 
     </main>
-    <footer>
-        <div class="footer-flex">
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="logo">
+                    <div class="logo-icon">B</div>
+                    <h2>Budget App</h2>
+                </div>
+                <p class="footer-tagline">Track expenses, manage personal income, and reach your savings goals faster with smart budget management.</p>
+            </div>
 
-            <p>All Rights Reserved</p>
-            <p>contact :test@gmail.com</p>
-            <p>phone:05341234567</p>
-            <p>website:https://example.com</p>
+            <div class="footer-col links-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col contact-col">
+                <h3>Contact Us</h3>
+                <div class="contact-row">
+                    <span class="contact-icon">📧</span>
+                    <a href="mailto:test@gmail.com">group4@gmail.com</a>
+                </div>
+                <div class="contact-row">
+                    <span class="contact-icon">📞</span>
+                    <a href="tel:05341234567">+251938756685</a>
+                </div>
+                <div class="contact-row">
+                    <span class="contact-icon">🌐</span>
+                    <a href="https://group4.com" target="_blank" rel="noopener">https://group4.com</a>
+                </div>
+            </div>
         </div>
 
+        <div class="footer-bottom">
+            <p>&copy; 2026 Budget App. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script src="./js/app.js"></script>
