@@ -477,7 +477,8 @@ nav a:hover, nav a.active {
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     border: 1px solid #f1f5f9;
-    overflow: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .transaction-table {
@@ -725,19 +726,108 @@ nav a:hover, nav a.active {
     color: #64748b;
 }
 
-/* --- Responsive Adjustments --- */
+/* --- Comprehensive Responsive Adjustments --- */
 @media (max-width: 860px) {
     .top-card-container {
         flex-direction: column;
+        gap: 1rem;
     }
+    
     .footer-container {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+    
     .hero h1 {
         font-size: 2.2rem;
     }
+    
+    .card-left {
+        padding: 2rem 1.5rem;
+    }
+    
+    .card-left-content p {
+        font-size: 2.4rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .header-container {
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    nav ul {
+        gap: 1.25rem;
+    }
+    
+    .hero {
+        padding: 2.5rem 1rem 2rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.85rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .hero-buttons .btn-primary,
+    .hero-buttons .btn-secondary {
+        width: 100%;
+    }
+    
+    .budget-overview h2,
+    .transaction-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .card-left-content p {
+        font-size: 2rem;
+    }
+    
+    .card-right-content {
+        padding: 1rem 1.25rem;
+    }
+    
+    .card-right-content h3 {
+        font-size: 0.95rem;
+    }
+    
+    .card-right-content p {
+        font-size: 1.25rem;
+    }
+    
     .modal-container {
-        padding: 1.75rem 1.5rem;
+        padding: 1.5rem 1.25rem;
+        border-radius: 16px;
+        max-width: 95vw;
+    }
+    
+    .form-header h2 {
+        font-size: 1.35rem;
+    }
+    
+    .transaction-table th,
+    .transaction-table td {
+        padding: 0.85rem 1rem;
+        font-size: 0.88rem;
+    }
+    
+    .contact-container {
+        padding: 2rem 1rem;
+    }
+    
+    .contact-container form {
+        padding: 1.5rem;
     }
 }
