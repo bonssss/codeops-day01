@@ -1,6 +1,11 @@
-# Addis Eats - Static React Menu
+# Addis Eats - Typed & Filtered React Menu
 
-A static restaurant menu application built with Vite and React. Demonstrates modular components (`Header`, `Dish`), props destructuring, and dynamic list rendering using `.map()`.
+A modular, typed React menu application built with Vite demonstrating professional React patterns:
+- **`Dish` Component**: Typed with PropTypes (`name` & `price` required, `spicy` optional), currency default of `"ETB"`, and a guarded boolean spicy badge.
+- **`Card` Component**: Reusable wrapper component leveraging the `children` prop.
+- **`Menu` Component**: Filters dishes by category, renders an empty state when no matches exist, and maps items using stable `id` keys.
+- **`Category` Component**: Category selector supporting category switching and "All" dishes.
+- **`src/data.js`**: Centralized data module containing the menu items (`id`, `name`, `price`, `category`, `spicy`).
 
 ## Getting Started
 

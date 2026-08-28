@@ -11,8 +11,9 @@ function Category({ selectedCategory, onSelectCategory }) {
         onChange={(e) => onSelectCategory(e.target.value)}
       >
         <option value="All">All</option>
+        <option value="Traditional">Traditional</option>
         <option value="Fast Food">Fast Food</option>
-        <option value="Drink">Drink</option>
+        <option value="Drinks">Drinks</option>
         <option value="Dessert">Dessert (Test Empty State)</option>
       </select>
     </div>
