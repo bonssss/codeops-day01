@@ -81,4 +81,19 @@ body{
     font-size: 1.1rem;
 }
 
+.category-tag {
+    background-color: #f1faee;
+    color: #1d3557;
+    font-size: 0.8rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.menu-section h2 {
+    margin-bottom: 16px;
+}
+
+
+
 
