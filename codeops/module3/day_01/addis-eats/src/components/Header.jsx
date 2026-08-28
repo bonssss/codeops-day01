@@ -2,9 +2,10 @@ import React from 'react'
 
 function Header() {
   return (
-    <>
-    <h1>Addis Eats</h1>
-    <p>Best Ethiopian Food</p></>
+    <div className='header'>
+    <h1 className='title'>Addis Eats</h1>
+    <p className='description'>Best Ethiopian Food</p>
+    </div>
   )
 }
 
