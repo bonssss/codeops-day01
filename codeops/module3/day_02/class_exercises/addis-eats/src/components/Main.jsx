@@ -1,28 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Dish from './Dish'
 import CategoryBar from './CategoryBar'
 
 function Main() {
   const [total, setTotal] = useState(0);
   const [catagory, setCatagory] = useState("all");
+  const[dish,setDishes]=useState([]);
+  const[loading,setLoading]=useState(true);
+  const[error,setError]=useState(null);
 
-  const dishes = [
-    { id: 1, name: "Misir Wot", price: 120, catagory: "main course", isspicy: false },
-    { id: 2, name: "Shiro Wot", price: 200, catagory: "main course", isspicy: false },
-    { id: 3, name: "Kitfo", price: 350, catagory: "main course", isspicy: true },
-    { id: 4, name: "Dorowot", price: 300, catagory: "main course", isspicy: true },
-    { id: 5, name: "Tibs", price: 250, catagory: "main course", isspicy: true },
-    { id: 6, name: "Gored Gored", price: 380, catagory: "main course", isspicy: false },
-    { id: 7, name: "Atakilt", price: 220, catagory: "side dish", isspicy: false },
-    { id: 8, name: "Salad", price: 100, catagory: "side dish", isspicy: false },
-    { id: 9, name: "Spiced Tea", price: 40, catagory: "beverage", isspicy: true },
-    { id: 10, name: "Fresh Juice", price: 90, catagory: "beverage", isspicy: false },
-    { id: 11, name: "Water", price: 30, catagory: "beverage", isspicy: false },
-  ];
+  useEffect(()=>{
+    async function loadData(){
+      try{
+        const res = await fetch('/menu.json')
+        if(!res.ok){
+          throw new Error(`Failed to fetch menu: ${res.statusText}`);
+        }
+        const data=await res.json();
+        if(!data || !Array.isArray(data.items)){
+          throw new Error("Invalid menu format");
+        }
+        setDishes(data.items);
+
+      }
+      catch(e){
+        console.log(e.message);
+        setError(e.message);
+      }
+      finally{
+        setLoading(false);
+      }
+    }
+
+    loadData();
+  },[]);
+
 
   const shown = catagory === "all"
-    ? dishes
-    : dishes.filter(dish => dish.catagory.toLowerCase().trim() === catagory.toLowerCase().trim());
+    ? dish
+    : dish.filter(dish => dish.catagory.toLowerCase().trim() === catagory.toLowerCase().trim());
 
   function addToOrder(price) {
     setTotal(prevTotal => prevTotal + price);
@@ -47,7 +63,17 @@ function Main() {
       <p className="category-status">Showing: <strong style={{ textTransform: 'capitalize' }}>{catagory}</strong> ({shown.length} items)</p>
 
       <div className="dishes-grid">
-        {shown.map((item) => (
+        {loading ?(
+          <p>Loading...</p>
+        ):
+        error ? (
+          <p>Error: {error}</p>
+        ): 
+        shown.length==0?
+        (
+          <p>No dishes found in category "{catagory}".</p>
+        ):
+        shown.map((item) => (
           <Dish
             key={item.id}
             {...item}
