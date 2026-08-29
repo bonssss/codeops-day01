@@ -2,9 +2,10 @@ import React from 'react'
 
 function Header() {
   return (
-    <div>
-        <h1>Bonsa's Dishes</h1>
-    </div>
+    <header className="header">
+      <h1>Addis Eats</h1>
+      <p>Authentic Ethiopian Cuisine & Fresh Fast Food</p>
+    </header>
   )
 }
 
