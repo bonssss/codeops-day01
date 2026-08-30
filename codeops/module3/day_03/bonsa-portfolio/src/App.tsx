@@ -8,6 +8,7 @@ import Process from './components/Process'
 import Experience from './components/Experience'
 import About from './components/About'
 import Contact from './components/Contact'
+import Footer from './components/Footer'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -24,6 +25,7 @@ function App() {
         <Experience/>
         <About/>
         <Contact/>
+        <Footer/>
       </main>
       
     </div>
