@@ -5,7 +5,6 @@ import {
   Code2,
   Bug,
   Rocket,
-  ArrowRight,
 } from "lucide-react";
 
 const steps = [
