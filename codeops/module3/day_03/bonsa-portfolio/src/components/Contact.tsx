@@ -53,14 +53,14 @@ function Linkedin({ size = 24, className = "" }: IconProps) {
 const socials = [
   {
     name: "GitHub",
-    label: "@bonsa-dev",
-    href: "#",
+    label: "@bonssss",
+    href: "https://github.com/bonssss",
     icon: Github,
   },
   {
     name: "LinkedIn",
     label: "Bonsa Desalegn",
-    href: "#",
+    href: "https://www.linkedin.com/in/bonsa-desalegn-90175b257/",
     icon: Linkedin,
   },
 ];
@@ -102,7 +102,7 @@ export default function Contact() {
 
           {/* Email CTA */}
           <motion.a
-            href="mailto:your.email@example.com"
+            href="mailto:bons6710hos@gmail.com"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -140,7 +140,7 @@ export default function Contact() {
               </p>
 
               <div className="mt-8 flex items-center gap-3 text-sm text-blue-400">
-                your.email@example.com
+                bons6710hos@gmail.com
                 <Send size={14} />
               </div>
 

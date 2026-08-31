@@ -25,10 +25,11 @@ export const skillGroups: SkillGroup[] = [
     icon: Server,
     technologies: [
       "Node.js",
-      "Express",
-      "NestJS",
+      "Express.js",
       "FastAPI",
       "REST APIs",
+      "PostgreSQL",
+      "PostGIS",
       "Prisma",
     ],
   },

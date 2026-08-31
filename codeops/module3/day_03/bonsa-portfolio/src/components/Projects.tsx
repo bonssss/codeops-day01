@@ -186,26 +186,23 @@ function ProjectCard({
 
 
         {/* Project preview */}
-        <div className="relative min-h-[280px] overflow-hidden border-t border-white/10 lg:border-l lg:border-t-0">
+        <div className="relative min-h-[300px] bg-[#111111] overflow-hidden border-t border-white/10 lg:border-l lg:border-t-0 flex items-center justify-center p-4">
 
-          {/* Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-transparent" />
-
+          {/* Background subtle glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-transparent pointer-events-none" />
 
           {/* Image */}
           <img
             src={project.image}
             alt={project.title}
-            className="absolute inset-0 h-full w-full object-cover opacity-60 grayscale transition duration-700 group-hover:scale-105 group-hover:opacity-90 group-hover:grayscale-0"
+            className="h-full w-full object-cover object-top rounded-lg border border-white/5 opacity-90 transition duration-500 group-hover:scale-105 group-hover:opacity-100 shadow-xl"
           />
 
-
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-
+          {/* Subtle Bottom Gradient for readable text */}
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
 
           {/* Arrow */}
-          <div className="absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur transition duration-300 group-hover:rotate-45 group-hover:bg-blue-600">
+          <div className="absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur transition duration-300 group-hover:rotate-45 group-hover:bg-blue-600 shadow-lg">
             <ArrowUpRight size={20} />
           </div>
 
