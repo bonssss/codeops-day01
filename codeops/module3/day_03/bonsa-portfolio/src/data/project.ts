@@ -1,3 +1,9 @@
+import bugsight from "../assets/images/bugsight.png";
+import gym from "../assets/images/gym.png";
+import love from "../assets/images/love.png";
+import portfolio from "../assets/images/portfolio.png";
+import daas from "../assets/images/daas.png";
+
 export interface Project {
   number: string;
   title: string;
@@ -14,48 +20,68 @@ export const projects: Project[] = [
     number: "01",
     title: "BugScribe AI",
     description:
-      "An AI-powered platform for creating, analyzing, and managing software bug reports.",
+      "An AI-powered platform for creating, analyzing, and managing software bug reports with intelligent categorization.",
     category: "AI / QA",
-    image: "/projects/bugscribe.png",
+    image: bugsight,
     technologies: [
-      "Next.js",
-      "FastAPI",
-      "PostgreSQL",
-      "AI",
+      "React.js",
+      "Supabase",
+      "Python",
+      "Gemini API",
     ],
-    github: "#",
-    demo: "#",
+    github: "https://github.com/bonssss/bugscribe-ai",
+    demo: "https://bugscribe-ai.vercel.app/",
   },
 
   {
     number: "02",
-    title: "eDAS",
+    title: "Delivery AS A Service (DAAS)",
     description:
-      "A digital addressing system focused on reliable backend services, APIs, and data management.",
-    category: "BACKEND",
-    image: "/projects/edas.png",
+      "Enterprise-grade logistics platform powering B2B and government deliveries with real-time tracking and smart routing.",
+    category: "FULLSTACK & BACKEND",
+    image: daas,
     technologies: [
+      "React",
+      "TypeScript",
       "Node.js",
       "PostgreSQL",
-      "Prisma",
+      "PostGIS",
     ],
     github: "#",
-    demo: "#",
+    demo: "https://dev.daas.ambalaymaps.com/",
   },
 
   {
     number: "03",
-    title: "Smart Data Entry",
+    title: "Oli Fit Gym",
     description:
-      "An automation system designed to reduce repetitive browser-based data entry.",
-    category: "AUTOMATION",
-    image: "/projects/data-entry.png",
+      "Modern, responsive web platform for Olyyad Gym featuring workout program showcases, membership details, and sleek UI.",
+    category: "FRONTEND",
+    image: gym,
     technologies: [
-      "Playwright",
+      "React",
       "TypeScript",
-      "Node.js",
+      "Tailwind CSS",
     ],
     github: "#",
-    demo: "#",
+    demo: "https://gym-website-rho-sepia.vercel.app/",
+  },
+
+ 
+  {
+    number: "04",
+    title: "Portfolio Website",
+    description:
+      "A personal portfolio website showcasing my skills, projects, and experience.",
+    category: "FRONTEND",
+    image: portfolio,
+    technologies: [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+    ],
+    github: "#",
+    demo: "https://bons-dev-qa.vercel.app/",
   },
 ];

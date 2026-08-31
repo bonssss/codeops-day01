@@ -9,47 +9,50 @@ export interface ExperienceItem {
 
 export const experiences: ExperienceItem[] = [
   {
-    year: "2025 — PRESENT",
-    role: "Backend Developer / QA Engineer",
-    company: "Professional Software Projects",
-    type: "ENGINEERING",
+    year: "JAN 2026 — PRESENT",
+    role: "Backend Developer",
+    company: "Ambalay Maps",
+    type: "BACKEND & GEOSPATIAL",
     description:
-      "Building backend services, designing APIs, testing applications, and improving software reliability across web and mobile systems.",
+      "Developing RESTful APIs with Node.js/Express, designing & optimizing PostgreSQL/PostGIS databases, and integrating geospatial mapping services.",
     technologies: [
       "Node.js",
+      "Express.js",
       "PostgreSQL",
+      "PostGIS",
       "REST APIs",
+      "Git",
+    ],
+  },
+  {
+    year: "FEB 2025 — PRESENT",
+    role: "QA / Automation Engineer (SDET)",
+    company: "Arifpay Financial Technologies S.C",
+    type: "FINTECH & QUALITY ASSURANCE",
+    description:
+      "Building and maintaining Playwright end-to-end automation frameworks for fintech applications, automating API testing for payment services, and setting up CI/CD quality pipelines.",
+    technologies: [
       "Playwright",
-      "Appium",
+      "Python",
+      "TypeScript",
+      "Postman",
+      "GitHub Actions",
+      "CI/CD",
     ],
   },
   {
-    year: "2025",
-    role: "QA Engineer",
-    company: "ArifPay",
-    type: "QUALITY ENGINEERING",
+    year: "JUL 2024 — FEB 2025",
+    role: "Full Stack Developer & QA Engineer",
+    company: "Binary Cosmo (NetRyde)",
+    type: "FULL STACK & QA",
     description:
-      "Worked across web, API, and mobile testing with a focus on identifying defects, validating functionality, and improving software quality.",
+      "Engineered full stack features and executed end-to-end automated testing for a multi-role ride service platform (Customer, Driver & Admin modules).",
     technologies: [
-      "API Testing",
-      "Mobile Testing",
-      "Web Testing",
-      "JIRA",
-      "Automation",
-    ],
-  },
-  {
-    year: "2024 — 2025",
-    role: "Graphic Designer",
-    company: "Netryde",
-    type: "DESIGN",
-    description:
-      "Created digital graphics and visual content while working within a defined brand system for a Seattle-based ride service.",
-    technologies: [
-      "Photoshop",
-      "Brand Design",
-      "Visual Design",
-      "Marketing",
+      "React",
+      "Node.js",
+      "Selenium",
+      "JavaScript",
+      "QA Strategy",
     ],
   },
 ];
