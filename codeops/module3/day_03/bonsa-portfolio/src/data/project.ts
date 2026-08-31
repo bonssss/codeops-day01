@@ -1,6 +1,5 @@
 import bugsight from "../assets/images/bugsight.png";
 import gym from "../assets/images/gym.png";
-import love from "../assets/images/love.png";
 import portfolio from "../assets/images/portfolio.png";
 import daas from "../assets/images/daas.png";
 
