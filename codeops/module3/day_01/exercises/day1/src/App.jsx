@@ -1,6 +1,5 @@
-import Card from './components/Card'
-import Dish from './components/Dish'
 import Header from './components/Header'
+import Menu from './components/Menu'
 
 const Dishes = [
   {
@@ -31,26 +30,27 @@ const Dishes = [
     spicy: false,
     category: "Breakfast",
   },
+  {
+    id: 5,
+    name: "Doro Wat",
+    price: 450,
+    spicy: true,
+    category: "Traditional",
+  },
 ]
 
 function App() {
+  // Static prop-driven category filter (e.g. "All", "Main", "Breakfast", "Dessert")
+  const selectedCategory = "All"
+
   return (
     <div className="container">
       <Header />
-      <h1>OUR MENU</h1>
-      <p className="subtitle">Come and check out our delicious menu items!</p>
-
-      <div className="dishes">
-        {Dishes.map((dish) => (
-          <Card key={dish.id}>
-            <Dish
-              name={dish.name}
-              price={dish.price}
-              spicy={dish.spicy}
-            />
-          </Card>
-        ))}
-      </div>
+      <main>
+        <h1>OUR MENU</h1>
+        <p className="subtitle">Come and check out our delicious menu items!</p>
+        <Menu dishes={Dishes} selectedCategory={selectedCategory} />
+      </main>
     </div>
   )
 }
