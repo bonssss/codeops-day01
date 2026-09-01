@@ -1,41 +1,56 @@
-import { useState } from 'react'
-
-import Dish from './components/Dish'
 import Header from './components/Header'
-const Dishes=[
-    {
-        id:1,
-        name:"Pizza",
-        price:10
-    },
-    {
-        id:2,
-        name:"Pasta",
-        price:12
-    },
-    {
-        id:3,
-        name:"Burger",
-        price:15
-    },
-    {
-        id:4,
-        name:"Sandwich",
-        price:8
-    }
-]
-function App() {
-  return (
-    <div>
-      <Header/>
-      <h1>OUR MENU</h1>
-        <p>Come and check out our delicious menu items!</p>
+import Menu from './components/Menu'
 
-        <div className="dishes">
-            {Dishes.map((dish) => (
-                <Dish key={dish.id} name={dish.name} price={dish.price}/>
-            ))}
-        </div>
+const Dishes = [
+  {
+    id: 1,
+    name: "Pizza",
+    price: 350,
+    spicy: false,
+    category: "Main",
+  },
+  {
+    id: 2,
+    name: "Pasta",
+    price: 280,
+    spicy: false,
+    category: "Main",
+  },
+  {
+    id: 3,
+    name: "Burger",
+    price: 300,
+    spicy: true,
+    category: "Main",
+  },
+  {
+    id: 4,
+    name: "Sandwich",
+    price: 150,
+    spicy: false,
+    category: "Breakfast",
+  },
+  {
+    id: 5,
+    name: "Doro Wat",
+    price: 450,
+    spicy: true,
+    category: "Traditional",
+  },
+]
+
+function App() {
+  // Static prop-driven category filter (e.g. "All", "Main", "Breakfast", "Dessert")
+  const selectedCategory = "All"
+
+  return (
+    <div className="container">
+      <Header />
+      <main>
+        <h1>OUR MENU</h1>
+        <p className="subtitle">Come and check out our delicious menu items!</p>
+        <Menu dishes={Dishes} selectedCategory={selectedCategory} />
+      </main>
     </div>
   )
 }
