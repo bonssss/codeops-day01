@@ -1,34 +1,65 @@
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import Card from './Card'
 import Dish from './Dish'
+import CategoryBar from './CategoryBar'
+import DeliveryForm from './DeliveryForm'
 
-function Menu({ dishes, selectedCategory = "All" }) {
-  const filteredDishes = selectedCategory === "All"
-    ? dishes
-    : dishes.filter((dish) => dish.category === selectedCategory)
+const CATEGORIES = ["All", "Main", "Breakfast", "Traditional", "Dessert"]
 
-  // Early return empty state when nothing matches
-  if (filteredDishes.length === 0) {
-    return (
-      <div className="empty-state">
-        <p>No dishes found for category &quot;{selectedCategory}&quot;.</p>
-      </div>
-    )
+function Menu({ dishes }) {
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [orderTotal, setOrderTotal] = useState(0)
+
+  const handleAddDish = (price) => {
+    setOrderTotal((prevTotal) => prevTotal + price)
   }
 
-  // Render filtered list with map, using dish.id as key
+  const filteredDishes =
+    selectedCategory === "All"
+      ? dishes
+      : dishes.filter((dish) => dish.category === selectedCategory)
+
   return (
-    <div className="dishes">
-      {filteredDishes.map((dish) => (
-        <Card key={dish.id}>
-          <Dish
-            name={dish.name}
-            price={dish.price}
-            spicy={dish.spicy}
-            currency={dish.currency}
-          />
-        </Card>
-      ))}
+    <div className="menu-container">
+      {/* Category selector chips */}
+      <CategoryBar
+        categories={CATEGORIES}
+        selected={selectedCategory}
+        onSelect={setSelectedCategory}
+      />
+
+      {/* Dish list or Empty state */}
+      {filteredDishes.length === 0 ? (
+        <div className="empty-state">
+          <p>No dishes found for category &quot;{selectedCategory}&quot;.</p>
+        </div>
+      ) : (
+        <div className="dishes">
+          {filteredDishes.map((dish) => (
+            <Card key={dish.id}>
+              <Dish
+                name={dish.name}
+                price={dish.price}
+                spicy={dish.spicy}
+                currency={dish.currency}
+                onAdd={handleAddDish}
+              />
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {/* Running Order Total below the menu */}
+      <div className="order-summary-box">
+        <div className="order-total-info">
+          <span>Order Running Total:</span>
+          <span className="total-amount">{orderTotal} ETB</span>
+        </div>
+      </div>
+
+      {/* Controlled Delivery Form with TeleBirr validation */}
+      <DeliveryForm orderTotal={orderTotal} />
     </div>
   )
 }
@@ -44,7 +75,6 @@ Menu.propTypes = {
       category: PropTypes.string,
     })
   ).isRequired,
-  selectedCategory: PropTypes.string,
 }
 
 export default Menu

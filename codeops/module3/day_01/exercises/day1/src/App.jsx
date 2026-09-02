@@ -40,16 +40,13 @@ const Dishes = [
 ]
 
 function App() {
-  // Static prop-driven category filter (e.g. "All", "Main", "Breakfast", "Dessert")
-  const selectedCategory = "All"
-
   return (
     <div className="container">
       <Header />
       <main>
         <h1>OUR MENU</h1>
         <p className="subtitle">Come and check out our delicious menu items!</p>
-        <Menu dishes={Dishes} selectedCategory={selectedCategory} />
+        <Menu dishes={Dishes} />
       </main>
     </div>
   )
