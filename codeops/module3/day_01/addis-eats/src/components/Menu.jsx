@@ -1,35 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import Card from './Card'
-import Dish from './Dish'
+import CategoryBar from './CategoryBar'
+import DishList from './DishList'
+import OrderForm from './OrderForm'
+import { dishes as defaultDishes } from '../data'
 
-function Menu({ dishes, selectedCategory = "All" }) {
-  const filteredDishes = selectedCategory === "All"
-    ? dishes
-    : dishes.filter((dish) => dish.category === selectedCategory)
+const CATEGORIES = ["All", "Traditional", "Fast Food", "Drinks", "Dessert"]
 
-  // Empty state early return
-  if (filteredDishes.length === 0) {
-    return (
-      <div className="empty-state">
-        <p>No dishes found in category "{selectedCategory}".</p>
-      </div>
-    )
+function Menu({ dishes = defaultDishes }) {
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [orderTotal, setOrderTotal] = useState(0)
+
+  // Derived filtered dish list from category state
+  const filteredDishes =
+    selectedCategory === "All"
+      ? dishes
+      : dishes.filter((dish) => dish.category === selectedCategory)
+
+  // Handler to increment running order total
+  const handleAddDish = (price) => {
+    setOrderTotal((prevTotal) => prevTotal + price)
   }
 
   return (
-    <div className="dishes">
-      {filteredDishes.map((dish) => (
-        <Card key={dish.id}>
-          <Dish
-            name={dish.name}
-            price={dish.price}
-            spicy={dish.spicy}
-            currency={dish.currency}
-            category={dish.category}
-          />
-        </Card>
-      ))}
+    <div className="menu-container">
+      {/* Category selector chips */}
+      <CategoryBar
+        categories={CATEGORIES}
+        selected={selectedCategory}
+        onSelect={setSelectedCategory}
+      />
+
+      {/* Filtered dish list with empty state */}
+      <DishList
+        dishes={filteredDishes}
+        onAddDish={handleAddDish}
+      />
+
+      {/* Running Order Total in ETB */}
+      <div className="order-summary-panel">
+        <span className="summary-label">Order Total:</span>
+        <span className="summary-amount">{orderTotal} ETB</span>
+      </div>
+
+      {/* Controlled Order and Delivery Form */}
+      <OrderForm orderTotal={orderTotal} />
     </div>
   )
 }
@@ -44,8 +59,7 @@ Menu.propTypes = {
       currency: PropTypes.string,
       category: PropTypes.string,
     })
-  ).isRequired,
-  selectedCategory: PropTypes.string,
+  ),
 }
 
 export default Menu
