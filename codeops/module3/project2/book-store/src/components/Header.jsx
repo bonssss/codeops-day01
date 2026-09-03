@@ -1,5 +1,3 @@
-import React from 'react'
-import  '../index.css'
 function Header() {
   return (
     <div className='flex justify-center items-center h-20 bg-gray-800 text-white'>
