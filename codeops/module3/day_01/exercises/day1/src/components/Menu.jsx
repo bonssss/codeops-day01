@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Card from './Card'
 import Dish from './Dish'
 import CategoryBar from './CategoryBar'
@@ -11,7 +11,20 @@ function Menu() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState("All")
+  const [searchQuery, setSearchQuery] = useState('')
   const [orderTotal, setOrderTotal] = useState(0)
+
+  // Exercise 7: Focus a search input on mount with useRef
+  const searchInputRef = useRef(null)
+
+  // Note: The focus() call must be placed inside an effect (useEffect) because during the initial
+  // render phase, the component's JSX has not yet been mounted/attached to the actual browser DOM.
+  // `searchInputRef.current` is null until React completes the DOM mutation phase.
+  // useEffect runs asynchronously after the component has rendered and mounted to the DOM,
+  // guaranteeing that `searchInputRef.current` points to the rendered input DOM element.
+  useEffect(() => {
+    searchInputRef.current?.focus()
+  }, [])
 
   // Exercise 2, 3, 4, 5 & 6: Fetch menu array with AbortController in useEffect cleanup
   useEffect(() => {
@@ -56,7 +69,10 @@ function Menu() {
     setOrderTotal((prevTotal) => prevTotal + price)
   }
 
-  const filteredDishes = dishes
+  // Filter by search query on the currently loaded category dishes
+  const filteredDishes = dishes.filter((dish) =>
+    dish.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
+  )
 
   // Exercise 1: Update document.title to show the number of dishes currently shown
   useEffect(() => {
@@ -65,6 +81,18 @@ function Menu() {
 
   return (
     <div className="menu-container">
+      {/* Exercise 7: Search input focused on mount */}
+      <div className="search-container">
+        <input
+          ref={searchInputRef}
+          type="search"
+          className="search-input"
+          placeholder="🔍 Search dishes by name..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
       {/* Category selector chips */}
       <CategoryBar
         categories={CATEGORIES}
