@@ -13,7 +13,7 @@ function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [orderTotal, setOrderTotal] = useState(0)
 
-  // Exercise 2, 3 & 4: Fetch menu array with loading, error state, and res.ok check
+  // Exercise 2, 3, 4 & 5: Fetch menu array when selectedCategory changes
   useEffect(() => {
     setLoading(true)
     setError(null)
@@ -27,23 +27,24 @@ function Menu() {
         return res.json()
       })
       .then((data) => {
-        setDishes(data)
+        const result =
+          selectedCategory === "All"
+            ? data
+            : data.filter((dish) => dish.category === selectedCategory)
+        setDishes(result)
         setLoading(false)
       })
       .catch((err) => {
         setError(err.message)
         setLoading(false)
       })
-  }, [])
+  }, [selectedCategory])
 
   const handleAddDish = (price) => {
     setOrderTotal((prevTotal) => prevTotal + price)
   }
 
-  const filteredDishes =
-    selectedCategory === "All"
-      ? dishes
-      : dishes.filter((dish) => dish.category === selectedCategory)
+  const filteredDishes = dishes
 
   // Exercise 1: Update document.title to show the number of dishes currently shown
   useEffect(() => {
