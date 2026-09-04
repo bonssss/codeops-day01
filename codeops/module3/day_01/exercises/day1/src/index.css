@@ -48,6 +48,29 @@ h1 {
   margin-bottom: 1.5rem;
 }
 
+/* Search Bar */
+.search-container {
+  margin-bottom: 1.25rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #ffffff;
+  color: #1e293b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
 /* Category Bar & Chips */
 .category-bar {
   display: flex;
@@ -186,6 +209,27 @@ h1 {
   color: #64748b;
   font-size: 1.1rem;
   margin-top: 1.5rem;
+}
+
+.status-message {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+}
+
+.loading-state {
+  background: #f8fafc;
+  border: 1px dashed #94a3b8;
+  color: #475569;
+}
+
+.error-state {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+  font-weight: 500;
 }
 
 /* Order Summary Box */
