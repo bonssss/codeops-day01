@@ -85,6 +85,26 @@ body.dark-theme .form-group input {
   border-bottom: 1px solid #e2e8f0;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cart-badge-header {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #059669;
+  background: #d1fae5;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+}
+
+body.dark-theme .cart-badge-header {
+  background: #064e3b;
+  color: #6ee7b7;
+}
+
 .theme-toggle-btn {
   background-color: transparent;
   border: 1px solid #cbd5e1;

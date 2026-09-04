@@ -1,14 +1,18 @@
-import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTheme } from '../context/ThemeContext'
+import { useCart } from '../context/CartContext'
 
-function Dish({ name, price, spicy, currency = "ETB", onAdd }) {
-  const [count, setCount] = useState(0)
+function Dish({ id, name, price, spicy, currency = "ETB", onAdd }) {
   // Exercise 1: Read theme from deeply nested component via ThemeContext
   const { theme } = useTheme()
+  // Exercise 5: Use CartContext to dispatch addToCart and read item quantity
+  const { items, addToCart } = useCart()
+
+  const cartItem = items.find((item) => item.id === id)
+  const count = cartItem ? cartItem.quantity : 0
 
   const handleAdd = () => {
-    setCount((prevCount) => prevCount + 1)
+    addToCart({ id, name, price, spicy, currency })
     if (onAdd) {
       onAdd(price)
     }
@@ -33,6 +37,7 @@ function Dish({ name, price, spicy, currency = "ETB", onAdd }) {
 }
 
 Dish.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   spicy: PropTypes.bool,

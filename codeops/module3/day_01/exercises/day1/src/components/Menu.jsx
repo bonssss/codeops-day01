@@ -4,13 +4,15 @@ import Dish from './Dish'
 import CategoryBar from './CategoryBar'
 import DeliveryForm from './DeliveryForm'
 import useFetch from '../hooks/useFetch'
+import { useCart } from '../context/CartContext'
 
 const CATEGORIES = ["All", "Main", "Breakfast", "Traditional", "Dessert"]
 
 function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState('')
-  const [orderTotal, setOrderTotal] = useState(0)
+  // Exercise 5: Derived orderTotal from CartContext
+  const { orderTotal } = useCart()
 
   // Exercise 2: Fetch data using custom useFetch hook
   const { data: rawDishes, loading, error } = useFetch('/dishes.json')
@@ -92,11 +94,11 @@ function Menu() {
             {filteredDishes.map((dish) => (
               <Card key={dish.id}>
                 <Dish
+                  id={dish.id}
                   name={dish.name}
                   price={dish.price}
                   spicy={dish.spicy}
                   currency={dish.currency}
-                  onAdd={handleAddDish}
                 />
               </Card>
             ))}
