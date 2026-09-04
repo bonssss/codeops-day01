@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Doro Wat",
+    "price": 240,
+    "category": "Traditional",
+    "spicy": true,
+    "currency": "ETB"
+  },
+  {
+    "id": 2,
+    "name": "Tibs",
+    "price": 280,
+    "category": "Traditional",
+    "spicy": false,
+    "currency": "ETB"
+  },
+  {
+    "id": 3,
+    "name": "Shiro",
+    "price": 150,
+    "category": "Traditional",
+    "spicy": true,
+    "currency": "ETB"
+  },
+  {
+    "id": 4,
+    "name": "Kitfo",
+    "price": 320,
+    "category": "Traditional",
+    "spicy": true,
+    "currency": "ETB"
+  },
+  {
+    "id": 5,
+    "name": "Pizza",
+    "price": 350,
+    "category": "Fast Food",
+    "spicy": false,
+    "currency": "ETB"
+  },
+  {
+    "id": 6,
+    "name": "Burger",
+    "price": 250,
+    "category": "Fast Food",
+    "spicy": true,
+    "currency": "ETB"
+  },
+  {
+    "id": 7,
+    "name": "Fries",
+    "price": 120,
+    "category": "Fast Food",
+    "spicy": false,
+    "currency": "ETB"
+  },
+  {
+    "id": 8,
+    "name": "Spiced Tea",
+    "price": 40,
+    "category": "Drinks",
+    "spicy": true,
+    "currency": "ETB"
+  },
+  {
+    "id": 9,
+    "name": "Fresh Juice",
+    "price": 90,
+    "category": "Drinks",
+    "spicy": false,
+    "currency": "ETB"
+  }
+]
