@@ -13,12 +13,15 @@ function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [orderTotal, setOrderTotal] = useState(0)
 
-  // Exercise 2, 3, 4 & 5: Fetch menu array when selectedCategory changes
+  // Exercise 2, 3, 4, 5 & 6: Fetch menu array with AbortController in useEffect cleanup
   useEffect(() => {
+    const controller = new AbortController()
+    const { signal } = controller
+
     setLoading(true)
     setError(null)
 
-    fetch('/dishes.json')
+    fetch('/dishes.json', { signal })
       .then((res) => {
         // Exercise 4: Check res.ok and throw a clear error message
         if (!res.ok) {
@@ -35,9 +38,18 @@ function Menu() {
         setLoading(false)
       })
       .catch((err) => {
+        // Exercise 6: Ignore AbortError when request is cancelled
+        if (err.name === 'AbortError') {
+          return
+        }
         setError(err.message)
         setLoading(false)
       })
+
+    // Cleanup: abort previous in-flight request when component unmounts or dependency changes
+    return () => {
+      controller.abort()
+    }
   }, [selectedCategory])
 
   const handleAddDish = (price) => {
