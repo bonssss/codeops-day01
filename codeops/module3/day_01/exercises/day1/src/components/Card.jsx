@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import PropTypes from 'prop-types'
 
 function Card({ children }) {
@@ -12,4 +13,4 @@ Card.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default Card
+export default memo(Card)

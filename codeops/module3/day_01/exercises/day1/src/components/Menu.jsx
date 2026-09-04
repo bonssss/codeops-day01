@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import Card from './Card'
 import Dish from './Dish'
 import CategoryBar from './CategoryBar'
@@ -16,7 +16,7 @@ function Menu() {
 
   // Exercise 2: Fetch data using custom useFetch hook
   const { data: rawDishes, loading, error } = useFetch('/dishes.json')
-  const dishes = rawDishes || []
+  const dishes = useMemo(() => rawDishes || [], [rawDishes])
 
   // Exercise 7: Focus a search input on mount with useRef
   const searchInputRef = useRef(null)
@@ -30,19 +30,22 @@ function Menu() {
     searchInputRef.current?.focus()
   }, [])
 
-  const handleAddDish = (price) => {
-    setOrderTotal((prevTotal) => prevTotal + price)
-  }
+  // Exercise 7: Callback memoization with useCallback
+  const handleSelectCategory = useCallback((category) => {
+    setSelectedCategory(category)
+  }, [])
 
-  const categoryFiltered =
-    selectedCategory === "All"
-      ? dishes
-      : dishes.filter((dish) => dish.category === selectedCategory)
+  // Exercise 7: Memoize filtered dishes to prevent recalculation across unrelated re-renders
+  const filteredDishes = useMemo(() => {
+    const categoryFiltered =
+      selectedCategory === "All"
+        ? dishes
+        : dishes.filter((dish) => dish.category === selectedCategory)
 
-  // Filter by search query on the currently loaded category dishes
-  const filteredDishes = categoryFiltered.filter((dish) =>
-    dish.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
-  )
+    return categoryFiltered.filter((dish) =>
+      dish.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
+    )
+  }, [dishes, selectedCategory, searchQuery])
 
   // Exercise 1: Update document.title to show the number of dishes currently shown
   useEffect(() => {
@@ -67,7 +70,7 @@ function Menu() {
       <CategoryBar
         categories={CATEGORIES}
         selected={selectedCategory}
-        onSelect={setSelectedCategory}
+        onSelect={handleSelectCategory}
       />
 
       {/* Exercise 3: Render loading and error state before the list */}

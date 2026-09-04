@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import PropTypes from 'prop-types'
 
 function CategoryBar({ categories, selected, onSelect }) {
@@ -23,4 +24,4 @@ CategoryBar.propTypes = {
   onSelect: PropTypes.func.isRequired,
 }
 
-export default CategoryBar
+export default memo(CategoryBar)
