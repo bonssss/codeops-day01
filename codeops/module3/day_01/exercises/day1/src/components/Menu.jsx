@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import Card from './Card'
 import Dish from './Dish'
 import CategoryBar from './CategoryBar'
@@ -7,9 +6,19 @@ import DeliveryForm from './DeliveryForm'
 
 const CATEGORIES = ["All", "Main", "Breakfast", "Traditional", "Dessert"]
 
-function Menu({ dishes }) {
+function Menu() {
+  const [dishes, setDishes] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [orderTotal, setOrderTotal] = useState(0)
+
+  // Exercise 2: Fetch menu array from public/dishes.json in useEffect with []
+  useEffect(() => {
+    fetch('/dishes.json')
+      .then((res) => res.json())
+      .then((data) => {
+        setDishes(data)
+      })
+  }, [])
 
   const handleAddDish = (price) => {
     setOrderTotal((prevTotal) => prevTotal + price)
@@ -67,19 +76,6 @@ function Menu({ dishes }) {
       <DeliveryForm orderTotal={orderTotal} />
     </div>
   )
-}
-
-Menu.propTypes = {
-  dishes: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      spicy: PropTypes.bool,
-      currency: PropTypes.string,
-      category: PropTypes.string,
-    })
-  ).isRequired,
 }
 
 export default Menu
