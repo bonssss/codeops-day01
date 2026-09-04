@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useTheme } from '../context/ThemeContext'
 
 function Dish({ name, price, spicy, currency = "ETB", onAdd }) {
   const [count, setCount] = useState(0)
+  // Exercise 1: Read theme from deeply nested component via ThemeContext
+  const { theme } = useTheme()
 
   const handleAdd = () => {
     setCount((prevCount) => prevCount + 1)
@@ -12,7 +15,7 @@ function Dish({ name, price, spicy, currency = "ETB", onAdd }) {
   }
 
   return (
-    <div className="dish">
+    <div className={`dish dish-theme-${theme}`}>
       <h2>
         <span>
           {name} {count > 0 && <span className="dish-count">({count})</span>}
