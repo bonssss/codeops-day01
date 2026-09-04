@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Card from './Card'
 import Dish from './Dish'
@@ -19,6 +19,11 @@ function Menu({ dishes }) {
     selectedCategory === "All"
       ? dishes
       : dishes.filter((dish) => dish.category === selectedCategory)
+
+  // Exercise 1: Update document.title to show the number of dishes currently shown
+  useEffect(() => {
+    document.title = `${filteredDishes.length} dishes shown`
+  }, [filteredDishes.length])
 
   return (
     <div className="menu-container">
