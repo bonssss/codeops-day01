@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
 const ThemeContext = createContext()
@@ -6,20 +6,24 @@ const ThemeContext = createContext()
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('light')
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'))
-  }
+  }, [])
 
   // Update document body theme attribute/class for global theme styling
   useEffect(() => {
     document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme'
   }, [theme])
 
-  const value = {
-    theme,
-    toggleTheme,
-    isDark: theme === 'dark',
-  }
+  // Memoize theme context value object to prevent child re-renders on unrelated parent updates
+  const value = useMemo(
+    () => ({
+      theme,
+      toggleTheme,
+      isDark: theme === 'dark',
+    }),
+    [theme, toggleTheme]
+  )
 
   return (
     <ThemeContext.Provider value={value}>

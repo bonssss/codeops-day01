@@ -1,12 +1,12 @@
-import { createContext, useContext, useReducer } from 'react'
+import { createContext, useContext, useReducer, useMemo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { cartReducer, initialCartState, CART_ACTIONS } from '../reducers/cartReducer'
 
 const CartContext = createContext()
 
 /**
- * Exercise 5: CartProvider component holding cartReducer state
- * and providing items, dispatch, and derived total.
+ * Exercise 5 & 6: CartProvider component holding cartReducer state
+ * and providing a memoized items, dispatch, and derived total context value.
  */
 export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(cartReducer, initialCartState)
@@ -22,28 +22,53 @@ export function CartProvider({ children }) {
     0
   )
 
-  // Convenience helper dispatchers
-  const addToCart = (dish) => {
+  // Convenience helper dispatchers wrapped in useCallback for stable references
+  const addToCart = useCallback((dish) => {
     dispatch({ type: CART_ACTIONS.ADD_ITEM, payload: dish })
-  }
+  }, [dispatch])
 
-  const removeFromCart = (dishId) => {
+  const removeFromCart = useCallback((dishId) => {
     dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: dishId })
-  }
+  }, [dispatch])
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     dispatch({ type: CART_ACTIONS.CLEAR_CART })
-  }
+  }, [dispatch])
 
-  const value = {
-    items: state.items,
-    orderTotal,
-    totalItems,
-    dispatch,
-    addToCart,
-    removeFromCart,
-    clearCart,
-  }
+  /**
+   * ============================================================================
+   * Exercise 6: Memoizing the Provider Value with useMemo
+   * ============================================================================
+   * Why memoize the Context value object?
+   * 
+   * In JavaScript, object literals create a new reference in memory on every render.
+   * 
+   * Without `useMemo`:
+   * Whenever `CartProvider` or its parent tree re-renders for any reason, a new
+   * object reference is passed to `<CartContext.Provider value={value}>`. React uses
+   * `Object.is` reference equality to detect context value changes. As a result,
+   * EVERY component consuming `useCart()` (Header, Dish, Menu, DeliveryForm, etc.)
+   * would be forced to re-render, even if the actual items or totals never changed!
+   * 
+   * With `useMemo`:
+   * The context value object maintains reference stability and is ONLY recomputed
+   * when its actual dependencies (`state.items`, `orderTotal`, `totalItems`) change.
+   * This completely prevents unnecessary cascading re-renders across all consumer
+   * components down the component tree.
+   * ============================================================================
+   */
+  const value = useMemo(
+    () => ({
+      items: state.items,
+      orderTotal,
+      totalItems,
+      dispatch,
+      addToCart,
+      removeFromCart,
+      clearCart,
+    }),
+    [state.items, orderTotal, totalItems, addToCart, removeFromCart, clearCart]
+  )
 
   return (
     <CartContext.Provider value={value}>
