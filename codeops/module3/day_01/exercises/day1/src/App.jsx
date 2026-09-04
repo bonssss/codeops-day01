@@ -1,4 +1,5 @@
 import Header from './components/Header'
+import SpecialOffers from './components/SpecialOffers'
 import Menu from './components/Menu'
 import { ThemeProvider } from './context/ThemeContext'
 
@@ -10,6 +11,7 @@ function App() {
         <main>
           <h1>OUR MENU</h1>
           <p className="subtitle">Come and check out our delicious menu items!</p>
+          <SpecialOffers />
           <Menu />
         </main>
       </div>
