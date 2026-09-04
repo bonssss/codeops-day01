@@ -13,13 +13,19 @@ function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [orderTotal, setOrderTotal] = useState(0)
 
-  // Exercise 2 & 3: Fetch menu array with loading and error state
+  // Exercise 2, 3 & 4: Fetch menu array with loading, error state, and res.ok check
   useEffect(() => {
     setLoading(true)
     setError(null)
 
     fetch('/dishes.json')
-      .then((res) => res.json())
+      .then((res) => {
+        // Exercise 4: Check res.ok and throw a clear error message
+        if (!res.ok) {
+          throw new Error(`Failed to fetch dishes (Status ${res.status}: ${res.statusText || 'Not Found'})`)
+        }
+        return res.json()
+      })
       .then((data) => {
         setDishes(data)
         setLoading(false)
