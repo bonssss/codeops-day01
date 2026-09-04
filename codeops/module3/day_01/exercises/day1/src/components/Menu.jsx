@@ -1,18 +1,22 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import Card from './Card'
 import Dish from './Dish'
 import CategoryBar from './CategoryBar'
 import DeliveryForm from './DeliveryForm'
+import useFetch from '../hooks/useFetch'
+import { useCart } from '../context/CartContext'
 
 const CATEGORIES = ["All", "Main", "Breakfast", "Traditional", "Dessert"]
 
 function Menu() {
-  const [dishes, setDishes] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState('')
-  const [orderTotal, setOrderTotal] = useState(0)
+  // Exercise 5: Derived orderTotal from CartContext
+  const { orderTotal } = useCart()
+
+  // Exercise 2: Fetch data using custom useFetch hook
+  const { data: rawDishes, loading, error } = useFetch('/dishes.json')
+  const dishes = useMemo(() => rawDishes || [], [rawDishes])
 
   // Exercise 7: Focus a search input on mount with useRef
   const searchInputRef = useRef(null)
@@ -26,53 +30,22 @@ function Menu() {
     searchInputRef.current?.focus()
   }, [])
 
-  // Exercise 2, 3, 4, 5 & 6: Fetch menu array with AbortController in useEffect cleanup
-  useEffect(() => {
-    const controller = new AbortController()
-    const { signal } = controller
+  // Exercise 7: Callback memoization with useCallback
+  const handleSelectCategory = useCallback((category) => {
+    setSelectedCategory(category)
+  }, [])
 
-    setLoading(true)
-    setError(null)
+  // Exercise 7: Memoize filtered dishes to prevent recalculation across unrelated re-renders
+  const filteredDishes = useMemo(() => {
+    const categoryFiltered =
+      selectedCategory === "All"
+        ? dishes
+        : dishes.filter((dish) => dish.category === selectedCategory)
 
-    fetch('/dishes.json', { signal })
-      .then((res) => {
-        // Exercise 4: Check res.ok and throw a clear error message
-        if (!res.ok) {
-          throw new Error(`Failed to fetch dishes (Status ${res.status}: ${res.statusText || 'Not Found'})`)
-        }
-        return res.json()
-      })
-      .then((data) => {
-        const result =
-          selectedCategory === "All"
-            ? data
-            : data.filter((dish) => dish.category === selectedCategory)
-        setDishes(result)
-        setLoading(false)
-      })
-      .catch((err) => {
-        // Exercise 6: Ignore AbortError when request is cancelled
-        if (err.name === 'AbortError') {
-          return
-        }
-        setError(err.message)
-        setLoading(false)
-      })
-
-    // Cleanup: abort previous in-flight request when component unmounts or dependency changes
-    return () => {
-      controller.abort()
-    }
-  }, [selectedCategory])
-
-  const handleAddDish = (price) => {
-    setOrderTotal((prevTotal) => prevTotal + price)
-  }
-
-  // Filter by search query on the currently loaded category dishes
-  const filteredDishes = dishes.filter((dish) =>
-    dish.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
-  )
+    return categoryFiltered.filter((dish) =>
+      dish.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
+    )
+  }, [dishes, selectedCategory, searchQuery])
 
   // Exercise 1: Update document.title to show the number of dishes currently shown
   useEffect(() => {
@@ -97,7 +70,7 @@ function Menu() {
       <CategoryBar
         categories={CATEGORIES}
         selected={selectedCategory}
-        onSelect={setSelectedCategory}
+        onSelect={handleSelectCategory}
       />
 
       {/* Exercise 3: Render loading and error state before the list */}
@@ -124,11 +97,11 @@ function Menu() {
             {filteredDishes.map((dish) => (
               <Card key={dish.id}>
                 <Dish
+                  id={dish.id}
                   name={dish.name}
                   price={dish.price}
                   spicy={dish.spicy}
                   currency={dish.currency}
-                  onAdd={handleAddDish}
                 />
               </Card>
             ))}
