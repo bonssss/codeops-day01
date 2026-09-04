@@ -8,15 +8,25 @@ const CATEGORIES = ["All", "Main", "Breakfast", "Traditional", "Dessert"]
 
 function Menu() {
   const [dishes, setDishes] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [orderTotal, setOrderTotal] = useState(0)
 
-  // Exercise 2: Fetch menu array from public/dishes.json in useEffect with []
+  // Exercise 2 & 3: Fetch menu array with loading and error state
   useEffect(() => {
+    setLoading(true)
+    setError(null)
+
     fetch('/dishes.json')
       .then((res) => res.json())
       .then((data) => {
         setDishes(data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        setError(err.message)
+        setLoading(false)
       })
   }, [])
 
@@ -43,25 +53,40 @@ function Menu() {
         onSelect={setSelectedCategory}
       />
 
-      {/* Dish list or Empty state */}
-      {filteredDishes.length === 0 ? (
-        <div className="empty-state">
-          <p>No dishes found for category &quot;{selectedCategory}&quot;.</p>
+      {/* Exercise 3: Render loading and error state before the list */}
+      {loading && (
+        <div className="status-message loading-state">
+          <p>⏳ Loading dishes...</p>
         </div>
-      ) : (
-        <div className="dishes">
-          {filteredDishes.map((dish) => (
-            <Card key={dish.id}>
-              <Dish
-                name={dish.name}
-                price={dish.price}
-                spicy={dish.spicy}
-                currency={dish.currency}
-                onAdd={handleAddDish}
-              />
-            </Card>
-          ))}
+      )}
+
+      {error && (
+        <div className="status-message error-state">
+          <p>⚠️ Error: {error}</p>
         </div>
+      )}
+
+      {/* Dish list or Empty state (only when not loading and no error) */}
+      {!loading && !error && (
+        filteredDishes.length === 0 ? (
+          <div className="empty-state">
+            <p>No dishes found for category &quot;{selectedCategory}&quot;.</p>
+          </div>
+        ) : (
+          <div className="dishes">
+            {filteredDishes.map((dish) => (
+              <Card key={dish.id}>
+                <Dish
+                  name={dish.name}
+                  price={dish.price}
+                  spicy={dish.spicy}
+                  currency={dish.currency}
+                  onAdd={handleAddDish}
+                />
+              </Card>
+            ))}
+          </div>
+        )
       )}
 
       {/* Running Order Total below the menu */}
