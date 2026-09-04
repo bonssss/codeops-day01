@@ -1,33 +1,88 @@
-import { useState } from 'react'
+import { useReducer } from 'react'
 import PropTypes from 'prop-types'
 
-function DeliveryForm({ orderTotal = 0 }) {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    area: '',
-  })
-  const [submitted, setSubmitted] = useState(false)
+/**
+ * ============================================================================
+ * Exercise 4: useState vs useReducer Comparison
+ * ============================================================================
+ * 
+ * 1. useState Approach:
+ *    - Structure: Multiple separate useState hooks (e.g., [name, setName], [phone, setPhone],
+ *      [area, setArea], [submitted, setSubmitted]).
+ *    - Pros: Simple for 1-2 independent primitives with straightforward toggles.
+ *    - Cons: Updating multiple related fields simultaneously requires calling multiple setters;
+ *      spread operations (...prev) are scattered across event handlers; increases risk of
+ *      inconsistent/impossible intermediate states during form reset or submission.
+ * 
+ * 2. useReducer Approach:
+ *    - Structure: A single state object managed by a pure reducer function with action dispatches
+ *      (e.g., UPDATE_FIELD, SUBMIT_SUCCESS, RESET_FORM).
+ *    - Pros: Centralizes all state transitions in one place outside the component; simplifies
+ *      complex atomic transitions (like submitting and resetting all fields at once); separates
+ *      "what happened" (actions) from "how state updates" (reducer logic); scales easily for
+ *      larger forms and testing.
+ * ============================================================================
+ */
 
-  // Single change handler for all form fields
+const FORM_ACTIONS = {
+  UPDATE_FIELD: 'UPDATE_FIELD',
+  SUBMIT_SUCCESS: 'SUBMIT_SUCCESS',
+  RESET_FORM: 'RESET_FORM',
+}
+
+const initialFormState = {
+  name: '',
+  phone: '',
+  area: '',
+  submitted: false,
+}
+
+function formReducer(state, action) {
+  switch (action.type) {
+    case FORM_ACTIONS.UPDATE_FIELD:
+      return {
+        ...state,
+        [action.field]: action.value,
+        submitted: false, // Reset submitted status whenever user edits input
+      }
+    case FORM_ACTIONS.SUBMIT_SUCCESS:
+      return {
+        ...state,
+        submitted: true,
+      }
+    case FORM_ACTIONS.RESET_FORM:
+      return initialFormState
+    default:
+      return state
+  }
+}
+
+function DeliveryForm({ orderTotal = 0 }) {
+  // Exercise 4: Converted from useState to useReducer
+  const [formState, dispatch] = useReducer(formReducer, initialFormState)
+
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }))
-    if (submitted) setSubmitted(false)
+    dispatch({
+      type: FORM_ACTIONS.UPDATE_FIELD,
+      field: name,
+      value,
+    })
   }
 
   // TeleBirr phone validation: Ethiopian numbers starting with 09 or 07 (10 digits) or +251 9/7...
-  const cleanedPhone = formData.phone.trim()
+  const cleanedPhone = formState.phone.trim()
   const isTeleBirrValid =
     /^(09|07)\d{8}$/.test(cleanedPhone) || /^(\+251)(9|7)\d{8}$/.test(cleanedPhone)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!isTeleBirrValid) return
-    setSubmitted(true)
+    dispatch({ type: FORM_ACTIONS.SUBMIT_SUCCESS })
+  }
+
+  const handleReset = () => {
+    dispatch({ type: FORM_ACTIONS.RESET_FORM })
   }
 
   return (
@@ -36,12 +91,20 @@ function DeliveryForm({ orderTotal = 0 }) {
         <h2>Delivery Details</h2>
         <p className="delivery-subtitle">Enter your details to complete the order with TeleBirr</p>
 
-        {submitted ? (
+        {formState.submitted ? (
           <div className="order-success-message">
             <h3>🎉 Order Placed Successfully!</h3>
-            <p>Thank you, <strong>{formData.name}</strong>!</p>
-            <p>We will deliver to <strong>{formData.area}</strong>.</p>
-            <p>Payment of <strong>{orderTotal} ETB</strong> requested via TeleBirr to <strong>{formData.phone}</strong>.</p>
+            <p>Thank you, <strong>{formState.name}</strong>!</p>
+            <p>We will deliver to <strong>{formState.area}</strong>.</p>
+            <p>Payment of <strong>{orderTotal} ETB</strong> requested via TeleBirr to <strong>{formState.phone}</strong>.</p>
+            <button
+              type="button"
+              className="submit-btn"
+              onClick={handleReset}
+              style={{ marginTop: '1rem', backgroundColor: '#2563eb' }}
+            >
+              Place Another Order
+            </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="delivery-form">
@@ -52,7 +115,7 @@ function DeliveryForm({ orderTotal = 0 }) {
                 type="text"
                 name="name"
                 placeholder="e.g. Abebe Bikila"
-                value={formData.name}
+                value={formState.name}
                 onChange={handleChange}
                 required
               />
@@ -65,12 +128,12 @@ function DeliveryForm({ orderTotal = 0 }) {
                 type="tel"
                 name="phone"
                 placeholder="e.g. 0911223344 or 0711223344"
-                value={formData.phone}
+                value={formState.phone}
                 onChange={handleChange}
-                className={formData.phone.length > 0 ? (isTeleBirrValid ? 'valid' : 'invalid') : ''}
+                className={formState.phone.length > 0 ? (isTeleBirrValid ? 'valid' : 'invalid') : ''}
                 required
               />
-              {formData.phone.length > 0 && !isTeleBirrValid && (
+              {formState.phone.length > 0 && !isTeleBirrValid && (
                 <span className="error-text">
                   Must be a valid 10-digit TeleBirr number (starts with 09 or 07)
                 </span>
@@ -87,7 +150,7 @@ function DeliveryForm({ orderTotal = 0 }) {
                 type="text"
                 name="area"
                 placeholder="e.g. Bole, Kazanchis, Piassa"
-                value={formData.area}
+                value={formState.area}
                 onChange={handleChange}
                 required
               />
@@ -112,3 +175,4 @@ DeliveryForm.propTypes = {
 }
 
 export default DeliveryForm
+
