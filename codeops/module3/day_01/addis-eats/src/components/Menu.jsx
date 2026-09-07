@@ -3,7 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom'
 import CategoryBar from './CategoryBar'
 import DishList from './DishList'
 import { useFetch } from '../hooks/useFetch'
-import { useCart } from '../context/CartContext'
+import { useCartStore } from '../store/useCartStore'
 
 const CATEGORIES = ['All', 'Traditional', 'Fast Food', 'Drinks', 'Dessert']
 
@@ -11,7 +11,12 @@ function Menu() {
   const [searchParams, setSearchParams] = useSearchParams()
   const selectedCategory = searchParams.get('category') || 'All'
   const [searchQuery, setSearchQuery] = useState('')
-  const { total, items } = useCart()
+
+  // Narrow selectors: cart item count and derived total
+  const itemCount = useCartStore((state) => state.items.length)
+  const total = useCartStore((state) =>
+    state.items.reduce((sum, d) => sum + (d.price || 0), 0)
+  )
 
   const searchInputRef = useRef(null)
 
@@ -46,9 +51,9 @@ function Menu() {
     <div className="menu-container">
       <div className="menu-header-bar">
         <h2>Our Menu</h2>
-        {items.length > 0 && (
+        {itemCount > 0 && (
           <Link to="/cart" className="view-cart-banner-btn">
-            View Cart ({items.length} items · {total} ETB) →
+            View Cart ({itemCount} items · {total} ETB) →
           </Link>
         )}
       </div>

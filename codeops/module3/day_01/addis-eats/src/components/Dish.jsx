@@ -1,22 +1,22 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { useCart } from '../context/CartContext'
+import { useCartStore } from '../store/useCartStore'
 
 function Dish({ id, name, price, currency = 'ETB', spicy = false, category, onAdd }) {
-  const { items, dispatch } = useCart()
+  // Narrow selectors: specific dish count and addItem action
+  const count = useCartStore((state) =>
+    state.items.filter((item) => String(item.id) === String(id)).length
+  )
+  const addItem = useCartStore((state) => state.addItem)
 
-  // Derive how many instances of this dish are in the cart
-  const count = items.filter((item) => String(item.id) === String(id)).length
-
-  // Deliberate useCallback
   const handleAdd = useCallback(() => {
     const dish = { id, name, price, currency, spicy, category }
-    dispatch({ type: 'add', dish })
+    addItem(dish)
     if (onAdd) {
       onAdd(price)
     }
-  }, [id, name, price, currency, spicy, category, dispatch, onAdd])
+  }, [id, name, price, currency, spicy, category, addItem, onAdd])
 
   return (
     <div className="dish">

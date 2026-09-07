@@ -1,13 +1,8 @@
 import React from 'react'
-import { useCart } from '../context/CartContext'
+import { useCartStore } from '../store/useCartStore'
 
-/**
- * Header CartBadge component.
- * Reads cart items count directly from CartContext via useCart() without prop drilling.
- */
 export function CartBadge() {
-  const { items } = useCart()
-  const itemCount = items.length
+  const itemCount = useCartStore((state) => state.items.length)
 
   return (
     <div className="cart-badge" aria-label={`Shopping cart with ${itemCount} items`}>

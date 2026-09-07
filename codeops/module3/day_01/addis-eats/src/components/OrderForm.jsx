@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
-import { useCart } from '../context/CartContext'
+import { useCartStore } from '../store/useCartStore'
 
 function OrderForm() {
-  const { items, dispatch, total } = useCart()
+  // Narrow selectors: only re-render when the selected piece changes
+  const items = useCartStore((state) => state.items)
+  const removeItem = useCartStore((state) => state.remove)
+  const clearCart = useCartStore((state) => state.clear)
+  const total = useCartStore((state) =>
+    state.items.reduce((sum, d) => sum + (d.price || 0), 0)
+  )
 
   const [formData, setFormData] = useState({
     name: '',
@@ -38,15 +44,7 @@ function OrderForm() {
     })
 
     // Clear cart upon successful order placement
-    dispatch({ type: 'clear' })
-  }
-
-  const handleClearCart = () => {
-    dispatch({ type: 'clear' })
-  }
-
-  const handleRemoveItem = (id) => {
-    dispatch({ type: 'remove', id })
+    clearCart()
   }
 
   return (
@@ -63,7 +61,7 @@ function OrderForm() {
               <button
                 type="button"
                 className="clear-cart-btn"
-                onClick={handleClearCart}
+                onClick={clearCart}
               >
                 Clear Cart
               </button>
@@ -82,7 +80,7 @@ function OrderForm() {
                     <button
                       type="button"
                       className="remove-item-btn"
-                      onClick={() => handleRemoveItem(dish.id)}
+                      onClick={() => removeItem(dish.id)}
                       title="Remove item"
                       aria-label={`Remove ${dish.name} from cart`}
                     >

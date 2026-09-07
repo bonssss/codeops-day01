@@ -1,21 +1,25 @@
 import React, { useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useFetch } from '../hooks/useFetch'
-import { useCart } from '../context/CartContext'
+import { useCartStore } from '../store/useCartStore'
 
 export function DishDetail() {
   const { id } = useParams()
   const { data: dishes, loading, error } = useFetch('/dishes.json')
-  const { items, dispatch } = useCart()
+
+  // Narrow selectors: specific dish count and addItem action
+  const count = useCartStore((state) =>
+    state.items.filter((item) => String(item.id) === String(id)).length
+  )
+  const addItem = useCartStore((state) => state.addItem)
 
   const dish = dishes?.find((d) => String(d.id) === String(id))
-  const count = items.filter((item) => String(item.id) === String(id)).length
 
   const handleAdd = useCallback(() => {
     if (dish) {
-      dispatch({ type: 'add', dish })
+      addItem(dish)
     }
-  }, [dish, dispatch])
+  }, [dish, addItem])
 
   if (loading) {
     return (

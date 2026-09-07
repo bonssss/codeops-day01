@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useCart } from '../context/CartContext'
+import { useCartStore } from '../store/useCartStore'
 import { useAuth } from '../context/AuthContext'
 
 export function Checkout() {
-  const { items, dispatch, total } = useCart()
+  // Narrow selectors: cart items, clear action, and total
+  const items = useCartStore((state) => state.items)
+  const clearCart = useCartStore((state) => state.clear)
+  const total = useCartStore((state) =>
+    state.items.reduce((sum, d) => sum + (d.price || 0), 0)
+  )
+
   const { user } = useAuth()
 
   const [formData, setFormData] = useState({
@@ -37,7 +43,7 @@ export function Checkout() {
       orderTime: new Date().toLocaleTimeString(),
     })
 
-    dispatch({ type: 'clear' })
+    clearCart()
   }
 
   if (items.length === 0 && !submittedOrder) {

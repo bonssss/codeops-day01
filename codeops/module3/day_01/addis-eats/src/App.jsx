@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { CartProvider } from './context/CartProvider'
+import { ThemeProvider } from './context/ThemeProvider'
 import { AuthProvider } from './context/AuthProvider'
 import Layout from './components/Layout'
 import Home from './components/Home'
@@ -14,7 +14,7 @@ import NotFound from './components/NotFound'
 
 function App() {
   return (
-    <CartProvider>
+    <ThemeProvider>
       <AuthProvider>
         <BrowserRouter>
           <Routes>
@@ -37,7 +37,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </AuthProvider>
-    </CartProvider>
+    </ThemeProvider>
   )
 }
 
