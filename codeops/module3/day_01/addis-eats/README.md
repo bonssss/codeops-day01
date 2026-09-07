@@ -1,98 +1,63 @@
-# Addis Eats, Assembled · Week 1 Project
+# Addis Eats, Routed · Day 31 Mini-Project
 
-A modular, robust React application bringing together full-stack client development concepts: components & props, state & events, an API-driven menu with loading and error states, category filtering, a global cart managed via React Context, a pure reducer managing cart state transitions, and a custom `useFetch` hook with `AbortController` cancellation.
-
----
-
-## 📁 Project Architecture & Clean Folder Structure
-
-```
-src/
-├── components/          # Reusable UI components
-│   ├── Card.jsx         # Card wrapper component
-│   ├── CartBadge.jsx    # Header cart badge consuming useCart()
-│   ├── Category.jsx     # Dropdown category selector
-│   ├── CategoryBar.jsx  # Category filter chips
-│   ├── Dish.jsx         # Individual dish card with counter & action
-│   ├── DishList.jsx     # Dish list rendering loading/error/empty/dishes
-│   ├── Header.jsx       # Header integrating CartBadge
-│   ├── Menu.jsx         # Main menu orchestrator
-│   └── OrderForm.jsx    # Checkout panel & TeleBirr payment form
-├── context/             # Global Cart state management
-│   ├── CartContext.js   # CartContext & useCart() custom hook
-│   ├── CartProvider.jsx # Context provider with useReducer & useMemo
-│   └── cartReducer.js   # Pure reducer function (add, remove, clear)
-├── hooks/               # Custom reusable React hooks
-│   └── useFetch.js      # Fetch hook with AbortController cancellation
-├── App.jsx              # Root app component wrapped with CartProvider
-├── api.js               # API client
-├── data.js              # Mock data
-├── index.css            # Complete styling & responsive layout
-└── main.jsx             # React DOM entry point
-```
+A multi-page React application built with React Router v7, featuring global context state persistence, dynamic route parameters, query-string driven category filters, protected checkout routes, and responsive UI.
 
 ---
 
-## 🧠 Hook Contributions Breakdown
+## 🗺️ Route Table & Documentation
 
-| Hook | Where Used | Contribution & Purpose |
+| Path | Element / Guard | Description |
 | :--- | :--- | :--- |
-| **`useState`** | `useFetch`, `Menu`, `OrderForm` | Manages local component states (data/loading/error, active category filter, search query, controlled form inputs). |
-| **`useEffect`** | `useFetch`, `Menu` | Synchronizes network requests with the active URL/filter, sets up `AbortController` cleanup, and focuses the search input on mount. |
-| **`useReducer`** | `CartProvider` (`cartReducer`) | Owns all cart state transitions (`add`, `remove`, `clear`) via a predictable, pure reducer function. |
-| **`useContext`** | `CartBadge`, `Dish`, `OrderForm`, `Menu` (via `useCart`) | Grants components direct access to global cart `items`, `dispatch`, and derived `total` without prop drilling. |
-| **`useMemo`** | `CartProvider`, `Menu` | 1. **Context value memoization**: Prevents all cart consumer components from re-rendering unless `items` or `total` change.<br>2. **Search filtering**: Avoids recalculating filtered dish lists on unrelated re-renders. |
-| **`useCallback`** | `Dish` | Memoizes the dish addition handler to guarantee stable function references across re-renders. |
-| **`useRef`** | `Menu` | Directly references the search `<input>` DOM node to automatically focus it when the application mounts. |
-| **`useFetch` (Custom)** | `Menu` | Encapsulates async lifecycle management, error handling, and request cancellation into a reusable hook. |
+| **`/`** | `<Layout>` > `<Home />` | Landing page with hero banner, Ethiopian culinary specialties, and quick category links. |
+| **`/menu`** | `<Layout>` > `<Menu />` | Full menu with search bar and shareable query-string category filter (e.g. `/menu?category=Traditional` or `/menu?category=Vegan`). |
+| **`/menu/:id`** | `<Layout>` > `<DishDetail />` | Dynamic route reading the dish ID with `useParams`. Gracefully handles non-existent IDs like `/menu/not-a-dish`. |
+| **`/cart`** | `<Layout>` > `<Cart />` | Cart page displaying selected dishes, item removal, cart clearing, and total in ETB. |
+| **`/checkout`** | `<Layout>` > `<RequireAuth><Checkout /></RequireAuth>` | Protected checkout route guarded by `RequireAuth`. Redirects unauthenticated users to `/login` and restores location after sign-in. |
+| **`/login`** | `<Layout>` > `<Login />` | Authentication screen. On submission, logs in and redirects back to the original destination. |
+| **`*`** | `<Layout>` > `<NotFound />` | Catch-all 404 page for unmatched routes. |
+
+---
+
+## 📁 Key Files Submitted
+
+- **[`src/App.jsx`](file:///c:/Users/bons/Documents/IBT/IBT_SW_Course/codeops/module3/day_01/addis-eats/src/App.jsx)**: Top-level route tree nesting all routes within `CartProvider`, `AuthProvider`, `BrowserRouter`, and `<Layout>`.
+- **[`src/components/Layout.jsx`](file:///c:/Users/bons/Documents/IBT/IBT_SW_Course/codeops/module3/day_01/addis-eats/src/components/Layout.jsx)** (and [`src/Layout.jsx`](file:///c:/Users/bons/Documents/IBT/IBT_SW_Course/codeops/module3/day_01/addis-eats/src/Layout.jsx)): Persistent navigation bar with `NavLink` active highlighting, `CartBadge`, user auth status, and `<Outlet />`.
+- **[`src/components/DishDetail.jsx`](file:///c:/Users/bons/Documents/IBT/IBT_SW_Course/codeops/module3/day_01/addis-eats/src/components/DishDetail.jsx)** (and [`src/DishDetail.jsx`](file:///c:/Users/bons/Documents/IBT/IBT_SW_Course/codeops/module3/day_01/addis-eats/src/DishDetail.jsx)): Dynamic dish profile page reading `:id` parameter via `useParams`.
+- **[`src/components/RequireAuth.jsx`](file:///c:/Users/bons/Documents/IBT/IBT_SW_Course/codeops/module3/day_01/addis-eats/src/components/RequireAuth.jsx)** (and [`src/RequireAuth.jsx`](file:///c:/Users/bons/Documents/IBT/IBT_SW_Course/codeops/module3/day_01/addis-eats/src/RequireAuth.jsx)): Route guard that waits for auth hydration and remembers previous destination with `location.state.from`.
 
 ---
 
 ## 📋 Self-Check & Verification
 
-### 1. Can the header badge read the cart without a single cart prop being passed to it?
-**Yes.** `<CartBadge />` consumes `useCart()` (which accesses `CartContext`), reading `items.length` directly without any props passed from `<Header />` or `<App />`.
+### 1. Does adding a dish to the cart, then visiting `/cart`, still show the order?
+**Yes.** `<CartProvider>` is mounted above `<BrowserRouter>`, meaning cart state lives above the router and survives all route navigations.
 
-### 2. Does the reducer work correctly when called directly, outside React?
-**Yes.** `cartReducer` is a 100% pure function with no React dependencies or side effects. It is validated with a standalone Node.js test suite (`node test-reducer.js`).
+### 2. Does the header keep its state when you navigate between screens?
+**Yes.** `<Layout>` acts as the parent route frame. The header and `<CartBadge />` stay mounted across navigations without re-initializing or losing count.
 
-### 3. Is the total derived on every render rather than stored in the reducer?
-**Yes.** In `CartProvider.jsx`:
-```javascript
-const total = state.items.reduce((sum, dish) => sum + (dish.price || 0), 0);
-```
-`total` is derived dynamically from `state.items` on every render, avoiding state duplication and synchronization bugs.
+### 3. Does `/menu?category=Vegan` show the filtered menu when opened in a new tab?
+**Yes.** `Menu.jsx` uses `useSearchParams` to read `searchParams.get('category')`, dynamically driving `useFetch('/dishes.json?category=...')`. If no dishes match (such as Vegan), it displays the empty state gracefully.
 
-### 4. Does adding a dish update the badge, the checkout panel, and the total together?
-**Yes.** Adding a dish dispatches `{ type: 'add', dish }` to the single source of truth in `CartProvider`, which immediately re-renders all context consumers (`CartBadge`, `OrderForm` cart item list, and total display) in sync.
+### 4. Does `/menu/not-a-dish` say the dish was not found rather than crashing?
+**Yes.** `DishDetail.jsx` looks up the ID in fetched dishes; if no match is found, it renders a friendly "Dish Not Found" card with a link back to `/menu`.
 
-### 5. Is the provider value memoised — and can you explain what that prevents?
-**Yes.** `value` is memoized via `useMemo(() => ({ items: state.items, dispatch, total }), [state.items, total])`. This prevents React from creating a new object reference on every parent re-render, avoiding unnecessary re-renders of all context consumers across the tree.
+### 5. Does opening `/checkout` while signed out send you to login, then back afterwards?
+**Yes.** `RequireAuth.jsx` stores `location` in `<Navigate to="/login" state={{ from: location }} replace />`. Upon login, `Login.jsx` retrieves `location.state?.from?.pathname` and navigates back to `/checkout`.
 
-### 6. Does `useFetch` cancel its previous request when the category changes?
-**Yes.** `useFetch` instantiates an `AbortController` and passes `controller.signal` to `fetch()`. When the category changes or the component unmounts, the `useEffect` cleanup function triggers `controller.abort()`, safely ignoring `AbortError`s and preventing race conditions.
-
-### 7. Can you justify every `useMemo` and `useCallback` added?
-- **`useMemo` in `CartProvider`**: Prevents recreating the context object on every render, which would force all context consumers to re-render.
-- **`useMemo` in `Menu`**: Memoizes the filtered dish list by search query so filtering isn't recomputed when unrelated state changes.
-- **`useCallback` in `Dish`**: Stabilizes the `handleAdd` callback identity to avoid creating new function references on each render.
+### 6. Does refreshing while signed in leave you on the page rather than at the login screen?
+**Yes.** `AuthProvider` persists the signed-in user in `localStorage` and restores it on mount, while keeping `loading: true` until verification completes.
 
 ---
 
 ## 🛠️ Running Locally
 
-### Development Server
 ```bash
+# Run Development Server
 npm run dev
-```
 
-### Run Reducer Test Suite
-```bash
-node test-reducer.js
-```
-
-### Build & Lint
-```bash
+# Run Linter
 npm run lint
+
+# Production Build
 npm run build
 ```

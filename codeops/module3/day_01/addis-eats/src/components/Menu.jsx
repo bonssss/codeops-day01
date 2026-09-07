@@ -1,37 +1,39 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
+import { useSearchParams, Link } from 'react-router-dom'
 import CategoryBar from './CategoryBar'
 import DishList from './DishList'
-import OrderForm from './OrderForm'
 import { useFetch } from '../hooks/useFetch'
 import { useCart } from '../context/CartContext'
 
 const CATEGORIES = ['All', 'Traditional', 'Fast Food', 'Drinks', 'Dessert']
 
 function Menu() {
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const selectedCategory = searchParams.get('category') || 'All'
   const [searchQuery, setSearchQuery] = useState('')
+  const { total, items } = useCart()
 
-  // Read total from context for display
-  const { total } = useCart()
-
-  // Search input auto-focused on mount using useRef
   const searchInputRef = useRef(null)
 
   useEffect(() => {
     searchInputRef.current?.focus()
   }, [])
 
-  // The category filter dynamically drives the fetch URL
+  const handleSelectCategory = (category) => {
+    if (category === 'All') {
+      setSearchParams({})
+    } else {
+      setSearchParams({ category })
+    }
+  }
+
   const fetchUrl =
     selectedCategory === 'All'
       ? '/dishes.json'
       : `/dishes.json?category=${encodeURIComponent(selectedCategory)}`
 
-  // Custom hook providing data, loading, and error states with AbortController cancellation
   const { data: dishes, loading, error } = useFetch(fetchUrl)
 
-  // Deliberate useMemo: memoize search-filtered list of dishes so it is only recomputed
-  // when the fetched dishes array or the searchQuery string changes
   const filteredDishes = useMemo(() => {
     const list = dishes || []
     if (!searchQuery.trim()) return list
@@ -42,7 +44,15 @@ function Menu() {
 
   return (
     <div className="menu-container">
-      {/* Auto-focused search bar */}
+      <div className="menu-header-bar">
+        <h2>Our Menu</h2>
+        {items.length > 0 && (
+          <Link to="/cart" className="view-cart-banner-btn">
+            View Cart ({items.length} items · {total} ETB) →
+          </Link>
+        )}
+      </div>
+
       <div className="search-container">
         <input
           ref={searchInputRef}
@@ -55,28 +65,17 @@ function Menu() {
         />
       </div>
 
-      {/* Category selector chips */}
       <CategoryBar
         categories={CATEGORIES}
         selected={selectedCategory}
-        onSelect={setSelectedCategory}
+        onSelect={handleSelectCategory}
       />
 
-      {/* All 3 states: Loading, Error, and Dish Data List / Empty state */}
       <DishList
         dishes={filteredDishes}
         loading={loading}
         error={error}
       />
-
-      {/* Derived Running Order Total in ETB */}
-      <div className="order-summary-panel">
-        <span className="summary-label">Order Total:</span>
-        <span className="summary-amount">{total} ETB</span>
-      </div>
-
-      {/* Checkout and Order Form with Cart Context */}
-      <OrderForm />
     </div>
   )
 }
