@@ -1,5 +1,6 @@
 import { memo } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import { useCart } from '../context/CartContext'
 
@@ -37,9 +38,9 @@ function Dish({ id, name, price, spicy, currency = "ETB", onAdd }) {
   return (
     <div className={`dish dish-theme-${theme}`}>
       <h2>
-        <span>
+        <Link to={`/menu/${id}`} className="dish-title-link">
           {name} {count > 0 && <span className="dish-count">({count})</span>}
-        </span>
+        </Link>
         {Boolean(spicy) && <span className="spicy-badge">🌶️ Spicy</span>}
       </h2>
       <div className="dish-footer">
