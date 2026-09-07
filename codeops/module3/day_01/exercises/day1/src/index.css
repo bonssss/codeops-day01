@@ -678,3 +678,129 @@ body.dark-theme .btn-secondary:hover {
   background-color: #475569;
 }
 
+/* Dish Title Link & Dish Detail Page */
+.dish-title-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.dish-title-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+body.dark-theme .dish-title-link:hover {
+  color: #38bdf8;
+}
+
+.back-link {
+  display: inline-block;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+body.dark-theme .back-link {
+  color: #38bdf8;
+}
+
+.dish-detail-container {
+  padding: 1rem 0;
+}
+
+.dish-detail-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+body.dark-theme .dish-detail-card {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+.dish-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.dish-detail-category {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+body.dark-theme .dish-detail-category {
+  color: #94a3b8;
+}
+
+.dish-detail-title {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.large-badge {
+  font-size: 0.9rem;
+  padding: 0.35rem 0.75rem;
+}
+
+.dish-detail-desc {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #475569;
+  margin-bottom: 2rem;
+}
+
+body.dark-theme .dish-detail-desc {
+  color: #cbd5e1;
+}
+
+.dish-detail-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1.5rem;
+}
+
+body.dark-theme .dish-detail-meta {
+  border-top-color: #334155;
+}
+
+.dish-price-large {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #16a34a;
+}
+
+.dish-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cart-count-badge {
+  background: #e0f2fe;
+  color: #0369a1;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+
