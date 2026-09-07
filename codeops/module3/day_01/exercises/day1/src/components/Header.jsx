@@ -1,3 +1,4 @@
+import { Link, NavLink } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import { useCart } from '../context/CartContext'
 
@@ -8,16 +9,45 @@ function Header() {
   return (
     <header className="app-header">
       <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Menu</a></li>
+        <ul className="nav-links">
+          <li>
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+              end
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/menu"
+              className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+            >
+              Menu
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/about"
+              className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+            >
+              About
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/contact"
+              className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+            >
+              Contact
+            </NavLink>
+          </li>
         </ul>
         <div className="header-actions">
-          <span className="cart-badge-header">
+          <Link to="/checkout" className="cart-badge-header" style={{ textDecoration: 'none' }}>
             🛒 Cart: <strong>{totalItems}</strong> ({orderTotal} ETB)
-          </span>
+          </Link>
           <button
             type="button"
             className="theme-toggle-btn"

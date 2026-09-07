@@ -131,11 +131,31 @@ nav a {
   text-decoration: none;
   color: #64748b;
   font-weight: 500;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, border-bottom 0.2s ease;
+  padding-bottom: 0.25rem;
 }
 
 nav a:hover {
   color: #0f172a;
+}
+
+nav a.active {
+  color: #2563eb;
+  font-weight: 700;
+  border-bottom: 2px solid #2563eb;
+}
+
+body.dark-theme nav a {
+  color: #94a3b8;
+}
+
+body.dark-theme nav a:hover {
+  color: #f8fafc;
+}
+
+body.dark-theme nav a.active {
+  color: #38bdf8;
+  border-bottom-color: #38bdf8;
 }
 
 h1 {
