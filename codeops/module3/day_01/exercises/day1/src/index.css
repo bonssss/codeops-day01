@@ -544,3 +544,56 @@ body.dark-theme .special-chip {
   margin-bottom: 0.5rem;
   color: #047857;
 }
+
+/* App Layout & Footer */
+.app-layout {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.app-footer {
+  margin-top: 3rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid #e2e8f0;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+body.dark-theme .app-footer {
+  border-top-color: #334155;
+  color: #94a3b8;
+}
+
+.footer-tagline {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+
+body.dark-theme .footer-tagline {
+  color: #64748b;
+}
+
+/* Content cards for Home/About/Contact */
+.content-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  line-height: 1.7;
+  color: #334155;
+  margin-top: 1rem;
+}
+
+body.dark-theme .content-card {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
