@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { useCart } from '../context/CartContext'
+import { useCartStore, selectTotalItems, selectOrderTotal } from '../store/cartStore'
 import DeliveryForm from '../components/DeliveryForm'
 
 function Checkout() {
   const { user } = useAuth()
-  const { items, orderTotal, totalItems, dispatch } = useCart()
+
+  // Exercise 5: Narrow selectors from Zustand store
+  const items = useCartStore((state) => state.items)
+  const totalItems = useCartStore(selectTotalItems)
+  const orderTotal = useCartStore(selectOrderTotal)
+  const clearCart = useCartStore((state) => state.clearCart)
 
   return (
     <div className="checkout-page">
@@ -54,7 +59,7 @@ function Checkout() {
                 type="button"
                 className="btn-secondary"
                 style={{ width: '100%', marginTop: '1rem' }}
-                onClick={() => dispatch({ type: 'CLEAR_CART' })}
+                onClick={() => clearCart()}
               >
                 🗑️ Clear Cart
               </button>

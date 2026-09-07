@@ -68,4 +68,14 @@ export const useCartStore = create((set) => ({
   clearCart: () => set({ items: [] }),
 }))
 
+// Narrow Selector Functions
+export const selectTotalItems = (state) =>
+  state.items.reduce((sum, item) => sum + item.quantity, 0)
+
+export const selectOrderTotal = (state) =>
+  state.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
+export const selectItemQuantity = (id) => (state) =>
+  state.items.find((item) => item.id === id)?.quantity || 0
+
 export default useCartStore

@@ -1,12 +1,15 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
-import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
+import { useCartStore, selectTotalItems, selectOrderTotal } from '../store/cartStore'
 
 function Header() {
   const { theme, toggleTheme } = useTheme()
-  const { totalItems, orderTotal } = useCart()
   const { user, isAuthenticated, logout } = useAuth()
+  
+  // Exercise 5: Narrow selectors from Zustand store
+  const totalItems = useCartStore(selectTotalItems)
+  const orderTotal = useCartStore(selectOrderTotal)
 
   return (
     <header className="app-header">

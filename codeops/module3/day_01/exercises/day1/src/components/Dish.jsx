@@ -2,34 +2,26 @@ import { memo } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
-import { useCart } from '../context/CartContext'
+import { useCartStore, selectItemQuantity } from '../store/cartStore'
 
 /**
  * ============================================================================
- * Exercise 7: React.memo Component Optimization & Profiling
+ * Exercise 5: Narrow Zustand Selectors & React.memo
  * ============================================================================
- * Before memoization:
- * When typing into the search input or selecting a category in Menu.jsx, the entire
- * list rendered all Dish items on every single keystroke/render, even when their
- * individual properties (name, price, spicy) never changed.
- * 
- * After React.memo + useCallback:
- * React performs shallow prop comparison before re-rendering each Dish card. Unaffected
- * Dish components skip re-rendering completely, minimizing Virtual DOM reconciliation
- * cost and significantly improving frame rates on large dish lists.
+ * Each Dish component subscribes exclusively to its own quantity in the cart.
+ * When other dishes are added/removed, this component will NOT re-render.
  * ============================================================================
  */
 function Dish({ id, name, price, spicy, currency = "ETB", onAdd }) {
-  // Exercise 1: Read theme from deeply nested component via ThemeContext
+  // Read theme from ThemeContext
   const { theme } = useTheme()
-  // Exercise 5: Use CartContext to dispatch addToCart and read item quantity
-  const { items, addToCart } = useCart()
 
-  const cartItem = items.find((item) => item.id === id)
-  const count = cartItem ? cartItem.quantity : 0
+  // Exercise 5: Narrow atomic selectors
+  const count = useCartStore(selectItemQuantity(id))
+  const addItem = useCartStore((state) => state.addItem)
 
   const handleAdd = () => {
-    addToCart({ id, name, price, spicy, currency })
+    addItem({ id, name, price, spicy, currency })
     if (onAdd) {
       onAdd(price)
     }

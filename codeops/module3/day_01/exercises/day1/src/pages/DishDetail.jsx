@@ -1,17 +1,18 @@
 import { useParams, Link } from 'react-router-dom'
 import useFetch from '../hooks/useFetch'
-import { useCart } from '../context/CartContext'
 import { useTheme } from '../context/ThemeContext'
+import { useCartStore, selectItemQuantity } from '../store/cartStore'
 
 function DishDetail() {
   const { id } = useParams()
   const { theme } = useTheme()
-  const { items, addToCart } = useCart()
   const { data: dishes, loading, error } = useFetch('/dishes.json')
 
   const dish = dishes?.find((item) => String(item.id) === String(id))
-  const cartItem = dish ? items.find((item) => item.id === dish.id) : null
-  const quantityInCart = cartItem ? cartItem.quantity : 0
+
+  // Exercise 5: Narrow selectors from Zustand store
+  const quantityInCart = useCartStore(selectItemQuantity(dish?.id))
+  const addItem = useCartStore((state) => state.addItem)
 
   if (loading) {
     return (
@@ -44,7 +45,7 @@ function DishDetail() {
   }
 
   const handleAddToCart = () => {
-    addToCart({
+    addItem({
       id: dish.id,
       name: dish.name,
       price: dish.price,
