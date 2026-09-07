@@ -1,29 +1,60 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import CategoryBar from './CategoryBar'
 import DishList from './DishList'
 import OrderForm from './OrderForm'
-import { dishes as defaultDishes } from '../data'
+import { useFetch } from '../hooks/useFetch'
+import { useCart } from '../context/CartContext'
 
-const CATEGORIES = ["All", "Traditional", "Fast Food", "Drinks", "Dessert"]
+const CATEGORIES = ['All', 'Traditional', 'Fast Food', 'Drinks', 'Dessert']
 
-function Menu({ dishes = defaultDishes }) {
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [orderTotal, setOrderTotal] = useState(0)
+function Menu() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [searchQuery, setSearchQuery] = useState('')
 
-  // Derived filtered dish list from category state
-  const filteredDishes =
-    selectedCategory === "All"
-      ? dishes
-      : dishes.filter((dish) => dish.category === selectedCategory)
+  // Read total from context for display
+  const { total } = useCart()
 
-  // Handler to increment running order total
-  const handleAddDish = (price) => {
-    setOrderTotal((prevTotal) => prevTotal + price)
-  }
+  // Search input auto-focused on mount using useRef
+  const searchInputRef = useRef(null)
+
+  useEffect(() => {
+    searchInputRef.current?.focus()
+  }, [])
+
+  // The category filter dynamically drives the fetch URL
+  const fetchUrl =
+    selectedCategory === 'All'
+      ? '/dishes.json'
+      : `/dishes.json?category=${encodeURIComponent(selectedCategory)}`
+
+  // Custom hook providing data, loading, and error states with AbortController cancellation
+  const { data: dishes, loading, error } = useFetch(fetchUrl)
+
+  // Deliberate useMemo: memoize search-filtered list of dishes so it is only recomputed
+  // when the fetched dishes array or the searchQuery string changes
+  const filteredDishes = useMemo(() => {
+    const list = dishes || []
+    if (!searchQuery.trim()) return list
+    return list.filter((dish) =>
+      dish.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
+    )
+  }, [dishes, searchQuery])
 
   return (
     <div className="menu-container">
+      {/* Auto-focused search bar */}
+      <div className="search-container">
+        <input
+          ref={searchInputRef}
+          type="search"
+          className="search-input"
+          placeholder="🔍 Search dishes by name..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          aria-label="Search dishes"
+        />
+      </div>
+
       {/* Category selector chips */}
       <CategoryBar
         categories={CATEGORIES}
@@ -31,35 +62,23 @@ function Menu({ dishes = defaultDishes }) {
         onSelect={setSelectedCategory}
       />
 
-      {/* Filtered dish list with empty state */}
+      {/* All 3 states: Loading, Error, and Dish Data List / Empty state */}
       <DishList
         dishes={filteredDishes}
-        onAddDish={handleAddDish}
+        loading={loading}
+        error={error}
       />
 
-      {/* Running Order Total in ETB */}
+      {/* Derived Running Order Total in ETB */}
       <div className="order-summary-panel">
         <span className="summary-label">Order Total:</span>
-        <span className="summary-amount">{orderTotal} ETB</span>
+        <span className="summary-amount">{total} ETB</span>
       </div>
 
-      {/* Controlled Order and Delivery Form */}
-      <OrderForm orderTotal={orderTotal} />
+      {/* Checkout and Order Form with Cart Context */}
+      <OrderForm />
     </div>
   )
-}
-
-Menu.propTypes = {
-  dishes: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      spicy: PropTypes.bool,
-      currency: PropTypes.string,
-      category: PropTypes.string,
-    })
-  ),
 }
 
 export default Menu

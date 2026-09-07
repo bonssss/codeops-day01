@@ -1,15 +1,21 @@
-import React, { useState } from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
+import { useCart } from '../context/CartContext'
 
-function Dish({ name, price, currency = 'ETB', spicy = false, category, onAdd }) {
-  const [count, setCount] = useState(0)
+function Dish({ id, name, price, currency = 'ETB', spicy = false, category, onAdd }) {
+  const { items, dispatch } = useCart()
 
-  const handleAdd = () => {
-    setCount((prev) => prev + 1)
+  // Derive how many instances of this dish are currently in the cart
+  const count = items.filter((item) => item.id === id).length
+
+  // Deliberate useCallback: memoize click handler to maintain reference stability
+  const handleAdd = useCallback(() => {
+    const dish = { id, name, price, currency, spicy, category }
+    dispatch({ type: 'add', dish })
     if (onAdd) {
       onAdd(price)
     }
-  }
+  }, [id, name, price, currency, spicy, category, dispatch, onAdd])
 
   return (
     <div className="dish">
@@ -25,8 +31,15 @@ function Dish({ name, price, currency = 'ETB', spicy = false, category, onAdd })
       </div>
 
       <div className="dish-footer">
-        <p className="dish-price">{price} {currency}</p>
-        <button type="button" className="add-btn" onClick={handleAdd}>
+        <p className="dish-price">
+          {price} {currency}
+        </p>
+        <button
+          type="button"
+          className="add-btn"
+          onClick={handleAdd}
+          aria-label={`Add ${name} to cart`}
+        >
           + Add
         </button>
       </div>
@@ -35,6 +48,7 @@ function Dish({ name, price, currency = 'ETB', spicy = false, category, onAdd })
 }
 
 Dish.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   spicy: PropTypes.bool,

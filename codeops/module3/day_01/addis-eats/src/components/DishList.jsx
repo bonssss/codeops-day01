@@ -3,7 +3,23 @@ import PropTypes from 'prop-types'
 import Dish from './Dish'
 import Card from './Card'
 
-function DishList({ dishes, onAddDish }) {
+function DishList({ dishes = [], onAddDish, loading = false, error = null }) {
+  if (loading) {
+    return (
+      <div className="status-message loading-state">
+        <p>Loading the menu...</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="status-message error-state">
+        <p className="err">{error}</p>
+      </div>
+    )
+  }
+
   if (dishes.length === 0) {
     return (
       <div className="empty-state">
@@ -17,6 +33,7 @@ function DishList({ dishes, onAddDish }) {
       {dishes.map((dish) => (
         <Card key={dish.id}>
           <Dish
+            id={dish.id}
             name={dish.name}
             price={dish.price}
             currency={dish.currency}
@@ -40,8 +57,10 @@ DishList.propTypes = {
       currency: PropTypes.string,
       category: PropTypes.string,
     })
-  ).isRequired,
+  ),
   onAddDish: PropTypes.func,
+  loading: PropTypes.bool,
+  error: PropTypes.string,
 }
 
 export default DishList
