@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Card from './Card'
 import Dish from './Dish'
 import CategoryBar from './CategoryBar'
@@ -9,7 +10,10 @@ import { useCart } from '../context/CartContext'
 const CATEGORIES = ["All", "Main", "Breakfast", "Traditional", "Dessert"]
 
 function Menu() {
-  const [selectedCategory, setSelectedCategory] = useState("All")
+  // Exercise 6: Move category filter into query string using useSearchParams
+  const [searchParams, setSearchParams] = useSearchParams()
+  const selectedCategory = searchParams.get('category') || 'All'
+
   const [searchQuery, setSearchQuery] = useState('')
   // Exercise 5: Derived orderTotal from CartContext
   const { orderTotal } = useCart()
@@ -30,10 +34,18 @@ function Menu() {
     searchInputRef.current?.focus()
   }, [])
 
-  // Exercise 7: Callback memoization with useCallback
+  // Exercise 6: Update URL query string when a category is selected
   const handleSelectCategory = useCallback((category) => {
-    setSelectedCategory(category)
-  }, [])
+    setSearchParams((prevParams) => {
+      const nextParams = new URLSearchParams(prevParams)
+      if (category === 'All') {
+        nextParams.delete('category')
+      } else {
+        nextParams.set('category', category)
+      }
+      return nextParams
+    })
+  }, [setSearchParams])
 
   // Exercise 7: Memoize filtered dishes to prevent recalculation across unrelated re-renders
   const filteredDishes = useMemo(() => {
