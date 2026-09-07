@@ -44,8 +44,8 @@ function App() {
               </Route>
             </Routes>
           </BrowserRouter>
-        </AuthProvider>
-      </CartProvider>
+        </CartProvider>
+      </AuthProvider>
     </ThemeProvider>
   )
 }
