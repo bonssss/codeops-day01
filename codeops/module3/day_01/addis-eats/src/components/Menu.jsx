@@ -2,66 +2,43 @@ import React, { useState, useEffect, useRef, useMemo } from 'react'
 import CategoryBar from './CategoryBar'
 import DishList from './DishList'
 import OrderForm from './OrderForm'
-import { fetchDishes } from '../api'
+import { useFetch } from '../hooks/useFetch'
+import { useCart } from '../context/CartContext'
 
-const CATEGORIES = ["All", "Traditional", "Fast Food", "Drinks", "Dessert"]
+const CATEGORIES = ['All', 'Traditional', 'Fast Food', 'Drinks', 'Dessert']
 
 function Menu() {
-  const [dishes, setDishes] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [searchQuery, setSearchQuery] = useState("")
-  const [orderTotal, setOrderTotal] = useState(0)
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [searchQuery, setSearchQuery] = useState('')
 
-  // Search input focused on mount with useRef
+  // Read total from context for display
+  const { total } = useCart()
+
+  // Search input auto-focused on mount using useRef
   const searchInputRef = useRef(null)
 
   useEffect(() => {
     searchInputRef.current?.focus()
   }, [])
 
-  // Effect to fetch dishes whenever selectedCategory changes, with AbortController cancellation
-  useEffect(() => {
-    const controller = new AbortController()
+  // The category filter dynamically drives the fetch URL
+  const fetchUrl =
+    selectedCategory === 'All'
+      ? '/dishes.json'
+      : `/dishes.json?category=${encodeURIComponent(selectedCategory)}`
 
-    async function load() {
-      setLoading(true)
-      setError(null)
-      try {
-        const data = await fetchDishes(selectedCategory, controller.signal)
-        setDishes(data)
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          setError(err.message || 'Could not load the menu')
-        }
-      } finally {
-        if (!controller.signal.aborted) {
-          setLoading(false)
-        }
-      }
-    }
+  // Custom hook providing data, loading, and error states with AbortController cancellation
+  const { data: dishes, loading, error } = useFetch(fetchUrl)
 
-    load()
-
-    // Cleanup: abort previous pending request if category changes quickly or component unmounts
-    return () => {
-      controller.abort()
-    }
-  }, [selectedCategory])
-
-  // Filter dishes by client-side search query
+  // Deliberate useMemo: memoize search-filtered list of dishes so it is only recomputed
+  // when the fetched dishes array or the searchQuery string changes
   const filteredDishes = useMemo(() => {
-    if (!searchQuery.trim()) return dishes
-    return dishes.filter((dish) =>
+    const list = dishes || []
+    if (!searchQuery.trim()) return list
+    return list.filter((dish) =>
       dish.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
     )
   }, [dishes, searchQuery])
-
-  // Handler to increment running order total
-  const handleAddDish = (price) => {
-    setOrderTotal((prevTotal) => prevTotal + price)
-  }
 
   return (
     <div className="menu-container">
@@ -74,6 +51,7 @@ function Menu() {
           placeholder="🔍 Search dishes by name..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          aria-label="Search dishes"
         />
       </div>
 
@@ -84,22 +62,21 @@ function Menu() {
         onSelect={setSelectedCategory}
       />
 
-      {/* Filtered dish list with loading, error, and empty states */}
+      {/* All 3 states: Loading, Error, and Dish Data List / Empty state */}
       <DishList
         dishes={filteredDishes}
-        onAddDish={handleAddDish}
         loading={loading}
         error={error}
       />
 
-      {/* Running Order Total in ETB */}
+      {/* Derived Running Order Total in ETB */}
       <div className="order-summary-panel">
         <span className="summary-label">Order Total:</span>
-        <span className="summary-amount">{orderTotal} ETB</span>
+        <span className="summary-amount">{total} ETB</span>
       </div>
 
-      {/* Controlled Order and Delivery Form */}
-      <OrderForm orderTotal={orderTotal} />
+      {/* Checkout and Order Form with Cart Context */}
+      <OrderForm />
     </div>
   )
 }

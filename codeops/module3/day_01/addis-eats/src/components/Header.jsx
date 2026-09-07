@@ -1,11 +1,15 @@
 import React from 'react'
+import CartBadge from './CartBadge'
 
 function Header() {
   return (
-    <div className='header'>
-    <h1 className='title'>Addis Eats</h1>
-    <p className='description'>Best Ethiopian Food</p>
-    </div>
+    <header className="header">
+      <div className="header-info">
+        <h1 className="title">Addis Eats</h1>
+        <p className="description">Authentic Ethiopian Cuisine & Fast Delivery</p>
+      </div>
+      <CartBadge />
+    </header>
   )
 }
 

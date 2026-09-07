@@ -1,47 +1,124 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import { useCart } from '../context/CartContext'
 
-function OrderForm({ orderTotal = 0 }) {
+function OrderForm() {
+  const { items, dispatch, total } = useCart()
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     area: '',
   })
-  const [submitted, setSubmitted] = useState(false)
+  const [submittedOrder, setSubmittedOrder] = useState(null)
 
-  // Single change handler using spread syntax to update state object
+  // Controlled input change handler
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }))
-    if (submitted) setSubmitted(false)
+    if (submittedOrder) setSubmittedOrder(null)
   }
 
-  // TeleBirr phone validation: accepts 0911223344, +251911223344 (and 07/ +2517)
+  // TeleBirr phone validation: accepts 09xxxxxxxx, +2519xxxxxxxx, 07xxxxxxxx, +2517xxxxxxxx
   const trimmedPhone = formData.phone.trim()
   const isTeleBirrValid = /^(09\d{8}|\+2519\d{8}|07\d{8}|\+2517\d{8})$/.test(trimmedPhone)
 
+  // Handle Order Checkout Submission
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!isTeleBirrValid) return
-    setSubmitted(true)
+    if (!isTeleBirrValid || items.length === 0) return
+
+    setSubmittedOrder({
+      ...formData,
+      items: [...items],
+      total,
+      orderTime: new Date().toLocaleTimeString(),
+    })
+
+    // Clear cart upon successful order placement
+    dispatch({ type: 'clear' })
+  }
+
+  const handleClearCart = () => {
+    dispatch({ type: 'clear' })
+  }
+
+  const handleRemoveItem = (id) => {
+    dispatch({ type: 'remove', id })
   }
 
   return (
-    <section className="order-form-section">
+    <section className="order-form-section" aria-label="Checkout and Delivery">
       <div className="order-form-card">
-        <h2>Delivery & Payment</h2>
-        <p className="form-subtitle">Complete your delivery details with TeleBirr</p>
+        <h2>Checkout & Delivery</h2>
+        <p className="form-subtitle">Review your selected dishes and pay with TeleBirr</p>
 
-        {submitted ? (
+        {/* Cart Item Breakdown */}
+        <div className="cart-panel">
+          <div className="cart-panel-header">
+            <h3>Cart Items ({items.length})</h3>
+            {items.length > 0 && (
+              <button
+                type="button"
+                className="clear-cart-btn"
+                onClick={handleClearCart}
+              >
+                Clear Cart
+              </button>
+            )}
+          </div>
+
+          {items.length === 0 ? (
+            <p className="cart-empty-hint">Your cart is empty. Add dishes from the menu above to get started!</p>
+          ) : (
+            <ul className="cart-item-list">
+              {items.map((dish, index) => (
+                <li key={`${dish.id}-${index}`} className="cart-item-row">
+                  <span className="cart-item-name">{dish.name}</span>
+                  <div className="cart-item-actions">
+                    <span className="cart-item-price">{dish.price} ETB</span>
+                    <button
+                      type="button"
+                      className="remove-item-btn"
+                      onClick={() => handleRemoveItem(dish.id)}
+                      title="Remove item"
+                      aria-label={`Remove ${dish.name} from cart`}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="checkout-total-row">
+            <span className="total-label">Total to Pay:</span>
+            <span className="total-value">{total} ETB</span>
+          </div>
+        </div>
+
+        {/* Order Confirmation Banner */}
+        {submittedOrder ? (
           <div className="order-success-banner">
-            <h3>🎉 Order Received!</h3>
-            <p>Customer: <strong>{formData.name}</strong></p>
-            <p>Delivery Location: <strong>{formData.area}</strong></p>
-            <p>TeleBirr Number: <strong>{formData.phone}</strong></p>
-            <p>Total Amount: <strong>{orderTotal} ETB</strong></p>
+            <h3>🎉 Order Placed Successfully!</h3>
+            <p>Customer: <strong>{submittedOrder.name}</strong></p>
+            <p>Delivery Location: <strong>{submittedOrder.area}</strong></p>
+            <p>TeleBirr Number: <strong>{submittedOrder.phone}</strong></p>
+            <p>Items Ordered: <strong>{submittedOrder.items.length} items ({submittedOrder.total} ETB)</strong></p>
+            <p>Time: <strong>{submittedOrder.orderTime}</strong></p>
+            <button
+              type="button"
+              className="new-order-btn"
+              onClick={() => {
+                setSubmittedOrder(null)
+                setFormData({ name: '', phone: '', area: '' })
+              }}
+            >
+              Place Another Order
+            </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="order-form">
@@ -103,20 +180,16 @@ function OrderForm({ orderTotal = 0 }) {
 
             <button
               type="submit"
-              disabled={!isTeleBirrValid}
+              disabled={!isTeleBirrValid || items.length === 0}
               className="submit-order-btn"
             >
-              Pay with TeleBirr ({orderTotal} ETB)
+              Pay with TeleBirr ({total} ETB)
             </button>
           </form>
         )}
       </div>
     </section>
   )
-}
-
-OrderForm.propTypes = {
-  orderTotal: PropTypes.number,
 }
 
 export default OrderForm
