@@ -13,11 +13,16 @@ import { ThemeProvider } from './context/ThemeContext'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 
+/**
+ * Exercise 2: Dedicated independent providers for Theme, Auth, and Cart.
+ * Splitting contexts avoids unnecessary re-renders across disparate domains
+ * (e.g., changing theme does not re-render auth consumers or cart consumers).
+ */
 function App() {
   return (
     <ThemeProvider>
-      <CartProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <CartProvider>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Layout />}>
@@ -39,8 +44,8 @@ function App() {
               </Route>
             </Routes>
           </BrowserRouter>
-        </AuthProvider>
-      </CartProvider>
+        </CartProvider>
+      </AuthProvider>
     </ThemeProvider>
   )
 }

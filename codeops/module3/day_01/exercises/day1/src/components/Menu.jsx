@@ -5,7 +5,7 @@ import Dish from './Dish'
 import CategoryBar from './CategoryBar'
 import DeliveryForm from './DeliveryForm'
 import useFetch from '../hooks/useFetch'
-import { useCart } from '../context/CartContext'
+import { useCartStore, selectOrderTotal } from '../store/cartStore'
 
 const CATEGORIES = ["All", "Main", "Breakfast", "Traditional", "Dessert"]
 
@@ -15,8 +15,8 @@ function Menu() {
   const selectedCategory = searchParams.get('category') || 'All'
 
   const [searchQuery, setSearchQuery] = useState('')
-  // Exercise 5: Derived orderTotal from CartContext
-  const { orderTotal } = useCart()
+  // Exercise 5: Narrow selector from Zustand store
+  const orderTotal = useCartStore(selectOrderTotal)
 
   // Exercise 2: Fetch data using custom useFetch hook
   const { data: rawDishes, loading, error } = useFetch('/dishes.json')

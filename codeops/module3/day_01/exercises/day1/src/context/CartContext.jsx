@@ -81,10 +81,14 @@ CartProvider.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
+/**
+ * Custom hook to safely consume CartContext.
+ * Throws a descriptive error if called outside of a CartProvider tree.
+ */
 export function useCart() {
   const context = useContext(CartContext)
   if (!context) {
-    throw new Error('useCart must be used within a CartProvider')
+    throw new Error('useCart must be used within a CartProvider. Wrap your component tree with <CartProvider>.')
   }
   return context
 }
