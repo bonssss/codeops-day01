@@ -1,17 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useCart } from '../context/CartContext'
+import { useCartStore } from '../store/useCartStore'
 
 export function Cart() {
-  const { items, dispatch, total } = useCart()
-
-  const handleClearCart = () => {
-    dispatch({ type: 'clear' })
-  }
-
-  const handleRemoveItem = (id) => {
-    dispatch({ type: 'remove', id })
-  }
+  // Narrow selectors: only re-render when the specific selected slice changes
+  const items = useCartStore((state) => state.items)
+  const removeItem = useCartStore((state) => state.remove)
+  const clearCart = useCartStore((state) => state.clear)
+  const total = useCartStore((state) =>
+    state.items.reduce((sum, d) => sum + (d.price || 0), 0)
+  )
 
   if (items.length === 0) {
     return (
@@ -31,7 +29,7 @@ export function Cart() {
     <div className="cart-page-container">
       <div className="cart-page-header">
         <h2>Your Cart ({items.length} items)</h2>
-        <button type="button" className="clear-cart-btn" onClick={handleClearCart}>
+        <button type="button" className="clear-cart-btn" onClick={clearCart}>
           Clear All
         </button>
       </div>
@@ -51,7 +49,7 @@ export function Cart() {
                 <button
                   type="button"
                   className="remove-item-btn"
-                  onClick={() => handleRemoveItem(dish.id)}
+                  onClick={() => removeItem(dish.id)}
                   title="Remove item"
                   aria-label={`Remove ${dish.name} from cart`}
                 >

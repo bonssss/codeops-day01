@@ -2,9 +2,12 @@ import React from 'react'
 import { NavLink, Link, Outlet } from 'react-router-dom'
 import CartBadge from './CartBadge'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 
 export function Layout() {
+  // Guarded hooks for remaining context providers
   const { user, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
 
   return (
     <div className="app">
@@ -42,6 +45,17 @@ export function Layout() {
           >
             Checkout
           </NavLink>
+
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="theme-toggle-btn"
+            title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            aria-label="Toggle theme"
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
+
           {user ? (
             <div className="auth-nav-user">
               <span className="user-greeting">Hi, {user.name}</span>
@@ -65,7 +79,7 @@ export function Layout() {
       </main>
 
       <footer className="footer">
-        <p>© 2026 Addis Eats · Authentic Ethiopian Flavors & Delivery</p>
+        <p>© 2026 Addis Eats · Authentic Ethiopian Flavors & Fast Delivery</p>
       </footer>
     </div>
   )
