@@ -1,14 +1,15 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 
 function Dish({ id, name, price, currency = 'ETB', spicy = false, category, onAdd }) {
   const { items, dispatch } = useCart()
 
-  // Derive how many instances of this dish are currently in the cart
-  const count = items.filter((item) => item.id === id).length
+  // Derive how many instances of this dish are in the cart
+  const count = items.filter((item) => String(item.id) === String(id)).length
 
-  // Deliberate useCallback: memoize click handler to maintain reference stability
+  // Deliberate useCallback
   const handleAdd = useCallback(() => {
     const dish = { id, name, price, currency, spicy, category }
     dispatch({ type: 'add', dish })
@@ -21,7 +22,10 @@ function Dish({ id, name, price, currency = 'ETB', spicy = false, category, onAd
     <div className="dish">
       <div className="dish-header">
         <h3>
-          {name} {count > 0 && <span className="dish-count">({count})</span>}
+          <Link to={`/menu/${id}`} className="dish-title-link">
+            {name}
+          </Link>
+          {count > 0 && <span className="dish-count">({count})</span>}
         </h3>
         {Boolean(spicy) && <span className="spicy">🌶️ Spicy</span>}
       </div>
@@ -34,14 +38,19 @@ function Dish({ id, name, price, currency = 'ETB', spicy = false, category, onAd
         <p className="dish-price">
           {price} {currency}
         </p>
-        <button
-          type="button"
-          className="add-btn"
-          onClick={handleAdd}
-          aria-label={`Add ${name} to cart`}
-        >
-          + Add
-        </button>
+        <div className="dish-card-actions">
+          <Link to={`/menu/${id}`} className="view-detail-link">
+            Details
+          </Link>
+          <button
+            type="button"
+            className="add-btn"
+            onClick={handleAdd}
+            aria-label={`Add ${name} to cart`}
+          >
+            + Add
+          </button>
+        </div>
       </div>
     </div>
   )
