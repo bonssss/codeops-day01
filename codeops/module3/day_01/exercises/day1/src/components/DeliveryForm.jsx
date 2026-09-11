@@ -14,9 +14,38 @@ const initialFormState = {
 
 const DELIVERY_AREAS = ['Bole', 'Kazanchis', 'Megenagna', 'Piassa']
 
+/**
+ * Exercise 3: Pure validation function called during render
+ * Returns an object containing validation error messages per field.
+ */
+export function validate(values) {
+  const errors = {}
+
+  if (!values.name || !values.name.trim()) {
+    errors.name = 'Full name is required'
+  }
+
+  const cleanedPhone = (values.phone || '').trim()
+  if (!cleanedPhone) {
+    errors.phone = 'TeleBirr phone number is required'
+  } else if (!/^(09|07)\d{8}$|^(\+251)(9|7)\d{8}$/.test(cleanedPhone)) {
+    errors.phone = 'Enter a valid 10-digit TeleBirr number (starts with 09 or 07)'
+  }
+
+  if (!values.area) {
+    errors.area = 'Please select a delivery area'
+  }
+
+  return errors
+}
+
 function DeliveryForm({ orderTotal = 0 }) {
   const [form, setForm] = useState(initialFormState)
   const [submitted, setSubmitted] = useState(false)
+
+  // Pure validation evaluated during render
+  const errors = validate(form)
+  const isValid = Object.keys(errors).length === 0
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -26,14 +55,9 @@ function DeliveryForm({ orderTotal = 0 }) {
     }))
   }
 
-  // TeleBirr phone validation helper
-  const cleanedPhone = form.phone.trim()
-  const isTeleBirrValid =
-    /^(09|07)\d{8}$/.test(cleanedPhone) || /^(\+251)(9|7)\d{8}$/.test(cleanedPhone)
-
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!isTeleBirrValid || !form.area) return
+    if (!isValid) return
     setSubmitted(true)
   }
 
