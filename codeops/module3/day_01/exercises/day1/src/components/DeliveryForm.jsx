@@ -1,88 +1,139 @@
-import { useReducer } from 'react'
+import { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 /**
- * ============================================================================
- * Exercise 4: useState vs useReducer Comparison
- * ============================================================================
- * 
- * 1. useState Approach:
- *    - Structure: Multiple separate useState hooks (e.g., [name, setName], [phone, setPhone],
- *      [area, setArea], [submitted, setSubmitted]).
- *    - Pros: Simple for 1-2 independent primitives with straightforward toggles.
- *    - Cons: Updating multiple related fields simultaneously requires calling multiple setters;
- *      spread operations (...prev) are scattered across event handlers; increases risk of
- *      inconsistent/impossible intermediate states during form reset or submission.
- * 
- * 2. useReducer Approach:
- *    - Structure: A single state object managed by a pure reducer function with action dispatches
- *      (e.g., UPDATE_FIELD, SUBMIT_SUCCESS, RESET_FORM).
- *    - Pros: Centralizes all state transitions in one place outside the component; simplifies
- *      complex atomic transitions (like submitting and resetting all fields at once); separates
- *      "what happened" (actions) from "how state updates" (reducer logic); scales easily for
- *      larger forms and testing.
- * ============================================================================
+ * Exercise 1: Single State Object for Checkout Form
+ * Form values (name, phone, area, notes) are maintained in one coherent state object.
  */
-
-const FORM_ACTIONS = {
-  UPDATE_FIELD: 'UPDATE_FIELD',
-  SUBMIT_SUCCESS: 'SUBMIT_SUCCESS',
-  RESET_FORM: 'RESET_FORM',
-}
-
 const initialFormState = {
   name: '',
   phone: '',
   area: '',
-  submitted: false,
+  notes: '',
 }
 
-function formReducer(state, action) {
-  switch (action.type) {
-    case FORM_ACTIONS.UPDATE_FIELD:
-      return {
-        ...state,
-        [action.field]: action.value,
-        submitted: false, // Reset submitted status whenever user edits input
-      }
-    case FORM_ACTIONS.SUBMIT_SUCCESS:
-      return {
-        ...state,
-        submitted: true,
-      }
-    case FORM_ACTIONS.RESET_FORM:
-      return initialFormState
-    default:
-      return state
+const DELIVERY_AREAS = ['Bole', 'Kazanchis', 'Megenagna', 'Piassa']
+
+/**
+ * Exercise 3: Pure validation function called during render
+ * Returns an object containing validation error messages per field.
+ */
+export function validate(values) {
+  const errors = {}
+
+  if (!values.name || !values.name.trim()) {
+    errors.name = 'Full name is required'
   }
+
+  const cleanedPhone = (values.phone || '').trim()
+  if (!cleanedPhone) {
+    errors.phone = 'TeleBirr phone number is required'
+  } else if (!/^(09|07)\d{8}$|^(\+251)(9|7)\d{8}$/.test(cleanedPhone)) {
+    errors.phone = 'Enter a valid 10-digit TeleBirr number (starts with 09 or 07)'
+  }
+
+  if (!values.area) {
+    errors.area = 'Please select a delivery area'
+  }
+
+  return errors
 }
 
 function DeliveryForm({ orderTotal = 0 }) {
-  // Exercise 4: Converted from useState to useReducer
-  const [formState, dispatch] = useReducer(formReducer, initialFormState)
+  const [form, setForm] = useState(initialFormState)
+  const [touched, setTouched] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [serverError, setServerError] = useState(null)
+  const [simulateFailure, setSimulateFailure] = useState(true)
+
+  // Exercise 7: Refs for focusing bad fields
+  const nameInputRef = useRef(null)
+  const phoneInputRef = useRef(null)
+  const areaSelectRef = useRef(null)
+  const notesTextareaRef = useRef(null)
+
+  // Pure validation evaluated during render
+  const errors = validate(form)
+  const isValid = Object.keys(errors).length === 0
+
+  const focusFirstBadField = (errs) => {
+    if (errs.name) {
+      nameInputRef.current?.focus()
+    } else if (errs.phone) {
+      phoneInputRef.current?.focus()
+    } else if (errs.area) {
+      areaSelectRef.current?.focus()
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    dispatch({
-      type: FORM_ACTIONS.UPDATE_FIELD,
-      field: name,
-      value,
-    })
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+    // Clear server error upon editing input
+    if (serverError) {
+      setServerError(null)
+    }
   }
 
-  // TeleBirr phone validation: Ethiopian numbers starting with 09 or 07 (10 digits) or +251 9/7...
-  const cleanedPhone = formState.phone.trim()
-  const isTeleBirrValid =
-    /^(09|07)\d{8}$/.test(cleanedPhone) || /^(\+251)(9|7)\d{8}$/.test(cleanedPhone)
+  // Exercise 4: Track touched fields on blur
+  const handleBlur = (e) => {
+    const { name } = e.target
+    setTouched((prev) => ({
+      ...prev,
+      [name]: true,
+    }))
+  }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!isTeleBirrValid) return
-    dispatch({ type: FORM_ACTIONS.SUBMIT_SUCCESS })
+    setServerError(null)
+
+    // Mark all fields as touched upon submission attempt
+    setTouched({
+      name: true,
+      phone: true,
+      area: true,
+      notes: true,
+    })
+
+    // Exercise 7: Focus first bad field if client validation fails
+    if (!isValid) {
+      focusFirstBadField(errors)
+      return
+    }
+
+    // Exercise 6 & 7: Submitting state & simulated server request
+    setIsSubmitting(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800))
+
+      // Exercise 7: Simulate failed server request
+      if (simulateFailure) {
+        throw new Error(
+          `TeleBirr transaction failed: Insufficient balance or invalid merchant authentication for ${form.phone}. Please check your number and try again.`
+        )
+      }
+
+      setSubmitted(true)
+    } catch (err) {
+      // Exercise 7: Show reason, keep every value, and focus the first bad field
+      setServerError(err.message || 'Payment simulation failed. Please try again.')
+      phoneInputRef.current?.focus()
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleReset = () => {
-    dispatch({ type: FORM_ACTIONS.RESET_FORM })
+    setForm(initialFormState)
+    setTouched({})
+    setIsSubmitting(false)
+    setSubmitted(false)
+    setServerError(null)
   }
 
   return (
@@ -91,12 +142,21 @@ function DeliveryForm({ orderTotal = 0 }) {
         <h2>Delivery Details</h2>
         <p className="delivery-subtitle">Enter your details to complete the order with TeleBirr</p>
 
-        {formState.submitted ? (
+        {/* Exercise 7: Show error reason when request fails */}
+        {serverError && (
+          <div className="server-error-banner" role="alert">
+            <h4>⚠️ Order Processing Failed</h4>
+            <p>{serverError}</p>
+          </div>
+        )}
+
+        {submitted ? (
           <div className="order-success-message">
             <h3>🎉 Order Placed Successfully!</h3>
-            <p>Thank you, <strong>{formState.name}</strong>!</p>
-            <p>We will deliver to <strong>{formState.area}</strong>.</p>
-            <p>Payment of <strong>{orderTotal} ETB</strong> requested via TeleBirr to <strong>{formState.phone}</strong>.</p>
+            <p>Thank you, <strong>{form.name}</strong>!</p>
+            <p>We will deliver to <strong>{form.area}</strong>.</p>
+            {form.notes && <p>Delivery Notes: <em>{form.notes}</em></p>}
+            <p>Payment of <strong>{orderTotal} ETB</strong> requested via TeleBirr to <strong>{form.phone}</strong>.</p>
             <button
               type="button"
               className="submit-btn"
@@ -107,62 +167,132 @@ function DeliveryForm({ orderTotal = 0 }) {
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="delivery-form">
+          <form onSubmit={handleSubmit} className="delivery-form" noValidate>
+            {/* Full Name Field */}
             <div className="form-group">
               <label htmlFor="name">Full Name</label>
               <input
+                ref={nameInputRef}
                 id="name"
                 type="text"
                 name="name"
                 placeholder="e.g. Abebe Bikila"
-                value={formState.name}
+                value={form.name}
                 onChange={handleChange}
-                required
+                onBlur={handleBlur}
+                aria-invalid={Boolean(touched.name && errors.name)}
+                aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
+                className={touched.name && errors.name ? 'invalid' : touched.name && form.name ? 'valid' : ''}
               />
+              {touched.name && errors.name && (
+                <span id="name-error" className="error-text" role="alert">
+                  {errors.name}
+                </span>
+              )}
             </div>
 
+            {/* TeleBirr Phone Number Field */}
             <div className="form-group">
               <label htmlFor="phone">TeleBirr Phone Number</label>
               <input
+                ref={phoneInputRef}
                 id="phone"
                 type="tel"
                 name="phone"
                 placeholder="e.g. 0911223344 or 0711223344"
-                value={formState.phone}
+                value={form.phone}
                 onChange={handleChange}
-                className={formState.phone.length > 0 ? (isTeleBirrValid ? 'valid' : 'invalid') : ''}
-                required
+                onBlur={handleBlur}
+                aria-invalid={Boolean(touched.phone && errors.phone)}
+                aria-describedby={touched.phone && errors.phone ? 'phone-error' : undefined}
+                className={
+                  touched.phone && errors.phone
+                    ? 'invalid'
+                    : touched.phone && !errors.phone && form.phone
+                    ? 'valid'
+                    : ''
+                }
               />
-              {formState.phone.length > 0 && !isTeleBirrValid && (
-                <span className="error-text">
-                  Must be a valid 10-digit TeleBirr number (starts with 09 or 07)
+              {touched.phone && errors.phone && (
+                <span id="phone-error" className="error-text" role="alert">
+                  {errors.phone}
                 </span>
               )}
-              {isTeleBirrValid && (
+              {touched.phone && !errors.phone && form.phone && (
                 <span className="valid-text">✓ Valid TeleBirr number</span>
               )}
             </div>
 
+            {/* Delivery Area Dropdown */}
             <div className="form-group">
               <label htmlFor="area">Delivery Area / Sub-City</label>
-              <input
+              <select
+                ref={areaSelectRef}
                 id="area"
-                type="text"
                 name="area"
-                placeholder="e.g. Bole, Kazanchis, Piassa"
-                value={formState.area}
+                value={form.area}
                 onChange={handleChange}
-                required
+                onBlur={handleBlur}
+                aria-invalid={Boolean(touched.area && errors.area)}
+                aria-describedby={touched.area && errors.area ? 'area-error' : undefined}
+                className={
+                  touched.area && errors.area
+                    ? 'invalid'
+                    : touched.area && !errors.area && form.area
+                    ? 'valid'
+                    : ''
+                }
+              >
+                <option value="">Select an area...</option>
+                {DELIVERY_AREAS.map((areaOption) => (
+                  <option key={areaOption} value={areaOption}>
+                    {areaOption}
+                  </option>
+                ))}
+              </select>
+              {touched.area && errors.area && (
+                <span id="area-error" className="error-text" role="alert">
+                  {errors.area}
+                </span>
+              )}
+            </div>
+
+            {/* Optional Notes Field */}
+            <div className="form-group">
+              <label htmlFor="notes">Delivery Notes (Optional)</label>
+              <textarea
+                ref={notesTextareaRef}
+                id="notes"
+                name="notes"
+                placeholder="e.g. Near Edna Mall, 2nd floor, call upon arrival"
+                value={form.notes}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={false}
+                rows={3}
               />
             </div>
 
+            {/* Exercise 6: Disabled during submission with ETB total in label */}
             <button
               type="submit"
-              disabled={!isTeleBirrValid}
+              disabled={isSubmitting || !isValid}
               className="submit-btn"
             >
-              Confirm Order {orderTotal > 0 ? `(${orderTotal} ETB)` : ''}
+              {isSubmitting
+                ? `Submitting Order (${orderTotal} ETB)...`
+                : `Confirm Order (${orderTotal} ETB)`}
             </button>
+
+            {/* Exercise 7: Simulation toggle control */}
+            <label className="simulation-toggle">
+              <input
+                type="checkbox"
+                checked={simulateFailure}
+                onChange={(e) => setSimulateFailure(e.target.checked)}
+              />
+              Simulate failed server request (Exercise 7)
+            </label>
           </form>
         )}
       </div>

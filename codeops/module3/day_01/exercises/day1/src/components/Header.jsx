@@ -14,6 +14,11 @@ function Header() {
   return (
     <header className="app-header">
       <nav>
+        <Link to="/" className="brand-logo" aria-label="Addis Eats Home">
+          <span className="brand-icon">🍽️</span>
+          <span className="brand-name">Addis Eats</span>
+        </Link>
+
         <ul className="nav-links">
           <li>
             <NavLink
