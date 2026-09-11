@@ -41,6 +41,7 @@ export function validate(values) {
 
 function DeliveryForm({ orderTotal = 0 }) {
   const [form, setForm] = useState(initialFormState)
+  const [touched, setTouched] = useState({})
   const [submitted, setSubmitted] = useState(false)
 
   // Pure validation evaluated during render
@@ -55,14 +56,31 @@ function DeliveryForm({ orderTotal = 0 }) {
     }))
   }
 
+  // Exercise 4: Track touched fields on blur
+  const handleBlur = (e) => {
+    const { name } = e.target
+    setTouched((prev) => ({
+      ...prev,
+      [name]: true,
+    }))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    // Mark all fields as touched upon submission attempt
+    setTouched({
+      name: true,
+      phone: true,
+      area: true,
+      notes: true,
+    })
     if (!isValid) return
     setSubmitted(true)
   }
 
   const handleReset = () => {
     setForm(initialFormState)
+    setTouched({})
     setSubmitted(false)
   }
 
@@ -89,7 +107,7 @@ function DeliveryForm({ orderTotal = 0 }) {
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="delivery-form">
+          <form onSubmit={handleSubmit} className="delivery-form" noValidate>
             <div className="form-group">
               <label htmlFor="name">Full Name</label>
               <input
@@ -99,8 +117,12 @@ function DeliveryForm({ orderTotal = 0 }) {
                 placeholder="e.g. Abebe Bikila"
                 value={form.name}
                 onChange={handleChange}
-                required
+                onBlur={handleBlur}
+                className={touched.name && errors.name ? 'invalid' : touched.name && form.name ? 'valid' : ''}
               />
+              {touched.name && errors.name && (
+                <span className="error-text">{errors.name}</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -112,15 +134,19 @@ function DeliveryForm({ orderTotal = 0 }) {
                 placeholder="e.g. 0911223344 or 0711223344"
                 value={form.phone}
                 onChange={handleChange}
-                className={form.phone.length > 0 ? (isTeleBirrValid ? 'valid' : 'invalid') : ''}
-                required
+                onBlur={handleBlur}
+                className={
+                  touched.phone && errors.phone
+                    ? 'invalid'
+                    : touched.phone && !errors.phone && form.phone
+                    ? 'valid'
+                    : ''
+                }
               />
-              {form.phone.length > 0 && !isTeleBirrValid && (
-                <span className="error-text">
-                  Must be a valid 10-digit TeleBirr number (starts with 09 or 07)
-                </span>
+              {touched.phone && errors.phone && (
+                <span className="error-text">{errors.phone}</span>
               )}
-              {isTeleBirrValid && (
+              {touched.phone && !errors.phone && form.phone && (
                 <span className="valid-text">✓ Valid TeleBirr number</span>
               )}
             </div>
@@ -133,7 +159,14 @@ function DeliveryForm({ orderTotal = 0 }) {
                 name="area"
                 value={form.area}
                 onChange={handleChange}
-                required
+                onBlur={handleBlur}
+                className={
+                  touched.area && errors.area
+                    ? 'invalid'
+                    : touched.area && !errors.area && form.area
+                    ? 'valid'
+                    : ''
+                }
               >
                 <option value="">Select an area...</option>
                 {DELIVERY_AREAS.map((areaOption) => (
@@ -142,6 +175,9 @@ function DeliveryForm({ orderTotal = 0 }) {
                   </option>
                 ))}
               </select>
+              {touched.area && errors.area && (
+                <span className="error-text">{errors.area}</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -152,13 +188,14 @@ function DeliveryForm({ orderTotal = 0 }) {
                 placeholder="e.g. Near Edna Mall, 2nd floor, call upon arrival"
                 value={form.notes}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 rows={3}
               />
             </div>
 
             <button
               type="submit"
-              disabled={!isTeleBirrValid}
+              disabled={!isValid}
               className="submit-btn"
             >
               Confirm Order {orderTotal > 0 ? `(${orderTotal} ETB)` : ''}
