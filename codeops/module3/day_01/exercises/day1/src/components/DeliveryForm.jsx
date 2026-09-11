@@ -108,6 +108,7 @@ function DeliveryForm({ orderTotal = 0 }) {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="delivery-form" noValidate>
+            {/* Full Name Field */}
             <div className="form-group">
               <label htmlFor="name">Full Name</label>
               <input
@@ -118,13 +119,18 @@ function DeliveryForm({ orderTotal = 0 }) {
                 value={form.name}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                aria-invalid={Boolean(touched.name && errors.name)}
+                aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
                 className={touched.name && errors.name ? 'invalid' : touched.name && form.name ? 'valid' : ''}
               />
               {touched.name && errors.name && (
-                <span className="error-text">{errors.name}</span>
+                <span id="name-error" className="error-text" role="alert">
+                  {errors.name}
+                </span>
               )}
             </div>
 
+            {/* TeleBirr Phone Number Field */}
             <div className="form-group">
               <label htmlFor="phone">TeleBirr Phone Number</label>
               <input
@@ -135,6 +141,8 @@ function DeliveryForm({ orderTotal = 0 }) {
                 value={form.phone}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                aria-invalid={Boolean(touched.phone && errors.phone)}
+                aria-describedby={touched.phone && errors.phone ? 'phone-error' : undefined}
                 className={
                   touched.phone && errors.phone
                     ? 'invalid'
@@ -144,14 +152,16 @@ function DeliveryForm({ orderTotal = 0 }) {
                 }
               />
               {touched.phone && errors.phone && (
-                <span className="error-text">{errors.phone}</span>
+                <span id="phone-error" className="error-text" role="alert">
+                  {errors.phone}
+                </span>
               )}
               {touched.phone && !errors.phone && form.phone && (
                 <span className="valid-text">✓ Valid TeleBirr number</span>
               )}
             </div>
 
-            {/* Exercise 2: Select dropdown for delivery area */}
+            {/* Delivery Area Dropdown */}
             <div className="form-group">
               <label htmlFor="area">Delivery Area / Sub-City</label>
               <select
@@ -160,6 +170,8 @@ function DeliveryForm({ orderTotal = 0 }) {
                 value={form.area}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                aria-invalid={Boolean(touched.area && errors.area)}
+                aria-describedby={touched.area && errors.area ? 'area-error' : undefined}
                 className={
                   touched.area && errors.area
                     ? 'invalid'
@@ -176,10 +188,13 @@ function DeliveryForm({ orderTotal = 0 }) {
                 ))}
               </select>
               {touched.area && errors.area && (
-                <span className="error-text">{errors.area}</span>
+                <span id="area-error" className="error-text" role="alert">
+                  {errors.area}
+                </span>
               )}
             </div>
 
+            {/* Optional Notes Field */}
             <div className="form-group">
               <label htmlFor="notes">Delivery Notes (Optional)</label>
               <textarea
@@ -189,6 +204,7 @@ function DeliveryForm({ orderTotal = 0 }) {
                 value={form.notes}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                aria-invalid={false}
                 rows={3}
               />
             </div>
