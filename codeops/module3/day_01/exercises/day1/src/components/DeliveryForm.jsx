@@ -42,6 +42,7 @@ export function validate(values) {
 function DeliveryForm({ orderTotal = 0 }) {
   const [form, setForm] = useState(initialFormState)
   const [touched, setTouched] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
   // Pure validation evaluated during render
@@ -65,7 +66,7 @@ function DeliveryForm({ orderTotal = 0 }) {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     // Mark all fields as touched upon submission attempt
     setTouched({
@@ -74,13 +75,23 @@ function DeliveryForm({ orderTotal = 0 }) {
       area: true,
       notes: true,
     })
+
     if (!isValid) return
-    setSubmitted(true)
+
+    // Exercise 6: Set submitting flag during async processing
+    setIsSubmitting(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800))
+      setSubmitted(true)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleReset = () => {
     setForm(initialFormState)
     setTouched({})
+    setIsSubmitting(false)
     setSubmitted(false)
   }
 
@@ -209,12 +220,15 @@ function DeliveryForm({ orderTotal = 0 }) {
               />
             </div>
 
+            {/* Exercise 6: Disabled during submission with ETB total in label */}
             <button
               type="submit"
-              disabled={!isValid}
+              disabled={isSubmitting || !isValid}
               className="submit-btn"
             >
-              Confirm Order {orderTotal > 0 ? `(${orderTotal} ETB)` : ''}
+              {isSubmitting
+                ? `Submitting Order (${orderTotal} ETB)...`
+                : `Confirm Order (${orderTotal} ETB)`}
             </button>
           </form>
         )}
