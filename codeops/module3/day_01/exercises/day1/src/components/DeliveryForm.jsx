@@ -12,6 +12,8 @@ const initialFormState = {
   notes: '',
 }
 
+const DELIVERY_AREAS = ['Bole', 'Kazanchis', 'Megenagna', 'Piassa']
+
 function DeliveryForm({ orderTotal = 0 }) {
   const [form, setForm] = useState(initialFormState)
   const [submitted, setSubmitted] = useState(false)
@@ -31,7 +33,7 @@ function DeliveryForm({ orderTotal = 0 }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!isTeleBirrValid) return
+    if (!isTeleBirrValid || !form.area) return
     setSubmitted(true)
   }
 
@@ -99,17 +101,23 @@ function DeliveryForm({ orderTotal = 0 }) {
               )}
             </div>
 
+            {/* Exercise 2: Select dropdown for delivery area */}
             <div className="form-group">
               <label htmlFor="area">Delivery Area / Sub-City</label>
-              <input
+              <select
                 id="area"
-                type="text"
                 name="area"
-                placeholder="e.g. Bole, Kazanchis, Piassa"
                 value={form.area}
                 onChange={handleChange}
                 required
-              />
+              >
+                <option value="">Select an area...</option>
+                {DELIVERY_AREAS.map((areaOption) => (
+                  <option key={areaOption} value={areaOption}>
+                    {areaOption}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="form-group">
