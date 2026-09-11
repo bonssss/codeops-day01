@@ -546,6 +546,61 @@ body.dark-theme .special-chip {
   opacity: 0.7;
 }
 
+.server-error-banner {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-left: 4px solid #ef4444;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+  color: #991b1b;
+}
+
+.server-error-banner h4 {
+  margin: 0 0 0.35rem 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.server-error-banner p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+body.dark-theme .server-error-banner {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: #7f1d1d;
+  color: #fca5a5;
+}
+
+.simulation-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.825rem;
+  color: #64748b;
+}
+
+body.dark-theme .simulation-toggle {
+  background-color: #1e293b;
+  border-color: #475569;
+  color: #94a3b8;
+}
+
+.simulation-toggle input[type="checkbox"] {
+  width: auto;
+  cursor: pointer;
+}
+
 .order-success-message {
   background-color: #ecfdf5;
   border: 1px solid #a7f3d0;

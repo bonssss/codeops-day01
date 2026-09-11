@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 /**
@@ -44,10 +44,28 @@ function DeliveryForm({ orderTotal = 0 }) {
   const [touched, setTouched] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [serverError, setServerError] = useState(null)
+  const [simulateFailure, setSimulateFailure] = useState(true)
+
+  // Exercise 7: Refs for focusing bad fields
+  const nameInputRef = useRef(null)
+  const phoneInputRef = useRef(null)
+  const areaSelectRef = useRef(null)
+  const notesTextareaRef = useRef(null)
 
   // Pure validation evaluated during render
   const errors = validate(form)
   const isValid = Object.keys(errors).length === 0
+
+  const focusFirstBadField = (errs) => {
+    if (errs.name) {
+      nameInputRef.current?.focus()
+    } else if (errs.phone) {
+      phoneInputRef.current?.focus()
+    } else if (errs.area) {
+      areaSelectRef.current?.focus()
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -55,6 +73,10 @@ function DeliveryForm({ orderTotal = 0 }) {
       ...prev,
       [name]: value,
     }))
+    // Clear server error upon editing input
+    if (serverError) {
+      setServerError(null)
+    }
   }
 
   // Exercise 4: Track touched fields on blur
@@ -68,6 +90,8 @@ function DeliveryForm({ orderTotal = 0 }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setServerError(null)
+
     // Mark all fields as touched upon submission attempt
     setTouched({
       name: true,
@@ -76,13 +100,29 @@ function DeliveryForm({ orderTotal = 0 }) {
       notes: true,
     })
 
-    if (!isValid) return
+    // Exercise 7: Focus first bad field if client validation fails
+    if (!isValid) {
+      focusFirstBadField(errors)
+      return
+    }
 
-    // Exercise 6: Set submitting flag during async processing
+    // Exercise 6 & 7: Submitting state & simulated server request
     setIsSubmitting(true)
     try {
       await new Promise((resolve) => setTimeout(resolve, 800))
+
+      // Exercise 7: Simulate failed server request
+      if (simulateFailure) {
+        throw new Error(
+          `TeleBirr transaction failed: Insufficient balance or invalid merchant authentication for ${form.phone}. Please check your number and try again.`
+        )
+      }
+
       setSubmitted(true)
+    } catch (err) {
+      // Exercise 7: Show reason, keep every value, and focus the first bad field
+      setServerError(err.message || 'Payment simulation failed. Please try again.')
+      phoneInputRef.current?.focus()
     } finally {
       setIsSubmitting(false)
     }
@@ -93,6 +133,7 @@ function DeliveryForm({ orderTotal = 0 }) {
     setTouched({})
     setIsSubmitting(false)
     setSubmitted(false)
+    setServerError(null)
   }
 
   return (
@@ -100,6 +141,14 @@ function DeliveryForm({ orderTotal = 0 }) {
       <div className="delivery-card">
         <h2>Delivery Details</h2>
         <p className="delivery-subtitle">Enter your details to complete the order with TeleBirr</p>
+
+        {/* Exercise 7: Show error reason when request fails */}
+        {serverError && (
+          <div className="server-error-banner" role="alert">
+            <h4>⚠️ Order Processing Failed</h4>
+            <p>{serverError}</p>
+          </div>
+        )}
 
         {submitted ? (
           <div className="order-success-message">
@@ -123,6 +172,7 @@ function DeliveryForm({ orderTotal = 0 }) {
             <div className="form-group">
               <label htmlFor="name">Full Name</label>
               <input
+                ref={nameInputRef}
                 id="name"
                 type="text"
                 name="name"
@@ -145,6 +195,7 @@ function DeliveryForm({ orderTotal = 0 }) {
             <div className="form-group">
               <label htmlFor="phone">TeleBirr Phone Number</label>
               <input
+                ref={phoneInputRef}
                 id="phone"
                 type="tel"
                 name="phone"
@@ -176,6 +227,7 @@ function DeliveryForm({ orderTotal = 0 }) {
             <div className="form-group">
               <label htmlFor="area">Delivery Area / Sub-City</label>
               <select
+                ref={areaSelectRef}
                 id="area"
                 name="area"
                 value={form.area}
@@ -209,6 +261,7 @@ function DeliveryForm({ orderTotal = 0 }) {
             <div className="form-group">
               <label htmlFor="notes">Delivery Notes (Optional)</label>
               <textarea
+                ref={notesTextareaRef}
                 id="notes"
                 name="notes"
                 placeholder="e.g. Near Edna Mall, 2nd floor, call upon arrival"
@@ -230,6 +283,16 @@ function DeliveryForm({ orderTotal = 0 }) {
                 ? `Submitting Order (${orderTotal} ETB)...`
                 : `Confirm Order (${orderTotal} ETB)`}
             </button>
+
+            {/* Exercise 7: Simulation toggle control */}
+            <label className="simulation-toggle">
+              <input
+                type="checkbox"
+                checked={simulateFailure}
+                onChange={(e) => setSimulateFailure(e.target.checked)}
+              />
+              Simulate failed server request (Exercise 7)
+            </label>
           </form>
         )}
       </div>
