@@ -86,7 +86,7 @@ function Home() {
         </div>
 
         <h1 className="hero-title">
-          Savor the Rich Flavors of <span className="hero-gradient-text">Addis Ababa</span>
+          Savor the Rich Flavors of <span className="hero-accent-text">Addis Ababa</span>
         </h1>
 
         <p className="hero-subtitle">

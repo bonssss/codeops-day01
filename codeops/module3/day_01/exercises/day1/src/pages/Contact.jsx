@@ -60,7 +60,7 @@ function Contact() {
       <section className="contact-hero">
         <span className="section-kicker">WE ARE HERE TO HELP</span>
         <h1 className="contact-title">
-          Get in Touch With <span className="hero-gradient-text">Addis Eats</span> 💬
+          Get in Touch With <span className="hero-accent-text">Addis Eats</span> 💬
         </h1>
         <p className="contact-subtitle">
           Have a question about your order, catering inquiry, dietary request, or partnership idea?

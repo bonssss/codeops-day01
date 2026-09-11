@@ -58,7 +58,7 @@ function About() {
       <section className="about-hero">
         <span className="section-kicker">OUR CULINARY STORY</span>
         <h1 className="about-title">
-          From Addis Ababa <span className="hero-gradient-text">With Pure Passion</span> ❤️
+          From Addis Ababa <span className="hero-accent-text">With Pure Passion</span> ❤️
         </h1>
         <p className="about-subtitle">
           Addis Eats began with a shared dream: bringing authentic, heartwarming Ethiopian cuisine
