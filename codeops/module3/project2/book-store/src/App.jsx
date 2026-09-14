@@ -1,38 +1,29 @@
-import { useState } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { BookProvider } from './components/BookContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Book from './components/Book'
-import Card from './components/Card'
 import RentForm from './components/RentForm'
-import { books as initialBooks } from '../data/books'
+import MyRentals from './components/MyRentals'
+
 function App() {
-  const [books, setBooks] = useState(initialBooks)
-
-  function rentBook(bookId) {
-    const book = books.find(item => item.id === bookId)
-    if (!book || !book.isAvailable) {
-      return false
-    }
-
-    setBooks(currentBooks => currentBooks.map(item => (
-      item.id === bookId ? { ...item, isAvailable: false } : item
-    )))
-    return true
-  }
-  
-
   return (
-    <div className="App">
-     <Header/>
-
-    <Book books={books} onRent={rentBook} />
-    <RentForm books={books} onRent={rentBook}/>
-     <Footer/>
-     <Card><h3>Book Title</h3>
-     <p>Description of the book.</p>
-
-     </Card>
-    </div>
+    <BookProvider>
+      <div className="App flex flex-col min-h-screen bg-slate-50 font-sans antialiased text-slate-800">
+        <Header />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Book />} />
+            <Route path="/book" element={<Book />} />
+            <Route path="/books" element={<Book />} />
+            <Route path="/rent" element={<RentForm />} />
+            <Route path="/my-rentals" element={<MyRentals />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </BookProvider>
   )
 }
 
