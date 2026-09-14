@@ -108,10 +108,10 @@ function RentForm() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+    <div className="min-h-screen bg-slate-50 py-6 sm:py-12 px-3 sm:px-6 lg:px-8 flex items-center justify-center">
       <div className="max-w-4xl w-full">
         {/* Breadcrumb navigation */}
-        <div className="flex items-center gap-2 text-sm text-slate-500 mb-6">
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-500 mb-4 sm:mb-6">
           <Link to="/" className="hover:text-black transition-colors">Catalog</Link>
           <span>/</span>
           <span className="text-slate-900 font-medium">Rental Checkout</span>
@@ -119,16 +119,16 @@ function RentForm() {
 
         {/* Modal / Success View */}
         {completedRental ? (
-          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border border-slate-200 text-center max-w-lg mx-auto">
-            <div className="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-5 text-3xl">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-lg border border-slate-200 text-center max-w-lg mx-auto">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-5 text-2xl sm:text-3xl">
               ✓
             </div>
-            <h2 className="text-2xl font-black text-slate-900 mb-2">Rental Confirmed!</h2>
-            <p className="text-slate-600 text-sm mb-6">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-2">Rental Confirmed!</h2>
+            <p className="text-slate-600 text-xs sm:text-sm mb-6">
               Thank you, <span className="font-semibold text-slate-900">{completedRental.fullName}</span>! Your book rental order has been placed successfully.
             </p>
 
-            <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200 text-left text-xs sm:text-sm space-y-2.5 mb-8">
+            <div className="bg-slate-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-slate-200 text-left text-xs sm:text-sm space-y-2.5 mb-6 sm:mb-8">
               <div className="flex justify-between">
                 <span className="text-slate-500">Order Reference</span>
                 <span className="font-mono font-bold text-slate-900">{completedRental.id}</span>
@@ -177,12 +177,12 @@ function RentForm() {
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg border border-slate-200 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
             {/* Form Section */}
-            <div className="lg:col-span-7 p-6 sm:p-8">
+            <div className="lg:col-span-7 p-5 sm:p-8">
               <div className="mb-6">
-                <h2 className="text-2xl font-black text-slate-900">Borrow a Book</h2>
-                <p className="text-sm text-slate-500 mt-1">Select your book, choose your rental term, and confirm your details.</p>
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900">Borrow a Book</h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1">Select your book, choose your rental term, and confirm your details.</p>
               </div>
 
               {error && (
@@ -278,7 +278,7 @@ function RentForm() {
                   </div>
 
                   {/* Quick Preset Buttons */}
-                  <div className="grid grid-cols-4 gap-2 mb-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
                     {[3, 7, 14, 30].map(d => (
                       <button
                         key={d}
