@@ -10,26 +10,29 @@ import ResourceDetails from './pages/ResourceDetails';
 import Favorites from './pages/Favorites';
 import NotFound from './pages/NotFound';
 import { FavoritesProvider } from './context/FavoritesContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
   return (
-    <FavoritesProvider>
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <Navbar />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/explore" element={<Explore />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/resource/:id" element={<ResourceDetails />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Toast />
-        <Footer />
-      </div>
-    </FavoritesProvider>
+    <ThemeProvider>
+      <FavoritesProvider>
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+          <Navbar />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/explore" element={<Explore />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/resource/:id" element={<ResourceDetails />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <Toast />
+          <Footer />
+        </div>
+      </FavoritesProvider>
+    </ThemeProvider>
   );
 }
 
