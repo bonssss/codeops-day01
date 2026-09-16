@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import {
-  Compass,
   Search,
   Grid,
   Heart,
   Menu,
-  X
+  X,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useFavorites } from '../context/FavoritesContext';
+import { useTheme } from '../context/ThemeContext';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { favoritesCount } = useFavorites();
+  const { theme, toggleTheme, isDark } = useTheme();
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -56,9 +59,20 @@ const Navbar = () => {
             </ul>
           </nav>
 
-          {/* Right Action */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Link to="/explore" className="btn btn-primary btn-sm">
+          {/* Right Controls: Theme Toggle & Search CTA */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            {/* Theme Toggle Button */}
+            <button
+              type="button"
+              className="theme-toggle-btn"
+              onClick={toggleTheme}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {isDark ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
+
+            <Link to="/explore" className="btn btn-primary btn-sm nav-cta-btn">
               Search Catalog
             </Link>
 
@@ -109,6 +123,18 @@ const Navbar = () => {
             <Heart size={14} />
             Bookmarks ({favoritesCount})
           </NavLink>
+
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.75rem', marginTop: '0.5rem', borderTop: '1px solid var(--border-subtle)' }}>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Theme: {isDark ? 'Dark Mode' : 'Light Mode'}</span>
+            <button
+              type="button"
+              className="theme-toggle-btn"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+            >
+              {isDark ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
+          </div>
         </div>
       )}
     </header>
