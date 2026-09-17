@@ -1,10 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { useCart } from "../context/CartContext";
+import { useState } from "react";
 
 const dishes = [
   {
     id: 1,
     name: "Doro Wat",
-    price: "$15.00",
+    price: 15.0,
+    formattedPrice: "$15.00",
     category: "Traditional",
     spice: "🌶️🌶️🌶️",
     time: "30 min",
@@ -14,7 +19,8 @@ const dishes = [
   {
     id: 2,
     name: "Shiro Wat",
-    price: "$11.00",
+    price: 11.0,
+    formattedPrice: "$11.00",
     category: "Vegetarian",
     spice: "🌶️",
     time: "20 min",
@@ -24,7 +30,8 @@ const dishes = [
   {
     id: 3,
     name: "Special Beef Tibs",
-    price: "$16.50",
+    price: 16.5,
+    formattedPrice: "$16.50",
     category: "Sautéed",
     spice: "🌶️🌶️",
     time: "25 min",
@@ -34,7 +41,8 @@ const dishes = [
   {
     id: 4,
     name: "Gored Gored / Kitfo",
-    price: "$17.00",
+    price: 17.0,
+    formattedPrice: "$17.00",
     category: "Traditional",
     spice: "🌶️🌶️🌶️",
     time: "15 min",
@@ -44,6 +52,17 @@ const dishes = [
 ];
 
 export default function DishList() {
+  const { addToCart } = useCart();
+  const [addedMap, setAddedMap] = useState({});
+
+  const handleQuickAdd = (dish) => {
+    addToCart(dish, 1);
+    setAddedMap((prev) => ({ ...prev, [dish.id]: true }));
+    setTimeout(() => {
+      setAddedMap((prev) => ({ ...prev, [dish.id]: false }));
+    }, 1500);
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mx-auto my-6">
       {dishes.map((dish) => (
@@ -67,7 +86,7 @@ export default function DishList() {
                 </div>
               </div>
               <span className="text-lg font-black text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/70 px-3 py-1 rounded-xl">
-                {dish.price}
+                {dish.formattedPrice}
               </span>
             </div>
 
@@ -83,12 +102,24 @@ export default function DishList() {
               <span>⏱️ {dish.time}</span>
             </div>
 
-            <Link
-              href={`/menu/${dish.id}`}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-xs font-bold rounded-lg hover:bg-amber-600 dark:hover:bg-amber-500 hover:text-white dark:hover:text-white transition"
-            >
-              Order & Details &rarr;
-            </Link>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handleQuickAdd(dish)}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition cursor-pointer ${
+                  addedMap[dish.id]
+                    ? "bg-green-600 border-green-600 text-white"
+                    : "bg-amber-50 dark:bg-amber-950/50 border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900"
+                }`}
+              >
+                {addedMap[dish.id] ? "✓ Added" : "+ Add"}
+              </button>
+              <Link
+                href={`/menu/${dish.id}`}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-xs font-bold rounded-lg hover:bg-amber-600 dark:hover:bg-amber-500 hover:text-white dark:hover:text-white transition"
+              >
+                Details &rarr;
+              </Link>
+            </div>
           </div>
         </div>
       ))}

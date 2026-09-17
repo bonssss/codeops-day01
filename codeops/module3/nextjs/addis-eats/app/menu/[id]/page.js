@@ -5,7 +5,8 @@ import AddToCartButton from "./AddToCartButton";
 const dishes = {
   "1": {
     name: "Doro Wat",
-    price: "$15.00",
+    price: 15.0,
+    formattedPrice: "$15.00",
     category: "Traditional Stew",
     spice: "🌶️🌶️🌶️ High Spice",
     time: "30-40 min",
@@ -16,7 +17,8 @@ const dishes = {
   },
   "2": {
     name: "Shiro Wat",
-    price: "$11.00",
+    price: 11.0,
+    formattedPrice: "$11.00",
     category: "Vegetarian Stew",
     spice: "🌶️ Mild-Medium",
     time: "20-25 min",
@@ -27,7 +29,8 @@ const dishes = {
   },
   "3": {
     name: "Special Beef Tibs",
-    price: "$16.50",
+    price: 16.5,
+    formattedPrice: "$16.50",
     category: "Sautéed Specialty",
     spice: "🌶️🌶️ Medium-Hot",
     time: "25 min",
@@ -38,7 +41,8 @@ const dishes = {
   },
   "4": {
     name: "Kitfo Special",
-    price: "$17.00",
+    price: 17.0,
+    formattedPrice: "$17.00",
     category: "Chef's Signature",
     spice: "🌶️🌶️🌶️ High Spice",
     time: "15 min",
@@ -56,6 +60,14 @@ export default async function MenuItemPage({ params }) {
   if (!dish) {
     notFound();
   }
+
+  const dishPayload = {
+    id: parseInt(id, 10),
+    name: dish.name,
+    price: dish.price,
+    emoji: dish.emoji,
+    category: dish.category,
+  };
 
   return (
     <div className="flex flex-col flex-1 px-4 sm:px-6 lg:px-8 py-10 max-w-4xl mx-auto w-full">
@@ -88,7 +100,7 @@ export default async function MenuItemPage({ params }) {
           <div className="flex flex-col items-start md:items-end">
             <span className="text-xs text-stone-500 uppercase tracking-wider font-semibold">Price per order</span>
             <span className="text-3xl font-black text-amber-600 dark:text-amber-400 mt-1">
-              {dish.price}
+              {dish.formattedPrice}
             </span>
           </div>
         </div>
@@ -134,7 +146,7 @@ export default async function MenuItemPage({ params }) {
 
         {/* Action Button & Router Push */}
         <div className="pt-6 border-t border-stone-100 dark:border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <AddToCartButton dishName={dish.name} />
+          <AddToCartButton dish={dishPayload} />
           <Link
             href="/menu"
             className="text-sm font-semibold text-stone-500 hover:text-stone-900 dark:hover:text-stone-200 transition"
