@@ -8,8 +8,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="h-full">
-      <body className="min-h-screen flex flex-col bg-[#fafaf9] text-stone-900 dark:bg-[#0c0a09] dark:text-stone-100 antialiased selection:bg-amber-500 selection:text-white">
+    <html lang="en" className="h-full" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col bg-[#fafaf9] text-stone-900 dark:bg-[#0c0a09] dark:text-stone-100 antialiased selection:bg-amber-500 selection:text-white" suppressHydrationWarning>
         {/* Navigation Bar */}
         <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-stone-950/80 border-b border-stone-200 dark:border-stone-800 transition-colors">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -59,7 +59,7 @@ export default function RootLayout({ children }) {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
             <div className="flex items-center gap-2">
               <span className="text-base">🇪🇹</span>
-              <span>© {new Date().getFullYear()} Addis Eats. Built with Next.js App Router.</span>
+              <span>© 2026 Addis Eats. Built with Next.js App Router.</span>
             </div>
             <div className="flex gap-6">
               <Link href="/" className="hover:text-amber-600 transition">Home</Link>
