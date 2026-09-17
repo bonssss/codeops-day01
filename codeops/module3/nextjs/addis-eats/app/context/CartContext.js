@@ -4,8 +4,9 @@ import { createContext, useContext, useSyncExternalStore } from "react";
 
 const CartContext = createContext();
 
+const EMPTY_CART = [];
 let listeners = [];
-let cartState = [];
+let cartState = EMPTY_CART;
 
 function emitChange() {
   for (const listener of listeners) {
@@ -45,7 +46,7 @@ const cartStore = {
     emitChange();
   },
   clear() {
-    cartState = [];
+    cartState = EMPTY_CART;
     cartStore.save();
     emitChange();
   },
@@ -68,7 +69,7 @@ const cartStore = {
     return cartState;
   },
   getServerSnapshot() {
-    return [];
+    return EMPTY_CART;
   },
 };
 
