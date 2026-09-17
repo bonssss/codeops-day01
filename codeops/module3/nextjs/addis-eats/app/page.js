@@ -40,7 +40,7 @@ export default function Home() {
               href="/cart"
               className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-200 font-semibold rounded-xl border border-stone-200 dark:border-stone-800 shadow-sm hover:bg-stone-50 dark:hover:bg-stone-800/80 transition text-center flex items-center justify-center gap-2"
             >
-              <span>🛒</span> View Cart (2 Items)
+              <span>🛒</span> View Shopping Cart
             </Link>
           </div>
         </div>
