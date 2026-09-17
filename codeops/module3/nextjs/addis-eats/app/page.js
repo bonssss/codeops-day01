@@ -2,45 +2,62 @@ import Link from "next/link";
 
 export default function Home() {
   const highlights = [
-    { title: "Authentic Recipes", desc: "Crafted with handpicked berbere and organic Ethiopian spices.", icon: "🌶️" },
-    { title: "Fast Delivery", desc: "Fresh & hot delivery right to your door in under 35 minutes.", icon: "⚡" },
-    { title: "Top Rated Chefs", desc: "4.9/5 stars from over 12,000 satisfied food lovers across Addis.", icon: "⭐" },
+    {
+      title: "Authentic Recipes",
+      desc: "Handcrafted with organic berbere, herbal niter kibbeh, and fresh spices.",
+      icon: "🌶️",
+      tag: "100% Traditional",
+    },
+    {
+      title: "Fast Local Delivery",
+      desc: "Hot and steaming dishes delivered across Addis Ababa in under 35 minutes.",
+      icon: "🛵",
+      tag: "Average 28 Mins",
+    },
+    {
+      title: "Master Chefs",
+      desc: "4.9/5 stars from over 14,000 satisfied food enthusiasts in the city.",
+      icon: "👨‍🍳",
+      tag: "Top Rated",
+    },
   ];
 
   return (
     <div className="flex flex-col flex-1">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-amber-500/10 via-transparent to-transparent">
+      <section className="relative overflow-hidden py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-100/60 via-amber-50/40 to-transparent">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950/70 border border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-300 text-xs font-semibold mb-6 shadow-sm">
-            <span>✨ Freshly Prepared Daily</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-orange-200 text-orange-800 text-xs font-bold mb-6 shadow-xs">
+            <span className="text-orange-600">✨ Addis Ababa&apos;s Best Ethiopian Cuisine</span>
             <span>•</span>
-            <span className="text-amber-700 dark:text-amber-400">Order Online Now</span>
+            <span className="text-stone-500 font-medium">Order Online Now</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-stone-900 dark:text-white mb-6 leading-tight">
-            Authentic Taste of Addis, <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
-              Delivered To Your Door
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-stone-900 mb-6 leading-tight">
+            Delicious Ethiopian Food, <br className="hidden sm:inline" />
+            <span className="bg-gradient-to-r from-orange-600 via-amber-600 to-red-600 bg-clip-text text-transparent">
+              Fresh to Your Table
             </span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-stone-600 dark:text-stone-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-            From mouthwatering <strong>Doro Wat</strong> and sizzling <strong>Tibs</strong> to savory <strong>Shiro</strong>, experience the culinary heritage of Ethiopia.
+          <p className="text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+            Enjoy authentic <strong>Doro Wat</strong>, sizzling <strong>Tibs</strong>, creamy <strong>Shiro</strong>, and savory <strong>Misir</strong> made fresh with warm injera.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href="/menu"
-              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold rounded-xl shadow-lg shadow-amber-600/30 hover:shadow-amber-600/40 hover:-translate-y-0.5 transition duration-200 text-center"
+              className="w-full sm:w-auto px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-2xl shadow-md shadow-orange-600/25 hover:shadow-orange-600/35 hover:-translate-y-0.5 transition duration-200 text-center flex items-center justify-center gap-2"
             >
-              Explore Full Menu 🍛
+              <span>Explore Our Menu</span>
+              <span>🍲</span>
             </Link>
             <Link
               href="/cart"
-              className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-200 font-semibold rounded-xl border border-stone-200 dark:border-stone-800 shadow-sm hover:bg-stone-50 dark:hover:bg-stone-800/80 transition text-center flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 bg-white text-stone-800 font-bold rounded-2xl border border-stone-200/90 shadow-xs hover:bg-stone-50 hover:border-orange-300 transition text-center flex items-center justify-center gap-2"
             >
-              <span>🛒</span> View Shopping Cart
+              <span>🛒</span>
+              <span>View Shopping Cart</span>
             </Link>
           </div>
         </div>
@@ -52,15 +69,24 @@ export default function Home() {
           {highlights.map((item, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200/80 dark:border-stone-800 shadow-sm hover:shadow-md transition group"
+              className="p-8 rounded-3xl bg-white border border-stone-200/70 shadow-xs hover:shadow-md hover:border-orange-200 transition group flex flex-col justify-between"
             >
-              <div className="text-3xl mb-3">{item.icon}</div>
-              <h3 className="text-lg font-bold text-stone-900 dark:text-stone-100 mb-1 group-hover:text-amber-600 transition">
-                {item.title}
-              </h3>
-              <p className="text-sm text-stone-500 dark:text-stone-400 leading-relaxed">
-                {item.desc}
-              </p>
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-4xl p-3 bg-orange-50 rounded-2xl border border-orange-100">
+                    {item.icon}
+                  </span>
+                  <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 bg-stone-100 text-stone-600 rounded-full">
+                    {item.tag}
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold text-stone-900 mb-2 group-hover:text-orange-600 transition">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-stone-500 leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
             </div>
           ))}
         </div>
