@@ -9,9 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col bg-[#fafaf9] text-stone-900 dark:bg-[#0c0a09] dark:text-stone-100 antialiased selection:bg-amber-500 selection:text-white" suppressHydrationWarning>
-        {/* Navigation Bar */}
-        <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-stone-950/80 border-b border-stone-200 dark:border-stone-800 transition-colors">
+      <body className="min-h-screen flex flex-col bg-[#fafaf9] text-stone-900 dark:bg-[#0c0a09] dark:text-stone-100 antialiased selection:bg-amber-500 selection:text-white" suppressHydrationWarning><header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-stone-950/80 border-b border-stone-200 dark:border-stone-800 transition-colors">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2.5 group">
               <span className="text-2xl transform group-hover:scale-110 transition-transform">🍲</span>
@@ -49,13 +47,7 @@ export default function RootLayout({ children }) {
               </Link>
             </nav>
           </div>
-        </header>
-
-        {/* Main Content */}
-        <main className="flex-1 flex flex-col">{children}</main>
-
-        {/* Footer */}
-        <footer className="border-t border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950/50 py-8 transition-colors">
+        </header><main className="flex-1 flex flex-col">{children}</main><footer className="border-t border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950/50 py-8 transition-colors">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
             <div className="flex items-center gap-2">
               <span className="text-base">🇪🇹</span>
@@ -68,8 +60,7 @@ export default function RootLayout({ children }) {
               <Link href="/checkout" className="hover:text-amber-600 transition">Checkout</Link>
             </div>
           </div>
-        </footer>
-      </body>
+        </footer></body>
     </html>
   );
 }
