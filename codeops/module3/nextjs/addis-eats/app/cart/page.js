@@ -14,7 +14,7 @@ export default function Cart() {
     return (
       <div className="flex flex-col flex-1 items-center justify-center min-h-[60vh] p-8 text-center max-w-md mx-auto">
         <div className="text-6xl mb-4">🛒</div>
-        <h1 className="text-2xl font-black text-stone-900 dark:text-stone-100 mb-2">
+        <h1 className="text-2xl font-black text-stone-900 mb-2">
           Your Cart is Empty
         </h1>
         <p className="text-sm text-stone-500 mb-6">
@@ -22,7 +22,7 @@ export default function Cart() {
         </p>
         <Link
           href="/menu"
-          className="px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl shadow-md shadow-amber-600/30 transition"
+          className="px-6 py-3.5 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-2xl shadow-md shadow-orange-600/25 transition"
         >
           Explore Menu & Add Dishes 🍲
         </Link>
@@ -34,14 +34,14 @@ export default function Cart() {
     <div className="flex flex-col flex-1 px-4 sm:px-6 lg:px-8 py-10 max-w-4xl mx-auto w-full">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-black text-stone-900 dark:text-stone-100">
+          <h1 className="text-3xl font-black text-stone-900">
             Shopping Cart ({totalItemsCount} {totalItemsCount === 1 ? "item" : "items"})
           </h1>
           <p className="text-sm text-stone-500 mt-1">Review your dishes and adjust quantities</p>
         </div>
         <button
           onClick={clearCart}
-          className="text-xs text-red-500 hover:text-red-700 font-semibold cursor-pointer"
+          className="text-xs text-red-500 hover:text-red-700 font-bold cursor-pointer"
         >
           Clear Cart
         </button>
@@ -53,17 +53,17 @@ export default function Cart() {
           {cart.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between p-4 bg-white dark:bg-stone-900 border border-stone-200/80 dark:border-stone-800 rounded-2xl shadow-sm"
+              className="flex items-center justify-between p-5 bg-white border border-stone-200/80 rounded-3xl shadow-xs"
             >
               <div className="flex items-center gap-4">
-                <span className="text-3xl p-2.5 bg-amber-50 dark:bg-amber-950/60 rounded-xl">
+                <span className="text-3xl p-3 bg-orange-50 border border-orange-100 rounded-2xl">
                   {item.emoji || "🍲"}
                 </span>
                 <div>
-                  <h3 className="font-bold text-stone-900 dark:text-stone-100">
+                  <h3 className="font-bold text-stone-900 text-base">
                     {item.name}
                   </h3>
-                  <span className="text-sm font-bold text-amber-600 dark:text-amber-400 block mt-0.5">
+                  <span className="text-sm font-black text-orange-600 block mt-0.5">
                     ${(typeof item.price === "number" ? item.price : parseFloat(String(item.price).replace(/[^0-9.]/g, "")) || 0).toFixed(2)}
                   </span>
                 </div>
@@ -71,19 +71,19 @@ export default function Cart() {
 
               <div className="flex items-center gap-3">
                 {/* Quantity Controls */}
-                <div className="flex items-center border border-stone-300 dark:border-stone-700 rounded-lg bg-stone-50 dark:bg-stone-800 p-0.5">
+                <div className="flex items-center border border-stone-200 rounded-xl bg-stone-50 p-0.5">
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    className="w-7 h-7 flex items-center justify-center font-bold text-stone-600 dark:text-stone-300 hover:bg-white dark:hover:bg-stone-700 rounded transition cursor-pointer"
+                    className="w-8 h-8 flex items-center justify-center font-bold text-stone-700 hover:bg-white rounded-lg transition cursor-pointer"
                   >
                     -
                   </button>
-                  <span className="w-8 text-center font-bold text-xs text-stone-900 dark:text-stone-100">
+                  <span className="w-8 text-center font-extrabold text-xs text-stone-900">
                     {item.quantity}
                   </span>
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    className="w-7 h-7 flex items-center justify-center font-bold text-stone-600 dark:text-stone-300 hover:bg-white dark:hover:bg-stone-700 rounded transition cursor-pointer"
+                    className="w-8 h-8 flex items-center justify-center font-bold text-stone-700 hover:bg-white rounded-lg transition cursor-pointer"
                   >
                     +
                   </button>
@@ -92,7 +92,7 @@ export default function Cart() {
                 {/* Remove button */}
                 <button
                   onClick={() => removeFromCart(item.id)}
-                  className="text-stone-400 hover:text-red-500 p-1 text-sm transition cursor-pointer"
+                  className="text-stone-400 hover:text-red-500 p-1.5 text-sm transition cursor-pointer"
                   title="Remove item"
                 >
                   ✕
@@ -101,30 +101,30 @@ export default function Cart() {
             </div>
           ))}
 
-          <div className="p-4 bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-900/60 rounded-2xl flex items-center gap-3 text-xs text-amber-900 dark:text-amber-300">
+          <div className="p-4 bg-orange-50 border border-orange-200 rounded-2xl flex items-center gap-3 text-xs text-orange-900">
             <span>🎁</span>
-            <span>Free delivery promo applied for Addis Ababa central areas!</span>
+            <span className="font-medium">Free delivery promotion applied for central Addis Ababa locations!</span>
           </div>
         </div>
 
         {/* Order Summary Receipt */}
-        <div className="bg-white dark:bg-stone-900 border border-stone-200/80 dark:border-stone-800 rounded-3xl p-6 shadow-md flex flex-col justify-between h-fit">
-          <h2 className="text-lg font-bold text-stone-900 dark:text-stone-100 mb-4 pb-3 border-b border-stone-100 dark:border-stone-800">
+        <div className="bg-white border border-stone-200/80 rounded-3xl p-6 shadow-md flex flex-col justify-between h-fit">
+          <h2 className="text-lg font-bold text-stone-900 mb-4 pb-3 border-b border-stone-100">
             Order Summary
           </h2>
 
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between text-stone-600 dark:text-stone-400">
+            <div className="flex justify-between text-stone-600">
               <span>Subtotal ({totalItemsCount} items)</span>
-              <span className="font-semibold text-stone-800 dark:text-stone-200">${subtotal.toFixed(2)}</span>
+              <span className="font-bold text-stone-800">${subtotal.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-stone-600 dark:text-stone-400">
+            <div className="flex justify-between text-stone-600">
               <span>Delivery Fee</span>
-              <span className="font-semibold text-stone-800 dark:text-stone-200">${deliveryFee.toFixed(2)}</span>
+              <span className="font-bold text-stone-800">${deliveryFee.toFixed(2)}</span>
             </div>
-            <div className="border-t border-stone-200 dark:border-stone-800 pt-3 flex justify-between font-black text-lg text-stone-900 dark:text-white">
+            <div className="border-t border-stone-200 pt-3 flex justify-between font-black text-xl text-stone-900">
               <span>Total:</span>
-              <span className="text-amber-600 dark:text-amber-400">${total.toFixed(2)}</span>
+              <span className="text-orange-600">${total.toFixed(2)}</span>
             </div>
           </div>
 
@@ -132,7 +132,7 @@ export default function Cart() {
             <CheckoutButton />
             <Link
               href="/menu"
-              className="block text-center text-xs font-semibold text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 transition py-1"
+              className="block text-center text-xs font-bold text-stone-500 hover:text-stone-800 transition py-1"
             >
               + Add More Dishes
             </Link>

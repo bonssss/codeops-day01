@@ -5,29 +5,29 @@ import Link from "next/link";
 
 export default function Error({ error, reset }) {
   useEffect(() => {
-    // Log the error to an error reporting service if needed
     console.error("Menu segment error:", error);
   }, [error]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[50vh] p-8 text-center">
-      <div className="p-6 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded-xl max-w-md w-full">
-        <h2 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-2">
-          Oops! Something went wrong
+      <div className="p-8 bg-white border border-red-200 rounded-3xl max-w-md w-full shadow-xs">
+        <div className="text-4xl mb-3">⚠️</div>
+        <h2 className="text-2xl font-black text-stone-900 mb-2">
+          Something went wrong
         </h2>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">
-          {error?.message || "Failed to load the menu."}
+        <p className="text-sm text-stone-500 mb-6">
+          {error?.message || "Failed to load the menu items."}
         </p>
-        <div className="flex gap-4 justify-center">
+        <div className="flex gap-3 justify-center">
           <button
             onClick={() => reset()}
-            className="px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition"
+            className="px-5 py-2.5 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 transition cursor-pointer shadow-xs"
           >
             Try again
           </button>
           <Link
             href="/"
-            className="px-4 py-2 bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-200 font-medium rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition"
+            className="px-5 py-2.5 bg-stone-100 text-stone-800 font-bold rounded-xl hover:bg-stone-200 transition"
           >
             Back Home
           </Link>

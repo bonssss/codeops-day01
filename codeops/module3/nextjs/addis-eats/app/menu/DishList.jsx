@@ -11,7 +11,7 @@ const dishes = [
     price: 15.0,
     formattedPrice: "$15.00",
     category: "Traditional",
-    spice: "🌶️🌶️🌶️",
+    spice: "🌶️🌶️🌶️ High",
     time: "30 min",
     emoji: "🍗",
     description: "Slow-cooked tender chicken drumsticks in rich, spiced berbere sauce served with hard-boiled eggs and fresh injera.",
@@ -22,7 +22,7 @@ const dishes = [
     price: 11.0,
     formattedPrice: "$11.00",
     category: "Vegetarian",
-    spice: "🌶️",
+    spice: "🌶️ Mild",
     time: "20 min",
     emoji: "🍲",
     description: "Velvety spiced ground chickpea stew simmered with garlic, onions, and herbal butter, served bubbling hot with injera.",
@@ -33,21 +33,32 @@ const dishes = [
     price: 16.5,
     formattedPrice: "$16.50",
     category: "Sautéed",
-    spice: "🌶️🌶️",
+    spice: "🌶️🌶️ Medium",
     time: "25 min",
     emoji: "🥩",
     description: "Tender cubed beef sautéed to perfection with rosemary, caramelized onions, tomatoes, and spicy green peppers.",
   },
   {
     id: 4,
-    name: "Gored Gored / Kitfo",
+    name: "Kitfo Special",
     price: 17.0,
     formattedPrice: "$17.00",
     category: "Traditional",
-    spice: "🌶️🌶️🌶️",
+    spice: "🌶️🌶️🌶️ High",
     time: "15 min",
     emoji: "🥘",
     description: "Prime lean beef minced and infused with spiced clarified butter (niter kibbeh) and aromatic mitmita chili powder.",
+  },
+  {
+    id: 5,
+    name: "Misir Wot",
+    price: 12.0,
+    formattedPrice: "$12.00",
+    category: "Vegetarian",
+    spice: "🌶️🌶️ Medium",
+    time: "25 min",
+    emoji: "🥣",
+    description: "Savory red split lentils slow-simmered in a fragrant spiced berbere sauce with garlic, ginger, and herbs.",
   },
 ];
 
@@ -68,35 +79,35 @@ export default function DishList() {
       {dishes.map((dish) => (
         <div
           key={dish.id}
-          className="group flex flex-col justify-between bg-white dark:bg-stone-900 border border-stone-200/80 dark:border-stone-800 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all duration-300 transform hover:-translate-y-1"
+          className="group flex flex-col justify-between bg-white border border-stone-200/80 rounded-3xl p-6 shadow-xs hover:shadow-lg hover:border-orange-300 transition-all duration-300 transform hover:-translate-y-1"
         >
           <div>
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex items-center gap-3">
-                <span className="text-3xl p-3 bg-amber-50 dark:bg-amber-950/60 border border-amber-200/50 dark:border-amber-800/50 rounded-2xl">
+                <span className="text-3xl p-3 bg-orange-50 border border-orange-100 rounded-2xl">
                   {dish.emoji}
                 </span>
                 <div>
-                  <span className="text-[11px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300">
+                  <span className="text-[11px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-600">
                     {dish.category}
                   </span>
-                  <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100 mt-1 group-hover:text-amber-600 transition">
+                  <h3 className="text-xl font-bold text-stone-900 mt-1 group-hover:text-orange-600 transition">
                     {dish.name}
                   </h3>
                 </div>
               </div>
-              <span className="text-lg font-black text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/70 px-3 py-1 rounded-xl">
+              <span className="text-lg font-black text-orange-600 bg-orange-50 px-3 py-1 rounded-2xl border border-orange-100">
                 {dish.formattedPrice}
               </span>
             </div>
 
-            <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed mb-4">
+            <p className="text-sm text-stone-600 leading-relaxed mb-4">
               {dish.description}
             </p>
           </div>
 
-          <div className="pt-4 border-t border-stone-100 dark:border-stone-800/80 flex items-center justify-between">
-            <div className="flex items-center gap-3 text-xs text-stone-500">
+          <div className="pt-4 border-t border-stone-100 flex items-center justify-between">
+            <div className="flex items-center gap-3 text-xs font-medium text-stone-500">
               <span>{dish.spice}</span>
               <span>•</span>
               <span>⏱️ {dish.time}</span>
@@ -105,17 +116,17 @@ export default function DishList() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => handleQuickAdd(dish)}
-                className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition cursor-pointer ${
+                className={`px-3.5 py-2 text-xs font-bold rounded-xl border transition cursor-pointer flex items-center gap-1 ${
                   addedMap[dish.id]
-                    ? "bg-green-600 border-green-600 text-white"
-                    : "bg-amber-50 dark:bg-amber-950/50 border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900"
+                    ? "bg-emerald-600 border-emerald-600 text-white shadow-xs"
+                    : "bg-orange-50 border-orange-200 text-orange-800 hover:bg-orange-100 hover:border-orange-300"
                 }`}
               >
-                {addedMap[dish.id] ? "✓ Added" : "+ Add"}
+                <span>{addedMap[dish.id] ? "✓ Added" : "+ Add to Cart"}</span>
               </button>
               <Link
                 href={`/menu/${dish.id}`}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-xs font-bold rounded-lg hover:bg-amber-600 dark:hover:bg-amber-500 hover:text-white dark:hover:text-white transition"
+                className="inline-flex items-center gap-1 px-3.5 py-2 bg-stone-900 text-white text-xs font-bold rounded-xl hover:bg-orange-600 transition shadow-xs"
               >
                 Details &rarr;
               </Link>
