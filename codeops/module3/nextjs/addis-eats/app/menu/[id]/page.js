@@ -65,6 +65,12 @@ const dishes = {
   },
 };
 
+export async function generateStaticParams() {
+  return Object.keys(dishes).map((id) => ({
+    id: id,
+  }));
+}
+
 export default async function MenuItemPage({ params }) {
   const { id } = await params;
   const dish = dishes[id];
