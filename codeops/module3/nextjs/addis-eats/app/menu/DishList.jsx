@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 const dishes = [
   {
@@ -64,7 +65,22 @@ const dishes = [
 
 export default function DishList() {
   const { addToCart } = useCart();
+  const searchParams = useSearchParams();
   const [addedMap, setAddedMap] = useState({});
+
+  const currentCategory = searchParams.get("category") || "All";
+
+  const normalize = (str) =>
+    str ? str.toLowerCase().replace(/[^a-z0-9]/g, "") : "";
+
+  const filteredDishes =
+    currentCategory === "All" || !searchParams.get("category")
+      ? dishes
+      : dishes.filter(
+          (dish) =>
+            normalize(dish.category).includes(normalize(currentCategory)) ||
+            normalize(currentCategory).includes(normalize(dish.category))
+        );
 
   const handleQuickAdd = (dish) => {
     addToCart(dish, 1);
@@ -74,9 +90,27 @@ export default function DishList() {
     }, 1500);
   };
 
+  if (filteredDishes.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center p-12 bg-white rounded-3xl border border-stone-200/80 text-center my-6">
+        <span className="text-4xl mb-2">🍽️</span>
+        <h3 className="text-lg font-bold text-stone-900">No dishes found</h3>
+        <p className="text-xs text-stone-500 mt-1 mb-4">
+          No items match category &quot;{currentCategory}&quot;.
+        </p>
+        <Link
+          href="/menu"
+          className="px-4 py-2 bg-orange-600 text-white rounded-xl text-xs font-bold hover:bg-orange-700 transition shadow-2xs"
+        >
+          View All Dishes
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mx-auto my-6">
-      {dishes.map((dish) => (
+      {filteredDishes.map((dish) => (
         <div
           key={dish.id}
           className="group flex flex-col justify-between bg-white border border-stone-200/80 rounded-3xl p-6 shadow-xs hover:shadow-lg hover:border-orange-300 transition-all duration-300 transform hover:-translate-y-1"

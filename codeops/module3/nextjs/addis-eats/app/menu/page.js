@@ -1,6 +1,34 @@
+import { Suspense } from "react";
 import CategoryBar from "./CategoryBar";
 import DishList from "./DishList";
 import Link from "next/link";
+
+export const revalidate = 60;
+
+function DishListSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mx-auto my-6 animate-pulse">
+      {[1, 2, 3, 4].map((i) => (
+        <div
+          key={i}
+          className="h-48 bg-stone-100/80 border border-stone-200/60 rounded-3xl p-6 flex flex-col justify-between"
+        >
+          <div className="flex justify-between items-start">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-stone-200 rounded-2xl" />
+              <div className="space-y-2">
+                <div className="w-16 h-3 bg-stone-200 rounded-full" />
+                <div className="w-32 h-5 bg-stone-200 rounded-lg" />
+              </div>
+            </div>
+            <div className="w-14 h-7 bg-stone-200 rounded-xl" />
+          </div>
+          <div className="w-full h-10 bg-stone-200/70 rounded-xl" />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function Menu() {
   return (
@@ -21,10 +49,14 @@ export default function Menu() {
       </div>
 
       {/* Category Filter Pills */}
-      <CategoryBar />
+      <Suspense fallback={<div className="h-10 my-6" />}>
+        <CategoryBar />
+      </Suspense>
 
-      {/* Dishes Grid */}
-      <DishList />
+      {/* Dishes Grid wrapped in Suspense (Exercise 7) */}
+      <Suspense fallback={<DishListSkeleton />}>
+        <DishList />
+      </Suspense>
 
       {/* Quick Navigation Footer */}
       <div className="flex justify-center items-center gap-6 mt-8 pt-6 border-t border-stone-200/80">
