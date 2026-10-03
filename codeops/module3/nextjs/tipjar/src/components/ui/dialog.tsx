@@ -1,0 +1,108 @@
+"use client";
+
+import * as React from "react";
+import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+interface DialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function Dialog({ open, onOpenChange, children }: DialogProps) {
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onOpenChange(false);
+    };
+    if (open) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open, onOpenChange]);
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
+      <div
+        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
+        onClick={() => onOpenChange(false)}
+      />
+      <div className="relative z-50 w-full max-w-lg">{children}</div>
+    </div>
+  );
+}
+
+export function DialogContent({
+  children,
+  className,
+  onClose,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  onClose?: () => void;
+}) {
+  return (
+    <div
+      className={cn(
+        "relative w-full rounded-2xl border border-white/10 bg-neutral-900/95 p-6 shadow-2xl backdrop-blur-2xl text-neutral-100 max-h-[90vh] overflow-y-auto",
+        className
+      )}
+    >
+      {onClose && (
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 rounded-xl p-2 text-neutral-400 hover:text-white hover:bg-white/10 transition-colors"
+        >
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </button>
+      )}
+      {children}
+    </div>
+  );
+}
+
+export function DialogHeader({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn("flex flex-col space-y-1.5 text-center sm:text-left mb-5", className)}
+      {...props}
+    />
+  );
+}
+
+export function DialogTitle({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLHeadingElement>) {
+  return (
+    <h2
+      className={cn("text-xl font-bold leading-none tracking-tight text-white", className)}
+      {...props}
+    />
+  );
+}
+
+export function DialogDescription({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLParagraphElement>) {
+  return (
+    <p
+      className={cn("text-sm text-neutral-400 leading-relaxed mt-1", className)}
+      {...props}
+    />
+  );
+}

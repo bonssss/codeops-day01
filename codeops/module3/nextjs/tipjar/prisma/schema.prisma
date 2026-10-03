@@ -1,0 +1,136 @@
+// TipJar Prisma Schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  profile      Profile?
+  tipsReceived Tip[]     @relation("TipsReceived")
+  tipsSent     Tip[]     @relation("TipsSent")
+  goals        Goal[]
+  payments     Payment[]
+
+  @@map("users")
+}
+
+model Profile {
+  id                 String       @id @default(cuid())
+  userId             String       @unique
+  user               User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  username           String       @unique
+  displayName        String
+  avatarUrl          String?
+  bio                String?
+  location           String?
+  website            String?
+  github             String?
+  linkedin           String?
+  twitter            String?
+  customTipMessage   String?
+  currency           String       @default("ETB")
+  suggestedAmounts   String       @default("50,100,200,500")
+  allowAnonymous     Boolean      @default(true)
+  showSupporterWall  Boolean      @default(true)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  socialLinks        SocialLink[]
+
+  @@index([username])
+  @@map("profiles")
+}
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  platform  String   // "github", "twitter", "linkedin", "website", "youtube", "twitch", "telegram"
+  url       String
+  label     String?
+  createdAt DateTime @default(now())
+
+  @@index([profileId])
+  @@map("social_links")
+}
+
+model Tip {
+  id             String    @id @default(cuid())
+  senderId       String?
+  sender         User?     @relation("TipsSent", fields: [senderId], references: [id], onDelete: SetNull)
+  supporterName  String?
+  supporterEmail String?
+  recipientId    String
+  recipient      User      @relation("TipsReceived", fields: [recipientId], references: [id], onDelete: Cascade)
+  amount         Float
+  currency       String    @default("ETB")
+  message        String?
+  isAnonymous    Boolean   @default(false)
+  status         String    @default("PENDING") // PENDING, COMPLETED, FAILED, REFUNDED
+  goalId         String?
+  goal           Goal?     @relation(fields: [goalId], references: [id], onDelete: SetNull)
+  payment        Payment?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([recipientId, status, createdAt])
+  @@index([senderId])
+  @@index([goalId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("tips")
+}
+
+model Payment {
+  id                   String    @id @default(cuid())
+  tipId                String    @unique
+  tip                  Tip       @relation(fields: [tipId], references: [id], onDelete: Cascade)
+  userId               String?
+  user                 User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  provider             String    @default("MOCK_PAY") // MOCK_PAY, TELEBIRR, CHAPA, CBE_BIRR
+  transactionReference String    @unique
+  amount               Float
+  currency             String    @default("ETB")
+  status               String    @default("PENDING") // PENDING, COMPLETED, FAILED, REFUNDED
+  paymentMethod        String?   // "Telebirr", "CBE Birr", "Chapa", "Card", "Bank Transfer"
+  providerMetadata     String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  @@index([transactionReference])
+  @@index([status])
+  @@index([createdAt])
+  @@map("payments")
+}
+
+model Goal {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title         String
+  description   String?
+  targetAmount  Float
+  currentAmount Float     @default(0)
+  currency      String    @default("ETB")
+  deadline      DateTime?
+  imageUrl      String?
+  status        String    @default("ACTIVE") // ACTIVE, COMPLETED, PAUSED, CANCELLED
+  tips          Tip[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([userId, status])
+  @@index([createdAt])
+  @@map("goals")
+}
