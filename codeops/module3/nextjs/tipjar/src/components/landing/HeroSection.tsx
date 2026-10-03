@@ -13,12 +13,12 @@ export function HeroSection() {
           
           {/* Hero Left Content */}
           <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
-            <ScrollReveal direction="down">
+            {/* <ScrollReveal direction="down">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-xs font-semibold shadow-sm">
                 <Sparkles className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
                 <span>Direct Tipping Platform for Creators</span>
               </div>
-            </ScrollReveal>
+            </ScrollReveal> */}
 
             <ScrollReveal direction="up" delay={100}>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.1]">

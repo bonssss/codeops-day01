@@ -1,0 +1,47 @@
+name: QAFlow CI / Quality Gate
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  quality-gate:
+    name: Lint, Typecheck, Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: module3/nextjs/qaflow/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: module3/nextjs/qaflow
+        run: npm ci
+
+      - name: Generate Prisma Client
+        working-directory: module3/nextjs/qaflow
+        run: npm run prisma:generate
+
+      - name: ESLint Check
+        working-directory: module3/nextjs/qaflow
+        run: npm run lint
+
+      - name: TypeScript Compiler Check
+        working-directory: module3/nextjs/qaflow
+        run: npm run typecheck
+
+      - name: Production Next.js Build
+        working-directory: module3/nextjs/qaflow
+        run: npm run build
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/qaflow?schema=public"
+          AUTH_SECRET: "ci-test-secret-token-key-2026"
+          NEXTAUTH_URL: "http://localhost:3000"

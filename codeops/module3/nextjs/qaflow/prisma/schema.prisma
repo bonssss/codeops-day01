@@ -1,0 +1,484 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// ENUMS
+// ==========================================
+
+enum UserRole {
+  ADMIN
+  QA_MANAGER
+  QA_ENGINEER
+  VIEWER
+}
+
+enum ProjectRole {
+  PROJECT_ADMIN
+  QA_MANAGER
+  QA_ENGINEER
+  VIEWER
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum TestCasePriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum TestCaseType {
+  FUNCTIONAL
+  REGRESSION
+  SMOKE
+  SANITY
+  INTEGRATION
+  E2E
+  PERFORMANCE
+  SECURITY
+}
+
+enum TestCaseStatus {
+  DRAFT
+  READY
+  ACTIVE
+  DEPRECATED
+}
+
+enum TestRunStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABORTED
+}
+
+enum TestExecutionStatus {
+  PASS
+  FAIL
+  BLOCKED
+  NOT_RUN
+}
+
+enum BugSeverity {
+  TRIVIAL
+  MINOR
+  MAJOR
+  CRITICAL
+  BLOCKER
+}
+
+enum BugPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum BugStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  REOPENED
+  CLOSED
+  WONT_FIX
+}
+
+enum NotificationType {
+  ASSIGNED_TEST_CASE
+  ASSIGNED_BUG
+  TEST_RUN_COMPLETED
+  BUG_STATUS_CHANGED
+  PROJECT_INVITE
+  GENERAL
+}
+
+// ==========================================
+// USER & AUTHENTICATION MODELS
+// ==========================================
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  passwordHash  String?
+  image         String?
+  role          UserRole  @default(QA_ENGINEER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts            Account[]
+  sessions            Session[]
+  ownedProjects       Project[]       @relation("ProjectOwner")
+  projectMemberships  ProjectMember[]
+  assignedTestCases   TestCase[]      @relation("TestCaseAssignee")
+  createdTestCases    TestCase[]      @relation("TestCaseCreator")
+  updatedTestCases    TestCase[]      @relation("TestCaseUpdater")
+  testRunsCreated     TestRun[]       @relation("TestRunCreator")
+  testExecutions      TestExecution[] @relation("ExecutionTester")
+  assignedBugs        Bug[]           @relation("BugAssignee")
+  reportedBugs        Bug[]           @relation("BugReporter")
+  bugComments         BugComment[]
+  uploadedAttachments Attachment[]
+  notifications       Notification[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(uuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ==========================================
+// PROJECT MANAGEMENT MODELS
+// ==========================================
+
+model Project {
+  id          String        @id @default(uuid())
+  name        String
+  key         String        @unique // e.g. ECOM, BANK, PHARM
+  description String?       @db.Text
+  status      ProjectStatus @default(ACTIVE)
+  ownerId     String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  owner       User            @relation("ProjectOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+  members     ProjectMember[]
+  testSuites  TestSuite[]
+  testCases   TestCase[]
+  testRuns    TestRun[]
+  bugs        Bug[]
+  tags        Tag[]
+
+  @@index([ownerId])
+  @@index([status])
+  @@map("projects")
+}
+
+model ProjectMember {
+  id        String      @id @default(uuid())
+  projectId String
+  userId    String
+  role      ProjectRole @default(QA_ENGINEER)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+  @@index([projectId])
+  @@index([userId])
+  @@map("project_members")
+}
+
+// ==========================================
+// TEST SUITES & TEST CASES
+// ==========================================
+
+model TestSuite {
+  id          String   @id @default(uuid())
+  projectId   String
+  parentId    String?
+  name        String
+  description String?  @db.Text
+  orderIndex  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project   Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  parent    TestSuite?  @relation("SuiteHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children  TestSuite[] @relation("SuiteHierarchy")
+  testCases TestCase[]
+
+  @@index([projectId])
+  @@index([parentId])
+  @@map("test_suites")
+}
+
+model TestCase {
+  id             String           @id @default(uuid())
+  key            String // e.g. TC-101 or TC-AUTH-001
+  projectId      String
+  suiteId        String?
+  title          String
+  description    String?          @db.Text
+  preconditions  String?          @db.Text
+  expectedResult String?          @db.Text
+  priority       TestCasePriority @default(MEDIUM)
+  type           TestCaseType     @default(FUNCTIONAL)
+  status         TestCaseStatus   @default(ACTIVE)
+  severity       BugSeverity      @default(MAJOR)
+  assigneeId     String?
+  createdById    String
+  updatedById    String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  project     Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  suite       TestSuite?      @relation(fields: [suiteId], references: [id], onDelete: SetNull)
+  assignee    User?           @relation("TestCaseAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  createdBy   User            @relation("TestCaseCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  updatedBy   User?           @relation("TestCaseUpdater", fields: [updatedById], references: [id], onDelete: SetNull)
+  steps       TestStep[]
+  tags        TestCaseTag[]
+  executions  TestExecution[]
+  bugs        Bug[]           @relation("BugLinkedTestCase")
+
+  @@unique([projectId, key])
+  @@index([projectId])
+  @@index([suiteId])
+  @@index([assigneeId])
+  @@index([status])
+  @@index([priority])
+  @@map("test_cases")
+}
+
+model TestStep {
+  id             String   @id @default(uuid())
+  testCaseId     String
+  stepNumber     Int
+  action         String   @db.Text
+  expectedResult String?  @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  testCase TestCase @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+
+  @@index([testCaseId])
+  @@map("test_steps")
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  projectId String
+  name      String
+  color     String   @default("#3b82f6")
+  createdAt DateTime @default(now())
+
+  project   Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  testCases TestCaseTag[]
+
+  @@unique([projectId, name])
+  @@index([projectId])
+  @@map("tags")
+}
+
+model TestCaseTag {
+  testCaseId String
+  tagId      String
+
+  testCase TestCase @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+  tag      Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([testCaseId, tagId])
+  @@index([tagId])
+  @@map("test_case_tags")
+}
+
+// ==========================================
+// TEST RUNS & EXECUTIONS
+// ==========================================
+
+model TestRun {
+  id          String        @id @default(uuid())
+  projectId   String
+  runNumber   Int
+  name        String
+  description String?       @db.Text
+  environment String        @default("Staging")
+  browser     String        @default("Chrome")
+  status      TestRunStatus @default(IN_PROGRESS)
+  createdById String
+  startedAt   DateTime      @default(now())
+  completedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  project    Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy  User            @relation("TestRunCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  executions TestExecution[]
+  bugs       Bug[]           @relation("BugLinkedTestRun")
+
+  @@unique([projectId, runNumber])
+  @@index([projectId])
+  @@index([createdById])
+  @@index([status])
+  @@map("test_runs")
+}
+
+model TestExecution {
+  id            String              @id @default(uuid())
+  testRunId     String
+  testCaseId    String
+  executedById  String?
+  status        TestExecutionStatus @default(NOT_RUN)
+  actualResult  String?             @db.Text
+  failureReason String?             @db.Text
+  notes         String?             @db.Text
+  executedAt    DateTime?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  testRun     TestRun      @relation(fields: [testRunId], references: [id], onDelete: Cascade)
+  testCase    TestCase     @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+  executedBy  User?        @relation("ExecutionTester", fields: [executedById], references: [id], onDelete: SetNull)
+  bugs        Bug[]        @relation("BugLinkedTestExecution")
+  attachments Attachment[]
+
+  @@unique([testRunId, testCaseId])
+  @@index([testRunId])
+  @@index([testCaseId])
+  @@index([status])
+  @@map("test_executions")
+}
+
+// ==========================================
+// BUG TRACKING & ATTACHMENTS
+// ==========================================
+
+model Bug {
+  id                    String      @id @default(uuid())
+  projectId             String
+  key                   String // e.g. BUG-101
+  title                 String
+  description           String?     @db.Text
+  stepsToReproduce      String?     @db.Text
+  expectedResult        String?     @db.Text
+  actualResult          String?     @db.Text
+  severity              BugSeverity @default(MAJOR)
+  priority              BugPriority @default(MEDIUM)
+  status                BugStatus   @default(OPEN)
+  assigneeId            String?
+  reporterId            String
+  environment           String?
+  browser               String?
+  linkedTestCaseId      String?
+  linkedTestRunId       String?
+  linkedTestExecutionId String?
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  project             Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assignee            User?          @relation("BugAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  reporter            User           @relation("BugReporter", fields: [reporterId], references: [id], onDelete: Restrict)
+  linkedTestCase      TestCase?      @relation("BugLinkedTestCase", fields: [linkedTestCaseId], references: [id], onDelete: SetNull)
+  linkedTestRun       TestRun?       @relation("BugLinkedTestRun", fields: [linkedTestRunId], references: [id], onDelete: SetNull)
+  linkedTestExecution TestExecution? @relation("BugLinkedTestExecution", fields: [linkedTestExecutionId], references: [id], onDelete: SetNull)
+  comments            BugComment[]
+  attachments         Attachment[]
+
+  @@unique([projectId, key])
+  @@index([projectId])
+  @@index([assigneeId])
+  @@index([reporterId])
+  @@index([status])
+  @@index([severity])
+  @@index([linkedTestCaseId])
+  @@map("bugs")
+}
+
+model BugComment {
+  id        String   @id @default(uuid())
+  bugId     String
+  userId    String
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bug  Bug  @relation(fields: [bugId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([bugId])
+  @@index([userId])
+  @@map("bug_comments")
+}
+
+model Attachment {
+  id              String   @id @default(uuid())
+  name            String
+  url             String
+  fileType        String
+  sizeBytes       Int
+  bugId           String?
+  testExecutionId String?
+  uploadedById    String
+  createdAt       DateTime @default(now())
+
+  bug           Bug?           @relation(fields: [bugId], references: [id], onDelete: Cascade)
+  testExecution TestExecution? @relation(fields: [testExecutionId], references: [id], onDelete: Cascade)
+  uploadedBy    User           @relation(fields: [uploadedById], references: [id], onDelete: Restrict)
+
+  @@index([bugId])
+  @@index([testExecutionId])
+  @@index([uploadedById])
+  @@map("attachments")
+}
+
+// ==========================================
+// NOTIFICATIONS
+// ==========================================
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  title     String
+  message   String           @db.Text
+  link      String?
+  read      Boolean          @default(false)
+  type      NotificationType @default(GENERAL)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([read])
+  @@map("notifications")
+}
