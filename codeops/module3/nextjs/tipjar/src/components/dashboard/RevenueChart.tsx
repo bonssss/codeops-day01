@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { formatCurrency } from "@/lib/utils";
+import { useTheme } from "@/components/shared/theme-provider";
 
 interface DataPoint {
   date: string;
@@ -26,43 +27,44 @@ export function RevenueChart({
   currency?: string;
 }) {
   const [mounted, setMounted] = React.useState(false);
+  const { resolvedTheme } = useTheme();
 
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    return <div className="h-[280px] w-full animate-pulse bg-neutral-900/50 rounded-2xl" />;
+    return <div className="h-[280px] w-full animate-pulse bg-slate-100 dark:bg-slate-800 rounded-2xl" />;
   }
 
   if (!data || data.length === 0) {
     return (
-      <div className="h-[280px] flex items-center justify-center text-xs text-neutral-500">
+      <div className="h-[280px] flex items-center justify-center text-xs text-slate-400">
         No tip history available yet
       </div>
     );
   }
 
+  const isDark = resolvedTheme === "dark";
+  const strokeColor = isDark ? "#f59e0b" : "#d97706";
+  const fillColor = isDark ? "#78350f" : "#fef3c7";
+  const gridColor = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
+  const textColor = isDark ? "#94a3b8" : "#64748b";
+
   return (
     <div className="h-[280px] w-full pt-2">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-          <defs>
-            <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4} />
-              <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.0} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
           <XAxis
             dataKey="date"
-            stroke="#737373"
+            stroke={textColor}
             fontSize={11}
             tickLine={false}
             axisLine={false}
           />
           <YAxis
-            stroke="#737373"
+            stroke={textColor}
             fontSize={11}
             tickLine={false}
             axisLine={false}
@@ -73,12 +75,12 @@ export function RevenueChart({
               if (active && payload && payload.length) {
                 const item = payload[0].payload as DataPoint;
                 return (
-                  <div className="rounded-xl border border-white/10 bg-neutral-900/95 p-3 shadow-2xl backdrop-blur-md text-xs space-y-1">
-                    <p className="font-bold text-white">{label}</p>
-                    <p className="text-amber-400 font-extrabold">
+                  <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 shadow-lg text-xs space-y-1">
+                    <p className="font-bold text-slate-900 dark:text-white">{label}</p>
+                    <p className="text-amber-600 dark:text-amber-400 font-bold">
                       {formatCurrency(item.amount, currency)}
                     </p>
-                    <p className="text-neutral-400 text-[11px]">{item.tipsCount} tips received</p>
+                    <p className="text-slate-500 dark:text-slate-400 text-[11px]">{item.tipsCount} tips received</p>
                   </div>
                 );
               }
@@ -88,10 +90,10 @@ export function RevenueChart({
           <Area
             type="monotone"
             dataKey="amount"
-            stroke="#f59e0b"
-            strokeWidth={3}
-            fillOpacity={1}
-            fill="url(#colorAmount)"
+            stroke={strokeColor}
+            strokeWidth={2.5}
+            fill={fillColor}
+            fillOpacity={0.6}
           />
         </AreaChart>
       </ResponsiveContainer>

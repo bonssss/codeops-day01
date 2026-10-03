@@ -4,10 +4,6 @@ import * as React from "react";
 import {
   Search,
   Filter,
-  ArrowUpDown,
-  CheckCircle2,
-  AlertCircle,
-  Clock,
   Eye,
   Download,
   CreditCard,
@@ -101,7 +97,7 @@ export function TipsHistoryClient({
   return (
     <div className="space-y-6">
       {/* Search & Filter Controls */}
-      <div className="glass-card rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
         {/* Search */}
         <div className="w-full md:w-80">
           <Input
@@ -115,15 +111,15 @@ export function TipsHistoryClient({
         {/* Filters */}
         <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
           {/* Status Tabs */}
-          <div className="flex items-center bg-neutral-900 rounded-xl p-1 border border-white/5 text-xs">
+          <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700 text-xs">
             {["ALL", "COMPLETED", "PENDING", "FAILED"].map((s) => (
               <button
                 key={s}
                 onClick={() => setStatusFilter(s)}
-                className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-colors ${
                   statusFilter === s
-                    ? "bg-amber-500 text-neutral-950 shadow-sm"
-                    : "text-neutral-400 hover:text-white"
+                    ? "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 shadow-sm"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                 }`}
               >
                 {s.charAt(0) + s.slice(1).toLowerCase()}
@@ -134,8 +130,8 @@ export function TipsHistoryClient({
           {/* Sort Dropdown */}
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as unknown as "newest" | "oldest" | "highest" | "lowest")}
-            className="h-10 rounded-xl border border-white/10 bg-neutral-900 px-3 text-xs text-neutral-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            onChange={(e) => setSortBy(e.target.value as "newest" | "oldest" | "highest" | "lowest")}
+            className="h-10 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
           >
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
@@ -158,12 +154,12 @@ export function TipsHistoryClient({
       </div>
 
       {/* Table */}
-      <div className="glass-card rounded-3xl p-6">
+      <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
         {filteredTips.length === 0 ? (
-          <div className="text-center py-16 text-neutral-400 space-y-2">
-            <Filter className="h-8 w-8 mx-auto text-neutral-600 mb-2" />
-            <p className="font-semibold text-white">No transactions found</p>
-            <p className="text-xs text-neutral-500">
+          <div className="text-center py-16 text-slate-500 space-y-2">
+            <Filter className="h-8 w-8 mx-auto text-slate-300 dark:text-slate-700 mb-2" />
+            <p className="font-semibold text-slate-900 dark:text-white">No transactions found</p>
+            <p className="text-xs text-slate-500">
               Try adjusting your search criteria or status filter.
             </p>
           </div>
@@ -171,7 +167,7 @@ export function TipsHistoryClient({
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-white/5 text-neutral-400 font-semibold uppercase tracking-wider text-[10px]">
+                <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-500 font-semibold uppercase tracking-wider text-[10px]">
                   <th className="pb-3 px-3">Transaction ID</th>
                   <th className="pb-3 px-3">Supporter</th>
                   <th className="pb-3 px-3">Amount</th>
@@ -182,22 +178,22 @@ export function TipsHistoryClient({
                   <th className="pb-3 px-3 text-right">Details</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {filteredTips.map((tip) => (
-                  <tr key={tip.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3.5 px-3 font-mono text-[11px] text-neutral-400">
+                  <tr key={tip.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                    <td className="py-3.5 px-3 font-mono text-[11px] text-slate-500 dark:text-slate-400">
                       {tip.transactionRef}
                     </td>
-                    <td className="py-3.5 px-3 font-semibold text-white">
+                    <td className="py-3.5 px-3 font-semibold text-slate-900 dark:text-white">
                       {tip.supporterName}
                     </td>
-                    <td className="py-3.5 px-3 font-black text-amber-400 text-sm">
+                    <td className="py-3.5 px-3 font-black text-amber-600 dark:text-amber-400 text-sm">
                       {formatCurrency(tip.amount, tip.currency)}
                     </td>
-                    <td className="py-3.5 px-3 max-w-[200px] truncate text-neutral-300">
-                      {tip.message || <span className="text-neutral-600 italic">No message</span>}
+                    <td className="py-3.5 px-3 max-w-[200px] truncate text-slate-600 dark:text-slate-300">
+                      {tip.message || <span className="text-slate-300 dark:text-slate-600 italic">No message</span>}
                     </td>
-                    <td className="py-3.5 px-3 text-neutral-400">
+                    <td className="py-3.5 px-3 text-slate-600 dark:text-slate-400">
                       {tip.paymentMethod}
                     </td>
                     <td className="py-3.5 px-3">
@@ -217,7 +213,7 @@ export function TipsHistoryClient({
                         </Badge>
                       )}
                     </td>
-                    <td className="py-3.5 px-3 text-neutral-400 whitespace-nowrap">
+                    <td className="py-3.5 px-3 text-slate-500 dark:text-slate-400 whitespace-nowrap">
                       {formatDateTime(tip.createdAt)}
                     </td>
                     <td className="py-3.5 px-3 text-right">
@@ -227,7 +223,7 @@ export function TipsHistoryClient({
                         onClick={() => setSelectedTip(tip)}
                         className="h-8 w-8 p-0"
                       >
-                        <Eye className="h-4 w-4 text-neutral-400 hover:text-white" />
+                        <Eye className="h-4 w-4 text-slate-400 hover:text-slate-900 dark:hover:text-white" />
                       </Button>
                     </td>
                   </tr>
@@ -243,7 +239,7 @@ export function TipsHistoryClient({
         {selectedTip && (
           <DialogContent onClose={() => setSelectedTip(null)} className="max-w-md">
             <DialogHeader>
-              <div className="h-12 w-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 mx-auto mb-2">
+              <div className="h-12 w-12 rounded-2xl bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 border border-amber-300 dark:border-amber-800 flex items-center justify-center mx-auto mb-2">
                 <CreditCard className="h-6 w-6" />
               </div>
               <DialogTitle className="text-center text-xl">Transaction Details</DialogTitle>
@@ -252,47 +248,47 @@ export function TipsHistoryClient({
               </DialogDescription>
             </DialogHeader>
 
-            <div className="my-5 space-y-3 bg-neutral-950/80 p-5 rounded-2xl border border-white/5 text-xs">
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-neutral-400">Amount:</span>
-                <span className="font-black text-amber-400 text-base">
+            <div className="my-5 space-y-3 bg-slate-50 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 text-xs">
+              <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                <span className="text-slate-500 dark:text-slate-400">Amount:</span>
+                <span className="font-black text-amber-600 dark:text-amber-400 text-base">
                   {formatCurrency(selectedTip.amount, selectedTip.currency)}
                 </span>
               </div>
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-neutral-400">Status:</span>
+              <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                <span className="text-slate-500 dark:text-slate-400">Status:</span>
                 <span className="font-bold">
                   {selectedTip.status === "COMPLETED" ? (
-                    <span className="text-emerald-400">Completed</span>
+                    <span className="text-emerald-600 dark:text-emerald-400">Completed</span>
                   ) : selectedTip.status === "FAILED" ? (
-                    <span className="text-rose-400">Failed</span>
+                    <span className="text-red-600 dark:text-red-400">Failed</span>
                   ) : (
-                    <span className="text-amber-400">Pending</span>
+                    <span className="text-amber-600 dark:text-amber-400">Pending</span>
                   )}
                 </span>
               </div>
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-neutral-400">Supporter Name:</span>
-                <span className="font-semibold text-white">{selectedTip.supporterName}</span>
+              <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                <span className="text-slate-500 dark:text-slate-400">Supporter Name:</span>
+                <span className="font-semibold text-slate-900 dark:text-white">{selectedTip.supporterName}</span>
               </div>
               {selectedTip.supporterEmail && (
-                <div className="flex justify-between py-1 border-b border-white/5">
-                  <span className="text-neutral-400">Supporter Email:</span>
-                  <span className="text-neutral-300">{selectedTip.supporterEmail}</span>
+                <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Supporter Email:</span>
+                  <span className="text-slate-700 dark:text-slate-300">{selectedTip.supporterEmail}</span>
                 </div>
               )}
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-neutral-400">Payment Provider:</span>
-                <span className="text-neutral-300">{selectedTip.paymentMethod}</span>
+              <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                <span className="text-slate-500 dark:text-slate-400">Payment Provider:</span>
+                <span className="text-slate-700 dark:text-slate-300">{selectedTip.paymentMethod}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-neutral-400">Timestamp:</span>
-                <span className="text-neutral-300">{formatDateTime(selectedTip.createdAt)}</span>
+              <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                <span className="text-slate-500 dark:text-slate-400">Timestamp:</span>
+                <span className="text-slate-700 dark:text-slate-300">{formatDateTime(selectedTip.createdAt)}</span>
               </div>
               {selectedTip.message && (
                 <div className="pt-2">
-                  <span className="text-neutral-400 block mb-1">Supporter Message:</span>
-                  <div className="p-3 rounded-xl bg-white/[0.03] text-neutral-200 italic border border-white/5">
+                  <span className="text-slate-500 dark:text-slate-400 block mb-1">Supporter Message:</span>
+                  <div className="p-3 rounded-xl bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 italic border border-slate-200 dark:border-slate-800">
                     &ldquo;{selectedTip.message}&rdquo;
                   </div>
                 </div>

@@ -68,11 +68,11 @@ export function AnalyticsClient({
       {/* Chart Row 1: Daily Revenue & Monthly Trends */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Daily Area Chart */}
-        <div className="glass-card rounded-3xl p-6 space-y-3">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-3">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-white text-base">Daily Revenue Trend</h3>
-              <p className="text-xs text-neutral-400">Tips earned over the past 30 days</p>
+              <h3 className="font-bold text-foreground text-base">Daily Revenue Trend</h3>
+              <p className="text-xs text-muted-foreground">Tips earned over the past 30 days</p>
             </div>
             <Badge variant="outline" className="text-xs font-mono">{currency}</Badge>
           </div>
@@ -80,42 +80,36 @@ export function AnalyticsClient({
           <div className="h-[280px] w-full pt-3">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={dailyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="analyticsGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="date" stroke="#737373" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#737373" fontSize={11} tickLine={false} axisLine={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-border opacity-50" vertical={false} />
+                <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip
                   content={({ active, payload, label }) => {
                     if (active && payload && payload.length) {
                       const item = payload[0].payload as TimeDataPoint;
                       return (
-                        <div className="rounded-xl border border-white/10 bg-neutral-900/95 p-3 shadow-2xl backdrop-blur-md text-xs space-y-1">
-                          <p className="font-bold text-white">{label}</p>
-                          <p className="text-amber-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
-                          <p className="text-neutral-400">{item.count} tips received</p>
+                        <div className="rounded-xl border border-border bg-card p-3 shadow-lg text-xs space-y-1">
+                          <p className="font-bold text-card-foreground">{label}</p>
+                          <p className="text-amber-500 dark:text-amber-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
+                          <p className="text-muted-foreground">{item.count} tips received</p>
                         </div>
                       );
                     }
                     return null;
                   }}
                 />
-                <Area type="monotone" dataKey="amount" stroke="#f59e0b" strokeWidth={3} fill="url(#analyticsGradient)" />
+                <Area type="monotone" dataKey="amount" stroke="#f59e0b" strokeWidth={2.5} fill="#f59e0b" fillOpacity={0.15} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Monthly Revenue Bar Chart */}
-        <div className="glass-card rounded-3xl p-6 space-y-3">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-3">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-white text-base">Monthly Revenue</h3>
-              <p className="text-xs text-neutral-400">Total volume grouped by month</p>
+              <h3 className="font-bold text-foreground text-base">Monthly Revenue</h3>
+              <p className="text-xs text-muted-foreground">Total volume grouped by month</p>
             </div>
             <Badge variant="outline" className="text-xs font-mono">{currency}</Badge>
           </div>
@@ -123,18 +117,18 @@ export function AnalyticsClient({
           <div className="h-[280px] w-full pt-3">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="date" stroke="#737373" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#737373" fontSize={11} tickLine={false} axisLine={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-border opacity-50" vertical={false} />
+                <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip
                   content={({ active, payload, label }) => {
                     if (active && payload && payload.length) {
                       const item = payload[0].payload as TimeDataPoint;
                       return (
-                        <div className="rounded-xl border border-white/10 bg-neutral-900/95 p-3 shadow-2xl backdrop-blur-md text-xs space-y-1">
-                          <p className="font-bold text-white">{label}</p>
-                          <p className="text-emerald-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
-                          <p className="text-neutral-400">{item.count} tips</p>
+                        <div className="rounded-xl border border-border bg-card p-3 shadow-lg text-xs space-y-1">
+                          <p className="font-bold text-card-foreground">{label}</p>
+                          <p className="text-emerald-600 dark:text-emerald-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
+                          <p className="text-muted-foreground">{item.count} tips</p>
                         </div>
                       );
                     }
@@ -151,26 +145,26 @@ export function AnalyticsClient({
       {/* Chart Row 2: Tip Size Distribution & Payment/Supporter Breakdowns */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Tip Distribution */}
-        <div className="glass-card rounded-3xl p-6 space-y-3">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-3">
           <div>
-            <h3 className="font-bold text-white text-base">Tip Size Breakdown</h3>
-            <p className="text-xs text-neutral-400">Distribution by contribution tiers</p>
+            <h3 className="font-bold text-foreground text-base">Tip Size Breakdown</h3>
+            <p className="text-xs text-muted-foreground">Distribution by contribution tiers</p>
           </div>
 
           <div className="h-[240px] w-full pt-3">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={distributionData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="range" stroke="#737373" fontSize={10} tickLine={false} axisLine={false} />
-                <YAxis stroke="#737373" fontSize={11} tickLine={false} axisLine={false} allowDecimals={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-border opacity-50" vertical={false} />
+                <XAxis dataKey="range" stroke="#94a3b8" fontSize={10} tickLine={false} axisLine={false} />
+                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} allowDecimals={false} />
                 <Tooltip
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       const item = payload[0].payload as DistributionPoint;
                       return (
-                        <div className="rounded-xl border border-white/10 bg-neutral-900/95 p-3 shadow-2xl backdrop-blur-md text-xs space-y-1">
-                          <p className="font-bold text-white">{item.range}</p>
-                          <p className="text-amber-400 font-extrabold">{item.count} tips</p>
+                        <div className="rounded-xl border border-border bg-card p-3 shadow-lg text-xs space-y-1">
+                          <p className="font-bold text-card-foreground">{item.range}</p>
+                          <p className="text-amber-500 dark:text-amber-400 font-extrabold">{item.count} tips</p>
                         </div>
                       );
                     }
@@ -188,10 +182,10 @@ export function AnalyticsClient({
         </div>
 
         {/* Supporter Privacy Breakdown */}
-        <div className="glass-card rounded-3xl p-6 space-y-3">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-3">
           <div>
-            <h3 className="font-bold text-white text-base">Supporter Privacy</h3>
-            <p className="text-xs text-neutral-400">Public names vs anonymous supporters</p>
+            <h3 className="font-bold text-foreground text-base">Supporter Privacy</h3>
+            <p className="text-xs text-muted-foreground">Public names vs anonymous supporters</p>
           </div>
 
           <div className="h-[240px] w-full">
@@ -215,26 +209,26 @@ export function AnalyticsClient({
                     if (active && payload && payload.length) {
                       const item = payload[0].payload as PieDataPoint;
                       return (
-                        <div className="rounded-xl border border-white/10 bg-neutral-900/95 p-2.5 shadow-xl text-xs">
-                          <p className="font-bold text-white">{item.name}</p>
-                          <p className="text-amber-400">{item.value} tips</p>
+                        <div className="rounded-xl border border-border bg-card p-2.5 shadow-lg text-xs">
+                          <p className="font-bold text-card-foreground">{item.name}</p>
+                          <p className="text-amber-500 dark:text-amber-400 font-semibold">{item.value} tips</p>
                         </div>
                       );
                     }
                     return null;
                   }}
                 />
-                <Legend iconType="circle" wrapperStyle={{ fontSize: "11px", color: "#a3a3a3" }} />
+                <Legend iconType="circle" wrapperStyle={{ fontSize: "11px", color: "var(--muted-foreground)" }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Payment Methods Breakdown */}
-        <div className="glass-card rounded-3xl p-6 space-y-3">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-3">
           <div>
-            <h3 className="font-bold text-white text-base">Payment Methods</h3>
-            <p className="text-xs text-neutral-400">Channels used by supporters</p>
+            <h3 className="font-bold text-foreground text-base">Payment Methods</h3>
+            <p className="text-xs text-muted-foreground">Channels used by supporters</p>
           </div>
 
           <div className="h-[240px] w-full">
@@ -258,16 +252,16 @@ export function AnalyticsClient({
                     if (active && payload && payload.length) {
                       const item = payload[0].payload as PieDataPoint;
                       return (
-                        <div className="rounded-xl border border-white/10 bg-neutral-900/95 p-2.5 shadow-xl text-xs">
-                          <p className="font-bold text-white">{item.name}</p>
-                          <p className="text-emerald-400">{item.value} payments</p>
+                        <div className="rounded-xl border border-border bg-card p-2.5 shadow-lg text-xs">
+                          <p className="font-bold text-card-foreground">{item.name}</p>
+                          <p className="text-emerald-600 dark:text-emerald-400 font-semibold">{item.value} payments</p>
                         </div>
                       );
                     }
                     return null;
                   }}
                 />
-                <Legend iconType="circle" wrapperStyle={{ fontSize: "11px", color: "#a3a3a3" }} />
+                <Legend iconType="circle" wrapperStyle={{ fontSize: "11px", color: "var(--muted-foreground)" }} />
               </PieChart>
             </ResponsiveContainer>
           </div>

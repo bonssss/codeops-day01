@@ -54,21 +54,21 @@ export function LoginForm() {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="glass-card rounded-3xl p-8 border-white/10 shadow-2xl space-y-6">
+      <div className="rounded-3xl border border-border bg-card p-8 shadow-xl space-y-6">
         <div className="text-center space-y-2">
           <Link href="/" className="inline-flex items-center gap-2 mb-2 group">
-            <div className="h-10 w-10 rounded-2xl bg-amber-500 text-neutral-950 flex items-center justify-center font-black shadow-lg shadow-amber-500/20">
+            <div className="h-10 w-10 rounded-2xl bg-amber-500 text-neutral-950 flex items-center justify-center font-black">
               <Coffee className="h-5 w-5" />
             </div>
           </Link>
-          <h1 className="text-2xl font-black text-white">Welcome Back</h1>
-          <p className="text-xs text-neutral-400">
+          <h1 className="text-2xl font-black text-foreground">Welcome Back</h1>
+          <p className="text-xs text-muted-foreground">
             Sign in to manage your creator tipping page, goals, and payouts
           </p>
         </div>
 
         {error && (
-          <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2">
+          <div className="p-3.5 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-xs flex items-center gap-2">
             <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -76,7 +76,7 @@ export function LoginForm() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-neutral-300">Email Address</label>
+            <label className="text-xs font-medium text-foreground">Email Address</label>
             <Input
               type="email"
               required
@@ -89,7 +89,7 @@ export function LoginForm() {
 
           <div className="space-y-1.5">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-medium text-neutral-300">Password</label>
+              <label className="text-xs font-medium text-foreground">Password</label>
             </div>
             <Input
               type="password"
@@ -106,7 +106,7 @@ export function LoginForm() {
             variant="default"
             size="lg"
             disabled={loading}
-            className="w-full font-bold shadow-lg shadow-amber-500/20 gap-2 mt-2"
+            className="w-full font-bold gap-2 mt-2"
           >
             {loading ? "Signing in..." : "Sign In to Dashboard"}
             <ArrowRight className="h-4 w-4" />
@@ -114,38 +114,38 @@ export function LoginForm() {
         </form>
 
         {/* Demo Fast Login Pills */}
-        <div className="pt-4 border-t border-white/5 space-y-2">
-          <span className="text-[11px] text-neutral-400 font-medium block text-center">
-            Or test with seeded demo accounts (password: <code className="text-amber-400">password123</code>):
+        <div className="pt-4 border-t border-border space-y-2">
+          <span className="text-[11px] text-muted-foreground font-medium block text-center">
+            Or test with seeded demo accounts (password: <code className="text-amber-500 font-semibold">password123</code>):
           </span>
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
               onClick={() => handleFillDemo("bonsa@tipjar.io")}
-              className="px-2 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[11px] text-amber-300 border border-white/5 font-mono truncate"
+              className="px-2 py-1.5 rounded-lg bg-muted hover:bg-muted/80 text-[11px] text-amber-500 border border-border font-mono truncate"
             >
               @bonsa
             </button>
             <button
               type="button"
               onClick={() => handleFillDemo("sara@tipjar.io")}
-              className="px-2 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[11px] text-amber-300 border border-white/5 font-mono truncate"
+              className="px-2 py-1.5 rounded-lg bg-muted hover:bg-muted/80 text-[11px] text-amber-500 border border-border font-mono truncate"
             >
               @sarab
             </button>
             <button
               type="button"
               onClick={() => handleFillDemo("abel@tipjar.io")}
-              className="px-2 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[11px] text-amber-300 border border-white/5 font-mono truncate"
+              className="px-2 py-1.5 rounded-lg bg-muted hover:bg-muted/80 text-[11px] text-amber-500 border border-border font-mono truncate"
             >
               @abelt
             </button>
           </div>
         </div>
 
-        <div className="text-center text-xs text-neutral-400">
+        <div className="text-center text-xs text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-amber-400 hover:underline font-semibold">
+          <Link href="/register" className="text-amber-500 hover:underline font-semibold">
             Create your TipJar free
           </Link>
         </div>

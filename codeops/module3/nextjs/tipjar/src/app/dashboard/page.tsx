@@ -4,15 +4,11 @@ import Link from "next/link";
 import {
   DollarSign,
   TrendingUp,
-  Heart,
   Users,
   Target,
   ArrowUpRight,
   Sparkles,
   Coins,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
 } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { Button } from "@/components/ui/button";
@@ -43,7 +39,6 @@ export default async function DashboardPage() {
 
   const currency = user?.profile?.currency || "ETB";
 
-  // Calculate statistics across all completed tips
   const completedTips = await db.tip.findMany({
     where: {
       recipientId: session.id,
@@ -55,19 +50,16 @@ export default async function DashboardPage() {
   const totalAmount = completedTips.reduce((sum, t) => sum + t.amount, 0);
   const totalTipsCount = completedTips.length;
 
-  // Month-to-date calculation
   const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
   const thisMonthTips = completedTips.filter((t) => new Date(t.createdAt) >= startOfMonth);
   const thisMonthAmount = thisMonthTips.reduce((sum, t) => sum + t.amount, 0);
 
-  // Distinct supporters count (count distinct names / senderIds)
   const distinctSupporters = new Set(
     completedTips.map((t) => (t.isAnonymous ? `anon-${t.id}` : t.supporterName || t.senderId || t.id))
   ).size;
 
   const averageTip = totalTipsCount > 0 ? totalAmount / totalTipsCount : 0;
 
-  // Aggregate daily revenue data for chart
   const last14Days = Array.from({ length: 14 }, (_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - (13 - i));
@@ -101,70 +93,70 @@ export default async function DashboardPage() {
       <div className="px-6 space-y-6 max-w-7xl">
         {/* Top 4 KPI Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="glass-card rounded-2xl p-5 relative overflow-hidden border-amber-500/20">
-            <div className="flex items-center justify-between text-xs text-neutral-400 mb-2">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
+            <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-2">
               <span className="font-semibold uppercase tracking-wider">Total Received</span>
-              <div className="h-8 w-8 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold">
+              <div className="h-8 w-8 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 border border-amber-300 dark:border-amber-800 flex items-center justify-center font-bold">
                 <DollarSign className="h-4 w-4" />
               </div>
             </div>
-            <div className="text-2xl font-black text-white">
+            <div className="text-2xl font-black text-slate-900 dark:text-white">
               {formatCurrency(totalAmount, currency)}
             </div>
-            <div className="mt-2 flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
+            <div className="mt-2 flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
               <TrendingUp className="h-3.5 w-3.5" />
               <span>Lifetime Earnings</span>
             </div>
           </div>
 
-          <div className="glass-card rounded-2xl p-5 relative overflow-hidden">
-            <div className="flex items-center justify-between text-xs text-neutral-400 mb-2">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
+            <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-2">
               <span className="font-semibold uppercase tracking-wider">This Month</span>
-              <div className="h-8 w-8 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
+              <div className="h-8 w-8 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800 flex items-center justify-center font-bold">
                 <Sparkles className="h-4 w-4" />
               </div>
             </div>
-            <div className="text-2xl font-black text-white">
+            <div className="text-2xl font-black text-slate-900 dark:text-white">
               {formatCurrency(thisMonthAmount, currency)}
             </div>
-            <div className="mt-2 text-xs text-neutral-400">
+            <div className="mt-2 text-xs text-slate-500 dark:text-slate-400">
               {thisMonthTips.length} tips received this month
             </div>
           </div>
 
-          <div className="glass-card rounded-2xl p-5 relative overflow-hidden">
-            <div className="flex items-center justify-between text-xs text-neutral-400 mb-2">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
+            <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-2">
               <span className="font-semibold uppercase tracking-wider">Total Supporters</span>
-              <div className="h-8 w-8 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold">
+              <div className="h-8 w-8 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 flex items-center justify-center font-bold">
                 <Users className="h-4 w-4" />
               </div>
             </div>
-            <div className="text-2xl font-black text-white">{distinctSupporters}</div>
-            <div className="mt-2 text-xs text-neutral-400">Across {totalTipsCount} transactions</div>
+            <div className="text-2xl font-black text-slate-900 dark:text-white">{distinctSupporters}</div>
+            <div className="mt-2 text-xs text-slate-500 dark:text-slate-400">Across {totalTipsCount} transactions</div>
           </div>
 
-          <div className="glass-card rounded-2xl p-5 relative overflow-hidden">
-            <div className="flex items-center justify-between text-xs text-neutral-400 mb-2">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
+            <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-2">
               <span className="font-semibold uppercase tracking-wider">Average Tip</span>
-              <div className="h-8 w-8 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold">
+              <div className="h-8 w-8 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400 border border-amber-300 dark:border-amber-800 flex items-center justify-center font-bold">
                 <Coins className="h-4 w-4" />
               </div>
             </div>
-            <div className="text-2xl font-black text-white">
+            <div className="text-2xl font-black text-slate-900 dark:text-white">
               {formatCurrency(averageTip, currency)}
             </div>
-            <div className="mt-2 text-xs text-neutral-400">Per contribution</div>
+            <div className="mt-2 text-xs text-slate-500 dark:text-slate-400">Per contribution</div>
           </div>
         </div>
 
         {/* Middle Section: Revenue Chart & Active Goal Card */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Chart */}
-          <div className="lg:col-span-8 glass-card rounded-3xl p-6">
+          <div className="lg:col-span-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="font-bold text-white text-base">Tips Over Time</h3>
-                <p className="text-xs text-neutral-400">Daily revenue volume over the last 14 days</p>
+                <h3 className="font-bold text-slate-900 dark:text-white text-base">Tips Over Time</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Daily revenue volume over the last 14 days</p>
               </div>
               <Badge variant="outline" className="text-xs font-mono">
                 {currency}
@@ -174,14 +166,14 @@ export default async function DashboardPage() {
           </div>
 
           {/* Active Goal */}
-          <div className="lg:col-span-4 glass-card rounded-3xl p-6 space-y-4 border-amber-500/20">
+          <div className="lg:col-span-4 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4 shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Target className="h-5 w-5 text-amber-400" />
-                <h3 className="font-bold text-white text-base">Active Goal</h3>
+                <Target className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                <h3 className="font-bold text-slate-900 dark:text-white text-base">Active Goal</h3>
               </div>
               <Link href="/dashboard/goals">
-                <Button variant="ghost" size="sm" className="text-xs text-amber-400 hover:text-amber-300 p-0 h-auto">
+                <Button variant="ghost" size="sm" className="text-xs text-amber-600 dark:text-amber-400 p-0 h-auto font-semibold">
                   Manage
                 </Button>
               </Link>
@@ -189,24 +181,24 @@ export default async function DashboardPage() {
 
             {activeGoal ? (
               <div className="space-y-3 pt-1">
-                <h4 className="font-bold text-sm text-white">{activeGoal.title}</h4>
+                <h4 className="font-bold text-sm text-slate-900 dark:text-white">{activeGoal.title}</h4>
                 {activeGoal.description && (
-                  <p className="text-xs text-neutral-400 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed">
                     {activeGoal.description}
                   </p>
                 )}
 
                 <div className="space-y-1.5 pt-2">
                   <div className="flex justify-between text-xs">
-                    <span className="font-bold text-amber-400">
+                    <span className="font-bold text-amber-600 dark:text-amber-400">
                       {formatCurrency(activeGoal.currentAmount, activeGoal.currency)}
                     </span>
-                    <span className="text-neutral-400">
+                    <span className="text-slate-500 dark:text-slate-400">
                       Target: {formatCurrency(activeGoal.targetAmount, activeGoal.currency)}
                     </span>
                   </div>
-                  <Progress value={activeGoal.currentAmount} max={activeGoal.targetAmount} className="h-2.5" />
-                  <div className="flex justify-between text-[11px] text-neutral-500 pt-1">
+                  <Progress value={activeGoal.currentAmount} max={activeGoal.targetAmount} className="h-2" />
+                  <div className="flex justify-between text-[11px] text-slate-500 pt-1">
                     <span>
                       {Math.min(100, Math.round((activeGoal.currentAmount / activeGoal.targetAmount) * 100))}% funded
                     </span>
@@ -218,7 +210,7 @@ export default async function DashboardPage() {
               </div>
             ) : (
               <div className="text-center py-6 space-y-3">
-                <p className="text-xs text-neutral-400">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   You don&apos;t have an active goal yet. Setting a goal increases tips by up to 40%!
                 </p>
                 <Link href="/dashboard/goals">
@@ -232,11 +224,11 @@ export default async function DashboardPage() {
         </div>
 
         {/* Bottom Section: Recent Tips Table */}
-        <div className="glass-card rounded-3xl p-6">
+        <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
           <div className="flex items-center justify-between mb-5">
             <div>
-              <h3 className="font-bold text-white text-base">Recent Tips</h3>
-              <p className="text-xs text-neutral-400">Latest incoming tips and supporter notes</p>
+              <h3 className="font-bold text-slate-900 dark:text-white text-base">Recent Tips</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Latest incoming tips and supporter notes</p>
             </div>
             <Link href="/dashboard/tips">
               <Button variant="outline" size="sm" className="gap-1 text-xs">
@@ -247,14 +239,14 @@ export default async function DashboardPage() {
           </div>
 
           {!user?.tipsReceived || user.tipsReceived.length === 0 ? (
-            <div className="text-center py-10 text-neutral-500 text-xs">
+            <div className="text-center py-10 text-slate-400 text-xs">
               No tips received yet. Share your public link to start receiving support!
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-white/5 text-neutral-400 font-semibold uppercase tracking-wider text-[10px]">
+                  <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-500 font-semibold uppercase tracking-wider text-[10px]">
                     <th className="pb-3 px-3">Supporter</th>
                     <th className="pb-3 px-3">Amount</th>
                     <th className="pb-3 px-3">Message</th>
@@ -263,21 +255,21 @@ export default async function DashboardPage() {
                     <th className="pb-3 px-3 text-right">Date</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                   {user.tipsReceived.map((tip) => (
-                    <tr key={tip.id} className="hover:bg-white/[0.02] transition-colors">
-                      <td className="py-3 px-3 font-semibold text-white">
+                    <tr key={tip.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-slate-900 dark:text-white">
                         {tip.isAnonymous ? (
-                          <span className="text-neutral-400 italic">Anonymous</span>
+                          <span className="text-slate-400 italic">Anonymous</span>
                         ) : (
                           tip.supporterName || "Supporter"
                         )}
                       </td>
-                      <td className="py-3 px-3 font-black text-amber-400">
+                      <td className="py-3 px-3 font-black text-amber-600 dark:text-amber-400">
                         {formatCurrency(tip.amount, tip.currency)}
                       </td>
-                      <td className="py-3 px-3 max-w-xs truncate text-neutral-300">
-                        {tip.message || <span className="text-neutral-600">-</span>}
+                      <td className="py-3 px-3 max-w-xs truncate text-slate-600 dark:text-slate-300">
+                        {tip.message || <span className="text-slate-300 dark:text-slate-600">-</span>}
                       </td>
                       <td className="py-3 px-3">
                         {tip.status === "COMPLETED" && (
@@ -296,10 +288,10 @@ export default async function DashboardPage() {
                           </Badge>
                         )}
                       </td>
-                      <td className="py-3 px-3 text-neutral-400">
+                      <td className="py-3 px-3 text-slate-500 dark:text-slate-400">
                         {tip.payment?.paymentMethod || "Mock Pay"}
                       </td>
-                      <td className="py-3 px-3 text-right text-neutral-400">
+                      <td className="py-3 px-3 text-right text-slate-500 dark:text-slate-400">
                         {formatRelativeTime(tip.createdAt)}
                       </td>
                     </tr>

@@ -57,21 +57,21 @@ export function RegisterForm() {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="glass-card rounded-3xl p-8 border-white/10 shadow-2xl space-y-6">
+      <div className="rounded-3xl border border-border bg-card p-8 shadow-xl space-y-6">
         <div className="text-center space-y-2">
           <Link href="/" className="inline-flex items-center gap-2 mb-2 group">
-            <div className="h-10 w-10 rounded-2xl bg-amber-500 text-neutral-950 flex items-center justify-center font-black shadow-lg shadow-amber-500/20">
+            <div className="h-10 w-10 rounded-2xl bg-amber-500 text-neutral-950 flex items-center justify-center font-black">
               <Coffee className="h-5 w-5" />
             </div>
           </Link>
-          <h1 className="text-2xl font-black text-white">Create Your TipJar</h1>
-          <p className="text-xs text-neutral-400">
+          <h1 className="text-2xl font-black text-foreground">Create Your TipJar</h1>
+          <p className="text-xs text-muted-foreground">
             Start receiving tips and building your supporter base today
           </p>
         </div>
 
         {error && (
-          <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2">
+          <div className="p-3.5 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-xs flex items-center gap-2">
             <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -79,7 +79,7 @@ export function RegisterForm() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-neutral-300">Your Full Name</label>
+            <label className="text-xs font-medium text-foreground">Your Full Name</label>
             <Input
               type="text"
               required
@@ -91,7 +91,7 @@ export function RegisterForm() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-neutral-300">Claim Username (@handle)</label>
+            <label className="text-xs font-medium text-foreground">Claim Username (@handle)</label>
             <Input
               type="text"
               required
@@ -100,13 +100,13 @@ export function RegisterForm() {
               onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))}
               icon={<AtSign className="h-4 w-4" />}
             />
-            <span className="text-[11px] text-neutral-400">
-              Your tipping link: <span className="text-amber-400 font-mono">tipjar.io/tip/{username || "username"}</span>
+            <span className="text-[11px] text-muted-foreground">
+              Your tipping link: <span className="text-amber-500 font-mono">tipjar.io/tip/{username || "username"}</span>
             </span>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-neutral-300">Email Address</label>
+            <label className="text-xs font-medium text-foreground">Email Address</label>
             <Input
               type="email"
               required
@@ -118,7 +118,7 @@ export function RegisterForm() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-neutral-300">Password</label>
+            <label className="text-xs font-medium text-foreground">Password</label>
             <Input
               type="password"
               required
@@ -135,16 +135,16 @@ export function RegisterForm() {
             variant="default"
             size="lg"
             disabled={loading}
-            className="w-full font-bold shadow-lg shadow-amber-500/20 gap-2 mt-2"
+            className="w-full font-bold gap-2 mt-2"
           >
             {loading ? "Creating Account..." : "Claim My TipJar Free"}
             <ArrowRight className="h-4 w-4" />
           </Button>
         </form>
 
-        <div className="text-center text-xs text-neutral-400">
+        <div className="text-center text-xs text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/login" className="text-amber-400 hover:underline font-semibold">
+          <Link href="/login" className="text-amber-500 hover:underline font-semibold">
             Sign in
           </Link>
         </div>
