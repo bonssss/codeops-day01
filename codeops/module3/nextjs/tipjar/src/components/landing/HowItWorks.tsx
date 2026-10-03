@@ -1,4 +1,5 @@
 import { UserPlus, Share2, DollarSign } from "lucide-react";
+import { ScrollReveal } from "@/components/shared/scroll-reveal";
 
 export function HowItWorks() {
   const steps = [
@@ -25,33 +26,36 @@ export function HowItWorks() {
   return (
     <section id="how-it-works" className="py-20 lg:py-28 relative border-t border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-900/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400">Simple 3-Step Process</h2>
-          <p className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            How TipJar Powers Your Creator Journey
-          </p>
-          <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
-            Everything you need to accept support from supporters anywhere in the world.
-          </p>
-        </div>
+        <ScrollReveal direction="up">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400">Simple 3-Step Process</h2>
+            <p className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+              How TipJar Powers Your Creator Journey
+            </p>
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+              Everything you need to accept support from supporters anywhere in the world.
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-          {steps.map((step) => (
-            <div
-              key={step.number}
-              className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 relative overflow-hidden transition-all duration-200 hover:border-amber-500"
-            >
-              <div className="absolute top-6 right-6 font-mono text-4xl font-black text-slate-200 dark:text-slate-800">
-                {step.number}
-              </div>
+          {steps.map((step, idx) => (
+            <ScrollReveal key={step.number} delay={idx * 150} direction="up">
+              <div
+                className="h-full rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 relative overflow-hidden transition-all duration-300 hover:border-amber-500 hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="absolute top-6 right-6 font-mono text-4xl font-black text-slate-200 dark:text-slate-800">
+                  {step.number}
+                </div>
 
-              <div className="h-14 w-14 rounded-2xl bg-amber-100 dark:bg-amber-950 border border-amber-300 dark:border-amber-800 flex items-center justify-center mb-6">
-                {step.icon}
-              </div>
+                <div className="h-14 w-14 rounded-2xl bg-amber-100 dark:bg-amber-950 border border-amber-300 dark:border-amber-800 flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
+                  {step.icon}
+                </div>
 
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{step.title}</h3>
-              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{step.description}</p>
-            </div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{step.title}</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{step.description}</p>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

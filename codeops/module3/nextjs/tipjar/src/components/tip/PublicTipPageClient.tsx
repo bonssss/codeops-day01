@@ -272,8 +272,27 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
         </div>
       </header>
 
+      {/* Live Activity Ticker Banner */}
+      {creator.recentTips && creator.recentTips.length > 0 && (
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-4">
+          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 px-4 py-2.5 flex items-center justify-between text-xs text-slate-700 dark:text-slate-300 shadow-sm animate-fade-in">
+            <div className="flex items-center gap-2 truncate">
+              <span className="flex h-2 w-2 relative shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span className="font-semibold text-slate-900 dark:text-white shrink-0">Recent Support:</span>
+              <span className="truncate">
+                <strong className="text-slate-900 dark:text-white">{creator.recentTips[0].isAnonymous ? "A generous supporter" : creator.recentTips[0].supporterName}</strong> tipped <strong className="text-amber-600 dark:text-amber-400">{formatCurrency(creator.recentTips[0].amount, creator.recentTips[0].currency)}</strong> {formatRelativeTime(creator.recentTips[0].createdAt)}
+              </span>
+            </div>
+            <span className="text-[11px] text-slate-500 font-medium hidden sm:inline shrink-0 pl-2">{creator.recentTips.length} total tips</span>
+          </div>
+        </div>
+      )}
+
       {/* Main Container */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* LEFT COLUMN: Creator Profile, Goals, Supporter Wall */}
