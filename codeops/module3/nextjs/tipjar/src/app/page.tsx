@@ -10,7 +10,7 @@ export default async function HomePage() {
   const session = await getSession();
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-neutral-100 flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <LandingNavbar user={session} />
       <main className="flex-1">
         <HeroSection />

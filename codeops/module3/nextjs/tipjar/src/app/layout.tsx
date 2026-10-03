@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/toast";
+import { ThemeProvider } from "@/components/shared/theme-provider";
 
 export const metadata: Metadata = {
-  title: "TipJar - Empowering Creators with Direct Tips & Supporter Goals",
+  title: "TipJar - Direct Creator Tips & Supporter Milestones",
   description:
-    "A modern full-stack tipping platform allowing developers, artists, freelancers, and content creators to receive instant tips and achieve project goals.",
-  keywords: ["tipping", "creator economy", "donations", "fintech", "nextjs", "ethiopia", "telebirr"],
+    "A clean, modern tipping platform allowing creators, developers, freelancers, and artists to accept tips and hit funding goals.",
 };
 
 export default function RootLayout({
@@ -15,9 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="antialiased bg-[#07090e] text-neutral-100 min-h-screen selection:bg-amber-500 selection:text-neutral-950">
-        <ToastProvider>{children}</ToastProvider>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className="antialiased selection:bg-amber-500 selection:text-slate-950">
+        <ThemeProvider defaultTheme="dark">
+          <ToastProvider>{children}</ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

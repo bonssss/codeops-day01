@@ -31,9 +31,9 @@ export function Dialog({ open, onOpenChange, children }: DialogProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-150">
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
+        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity"
         onClick={() => onOpenChange(false)}
       />
       <div className="relative z-50 w-full max-w-lg">{children}</div>
@@ -53,14 +53,14 @@ export function DialogContent({
   return (
     <div
       className={cn(
-        "relative w-full rounded-2xl border border-white/10 bg-neutral-900/95 p-6 shadow-2xl backdrop-blur-2xl text-neutral-100 max-h-[90vh] overflow-y-auto",
+        "relative w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-xl text-slate-900 dark:text-slate-100 max-h-[90vh] overflow-y-auto",
         className
       )}
     >
       {onClose && (
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-xl p-2 text-neutral-400 hover:text-white hover:bg-white/10 transition-colors"
+          className="absolute right-4 top-4 rounded-xl p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         >
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
@@ -89,7 +89,7 @@ export function DialogTitle({
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h2
-      className={cn("text-xl font-bold leading-none tracking-tight text-white", className)}
+      className={cn("text-xl font-bold leading-none tracking-tight text-slate-900 dark:text-white", className)}
       {...props}
     />
   );
@@ -101,7 +101,7 @@ export function DialogDescription({
 }: React.HTMLAttributes<HTMLParagraphElement>) {
   return (
     <p
-      className={cn("text-sm text-neutral-400 leading-relaxed mt-1", className)}
+      className={cn("text-sm text-slate-500 dark:text-slate-400 leading-relaxed mt-1", className)}
       {...props}
     />
   );

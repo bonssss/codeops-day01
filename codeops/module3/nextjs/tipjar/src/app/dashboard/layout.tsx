@@ -16,7 +16,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-[#07090e] text-neutral-100">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100">
       <DashboardSidebar user={session} />
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {children}

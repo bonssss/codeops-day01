@@ -126,13 +126,13 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
   return (
     <div className="space-y-8 max-w-4xl">
       {/* Profile Live Card Preview */}
-      <div className="glass-card rounded-3xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6 border-amber-500/20">
+      <div className="rounded-2xl border border-border bg-card p-6 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
         <div className="flex items-center gap-4">
           <Avatar src={avatarUrl} name={displayName} size="xl" className="ring-2 ring-amber-500/30" />
           <div className="space-y-1 text-center sm:text-left">
-            <h2 className="text-xl font-bold text-white">{displayName}</h2>
-            <p className="text-xs font-mono text-amber-400">tipjar.io/tip/{username}</p>
-            {location && <p className="text-xs text-neutral-400">{location}</p>}
+            <h2 className="text-xl font-bold text-foreground">{displayName}</h2>
+            <p className="text-xs font-mono text-amber-500 dark:text-amber-400">tipjar.io/tip/{username}</p>
+            {location && <p className="text-xs text-muted-foreground">{location}</p>}
           </div>
         </div>
 
@@ -140,24 +140,24 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
           href={`/tip/${username}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-semibold text-neutral-200 hover:text-white border border-white/10 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted hover:bg-muted/80 text-xs font-semibold text-foreground border border-border transition-colors"
         >
           <span>Preview Public Page</span>
-          <ExternalLink className="h-3.5 w-3.5 text-amber-400" />
+          <ExternalLink className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />
         </a>
       </div>
 
       {/* Main Profile Form */}
-      <div className="glass-card rounded-3xl p-7 space-y-6">
-        <div className="border-b border-white/5 pb-4">
-          <h3 className="text-base font-bold text-white">General Information</h3>
-          <p className="text-xs text-neutral-400">Update how your name, avatar, and bio appear on your tipping page</p>
+      <div className="rounded-2xl border border-border bg-card p-7 space-y-6 shadow-sm">
+        <div className="border-b border-border pb-4">
+          <h3 className="text-base font-bold text-foreground">General Information</h3>
+          <p className="text-xs text-muted-foreground">Update how your name, avatar, and bio appear on your tipping page</p>
         </div>
 
         <form onSubmit={handleProfileSubmit} className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">Display Name *</label>
+              <label className="text-xs font-medium text-foreground">Display Name *</label>
               <Input
                 required
                 value={displayName}
@@ -167,7 +167,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">Username (@handle) *</label>
+              <label className="text-xs font-medium text-foreground">Username (@handle) *</label>
               <Input
                 required
                 value={username}
@@ -179,7 +179,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">Avatar Image URL</label>
+              <label className="text-xs font-medium text-foreground">Avatar Image URL</label>
               <Input
                 type="url"
                 placeholder="https://images.unsplash.com/..."
@@ -190,7 +190,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">Location</label>
+              <label className="text-xs font-medium text-foreground">Location</label>
               <Input
                 placeholder="e.g. Addis Ababa, Ethiopia"
                 value={location}
@@ -201,21 +201,21 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-neutral-300">About / Bio</label>
+            <label className="text-xs font-medium text-foreground">About / Bio</label>
             <Textarea
               placeholder="Tell your supporters about yourself, your projects, or what you create..."
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               rows={3}
             />
-            <span className="text-[11px] text-neutral-500">{bio.length}/500 characters</span>
+            <span className="text-[11px] text-muted-foreground">{bio.length}/500 characters</span>
           </div>
 
-          <div className="border-t border-white/5 pt-5">
-            <h4 className="text-sm font-semibold text-white mb-3">Primary Social Profiles</h4>
+          <div className="border-t border-border pt-5">
+            <h4 className="text-sm font-semibold text-foreground mb-3">Primary Social Profiles</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-neutral-400">Website URL</label>
+                <label className="text-xs font-medium text-muted-foreground">Website URL</label>
                 <Input
                   type="url"
                   placeholder="https://yourwebsite.com"
@@ -226,7 +226,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-neutral-400">GitHub Username</label>
+                <label className="text-xs font-medium text-muted-foreground">GitHub Username</label>
                 <Input
                   placeholder="github_username"
                   value={github}
@@ -235,7 +235,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-neutral-400">LinkedIn Username</label>
+                <label className="text-xs font-medium text-muted-foreground">LinkedIn Username</label>
                 <Input
                   placeholder="linkedin_username"
                   value={linkedin}
@@ -244,7 +244,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-neutral-400">X / Twitter Handle</label>
+                <label className="text-xs font-medium text-muted-foreground">X / Twitter Handle</label>
                 <Input
                   placeholder="twitter_username"
                   value={twitter}
@@ -259,7 +259,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
               type="submit"
               variant="default"
               disabled={loading}
-              className="gap-2 font-bold px-6 shadow-md shadow-amber-500/20"
+              className="gap-2 font-bold px-6"
             >
               <Save className="h-4 w-4" />
               <span>{loading ? "Saving Profile..." : "Save Profile Changes"}</span>
@@ -269,10 +269,10 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
       </div>
 
       {/* Additional Social Links Manager */}
-      <div className="glass-card rounded-3xl p-7 space-y-6">
-        <div className="border-b border-white/5 pb-4">
-          <h3 className="text-base font-bold text-white">Custom Social & Portfolio Links</h3>
-          <p className="text-xs text-neutral-400">Add YouTube, Twitch, Substack, Telegram, or custom project links</p>
+      <div className="rounded-2xl border border-border bg-card p-7 space-y-6 shadow-sm">
+        <div className="border-b border-border pb-4">
+          <h3 className="text-base font-bold text-foreground">Custom Social & Portfolio Links</h3>
+          <p className="text-xs text-muted-foreground">Add YouTube, Twitch, Substack, Telegram, or custom project links</p>
         </div>
 
         {/* Existing Links List */}
@@ -281,19 +281,19 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
             {socialLinks.map((link) => (
               <div
                 key={link.id}
-                className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.02] border border-white/5"
+                className="flex items-center justify-between p-3.5 rounded-xl bg-muted/40 border border-border"
               >
                 <div className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs uppercase">
+                  <div className="h-8 w-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold text-xs uppercase">
                     {link.platform.substring(0, 2)}
                   </div>
                   <div>
-                    <div className="font-semibold text-xs text-white">{link.label || link.platform}</div>
+                    <div className="font-semibold text-xs text-foreground">{link.label || link.platform}</div>
                     <a
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[11px] text-neutral-400 hover:text-amber-400 truncate max-w-xs block"
+                      className="text-[11px] text-muted-foreground hover:text-amber-500 truncate max-w-xs block"
                     >
                       {link.url}
                     </a>
@@ -303,7 +303,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
                 <button
                   type="button"
                   onClick={() => handleDeleteSocialLink(link.id)}
-                  className="p-2 rounded-lg text-neutral-400 hover:text-rose-400 hover:bg-white/5 transition-colors"
+                  className="p-2 rounded-lg text-muted-foreground hover:text-destructive hover:bg-muted transition-colors"
                   title="Remove link"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -312,17 +312,17 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
             ))}
           </div>
         ) : (
-          <p className="text-xs text-neutral-500 italic">No additional links added yet.</p>
+          <p className="text-xs text-muted-foreground italic">No additional links added yet.</p>
         )}
 
         {/* Add New Link Form */}
-        <form onSubmit={handleAddSocialLink} className="p-4 rounded-2xl bg-neutral-900/60 border border-white/5 space-y-3">
-          <h4 className="text-xs font-bold text-white">Add New Link</h4>
+        <form onSubmit={handleAddSocialLink} className="p-4 rounded-xl bg-muted/40 border border-border space-y-3">
+          <h4 className="text-xs font-bold text-foreground">Add New Link</h4>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <select
               value={newPlatform}
               onChange={(e) => setNewPlatform(e.target.value)}
-              className="h-11 rounded-xl border border-white/10 bg-neutral-900 px-3 text-xs text-neutral-200"
+              className="h-11 rounded-xl border border-input bg-background px-3 text-xs text-foreground"
             >
               <option value="youtube">YouTube</option>
               <option value="twitch">Twitch</option>

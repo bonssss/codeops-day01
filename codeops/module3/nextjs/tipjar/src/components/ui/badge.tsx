@@ -3,24 +3,24 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center rounded-lg px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none select-none",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-amber-500/15 text-amber-300 border-amber-500/30",
+          "bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950/80 dark:text-amber-300 dark:border-amber-800",
         secondary:
-          "border-transparent bg-neutral-800 text-neutral-300",
+          "bg-slate-100 text-slate-800 border border-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700",
         destructive:
-          "border-transparent bg-rose-500/15 text-rose-300 border-rose-500/30",
+          "bg-red-100 text-red-900 border border-red-300 dark:bg-red-950/80 dark:text-red-300 dark:border-red-800",
         outline:
-          "text-neutral-300 border-neutral-700",
+          "border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300",
         success:
-          "border-transparent bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
+          "bg-emerald-100 text-emerald-900 border border-emerald-300 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800",
         warning:
-          "border-transparent bg-amber-500/15 text-amber-300 border-amber-500/30",
+          "bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950/80 dark:text-amber-300 dark:border-amber-800",
         info:
-          "border-transparent bg-sky-500/15 text-sky-300 border-sky-500/30",
+          "bg-slate-100 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700",
       },
     },
     defaultVariants: {

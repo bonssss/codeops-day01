@@ -152,25 +152,25 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
   return (
     <div className="space-y-8 max-w-4xl">
       {/* Tip Settings Card */}
-      <div className="glass-card rounded-3xl p-7 space-y-6">
-        <div className="flex items-center gap-3 border-b border-white/5 pb-4">
-          <div className="h-10 w-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
+      <div className="rounded-2xl border border-border bg-card p-7 space-y-6 shadow-sm">
+        <div className="flex items-center gap-3 border-b border-border pb-4">
+          <div className="h-10 w-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500">
             <Sliders className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white">Tipping Configuration</h3>
-            <p className="text-xs text-neutral-400">Customize currencies, suggested amounts, and wall privacy</p>
+            <h3 className="text-base font-bold text-foreground">Tipping Configuration</h3>
+            <p className="text-xs text-muted-foreground">Customize currencies, suggested amounts, and wall privacy</p>
           </div>
         </div>
 
         <form onSubmit={handleSaveTipSettings} className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">Base Currency</label>
+              <label className="text-xs font-medium text-foreground">Base Currency</label>
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value as "ETB" | "USD" | "EUR")}
-                className="h-11 w-full rounded-xl border border-white/10 bg-neutral-900 px-3 text-xs text-neutral-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="h-11 w-full rounded-xl border border-input bg-background px-3 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-amber-500"
               >
                 <option value="ETB">ETB - Ethiopian Birr (Default)</option>
                 <option value="USD">USD - US Dollar ($)</option>
@@ -179,7 +179,7 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">
+              <label className="text-xs font-medium text-foreground">
                 Suggested Tip Amounts (comma separated)
               </label>
               <Input
@@ -191,7 +191,7 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-neutral-300">Custom Thank You / Note Message</label>
+            <label className="text-xs font-medium text-foreground">Custom Thank You / Note Message</label>
             <Textarea
               placeholder="Thanks for supporting my journey! Every birr fuels my work."
               value={customTipMessage}
@@ -201,21 +201,21 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
           </div>
 
           {/* Privacy Toggles */}
-          <div className="space-y-4 pt-2 border-t border-white/5">
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
+          <div className="space-y-4 pt-2 border-t border-border">
+            <div className="flex items-center justify-between p-3.5 rounded-xl bg-muted/40 border border-border">
               <div className="space-y-0.5">
-                <label className="text-xs font-semibold text-white">Allow Anonymous Tips</label>
-                <p className="text-[11px] text-neutral-400">
+                <label className="text-xs font-semibold text-foreground">Allow Anonymous Tips</label>
+                <p className="text-[11px] text-muted-foreground">
                   Allow supporters to hide their name from public tipping lists
                 </p>
               </div>
               <Switch checked={allowAnonymous} onCheckedChange={setAllowAnonymous} />
             </div>
 
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
+            <div className="flex items-center justify-between p-3.5 rounded-xl bg-muted/40 border border-border">
               <div className="space-y-0.5">
-                <label className="text-xs font-semibold text-white">Display Public Supporter Wall</label>
-                <p className="text-[11px] text-neutral-400">
+                <label className="text-xs font-semibold text-foreground">Display Public Supporter Wall</label>
+                <p className="text-[11px] text-muted-foreground">
                   Show recent supporter notes and tips on your public tipping page
                 </p>
               </div>
@@ -231,20 +231,20 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
       </div>
 
       {/* Account Security Card */}
-      <div className="glass-card rounded-3xl p-7 space-y-6">
-        <div className="flex items-center gap-3 border-b border-white/5 pb-4">
-          <div className="h-10 w-10 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+      <div className="rounded-2xl border border-border bg-card p-7 space-y-6 shadow-sm">
+        <div className="flex items-center gap-3 border-b border-border pb-4">
+          <div className="h-10 w-10 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-500">
             <ShieldCheck className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white">Account Security</h3>
-            <p className="text-xs text-neutral-400">Change password and manage credentials</p>
+            <h3 className="text-base font-bold text-foreground">Account Security</h3>
+            <p className="text-xs text-muted-foreground">Change password and manage credentials</p>
           </div>
         </div>
 
         <form onSubmit={handleChangePassword} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-neutral-300">Current Password</label>
+            <label className="text-xs font-medium text-foreground">Current Password</label>
             <Input
               type="password"
               required
@@ -257,7 +257,7 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">New Password</label>
+              <label className="text-xs font-medium text-foreground">New Password</label>
               <Input
                 type="password"
                 required
@@ -270,7 +270,7 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">Confirm New Password</label>
+              <label className="text-xs font-medium text-foreground">Confirm New Password</label>
               <Input
                 type="password"
                 required
@@ -291,19 +291,19 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
       </div>
 
       {/* Danger Zone */}
-      <div className="glass-card rounded-3xl p-7 border-rose-500/20 space-y-4">
+      <div className="rounded-2xl border border-destructive/30 bg-card p-7 space-y-4 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+          <div className="h-10 w-10 rounded-2xl bg-destructive/10 border border-destructive/20 flex items-center justify-center text-destructive">
             <AlertTriangle className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-rose-300">Danger Zone</h3>
-            <p className="text-xs text-neutral-400">Permanently delete your creator account and all associated tip data</p>
+            <h3 className="text-base font-bold text-destructive">Danger Zone</h3>
+            <p className="text-xs text-muted-foreground">Permanently delete your creator account and all associated tip data</p>
           </div>
         </div>
 
         <div className="pt-2 flex items-center justify-between">
-          <p className="text-xs text-neutral-400 max-w-md">
+          <p className="text-xs text-muted-foreground max-w-md">
             Once deleted, your tipping URL will become available to others and all records will be deleted.
           </p>
           <Button type="button" variant="destructive" size="sm" onClick={handleDeleteAccount}>

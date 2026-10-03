@@ -129,8 +129,8 @@ export function GoalsManagerClient({
       {/* Action Bar */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-white">Your Creator Milestones</h2>
-          <p className="text-xs text-neutral-400">
+          <h2 className="text-lg font-bold text-foreground">Your Creator Milestones</h2>
+          <p className="text-xs text-muted-foreground">
             Set ambitious targets for equipment, software, courses, or creative projects
           </p>
         </div>
@@ -142,13 +142,13 @@ export function GoalsManagerClient({
 
       {/* Goals Grid */}
       {goals.length === 0 ? (
-        <div className="glass-card rounded-3xl p-12 text-center space-y-4">
-          <div className="h-16 w-16 rounded-3xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mx-auto text-2xl">
+        <div className="rounded-2xl border border-border bg-card p-12 text-center space-y-4">
+          <div className="h-16 w-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-500 flex items-center justify-center mx-auto text-2xl">
             🎯
           </div>
           <div className="space-y-1">
-            <h3 className="text-base font-bold text-white">No goals created yet</h3>
-            <p className="text-xs text-neutral-400 max-w-sm mx-auto">
+            <h3 className="text-base font-bold text-foreground">No goals created yet</h3>
+            <p className="text-xs text-muted-foreground max-w-sm mx-auto">
               Setting up a clear support goal gives your audience a concrete reason to tip and be part of your success.
             </p>
           </div>
@@ -169,13 +169,13 @@ export function GoalsManagerClient({
             return (
               <div
                 key={goal.id}
-                className="glass-card rounded-3xl p-6 relative flex flex-col justify-between border-white/10 hover:border-amber-500/30 transition-all duration-300"
+                className="rounded-2xl border border-border bg-card p-6 relative flex flex-col justify-between hover:border-amber-500/40 transition-colors shadow-sm"
               >
                 <div className="space-y-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-bold text-white text-base leading-tight">
+                        <h3 className="font-bold text-foreground text-base leading-tight">
                           {goal.title}
                         </h3>
                       </div>
@@ -194,8 +194,8 @@ export function GoalsManagerClient({
                           </Badge>
                         )}
                         {goal.deadline && (
-                          <span className="text-[11px] text-neutral-400 flex items-center gap-1">
-                            <Calendar className="h-3 w-3 text-amber-400" />
+                          <span className="text-[11px] text-muted-foreground flex items-center gap-1">
+                            <Calendar className="h-3 w-3 text-amber-500" />
                             {new Date(goal.deadline).toLocaleDateString()}
                           </span>
                         )}
@@ -205,14 +205,14 @@ export function GoalsManagerClient({
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => openEditModal(goal)}
-                        className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 transition-colors"
+                        className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
                         title="Edit Goal"
                       >
                         <Edit2 className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => handleDelete(goal.id)}
-                        className="p-1.5 rounded-lg text-neutral-400 hover:text-rose-400 hover:bg-white/5 transition-colors"
+                        className="p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-muted transition-colors"
                         title="Delete Goal"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -221,7 +221,7 @@ export function GoalsManagerClient({
                   </div>
 
                   {goal.description && (
-                    <p className="text-xs text-neutral-300 leading-relaxed">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
                       {goal.description}
                     </p>
                   )}
@@ -229,15 +229,15 @@ export function GoalsManagerClient({
                   {/* Progress info */}
                   <div className="space-y-2 pt-2">
                     <div className="flex justify-between text-xs">
-                      <span className="font-bold text-amber-400">
+                      <span className="font-bold text-amber-500 dark:text-amber-400">
                         {formatCurrency(goal.currentAmount, goal.currency)}
                       </span>
-                      <span className="text-neutral-400">
+                      <span className="text-muted-foreground">
                         Target: {formatCurrency(goal.targetAmount, goal.currency)}
                       </span>
                     </div>
                     <Progress value={goal.currentAmount} max={goal.targetAmount} className="h-3" />
-                    <div className="text-right text-[11px] font-bold text-neutral-400">
+                    <div className="text-right text-[11px] font-bold text-muted-foreground">
                       {percentage}% achieved
                     </div>
                   </div>
