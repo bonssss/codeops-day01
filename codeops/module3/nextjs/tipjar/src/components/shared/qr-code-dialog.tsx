@@ -51,45 +51,46 @@ export function QRCodeDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent onClose={() => onOpenChange(false)} className="max-w-md text-center sm:text-center">
-        <DialogHeader className="text-center items-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-400 mb-2">
-            <QrIcon className="h-6 w-6" />
+      <DialogContent onClose={() => onOpenChange(false)} className="max-w-sm text-center sm:text-center p-5 sm:p-6">
+        <DialogHeader className="text-center items-center mb-2">
+          <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-500 mb-1.5">
+            <QrIcon className="h-5 w-5" />
           </div>
-          <DialogTitle className="text-xl">Scan to Tip {creatorName}</DialogTitle>
-          <DialogDescription>
-            Share this QR code on your live streams, YouTube videos, posters, or business cards.
+          <DialogTitle className="text-lg font-bold">Scan to Tip {creatorName}</DialogTitle>
+          <DialogDescription className="text-xs">
+            Scan with your mobile camera or banking app to open page.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="my-6 flex flex-col items-center justify-center">
-          <div className="rounded-2xl bg-white p-4 shadow-2xl border-4 border-amber-500/30">
+        <div className="my-3 flex flex-col items-center justify-center">
+          <div className="rounded-2xl bg-white p-3 shadow-md border-2 border-amber-500/30">
             {dataUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={dataUrl} alt={`QR Code for ${creatorName}`} className="h-60 w-60 rounded-lg" />
+              <img src={dataUrl} alt={`QR Code for ${creatorName}`} className="h-44 w-44 sm:h-48 sm:w-48 rounded-lg" />
             ) : (
-              <div className="h-60 w-60 animate-pulse bg-neutral-200 rounded-lg flex items-center justify-center text-neutral-500 text-sm">
+              <div className="h-44 w-44 sm:h-48 sm:w-48 animate-pulse bg-slate-200 rounded-lg flex items-center justify-center text-slate-500 text-xs">
                 Generating QR...
               </div>
             )}
           </div>
-          <div className="mt-4 text-xs font-mono text-neutral-400 max-w-[280px] truncate bg-black/40 px-3 py-1.5 rounded-lg border border-white/5">
+          <div className="mt-2.5 text-[11px] font-mono text-muted-foreground max-w-[260px] truncate bg-muted px-2.5 py-1 rounded-lg border border-border">
             {url}
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2.5 pt-1">
           <Button
             type="button"
             variant="outline"
+            size="sm"
             onClick={handleDownload}
             disabled={!dataUrl}
-            className="w-full"
+            className="w-full text-xs"
           >
-            <Download className="h-4 w-4 mr-2" />
+            <Download className="h-3.5 w-3.5 mr-1.5" />
             Download PNG
           </Button>
-          <CopyButton text={url} label="Copy Link" className="w-full" />
+          <CopyButton text={url} label="Copy Link" size="sm" className="w-full text-xs" />
         </div>
       </DialogContent>
     </Dialog>

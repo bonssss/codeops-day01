@@ -31,12 +31,12 @@ export function Dialog({ open, onOpenChange, children }: DialogProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
       <div
         className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity"
         onClick={() => onOpenChange(false)}
       />
-      <div className="relative z-50 w-full max-w-lg">{children}</div>
+      <div className="relative z-50 w-full max-w-md my-auto">{children}</div>
     </div>
   );
 }
@@ -53,7 +53,7 @@ export function DialogContent({
   return (
     <div
       className={cn(
-        "relative w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-xl text-slate-900 dark:text-slate-100 max-h-[90vh] overflow-y-auto",
+        "relative w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 shadow-2xl text-slate-900 dark:text-slate-100 max-h-[88vh] overflow-y-auto",
         className
       )}
     >
