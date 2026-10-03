@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +13,12 @@ interface DialogProps {
 }
 
 export function Dialog({ open, onOpenChange, children }: DialogProps) {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onOpenChange(false);
@@ -28,17 +35,24 @@ export function Dialog({ open, onOpenChange, children }: DialogProps) {
     };
   }, [open, onOpenChange]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+  const content = (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity"
         onClick={() => onOpenChange(false)}
+        aria-hidden="true"
       />
-      <div className="relative z-50 w-full max-w-md my-auto">{children}</div>
+      {/* Centered Modal Container */}
+      <div className="relative z-[101] w-full max-w-md my-auto flex items-center justify-center">
+        {children}
+      </div>
     </div>
   );
+
+  return createPortal(content, document.body);
 }
 
 export function DialogContent({
