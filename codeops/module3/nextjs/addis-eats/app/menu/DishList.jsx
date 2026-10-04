@@ -5,63 +5,7 @@ import { useCart } from "../context/CartContext";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-const dishes = [
-  {
-    id: 1,
-    name: "Doro Wat",
-    price: 15.0,
-    formattedPrice: "$15.00",
-    category: "Traditional",
-    spice: "🌶️🌶️🌶️ High",
-    time: "30 min",
-    emoji: "🍗",
-    description: "Slow-cooked tender chicken drumsticks in rich, spiced berbere sauce served with hard-boiled eggs and fresh injera.",
-  },
-  {
-    id: 2,
-    name: "Shiro Wat",
-    price: 11.0,
-    formattedPrice: "$11.00",
-    category: "Vegetarian",
-    spice: "🌶️ Mild",
-    time: "20 min",
-    emoji: "🍲",
-    description: "Velvety spiced ground chickpea stew simmered with garlic, onions, and herbal butter, served bubbling hot with injera.",
-  },
-  {
-    id: 3,
-    name: "Special Beef Tibs",
-    price: 16.5,
-    formattedPrice: "$16.50",
-    category: "Sautéed",
-    spice: "🌶️🌶️ Medium",
-    time: "25 min",
-    emoji: "🥩",
-    description: "Tender cubed beef sautéed to perfection with rosemary, caramelized onions, tomatoes, and spicy green peppers.",
-  },
-  {
-    id: 4,
-    name: "Kitfo Special",
-    price: 17.0,
-    formattedPrice: "$17.00",
-    category: "Traditional",
-    spice: "🌶️🌶️🌶️ High",
-    time: "15 min",
-    emoji: "🥘",
-    description: "Prime lean beef minced and infused with spiced clarified butter (niter kibbeh) and aromatic mitmita chili powder.",
-  },
-  {
-    id: 5,
-    name: "Misir Wot",
-    price: 12.0,
-    formattedPrice: "$12.00",
-    category: "Vegetarian",
-    spice: "🌶️🌶️ Medium",
-    time: "25 min",
-    emoji: "🥣",
-    description: "Savory red split lentils slow-simmered in a fragrant spiced berbere sauce with garlic, ginger, and herbs.",
-  },
-];
+import { dishes } from "@/lib/data";
 
 export default function DishList() {
   const { addToCart } = useCart();
