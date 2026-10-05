@@ -1,8 +1,20 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Save, Lock, AlertTriangle, Sliders, ShieldCheck } from "lucide-react";
+import {
+  User,
+  CreditCard,
+  Wallet,
+  Bell,
+  Lock,
+  ChevronRight,
+  ShieldCheck,
+  Save,
+  Check,
+  AlertTriangle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,6 +34,10 @@ interface SettingsData {
 export function SettingsClient({ initialSettings }: { initialSettings: SettingsData }) {
   const router = useRouter();
   const { toast } = useToast();
+
+  const [activeSection, setActiveSection] = React.useState<
+    "overview" | "payment" | "payout" | "notifications" | "security" | "tipping"
+  >("overview");
 
   // Tip Settings
   const [currency, setCurrency] = React.useState<"ETB" | "USD" | "EUR">(
@@ -45,6 +61,11 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [changingPass, setChangingPass] = React.useState(false);
 
+  // Notifications
+  const [notifyTips, setNotifyTips] = React.useState(true);
+  const [notifyGoals, setNotifyGoals] = React.useState(true);
+  const [notifyWeekly, setNotifyWeekly] = React.useState(false);
+
   const handleSaveTipSettings = async (e: React.FormEvent) => {
     e.preventDefault();
     setSavingTips(true);
@@ -58,7 +79,7 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
       if (parsedAmounts.length === 0) {
         toast({
           title: "Validation Error",
-          description: "Please specify at least one valid suggested amount (e.g. 50, 100, 200, 500)",
+          description: "Please specify at least one valid amount (e.g. 5, 10, 20)",
           type: "error",
         });
         setSavingTips(false);
@@ -76,7 +97,7 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
       if (res.success) {
         toast({
           title: "Settings Saved",
-          description: "Tipping preferences updated successfully",
+          description: "Preferences updated successfully",
           type: "success",
         });
         router.refresh();
@@ -149,168 +170,231 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
     }
   };
 
+  const menuItems = [
+    {
+      id: "profile",
+      title: "Profile",
+      description: "Update your personal information and profile details.",
+      icon: User,
+      href: "/dashboard/profile",
+    },
+    {
+      id: "payment",
+      title: "Payment methods",
+      description: "Manage your cards and payment options.",
+      icon: CreditCard,
+      onClick: () => setActiveSection("payment"),
+    },
+    {
+      id: "payout",
+      title: "Payout settings",
+      description: "Set up how you want to receive your earnings.",
+      icon: Wallet,
+      onClick: () => setActiveSection("payout"),
+    },
+    {
+      id: "notifications",
+      title: "Notifications",
+      description: "Choose what notifications you want to receive.",
+      icon: Bell,
+      onClick: () => setActiveSection("notifications"),
+    },
+    {
+      id: "security",
+      title: "Security",
+      description: "Change your password and enable two-factor authentication.",
+      icon: Lock,
+      onClick: () => setActiveSection("security"),
+    },
+  ];
+
   return (
-    <div className="space-y-8 max-w-4xl">
-      {/* Tip Settings Card */}
-      <div className="rounded-2xl border border-border bg-card p-7 space-y-6 shadow-sm">
-        <div className="flex items-center gap-3 border-b border-border pb-4">
-          <div className="h-10 w-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-            <Sliders className="h-5 w-5" />
-          </div>
-          <div>
-            <h3 className="text-base font-bold text-foreground">Tipping Configuration</h3>
-            <p className="text-xs text-muted-foreground">Customize currencies, suggested amounts, and wall privacy</p>
-          </div>
-        </div>
-
-        <form onSubmit={handleSaveTipSettings} className="space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-foreground">Base Currency</label>
-              <select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value as "ETB" | "USD" | "EUR")}
-                className="h-11 w-full rounded-xl border border-input bg-background px-3 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+    <div className="space-y-6 max-w-4xl">
+      
+      {/* Settings Navigation Menu Matching Screen 5 */}
+      <div className="space-y-3">
+        {menuItems.map((item) => {
+          const Icon = item.icon;
+          if (item.href) {
+            return (
+              <Link
+                key={item.id}
+                href={item.href}
+                className="flex items-center justify-between p-4 rounded-2xl border border-border bg-card hover:bg-muted/50 hover:border-emerald-500/40 transition-all cursor-pointer shadow-xs"
               >
-                <option value="ETB">ETB - Ethiopian Birr (Default)</option>
-                <option value="USD">USD - US Dollar ($)</option>
-                <option value="EUR">EUR - Euro (€)</option>
-              </select>
-            </div>
+                <div className="flex items-center gap-4">
+                  <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center text-foreground shrink-0">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-foreground text-sm">{item.title}</h3>
+                    <p className="text-xs text-muted-foreground">{item.description}</p>
+                  </div>
+                </div>
+                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              </Link>
+            );
+          }
 
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-foreground">
-                Suggested Tip Amounts (comma separated)
-              </label>
-              <Input
-                placeholder="50, 100, 200, 500"
-                value={amountsStr}
-                onChange={(e) => setAmountsStr(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-foreground">Custom Thank You / Note Message</label>
-            <Textarea
-              placeholder="Thanks for supporting my journey! Every birr fuels my work."
-              value={customTipMessage}
-              onChange={(e) => setCustomTipMessage(e.target.value)}
-              rows={2}
-            />
-          </div>
-
-          {/* Privacy Toggles */}
-          <div className="space-y-4 pt-2 border-t border-border">
-            <div className="flex items-center justify-between p-3.5 rounded-xl bg-muted/40 border border-border">
-              <div className="space-y-0.5">
-                <label className="text-xs font-semibold text-foreground">Allow Anonymous Tips</label>
-                <p className="text-[11px] text-muted-foreground">
-                  Allow supporters to hide their name from public tipping lists
-                </p>
+          return (
+            <div
+              key={item.id}
+              onClick={item.onClick}
+              className={`flex items-center justify-between p-4 rounded-2xl border bg-card hover:bg-muted/50 transition-all cursor-pointer shadow-xs ${
+                activeSection === item.id
+                  ? "border-emerald-600 ring-1 ring-emerald-600 bg-emerald-50/20 dark:bg-emerald-950/20"
+                  : "border-border hover:border-emerald-500/40"
+              }`}
+            >
+              <div className="flex items-center gap-4">
+                <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center text-foreground shrink-0">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-foreground text-sm">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground">{item.description}</p>
+                </div>
               </div>
-              <Switch checked={allowAnonymous} onCheckedChange={setAllowAnonymous} />
+              <ChevronRight className={`h-4 w-4 transition-transform ${activeSection === item.id ? "rotate-90 text-emerald-600" : "text-muted-foreground"}`} />
             </div>
-
-            <div className="flex items-center justify-between p-3.5 rounded-xl bg-muted/40 border border-border">
-              <div className="space-y-0.5">
-                <label className="text-xs font-semibold text-foreground">Display Public Supporter Wall</label>
-                <p className="text-[11px] text-muted-foreground">
-                  Show recent supporter notes and tips on your public tipping page
-                </p>
-              </div>
-              <Switch checked={showSupporterWall} onCheckedChange={setShowSupporterWall} />
-            </div>
-          </div>
-
-          <Button type="submit" variant="default" disabled={savingTips} className="gap-2 font-bold px-6">
-            <Save className="h-4 w-4" />
-            <span>{savingTips ? "Saving..." : "Save Tip Settings"}</span>
-          </Button>
-        </form>
+          );
+        })}
       </div>
 
-      {/* Account Security Card */}
-      <div className="rounded-2xl border border-border bg-card p-7 space-y-6 shadow-sm">
-        <div className="flex items-center gap-3 border-b border-border pb-4">
-          <div className="h-10 w-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-            <ShieldCheck className="h-5 w-5" />
+      {/* Expanded Section Details */}
+      {activeSection === "payment" && (
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-xs space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between border-b border-border pb-3">
+            <h3 className="font-bold text-base text-foreground">Payment Methods</h3>
+            <span className="text-xs text-emerald-600 font-semibold">Active Engine: Mock / Telebirr</span>
           </div>
-          <div>
-            <h3 className="text-base font-bold text-foreground">Account Security</h3>
-            <p className="text-xs text-muted-foreground">Change password and manage credentials</p>
-          </div>
-        </div>
-
-        <form onSubmit={handleChangePassword} className="space-y-4">
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-foreground">Current Password</label>
-            <Input
-              type="password"
-              required
-              placeholder="••••••••"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              icon={<Lock className="h-4 w-4" />}
-            />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-foreground">New Password</label>
-              <Input
-                type="password"
-                required
-                minLength={6}
-                placeholder="••••••••"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                icon={<Lock className="h-4 w-4" />}
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-foreground">Confirm New Password</label>
-              <Input
-                type="password"
-                required
-                minLength={6}
-                placeholder="••••••••"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                icon={<Lock className="h-4 w-4" />}
-              />
-            </div>
-          </div>
-
-          <Button type="submit" variant="outline" disabled={changingPass} className="gap-2 text-xs">
-            <Lock className="h-3.5 w-3.5" />
-            <span>{changingPass ? "Updating..." : "Update Password"}</span>
-          </Button>
-        </form>
-      </div>
-
-      {/* Danger Zone */}
-      <div className="rounded-2xl border border-destructive/30 bg-card p-7 space-y-4 shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-2xl bg-destructive/10 border border-destructive/20 flex items-center justify-center text-destructive">
-            <AlertTriangle className="h-5 w-5" />
-          </div>
-          <div>
-            <h3 className="text-base font-bold text-destructive">Danger Zone</h3>
-            <p className="text-xs text-muted-foreground">Permanently delete your creator account and all associated tip data</p>
-          </div>
-        </div>
-
-        <div className="pt-2 flex items-center justify-between">
-          <p className="text-xs text-muted-foreground max-w-md">
-            Once deleted, your tipping URL will become available to others and all records will be deleted.
+          <p className="text-xs text-muted-foreground">
+            Supporters can tip you using Card, Telebirr, CBE Birr, or Chapa. Simulated transactions are verified instantly.
           </p>
-          <Button type="button" variant="destructive" size="sm" onClick={handleDeleteAccount}>
-            Delete Account
-          </Button>
+          <div className="p-4 rounded-xl bg-muted/60 border border-border flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <CreditCard className="h-5 w-5 text-emerald-600" />
+              <div>
+                <p className="text-xs font-bold text-foreground">Instant Payment Simulator</p>
+                <p className="text-[11px] text-muted-foreground">Default development & demo mode</p>
+              </div>
+            </div>
+            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-lg">Connected</span>
+          </div>
         </div>
-      </div>
+      )}
+
+      {activeSection === "payout" && (
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-xs space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between border-b border-border pb-3">
+            <h3 className="font-bold text-base text-foreground">Payout Settings</h3>
+            <span className="text-xs text-muted-foreground">Weekly automatic payouts</span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Earnings are deposited to your configured mobile wallet or bank account on request or every Monday.
+          </p>
+          <div className="space-y-3 pt-2">
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-foreground">Mobile Wallet or Bank Account Number</label>
+              <Input placeholder="e.g. 0911223344 or 100012345678" defaultValue="0911456789" />
+            </div>
+            <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white">Save Payout Details</Button>
+          </div>
+        </div>
+      )}
+
+      {activeSection === "notifications" && (
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-xs space-y-4 animate-in fade-in duration-200">
+          <h3 className="font-bold text-base text-foreground border-b border-border pb-3">Notification Preferences</h3>
+          <div className="space-y-3 text-xs">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-muted/50 border border-border cursor-pointer">
+              <span>Email notification for every tip received</span>
+              <input type="checkbox" checked={notifyTips} onChange={(e) => setNotifyTips(e.target.checked)} className="h-4 w-4 accent-emerald-600" />
+            </label>
+            <label className="flex items-center justify-between p-3 rounded-xl bg-muted/50 border border-border cursor-pointer">
+              <span>Goal milestone alerts (50%, 100% funded)</span>
+              <input type="checkbox" checked={notifyGoals} onChange={(e) => setNotifyGoals(e.target.checked)} className="h-4 w-4 accent-emerald-600" />
+            </label>
+            <label className="flex items-center justify-between p-3 rounded-xl bg-muted/50 border border-border cursor-pointer">
+              <span>Weekly earnings summary digest</span>
+              <input type="checkbox" checked={notifyWeekly} onChange={(e) => setNotifyWeekly(e.target.checked)} className="h-4 w-4 accent-emerald-600" />
+            </label>
+          </div>
+        </div>
+      )}
+
+      {activeSection === "security" && (
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-xs space-y-6 animate-in fade-in duration-200">
+          <div className="flex items-center gap-3 border-b border-border pb-4">
+            <div className="h-9 w-9 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 flex items-center justify-center">
+              <Lock className="h-4 w-4" />
+            </div>
+            <div>
+              <h3 className="font-bold text-foreground text-sm">Change Password</h3>
+              <p className="text-xs text-muted-foreground">Keep your account secure with a strong password</p>
+            </div>
+          </div>
+
+          <form onSubmit={handleChangePassword} className="space-y-4">
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-foreground">Current Password</label>
+              <Input
+                type="password"
+                required
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Enter current password"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-foreground">New Password</label>
+                <Input
+                  type="password"
+                  required
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="At least 6 characters"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-foreground">Confirm New Password</label>
+                <Input
+                  type="password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Repeat new password"
+                />
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={changingPass}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs"
+            >
+              {changingPass ? "Updating Password..." : "Update Password"}
+            </Button>
+          </form>
+
+          <div className="pt-6 border-t border-border">
+            <h4 className="font-bold text-xs text-destructive mb-1">Danger Zone</h4>
+            <p className="text-xs text-muted-foreground mb-3">Permanently remove your profile and all tip history.</p>
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              onClick={handleDeleteAccount}
+              className="text-xs font-semibold"
+            >
+              Delete Account
+            </Button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

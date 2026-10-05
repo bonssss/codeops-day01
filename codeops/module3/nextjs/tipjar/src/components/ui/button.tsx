@@ -8,7 +8,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary hover:bg-amber-600 text-primary-foreground font-bold shadow-sm transition-all",
+          "bg-primary hover:bg-emerald-700 dark:hover:bg-emerald-600 text-primary-foreground font-semibold shadow-sm transition-all",
         emerald:
           "bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-sm",
         destructive:
@@ -18,11 +18,11 @@ const buttonVariants = cva(
         secondary:
           "bg-muted text-foreground hover:bg-border/60 font-medium",
         ghost:
-          "text-muted-foreground hover:text-foreground hover:bg-muted",
+          "text-muted-foreground hover:text-foreground hover:bg-muted font-medium",
         link:
           "text-primary underline-offset-4 hover:underline p-0 h-auto font-medium",
         glow:
-          "bg-primary hover:bg-amber-600 text-primary-foreground font-bold shadow-sm",
+          "bg-primary hover:bg-emerald-700 text-primary-foreground font-bold shadow-sm shadow-emerald-500/20",
       },
       size: {
         default: "h-11 px-5 py-2.5",

@@ -4,7 +4,8 @@ import { HeroSection } from "@/components/landing/HeroSection";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { CreatorShowcase } from "@/components/landing/CreatorShowcase";
-import { CTASection, Footer } from "@/components/landing/CTASection";
+import { CTASection } from "@/components/landing/CTASection";
+import { LandingFooter } from "@/components/landing/LandingFooter";
 
 export default async function HomePage() {
   const session = await getSession();
@@ -19,7 +20,7 @@ export default async function HomePage() {
         <CreatorShowcase />
         <CTASection />
       </main>
-      <Footer />
+      <LandingFooter />
     </div>
   );
 }

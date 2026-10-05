@@ -195,7 +195,7 @@ export function GoalsManagerClient({
                         )}
                         {goal.deadline && (
                           <span className="text-[11px] text-muted-foreground flex items-center gap-1">
-                            <Calendar className="h-3 w-3 text-amber-600 dark:text-amber-400" />
+                            <Calendar className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
                             {new Date(goal.deadline).toLocaleDateString()}
                           </span>
                         )}
@@ -229,7 +229,7 @@ export function GoalsManagerClient({
                   {/* Progress info */}
                   <div className="space-y-2 pt-2">
                     <div className="flex justify-between text-xs">
-                      <span className="font-bold text-amber-600 dark:text-amber-400">
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400">
                         {formatCurrency(goal.currentAmount, goal.currency)}
                       </span>
                       <span className="text-muted-foreground">

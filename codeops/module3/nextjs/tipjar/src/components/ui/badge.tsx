@@ -8,7 +8,7 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-amber-100 text-amber-900 border border-amber-300/60 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60 font-semibold",
+          "bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60 font-semibold",
         secondary:
           "bg-muted text-foreground border border-border font-medium",
         destructive:
@@ -20,7 +20,7 @@ const badgeVariants = cva(
         warning:
           "bg-amber-50 text-amber-900 border border-amber-200 dark:bg-amber-950/50 dark:text-amber-300 dark:border-amber-800",
         info:
-          "bg-amber-100 text-amber-900 border border-amber-300/60 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60",
+          "bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60",
       },
     },
     defaultVariants: {

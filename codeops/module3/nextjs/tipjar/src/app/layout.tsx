@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TipJar - Direct Creator Tips & Supporter Milestones",
+  title: "Tiply - Support the people you appreciate",
   description:
-    "A clean, modern tipping platform allowing creators, developers, freelancers, and artists to accept tips and hit funding goals.",
+    "A simple, modern tipping platform for creators, freelancers, and people you appreciate.",
 };
 
 export default function RootLayout({

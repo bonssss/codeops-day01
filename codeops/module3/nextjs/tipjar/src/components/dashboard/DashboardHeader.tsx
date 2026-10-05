@@ -41,7 +41,7 @@ export function DashboardHeader({ user, title, description }: HeaderProps) {
               onClick={() => setQrOpen(true)}
               className="gap-1.5"
             >
-              <QrIcon className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+              <QrIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
               <span className="hidden sm:inline">My QR Code</span>
             </Button>
 

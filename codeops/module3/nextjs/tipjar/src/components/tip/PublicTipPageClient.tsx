@@ -218,7 +218,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
           particleCount: 80,
           spread: 60,
           origin: { y: 0.6 },
-          colors: ["#F59E0B", "#FBBF24", "#1C1917"],
+          colors: ["#059669", "#10B981", "#34D399", "#111827"],
         });
 
         setMessage("");
@@ -250,10 +250,11 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
       <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2 text-foreground font-bold text-lg hover:opacity-80 transition-opacity">
-            <div className="h-8 w-8 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-sm">
-              <Coffee className="h-4 w-4" />
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-muted-foreground flex items-center gap-1 hover:text-foreground">
+                ← Back
+              </span>
             </div>
-            <span>TipJar</span>
           </a>
 
           <div className="flex items-center gap-2">
@@ -264,7 +265,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
               onClick={() => setQrModalOpen(true)}
               className="gap-1.5"
             >
-              <QrIcon className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+              <QrIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
               <span className="hidden sm:inline">QR Code</span>
             </Button>
             <CopyButton text={shareUrl} label="Share" variant="outline" size="sm" />
@@ -283,7 +284,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
               </span>
               <span className="font-semibold text-foreground shrink-0">Recent Support:</span>
               <span className="truncate">
-                <strong className="text-foreground">{creator.recentTips[0].isAnonymous ? "A generous supporter" : creator.recentTips[0].supporterName}</strong> tipped <strong className="text-amber-600 dark:text-amber-400">{formatCurrency(creator.recentTips[0].amount, creator.recentTips[0].currency)}</strong> {formatRelativeTime(creator.recentTips[0].createdAt)}
+                <strong className="text-foreground">{creator.recentTips[0].isAnonymous ? "A generous supporter" : creator.recentTips[0].supporterName}</strong> tipped <strong className="text-emerald-600 dark:text-emerald-400">{formatCurrency(creator.recentTips[0].amount, creator.recentTips[0].currency)}</strong> {formatRelativeTime(creator.recentTips[0].createdAt)}
               </span>
             </div>
             <span className="text-[11px] text-muted-foreground font-medium hidden sm:inline shrink-0 pl-2">{creator.recentTips.length} total tips</span>
@@ -320,7 +321,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
 
                   {creator.location && (
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <MapPin className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+                      <MapPin className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                       <span>{creator.location}</span>
                     </div>
                   )}
@@ -337,7 +338,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
               {/* Custom Creator Note */}
               {creator.customTipMessage && (
                 <div className="mt-5 p-4 rounded-2xl bg-muted border border-border text-foreground text-sm flex gap-3 items-start">
-                  <Sparkles className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                  <Sparkles className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                   <p className="italic leading-relaxed">{creator.customTipMessage}</p>
                 </div>
               )}
@@ -365,7 +366,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-muted text-foreground hover:text-amber-600 dark:hover:text-white border border-border transition-colors"
                     >
-                      <Globe className="h-3 w-3 text-amber-600 dark:text-amber-400" />
+                      <Globe className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
                       <span>Website</span>
                     </a>
                   )}
@@ -397,7 +398,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                 {/* Progress bar */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs sm:text-sm">
-                    <span className="font-bold text-amber-600 dark:text-amber-400">
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400">
                       {formatCurrency(creator.activeGoal.currentAmount, creator.activeGoal.currency)}
                     </span>
                     <span className="text-muted-foreground">
@@ -435,7 +436,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
               <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-2">
-                    <Heart className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                    <Heart className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                     <h3 className="font-bold text-foreground text-lg">Supporter Wall</h3>
                   </div>
                   <span className="text-xs text-muted-foreground">
@@ -455,7 +456,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                         key={tip.id}
                         className="p-4 rounded-2xl bg-muted border border-border flex items-start gap-3.5 transition-colors"
                       >
-                        <div className="h-9 w-9 rounded-xl bg-primary/10 text-amber-700 dark:text-amber-300 border border-primary/20 flex items-center justify-center font-bold text-sm shrink-0">
+                        <div className="h-9 w-9 rounded-xl bg-primary/10 text-emerald-700 dark:text-emerald-300 border border-primary/20 flex items-center justify-center font-bold text-sm shrink-0">
                           ☕
                         </div>
                         <div className="flex-1 min-w-0">
@@ -463,7 +464,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                             <span className="font-semibold text-foreground text-sm truncate">
                               {tip.isAnonymous ? "Anonymous Supporter" : tip.supporterName || "Supporter"}
                             </span>
-                            <span className="text-xs font-bold text-amber-600 dark:text-amber-400 shrink-0">
+                            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 shrink-0">
                               {formatCurrency(tip.amount, tip.currency)}
                             </span>
                           </div>
@@ -489,7 +490,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
             <div className="rounded-3xl border border-border bg-card p-6 sm:p-7 shadow-sm">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-xl bg-primary/10 text-amber-700 dark:text-amber-300 border border-primary/20 flex items-center justify-center font-bold text-sm">
+                  <div className="h-8 w-8 rounded-xl bg-primary/10 text-emerald-700 dark:text-emerald-300 border border-primary/20 flex items-center justify-center font-bold text-sm">
                     ☕
                   </div>
                   <div>
@@ -537,7 +538,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                       placeholder="Or enter custom amount..."
                       value={customAmount}
                       onChange={handleCustomChange}
-                      icon={<span className="text-xs font-bold text-amber-700 dark:text-amber-300 font-mono">{creator.currency}</span>}
+                      icon={<span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 font-mono">{creator.currency}</span>}
                     />
                   </div>
                 </div>
@@ -613,7 +614,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                 <div className="pt-3 border-t border-border space-y-3">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Total Contribution:</span>
-                    <span className="text-xl font-black text-amber-600 dark:text-amber-400">
+                    <span className="text-xl font-black text-emerald-600 dark:text-emerald-400">
                       {formatCurrency(currentTipAmount, creator.currency)}
                     </span>
                   </div>
@@ -638,7 +639,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
               </form>
 
               <div className="mt-4 flex items-center justify-center gap-2 text-[11px] text-muted-foreground">
-                <ShieldCheck className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                 <span>Simulated instant checkout &bull; 100% Secure</span>
               </div>
             </div>
@@ -650,7 +651,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
       <Dialog open={paymentModalOpen} onOpenChange={setPaymentModalOpen}>
         <DialogContent onClose={() => setPaymentModalOpen(false)} className="max-w-md">
           <DialogHeader>
-            <div className="h-12 w-12 rounded-2xl bg-primary/10 text-amber-700 dark:text-amber-300 border border-primary/20 flex items-center justify-center mx-auto mb-2">
+            <div className="h-12 w-12 rounded-2xl bg-primary/10 text-emerald-700 dark:text-emerald-300 border border-primary/20 flex items-center justify-center mx-auto mb-2">
               <Zap className="h-6 w-6" />
             </div>
             <DialogTitle className="text-center text-xl">
@@ -672,7 +673,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Amount:</span>
-              <span className="font-black text-amber-600 dark:text-amber-400 text-sm">
+              <span className="font-black text-emerald-600 dark:text-emerald-400 text-sm">
                 {formatCurrency(currentTipAmount, creator.currency)}
               </span>
             </div>
@@ -722,8 +723,8 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
       <Dialog open={successModalOpen} onOpenChange={setSuccessModalOpen}>
         <DialogContent onClose={() => setSuccessModalOpen(false)} className="max-w-md text-center">
           <DialogHeader className="text-center items-center">
-            <div className="h-14 w-14 rounded-2xl bg-primary/10 text-amber-700 dark:text-amber-300 border border-primary/20 flex items-center justify-center mx-auto mb-3">
-              <CheckCircle2 className="h-8 w-8 text-amber-600 dark:text-amber-400" />
+            <div className="h-14 w-14 rounded-2xl bg-primary/10 text-emerald-700 dark:text-emerald-300 border border-primary/20 flex items-center justify-center mx-auto mb-3">
+              <CheckCircle2 className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
             </div>
             <DialogTitle className="text-2xl font-black text-foreground">
               Thank You for Supporting!
@@ -737,7 +738,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
             <div className="my-5 p-5 rounded-2xl bg-muted border border-border text-left space-y-2.5">
               <div className="flex justify-between text-xs">
                 <span className="text-muted-foreground">Amount Sent:</span>
-                <span className="font-extrabold text-amber-600 dark:text-amber-400 text-base">
+                <span className="font-extrabold text-emerald-600 dark:text-emerald-400 text-base">
                   {formatCurrency(successData.amount, successData.currency)}
                 </span>
               </div>
