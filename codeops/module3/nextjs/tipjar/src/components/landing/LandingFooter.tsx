@@ -23,18 +23,18 @@ export function LandingFooter() {
               <a href="#how-it-works" className="hover:text-foreground transition-colors">
                 How it works
               </a>
-              <a href="#how-it-works" className="hover:text-foreground transition-colors">
-                Pricing
+              <a href="#features" className="hover:text-foreground transition-colors">
+                Features
               </a>
-              <a href="#how-it-works" className="hover:text-foreground transition-colors">
-                Help
+              <a href="#creators" className="hover:text-foreground transition-colors">
+                Creators
               </a>
-              <a href="#how-it-works" className="hover:text-foreground transition-colors">
-                Privacy
-              </a>
-              <a href="#how-it-works" className="hover:text-foreground transition-colors">
-                Terms
-              </a>
+              <Link href="/login" className="hover:text-foreground transition-colors">
+                Sign in
+              </Link>
+              <Link href="/register" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
+                Get started
+              </Link>
             </nav>
 
             {/* Social Icons */}

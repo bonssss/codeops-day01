@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Link as LinkIcon, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/shared/scroll-reveal";
@@ -17,7 +18,10 @@ export function HeroSection() {
     if (cleanUsername) {
       router.push(`/tip/${cleanUsername}`);
     } else {
-      router.push("/tip/sara");
+      const creatorsSection = document.getElementById("creators");
+      if (creatorsSection) {
+        creatorsSection.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -53,31 +57,43 @@ export function HeroSection() {
 
             {/* Search / Tip Direct Input Form */}
             <ScrollReveal direction="up" delay={300}>
-              <form onSubmit={handleSearchSubmit} className="max-w-md mx-auto lg:mx-0 pt-2">
-                <div className="flex flex-col sm:flex-row items-center gap-2 p-1.5 rounded-xl border border-border bg-card shadow-xs focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
-                  <div className="flex items-center gap-2.5 px-3 w-full sm:w-auto flex-1">
-                    <LinkIcon className="h-4 w-4 text-muted-foreground shrink-0" />
-                    <input
-                      type="text"
-                      value={usernameInput}
-                      onChange={(e) => setUsernameInput(e.target.value)}
-                      placeholder="Enter a username or link"
-                      className="w-full text-sm bg-transparent placeholder:text-muted-foreground focus:outline-none text-foreground py-1.5"
-                    />
+              <div className="space-y-2">
+                <form onSubmit={handleSearchSubmit} className="max-w-md mx-auto lg:mx-0 pt-1">
+                  <div className="flex flex-col sm:flex-row items-center gap-2 p-1.5 rounded-xl border border-border bg-card shadow-xs focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
+                    <div className="flex items-center gap-2.5 px-3 w-full sm:w-auto flex-1">
+                      <LinkIcon className="h-4 w-4 text-muted-foreground shrink-0" />
+                      <input
+                        type="text"
+                        value={usernameInput}
+                        onChange={(e) => setUsernameInput(e.target.value)}
+                        placeholder="Enter a username or link"
+                        className="w-full text-sm bg-transparent placeholder:text-muted-foreground focus:outline-none text-foreground py-1.5"
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-5 h-9 rounded-lg shadow-xs cursor-pointer shrink-0"
+                    >
+                      <span>Send a tip</span>
+                    </Button>
                   </div>
-                  <Button
-                    type="submit"
-                    className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-5 h-9 rounded-lg shadow-xs cursor-pointer shrink-0"
-                  >
-                    <span>Send a tip</span>
-                  </Button>
+                </form>
+
+                {/* Quick suggestions */}
+                <div className="flex items-center justify-center lg:justify-start gap-2 text-xs text-muted-foreground pt-1">
+                  <span>Explore creators:</span>
+                  <Link href="/tip/bonsa" className="font-medium text-emerald-600 dark:text-emerald-400 hover:underline">@bonsa</Link>
+                  <span>&bull;</span>
+                  <Link href="/tip/sara" className="font-medium text-emerald-600 dark:text-emerald-400 hover:underline">@sara</Link>
+                  <span>&bull;</span>
+                  <Link href="/tip/mina" className="font-medium text-emerald-600 dark:text-emerald-400 hover:underline">@mina</Link>
                 </div>
-              </form>
+              </div>
             </ScrollReveal>
 
           </div>
 
-          {/* Hero Right Visual: Tiply Profile Card */}
+          {/* Hero Right Visual: Tiply Profile Card Preview */}
           <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
             <ScrollReveal direction="left" delay={250}>
               <HeroPreviewCard />
