@@ -187,7 +187,7 @@ export function TipsHistoryClient({
                     <td className="py-3.5 px-3 font-semibold text-foreground">
                       {tip.supporterName}
                     </td>
-                    <td className="py-3.5 px-3 font-black text-amber-600 dark:text-amber-400 text-sm">
+                    <td className="py-3.5 px-3 font-black text-emerald-600 dark:text-emerald-400 text-sm">
                       {formatCurrency(tip.amount, tip.currency)}
                     </td>
                     <td className="py-3.5 px-3 max-w-[200px] truncate text-muted-foreground">
@@ -239,7 +239,7 @@ export function TipsHistoryClient({
         {selectedTip && (
           <DialogContent onClose={() => setSelectedTip(null)} className="max-w-md">
             <DialogHeader>
-              <div className="h-12 w-12 rounded-2xl bg-primary/10 text-amber-700 dark:text-amber-300 border border-primary/20 flex items-center justify-center mx-auto mb-2">
+              <div className="h-12 w-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 flex items-center justify-center mx-auto mb-2">
                 <CreditCard className="h-6 w-6" />
               </div>
               <DialogTitle className="text-center text-xl text-foreground">Transaction Details</DialogTitle>
@@ -251,7 +251,7 @@ export function TipsHistoryClient({
             <div className="my-5 space-y-3 bg-muted p-5 rounded-2xl border border-border text-xs">
               <div className="flex justify-between py-1 border-b border-border">
                 <span className="text-muted-foreground">Amount:</span>
-                <span className="font-black text-amber-600 dark:text-amber-400 text-base">
+                <span className="font-black text-emerald-600 dark:text-emerald-400 text-base">
                   {formatCurrency(selectedTip.amount, selectedTip.currency)}
                 </span>
               </div>
@@ -259,7 +259,7 @@ export function TipsHistoryClient({
                 <span className="text-muted-foreground">Status:</span>
                 <span className="font-bold">
                   {selectedTip.status === "COMPLETED" ? (
-                    <span className="text-amber-600 dark:text-amber-400">Completed</span>
+                    <span className="text-emerald-600 dark:text-emerald-400">Completed</span>
                   ) : selectedTip.status === "FAILED" ? (
                     <span className="text-red-600 dark:text-red-400">Failed</span>
                   ) : (

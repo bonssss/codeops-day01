@@ -45,7 +45,7 @@ export function Avatar({
           className="aspect-square h-full w-full object-cover"
         />
       ) : (
-        <span className="font-bold text-amber-700 dark:text-amber-400">{getInitials(name)}</span>
+        <span className="font-bold text-emerald-700 dark:text-emerald-400">{getInitials(name)}</span>
       )}
     </div>
   );

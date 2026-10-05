@@ -1,137 +1,86 @@
-import Link from "next/link";
-import { ArrowRight, Sparkles, CheckCircle } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Link as LinkIcon, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/shared/scroll-reveal";
+import { HeroPreviewCard } from "@/components/landing/HeroPreviewCard";
 
 export function HeroSection() {
+  const [usernameInput, setUsernameInput] = useState("");
+  const router = useRouter();
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanUsername = usernameInput.trim().replace(/^@/, "").replace(/.*\/tip\//, "");
+    if (cleanUsername) {
+      router.push(`/tip/${cleanUsername}`);
+    } else {
+      router.push("/tip/sara");
+    }
+  };
+
   return (
-    <section className="relative pt-12 pb-20 lg:pt-20 lg:pb-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+    <section className="relative pt-12 pb-16 lg:pt-18 lg:pb-24 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
           
           {/* Hero Left Content */}
-          <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
-            {/* <ScrollReveal direction="down">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold shadow-sm">
-                <Sparkles className="h-3.5 w-3.5 text-primary" />
-                <span>Direct Tipping Platform for Creators</span>
+          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+            
+            {/* Tag / Pill */}
+            <ScrollReveal direction="down">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">
+                <span>Support creators, workers, and people you appreciate</span>
               </div>
-            </ScrollReveal> */}
+            </ScrollReveal>
 
+            {/* Main Headline */}
             <ScrollReveal direction="up" delay={100}>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground tracking-tight leading-[1.1]">
-                Turn your creativity into a{" "}
-                <span className="text-amber-600 dark:text-amber-400">sustainable livelihood.</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-5xl font-black text-foreground tracking-tight leading-[1.15]">
+                Support the people <br className="hidden sm:inline" />
+                you appreciate.
               </h1>
             </ScrollReveal>
 
+            {/* Description */}
             <ScrollReveal direction="up" delay={200}>
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-                Create a personalized public tipping link in seconds. Let your supporters send tips, fund project milestones, and leave encouraging messages.
+              <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                Tiply makes it easy to send and receive tips. Whether it&apos;s a creator, a freelancer, or someone who made your day — show your support with a tip.
               </p>
             </ScrollReveal>
 
-            {/* CTAs */}
+            {/* Search / Tip Direct Input Form */}
             <ScrollReveal direction="up" delay={300}>
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-                <Link href="/register" className="w-full sm:w-auto">
-                  <Button variant="default" size="lg" className="w-full sm:w-auto gap-2 font-bold text-base px-8 h-13 transition-transform duration-200 active:scale-95 shadow-md">
-                    <span>Create Your Free TipJar</span>
-                    <ArrowRight className="h-5 w-5" />
+              <form onSubmit={handleSearchSubmit} className="max-w-md mx-auto lg:mx-0 pt-2">
+                <div className="flex flex-col sm:flex-row items-center gap-2 p-1.5 rounded-xl border border-border bg-card shadow-xs focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 transition-all">
+                  <div className="flex items-center gap-2.5 px-3 w-full sm:w-auto flex-1">
+                    <LinkIcon className="h-4 w-4 text-muted-foreground shrink-0" />
+                    <input
+                      type="text"
+                      value={usernameInput}
+                      onChange={(e) => setUsernameInput(e.target.value)}
+                      placeholder="Enter a username or link"
+                      className="w-full text-sm bg-transparent placeholder:text-muted-foreground focus:outline-none text-foreground py-1.5"
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-5 h-9 rounded-lg shadow-xs cursor-pointer shrink-0"
+                  >
+                    <span>Send a tip</span>
                   </Button>
-                </Link>
-                <Link href="/tip/bonsa" className="w-full sm:w-auto">
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto text-base h-13 transition-transform duration-200 hover:-translate-y-0.5">
-                    View Demo Page
-                  </Button>
-                </Link>
-              </div>
+                </div>
+              </form>
             </ScrollReveal>
 
-            {/* Value bullets */}
-            <ScrollReveal direction="up" delay={400}>
-              <div className="pt-6 border-t border-border grid grid-cols-3 gap-4 text-left">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
-                  <span className="text-xs text-muted-foreground">0% Platform Fee</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
-                  <span className="text-xs text-muted-foreground">Instant Mock Gateway</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
-                  <span className="text-xs text-muted-foreground">QR Code Built-In</span>
-                </div>
-              </div>
-            </ScrollReveal>
           </div>
 
-          {/* Hero Right Visual: Live Preview Card */}
-          <div className="lg:col-span-5 relative">
+          {/* Hero Right Visual: Tiply Profile Card */}
+          <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
             <ScrollReveal direction="left" delay={250}>
-              <div className="relative mx-auto max-w-md">
-                <div className="rounded-3xl border border-border bg-card p-6 sm:p-7 shadow-lg space-y-5 transition-all duration-300 hover:shadow-xl">
-                  {/* Creator Header */}
-                  <div className="flex items-center gap-4">
-                    <Avatar
-                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80"
-                      name="Bonsa Diriba"
-                      size="lg"
-                      className="ring-2 ring-primary"
-                    />
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-bold text-foreground text-base">Bonsa Diriba</h3>
-                        <Badge variant="default" className="text-[10px]">Verified</Badge>
-                      </div>
-                      <p className="text-xs text-muted-foreground font-mono">tipjar.io/tip/bonsa</p>
-                    </div>
-                  </div>
-
-                  {/* Goal Preview */}
-                  <div className="p-3.5 rounded-2xl bg-muted/60 border border-border space-y-2">
-                    <div className="flex justify-between text-xs">
-                      <span className="font-semibold text-foreground">🎯 32GB M3 Workstation Goal</span>
-                      <span className="text-amber-600 dark:text-amber-400 font-bold">73%</span>
-                    </div>
-                    <div className="h-2 w-full bg-border rounded-full overflow-hidden">
-                      <div className="h-full bg-primary w-[73%] transition-all duration-1000 ease-out" />
-                    </div>
-                    <div className="text-[10px] text-muted-foreground text-right">36,500 / 50,000 ETB</div>
-                  </div>
-
-                  {/* Amount Selectors */}
-                  <div className="space-y-2">
-                    <div className="text-xs text-foreground font-medium">Select Amount:</div>
-                    <div className="grid grid-cols-4 gap-2 text-center text-xs font-bold">
-                      <div className="py-2 rounded-xl bg-muted text-foreground border border-border transition-transform duration-150 hover:scale-105 cursor-pointer">50 ETB</div>
-                      <div className="py-2 rounded-xl bg-primary text-primary-foreground font-black transition-transform duration-150 scale-105 shadow-sm">100 ETB</div>
-                      <div className="py-2 rounded-xl bg-muted text-foreground border border-border transition-transform duration-150 hover:scale-105 cursor-pointer">200 ETB</div>
-                      <div className="py-2 rounded-xl bg-muted text-foreground border border-border transition-transform duration-150 hover:scale-105 cursor-pointer">500 ETB</div>
-                    </div>
-                  </div>
-
-                  {/* Supporter Feed Snapshot */}
-                  <div className="p-3 rounded-xl bg-muted/60 border border-border flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-primary/20 text-amber-700 dark:text-amber-300 flex items-center justify-center font-bold text-xs">
-                      ☕
-                    </div>
-                    <div className="text-xs flex-1">
-                      <div className="font-semibold text-foreground">Sara Bekele <span className="text-amber-600 dark:text-amber-400 font-bold ml-1">500 ETB</span></div>
-                      <div className="text-muted-foreground text-[11px] truncate">&ldquo;Thanks for the amazing Next.js guide!&rdquo;</div>
-                    </div>
-                  </div>
-
-                  <Link href="/tip/bonsa" className="block">
-                    <Button variant="default" className="w-full font-bold transition-transform duration-200 active:scale-95">
-                      Send 100 ETB Tip
-                    </Button>
-                  </Link>
-                </div>
-              </div>
+              <HeroPreviewCard />
             </ScrollReveal>
           </div>
 

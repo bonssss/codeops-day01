@@ -46,10 +46,10 @@ export function RevenueChart({
   }
 
   const isDark = resolvedTheme === "dark";
-  const strokeColor = isDark ? "#FBBF24" : "#D97706";
-  const fillColor = isDark ? "rgba(251, 191, 36, 0.15)" : "rgba(245, 158, 11, 0.15)";
-  const gridColor = isDark ? "rgba(168, 162, 158, 0.15)" : "rgba(28, 25, 23, 0.08)";
-  const textColor = isDark ? "#A8A29E" : "#78716C";
+  const strokeColor = isDark ? "#34D399" : "#059669";
+  const fillColor = isDark ? "rgba(52, 211, 153, 0.15)" : "rgba(5, 150, 105, 0.15)";
+  const gridColor = isDark ? "rgba(148, 163, 184, 0.15)" : "rgba(229, 231, 235, 0.8)";
+  const textColor = isDark ? "#94A3B8" : "#6B7280";
 
   return (
     <div className="h-[280px] w-full pt-2">

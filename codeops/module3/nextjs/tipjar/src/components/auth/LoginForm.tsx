@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { loginAction } from "@/actions/auth";
 import { useToast } from "@/components/ui/toast";
+import { TiplyLogo } from "@/components/shared/tiply-logo";
 
 export function LoginForm() {
   const router = useRouter();
@@ -56,10 +57,8 @@ export function LoginForm() {
     <div className="w-full max-w-md mx-auto">
       <div className="rounded-3xl border border-border bg-card p-8 shadow-xl space-y-6">
         <div className="text-center space-y-2">
-          <Link href="/" className="inline-flex items-center gap-2 mb-2 group">
-            <div className="h-10 w-10 rounded-2xl bg-primary text-primary-foreground shadow-md shadow-primary/25 flex items-center justify-center font-black group-hover:scale-105 transition-transform">
-              <Coffee className="h-5 w-5" />
-            </div>
+          <Link href="/" className="inline-flex items-center justify-center mb-2">
+            <TiplyLogo size="lg" />
           </Link>
           <h1 className="text-2xl font-black text-foreground">Welcome Back</h1>
           <p className="text-xs text-muted-foreground">

@@ -21,37 +21,37 @@
 
 @layer base {
   :root {
-    --background: #FDFBF7;
-    --foreground: #1C1917;
+    --background: #FFFFFF;
+    --foreground: #111827;
     --card: #FFFFFF;
-    --card-foreground: #1C1917;
-    --muted: #F5EFEB;
-    --muted-foreground: #78716C;
-    --border: #E8E2D8;
-    --input: #E8E2D8;
-    --primary: #F59E0B;
-    --primary-foreground: #1C1917;
-    --accent: #FEF3C7;
-    --accent-foreground: #92400E;
+    --card-foreground: #111827;
+    --muted: #F9FAFB;
+    --muted-foreground: #6B7280;
+    --border: #E5E7EB;
+    --input: #E5E7EB;
+    --primary: #059669;
+    --primary-foreground: #FFFFFF;
+    --accent: #ECFDF5;
+    --accent-foreground: #047857;
     --destructive: #EF4444;
     --destructive-foreground: #FFFFFF;
   }
 
   .dark {
-    --background: #141210;
-    --foreground: #FAF8F5;
-    --card: #1C1917;
-    --card-foreground: #FAF8F5;
-    --muted: #292524;
-    --muted-foreground: #A8A29E;
-    --border: #2E2925;
-    --input: #2E2925;
-    --primary: #FBBF24;
-    --primary-foreground: #141210;
-    --accent: #3A2E1A;
-    --accent-foreground: #FDE68A;
+    --background: #0B0F17;
+    --foreground: #F9FAFB;
+    --card: #131A26;
+    --card-foreground: #F9FAFB;
+    --muted: #1E293B;
+    --muted-foreground: #94A3B8;
+    --border: #243042;
+    --input: #243042;
+    --primary: #10B981;
+    --primary-foreground: #0B0F17;
+    --accent: #064E3B;
+    --accent-foreground: #A7F3D0;
     --destructive: #F87171;
-    --destructive-foreground: #141210;
+    --destructive-foreground: #0B0F17;
   }
 }
 
@@ -69,13 +69,23 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-h1, h2, h3, h4, h5, h6, .font-heading {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
   font-family: var(--font-geist-sans), sans-serif;
   letter-spacing: -0.03em;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
-code, kbd, samp, pre, .font-mono {
+code,
+kbd,
+samp,
+pre,
+.font-mono {
   font-family: var(--font-geist-mono), monospace;
 }
 
@@ -104,13 +114,16 @@ code, kbd, samp, pre, .font-mono {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 9999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--muted-foreground);
 }

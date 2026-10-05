@@ -36,7 +36,7 @@ interface PieDataPoint {
   [key: string]: unknown;
 }
 
-const PIE_COLORS = ["#F59E0B", "#FBBF24", "#D97706", "#78716C", "#E8E2D8"];
+const PIE_COLORS = ["#059669", "#10B981", "#34D399", "#6EE7B7", "#A7F3D0"];
 
 export function AnalyticsClient({
   dailyData,
@@ -90,7 +90,7 @@ export function AnalyticsClient({
                       return (
                         <div className="rounded-xl border border-border bg-card p-3 shadow-lg text-xs space-y-1">
                           <p className="font-bold text-foreground">{label}</p>
-                          <p className="text-amber-600 dark:text-amber-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
+                          <p className="text-emerald-600 dark:text-emerald-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
                           <p className="text-muted-foreground">{item.count} tips received</p>
                         </div>
                       );
@@ -98,7 +98,7 @@ export function AnalyticsClient({
                     return null;
                   }}
                 />
-                <Area type="monotone" dataKey="amount" stroke="#D97706" strokeWidth={2.5} fill="#F59E0B" fillOpacity={0.15} />
+                <Area type="monotone" dataKey="amount" stroke="#059669" strokeWidth={2.5} fill="#10B981" fillOpacity={0.15} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -127,7 +127,7 @@ export function AnalyticsClient({
                       return (
                         <div className="rounded-xl border border-border bg-card p-3 shadow-lg text-xs space-y-1">
                           <p className="font-bold text-foreground">{label}</p>
-                          <p className="text-amber-600 dark:text-amber-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
+                          <p className="text-emerald-600 dark:text-emerald-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
                           <p className="text-muted-foreground">{item.count} tips</p>
                         </div>
                       );
@@ -135,7 +135,7 @@ export function AnalyticsClient({
                     return null;
                   }}
                 />
-                <Bar dataKey="amount" fill="#F59E0B" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="amount" fill="#059669" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
