@@ -128,10 +128,10 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
       {/* Profile Live Card Preview */}
       <div className="rounded-2xl border border-border bg-card p-6 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
         <div className="flex items-center gap-4">
-          <Avatar src={avatarUrl} name={displayName} size="xl" className="ring-2 ring-amber-500/30" />
+          <Avatar src={avatarUrl} name={displayName} size="xl" className="ring-2 ring-primary/40" />
           <div className="space-y-1 text-center sm:text-left">
             <h2 className="text-xl font-bold text-foreground">{displayName}</h2>
-            <p className="text-xs font-mono text-amber-500 dark:text-amber-400">tipjar.io/tip/{username}</p>
+            <p className="text-xs font-mono text-amber-600 dark:text-amber-400 font-semibold">tipjar.io/tip/{username}</p>
             {location && <p className="text-xs text-muted-foreground">{location}</p>}
           </div>
         </div>
@@ -143,7 +143,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted hover:bg-muted/80 text-xs font-semibold text-foreground border border-border transition-colors"
         >
           <span>Preview Public Page</span>
-          <ExternalLink className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />
+          <ExternalLink className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
         </a>
       </div>
 
@@ -284,7 +284,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
                 className="flex items-center justify-between p-3.5 rounded-xl bg-muted/40 border border-border"
               >
                 <div className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold text-xs uppercase">
+                  <div className="h-8 w-8 rounded-lg bg-primary/10 text-amber-700 dark:text-amber-300 flex items-center justify-center font-bold text-xs uppercase">
                     {link.platform.substring(0, 2)}
                   </div>
                   <div>
@@ -293,7 +293,7 @@ export function ProfileManagerClient({ initialProfile }: { initialProfile: Profi
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[11px] text-muted-foreground hover:text-amber-500 truncate max-w-xs block"
+                      className="text-[11px] text-muted-foreground hover:text-amber-600 dark:hover:text-amber-400 truncate max-w-xs block"
                     >
                       {link.url}
                     </a>

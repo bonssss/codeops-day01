@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 export default function TipNotFound() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-6 text-center">
-      <div className="h-16 w-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 mb-6">
+      <div className="h-16 w-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-6">
         <Coffee className="h-8 w-8" />
       </div>
 

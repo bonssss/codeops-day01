@@ -24,11 +24,11 @@ export function DashboardHeader({ user, title, description }: HeaderProps) {
     : `https://tipjar.io/tip/${user.username || "creator"}`;
 
   return (
-    <div className="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md px-6 py-5">
+    <div className="border-b border-border bg-card/80 backdrop-blur-md px-6 py-5">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{title}</h1>
-          {description && <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{description}</p>}
+          <h1 className="text-2xl font-black text-foreground tracking-tight">{title}</h1>
+          {description && <p className="text-xs text-muted-foreground mt-0.5">{description}</p>}
         </div>
 
         {user.username && (

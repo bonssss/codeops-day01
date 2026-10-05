@@ -4,7 +4,7 @@ export default function RootLoading() {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
       <div className="relative flex items-center justify-center mb-4">
-        <div className="h-16 w-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 animate-pulse flex items-center justify-center text-amber-500">
+        <div className="h-16 w-16 rounded-2xl bg-primary/10 border border-primary/20 animate-pulse flex items-center justify-center text-primary">
           <Coffee className="h-8 w-8 animate-bounce" />
         </div>
       </div>

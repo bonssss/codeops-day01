@@ -46,10 +46,10 @@ export function RevenueChart({
   }
 
   const isDark = resolvedTheme === "dark";
-  const strokeColor = isDark ? "#f59e0b" : "#d97706";
-  const fillColor = isDark ? "#78350f" : "#fef3c7";
-  const gridColor = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
-  const textColor = isDark ? "#94a3b8" : "#64748b";
+  const strokeColor = isDark ? "#FBBF24" : "#D97706";
+  const fillColor = isDark ? "rgba(251, 191, 36, 0.15)" : "rgba(245, 158, 11, 0.15)";
+  const gridColor = isDark ? "rgba(168, 162, 158, 0.15)" : "rgba(28, 25, 23, 0.08)";
+  const textColor = isDark ? "#A8A29E" : "#78716C";
 
   return (
     <div className="h-[280px] w-full pt-2">
@@ -75,12 +75,12 @@ export function RevenueChart({
               if (active && payload && payload.length) {
                 const item = payload[0].payload as DataPoint;
                 return (
-                  <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 shadow-lg text-xs space-y-1">
-                    <p className="font-bold text-slate-900 dark:text-white">{label}</p>
-                    <p className="text-amber-600 dark:text-amber-400 font-bold">
+                  <div className="rounded-xl border border-border bg-card p-3 shadow-lg text-xs space-y-1">
+                    <p className="font-bold text-card-foreground">{label}</p>
+                    <p className="text-primary font-bold">
                       {formatCurrency(item.amount, currency)}
                     </p>
-                    <p className="text-slate-500 dark:text-slate-400 text-[11px]">{item.tipsCount} tips received</p>
+                    <p className="text-muted-foreground text-[11px]">{item.tipsCount} tips received</p>
                   </div>
                 );
               }

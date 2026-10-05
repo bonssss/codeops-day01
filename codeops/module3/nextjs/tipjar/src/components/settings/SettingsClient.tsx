@@ -154,7 +154,7 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
       {/* Tip Settings Card */}
       <div className="rounded-2xl border border-border bg-card p-7 space-y-6 shadow-sm">
         <div className="flex items-center gap-3 border-b border-border pb-4">
-          <div className="h-10 w-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500">
+          <div className="h-10 w-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
             <Sliders className="h-5 w-5" />
           </div>
           <div>
@@ -170,7 +170,7 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value as "ETB" | "USD" | "EUR")}
-                className="h-11 w-full rounded-xl border border-input bg-background px-3 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="h-11 w-full rounded-xl border border-input bg-background px-3 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
               >
                 <option value="ETB">ETB - Ethiopian Birr (Default)</option>
                 <option value="USD">USD - US Dollar ($)</option>
@@ -233,7 +233,7 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
       {/* Account Security Card */}
       <div className="rounded-2xl border border-border bg-card p-7 space-y-6 shadow-sm">
         <div className="flex items-center gap-3 border-b border-border pb-4">
-          <div className="h-10 w-10 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-500">
+          <div className="h-10 w-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
             <ShieldCheck className="h-5 w-5" />
           </div>
           <div>

@@ -60,7 +60,7 @@ export function RegisterForm() {
       <div className="rounded-3xl border border-border bg-card p-8 shadow-xl space-y-6">
         <div className="text-center space-y-2">
           <Link href="/" className="inline-flex items-center gap-2 mb-2 group">
-            <div className="h-10 w-10 rounded-2xl bg-amber-500 text-neutral-950 flex items-center justify-center font-black">
+            <div className="h-10 w-10 rounded-2xl bg-primary text-primary-foreground shadow-md shadow-primary/25 flex items-center justify-center font-black group-hover:scale-105 transition-transform">
               <Coffee className="h-5 w-5" />
             </div>
           </Link>
@@ -101,7 +101,7 @@ export function RegisterForm() {
               icon={<AtSign className="h-4 w-4" />}
             />
             <span className="text-[11px] text-muted-foreground">
-              Your tipping link: <span className="text-amber-500 font-mono">tipjar.io/tip/{username || "username"}</span>
+              Your tipping link: <span className="text-primary font-mono font-medium">tipjar.io/tip/{username || "username"}</span>
             </span>
           </div>
 
@@ -144,7 +144,7 @@ export function RegisterForm() {
 
         <div className="text-center text-xs text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/login" className="text-amber-500 hover:underline font-semibold">
+          <Link href="/login" className="text-primary hover:underline font-semibold">
             Sign in
           </Link>
         </div>
