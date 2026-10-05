@@ -218,7 +218,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
           particleCount: 80,
           spread: 60,
           origin: { y: 0.6 },
-          colors: ["#d97706", "#059669", "#0284c7"],
+          colors: ["#F59E0B", "#FBBF24", "#1C1917"],
         });
 
         setMessage("");
@@ -245,12 +245,12 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
   const shareUrl = typeof window !== "undefined" ? window.location.href : `https://tipjar.io/tip/${creator.username}`;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 pb-20">
+    <div className="min-h-screen bg-background text-foreground pb-20">
       {/* Top Navbar */}
-      <header className="sticky top-0 z-30 border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md">
+      <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2 text-slate-900 dark:text-white font-bold text-lg hover:opacity-80 transition-opacity">
-            <div className="h-8 w-8 rounded-xl bg-amber-600 dark:bg-amber-500 flex items-center justify-center text-white dark:text-slate-950 shadow-sm">
+          <a href="/" className="flex items-center gap-2 text-foreground font-bold text-lg hover:opacity-80 transition-opacity">
+            <div className="h-8 w-8 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-sm">
               <Coffee className="h-4 w-4" />
             </div>
             <span>TipJar</span>
@@ -275,18 +275,18 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
       {/* Live Activity Ticker Banner */}
       {creator.recentTips && creator.recentTips.length > 0 && (
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-4">
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 px-4 py-2.5 flex items-center justify-between text-xs text-slate-700 dark:text-slate-300 shadow-sm animate-fade-in">
+          <div className="rounded-2xl bg-muted border border-border px-4 py-2.5 flex items-center justify-between text-xs text-muted-foreground shadow-sm animate-fade-in">
             <div className="flex items-center gap-2 truncate">
               <span className="flex h-2 w-2 relative shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              <span className="font-semibold text-slate-900 dark:text-white shrink-0">Recent Support:</span>
+              <span className="font-semibold text-foreground shrink-0">Recent Support:</span>
               <span className="truncate">
-                <strong className="text-slate-900 dark:text-white">{creator.recentTips[0].isAnonymous ? "A generous supporter" : creator.recentTips[0].supporterName}</strong> tipped <strong className="text-amber-600 dark:text-amber-400">{formatCurrency(creator.recentTips[0].amount, creator.recentTips[0].currency)}</strong> {formatRelativeTime(creator.recentTips[0].createdAt)}
+                <strong className="text-foreground">{creator.recentTips[0].isAnonymous ? "A generous supporter" : creator.recentTips[0].supporterName}</strong> tipped <strong className="text-amber-600 dark:text-amber-400">{formatCurrency(creator.recentTips[0].amount, creator.recentTips[0].currency)}</strong> {formatRelativeTime(creator.recentTips[0].createdAt)}
               </span>
             </div>
-            <span className="text-[11px] text-slate-500 font-medium hidden sm:inline shrink-0 pl-2">{creator.recentTips.length} total tips</span>
+            <span className="text-[11px] text-muted-foreground font-medium hidden sm:inline shrink-0 pl-2">{creator.recentTips.length} total tips</span>
           </div>
         </div>
       )}
@@ -298,28 +298,28 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
           {/* LEFT COLUMN: Creator Profile, Goals, Supporter Wall */}
           <div className="lg:col-span-7 space-y-6">
             {/* Profile Card */}
-            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm relative overflow-hidden">
+            <div className="rounded-3xl border border-border bg-card p-6 sm:p-8 shadow-sm relative overflow-hidden">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                 <Avatar
                   src={creator.avatarUrl}
                   name={creator.displayName}
                   size="xl"
-                  className="ring-4 ring-amber-500/20 shadow-md h-24 w-24 sm:h-28 sm:w-28 text-2xl"
+                  className="ring-4 ring-primary/20 shadow-md h-24 w-24 sm:h-28 sm:w-28 text-2xl"
                 />
 
                 <div className="flex-1 space-y-1.5">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                    <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
                       {creator.displayName}
                     </h1>
                     <Badge variant="default" className="text-xs">
                       Creator
                     </Badge>
                   </div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-mono">@{creator.username}</div>
+                  <div className="text-sm text-muted-foreground font-mono">@{creator.username}</div>
 
                   {creator.location && (
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                       <MapPin className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
                       <span>{creator.location}</span>
                     </div>
@@ -329,14 +329,14 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
 
               {/* Bio */}
               {creator.bio && (
-                <p className="mt-6 text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+                <p className="mt-6 text-foreground text-sm sm:text-base leading-relaxed">
                   {creator.bio}
                 </p>
               )}
 
               {/* Custom Creator Note */}
               {creator.customTipMessage && (
-                <div className="mt-5 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-amber-900 dark:text-amber-200 text-sm flex gap-3 items-start">
+                <div className="mt-5 p-4 rounded-2xl bg-muted border border-border text-foreground text-sm flex gap-3 items-start">
                   <Sparkles className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                   <p className="italic leading-relaxed">{creator.customTipMessage}</p>
                 </div>
@@ -344,16 +344,16 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
 
               {/* Social Links */}
               {creator.socialLinks && creator.socialLinks.length > 0 && (
-                <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-2">
+                <div className="mt-6 pt-5 border-t border-border flex flex-wrap gap-2">
                   {creator.socialLinks.map((link) => (
                     <a
                       key={link.id}
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-white border border-slate-200 dark:border-slate-700 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-muted text-foreground hover:text-amber-600 dark:hover:text-white border border-border transition-colors"
                     >
-                      <Globe className="h-3 w-3 text-slate-400" />
+                      <Globe className="h-3 w-3 text-muted-foreground" />
                       <span>{link.label || link.platform}</span>
                       <ExternalLink className="h-2.5 w-2.5 opacity-50" />
                     </a>
@@ -363,7 +363,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                       href={creator.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-white border border-slate-200 dark:border-slate-700 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-muted text-foreground hover:text-amber-600 dark:hover:text-white border border-border transition-colors"
                     >
                       <Globe className="h-3 w-3 text-amber-600 dark:text-amber-400" />
                       <span>Website</span>
@@ -375,21 +375,21 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
 
             {/* Active Goal Card */}
             {creator.activeGoal && (
-              <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <span className="text-xl">🎯</span>
-                    <h3 className="font-bold text-slate-900 dark:text-white text-base sm:text-lg">
+                    <h3 className="font-bold text-foreground text-base sm:text-lg">
                       {creator.activeGoal.title}
                     </h3>
                   </div>
-                  <Badge variant="warning" className="text-[11px]">
+                  <Badge variant="default" className="text-[11px]">
                     Active Goal
                   </Badge>
                 </div>
 
                 {creator.activeGoal.description && (
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-4 leading-relaxed">
                     {creator.activeGoal.description}
                   </p>
                 )}
@@ -400,7 +400,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                     <span className="font-bold text-amber-600 dark:text-amber-400">
                       {formatCurrency(creator.activeGoal.currentAmount, creator.activeGoal.currency)}
                     </span>
-                    <span className="text-slate-500 dark:text-slate-400">
+                    <span className="text-muted-foreground">
                       Target: {formatCurrency(creator.activeGoal.targetAmount, creator.activeGoal.currency)}
                     </span>
                   </div>
@@ -409,7 +409,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                     max={creator.activeGoal.targetAmount}
                     className="h-2.5"
                   />
-                  <div className="flex justify-between text-[11px] text-slate-500 pt-1">
+                  <div className="flex justify-between text-[11px] text-muted-foreground pt-1">
                     <span>
                       {Math.min(
                         100,
@@ -432,20 +432,20 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
 
             {/* Supporter Wall */}
             {creator.showSupporterWall && (
-              <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-2">
                     <Heart className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-                    <h3 className="font-bold text-slate-900 dark:text-white text-lg">Supporter Wall</h3>
+                    <h3 className="font-bold text-foreground text-lg">Supporter Wall</h3>
                   </div>
-                  <span className="text-xs text-slate-500 dark:text-slate-400">
+                  <span className="text-xs text-muted-foreground">
                     {creator.recentTips.length} supporters
                   </span>
                 </div>
 
                 {creator.recentTips.length === 0 ? (
-                  <div className="text-center py-8 text-slate-400 text-sm">
-                    <Heart className="h-8 w-8 mx-auto mb-2 text-slate-300 dark:text-slate-700" />
+                  <div className="text-center py-8 text-muted-foreground text-sm">
+                    <Heart className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     Be the first supporter to leave a tip!
                   </div>
                 ) : (
@@ -453,14 +453,14 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                     {creator.recentTips.map((tip) => (
                       <div
                         key={tip.id}
-                        className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 flex items-start gap-3.5 transition-colors"
+                        className="p-4 rounded-2xl bg-muted border border-border flex items-start gap-3.5 transition-colors"
                       >
-                        <div className="h-9 w-9 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 flex items-center justify-center font-bold text-sm shrink-0">
-                          💛
+                        <div className="h-9 w-9 rounded-xl bg-primary/10 text-amber-700 dark:text-amber-300 border border-primary/20 flex items-center justify-center font-bold text-sm shrink-0">
+                          ☕
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="font-semibold text-slate-900 dark:text-white text-sm truncate">
+                            <span className="font-semibold text-foreground text-sm truncate">
                               {tip.isAnonymous ? "Anonymous Supporter" : tip.supporterName || "Supporter"}
                             </span>
                             <span className="text-xs font-bold text-amber-600 dark:text-amber-400 shrink-0">
@@ -468,11 +468,11 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                             </span>
                           </div>
                           {tip.message && (
-                            <p className="mt-1 text-xs text-slate-600 dark:text-slate-300 italic leading-relaxed">
+                            <p className="mt-1 text-xs text-muted-foreground italic leading-relaxed">
                               &ldquo;{tip.message}&rdquo;
                             </p>
                           )}
-                          <div className="mt-1.5 text-[10px] text-slate-400">
+                          <div className="mt-1.5 text-[10px] text-muted-foreground">
                             {formatRelativeTime(tip.createdAt)}
                           </div>
                         </div>
@@ -486,15 +486,15 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
 
           {/* RIGHT COLUMN: Interactive Tipping Form */}
           <div className="lg:col-span-5 sticky top-24">
-            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-7 shadow-sm">
+            <div className="rounded-3xl border border-border bg-card p-6 sm:p-7 shadow-sm">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 flex items-center justify-center font-bold text-sm">
+                  <div className="h-8 w-8 rounded-xl bg-primary/10 text-amber-700 dark:text-amber-300 border border-primary/20 flex items-center justify-center font-bold text-sm">
                     ☕
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-slate-900 dark:text-white">Send a Tip</h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">Support {creator.displayName}</p>
+                    <h2 className="text-lg font-bold text-foreground">Send a Tip</h2>
+                    <p className="text-xs text-muted-foreground">Support {creator.displayName}</p>
                   </div>
                 </div>
                 <Badge variant="outline" className="text-xs font-mono">
@@ -505,7 +505,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
               <form onSubmit={handleInitiateTip} className="space-y-5">
                 {/* Predefined Amounts */}
                 <div className="space-y-2">
-                  <label className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                  <label className="text-xs font-medium text-foreground">
                     Select Tip Amount ({creator.currency})
                   </label>
                   <div className="grid grid-cols-4 gap-2">
@@ -518,8 +518,8 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                           onClick={() => handleSelectPredefined(amt)}
                           className={`py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-colors ${
                             isSelected
-                              ? "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950"
-                              : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700"
+                              ? "bg-primary text-primary-foreground font-black shadow-sm"
+                              : "bg-muted text-foreground hover:bg-border border border-border"
                           }`}
                         >
                           {amt}
@@ -537,7 +537,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                       placeholder="Or enter custom amount..."
                       value={customAmount}
                       onChange={handleCustomChange}
-                      icon={<span className="text-xs font-bold text-amber-600 dark:text-amber-400 font-mono">{creator.currency}</span>}
+                      icon={<span className="text-xs font-bold text-amber-700 dark:text-amber-300 font-mono">{creator.currency}</span>}
                     />
                   </div>
                 </div>
@@ -546,7 +546,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                 <div className="space-y-3 pt-1">
                   {!isAnonymous && (
                     <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-slate-700 dark:text-slate-300">Your Name (Optional)</label>
+                      <label className="text-xs font-medium text-foreground">Your Name (Optional)</label>
                       <Input
                         type="text"
                         placeholder="e.g. Dawit Alemayehu"
@@ -558,12 +558,12 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                   )}
 
                   {creator.allowAnonymous && (
-                    <label className="flex items-center gap-2.5 cursor-pointer text-xs text-slate-700 dark:text-slate-300 py-1">
+                    <label className="flex items-center gap-2.5 cursor-pointer text-xs text-foreground py-1">
                       <input
                         type="checkbox"
                         checked={isAnonymous}
                         onChange={(e) => setIsAnonymous(e.target.checked)}
-                        className="rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-amber-600 focus:ring-amber-500 h-4 w-4"
+                        className="rounded border-input bg-card text-primary focus:ring-primary h-4 w-4"
                       />
                       <span>Make this tip anonymous</span>
                     </label>
@@ -572,7 +572,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
 
                 {/* Supporter Message */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                  <label className="text-xs font-medium text-foreground">
                     Message / Note (Optional)
                   </label>
                   <Textarea
@@ -585,7 +585,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
 
                 {/* Payment Method Selector */}
                 <div className="space-y-2">
-                  <label className="text-xs font-medium text-slate-700 dark:text-slate-300">Payment Method</label>
+                  <label className="text-xs font-medium text-foreground">Payment Method</label>
                   <div className="grid grid-cols-3 gap-2">
                     {[
                       { id: "Telebirr", name: "Telebirr", icon: "📱" },
@@ -598,8 +598,8 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                         onClick={() => setPaymentMethod(m.id)}
                         className={`p-2.5 rounded-xl border text-xs font-medium flex flex-col items-center gap-1 transition-colors ${
                           paymentMethod === m.id
-                            ? "border-amber-600 dark:border-amber-500 bg-amber-50 dark:bg-amber-950/50 text-slate-900 dark:text-white font-semibold"
-                            : "border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 hover:border-slate-300"
+                            ? "border-primary bg-primary/10 text-amber-800 dark:text-amber-200 font-bold"
+                            : "border-border bg-muted text-muted-foreground hover:border-muted-foreground"
                         }`}
                       >
                         <span className="text-base">{m.icon}</span>
@@ -610,9 +610,9 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                 </div>
 
                 {/* Total & Submit Button */}
-                <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-3">
+                <div className="pt-3 border-t border-border space-y-3">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-500 dark:text-slate-400">Total Contribution:</span>
+                    <span className="text-muted-foreground">Total Contribution:</span>
                     <span className="text-xl font-black text-amber-600 dark:text-amber-400">
                       {formatCurrency(currentTipAmount, creator.currency)}
                     </span>
@@ -637,8 +637,8 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                 </div>
               </form>
 
-              <div className="mt-4 flex items-center justify-center gap-2 text-[11px] text-slate-500">
-                <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+              <div className="mt-4 flex items-center justify-center gap-2 text-[11px] text-muted-foreground">
+                <ShieldCheck className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
                 <span>Simulated instant checkout &bull; 100% Secure</span>
               </div>
             </div>
@@ -650,35 +650,35 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
       <Dialog open={paymentModalOpen} onOpenChange={setPaymentModalOpen}>
         <DialogContent onClose={() => setPaymentModalOpen(false)} className="max-w-md">
           <DialogHeader>
-            <div className="h-12 w-12 rounded-2xl bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 flex items-center justify-center mx-auto mb-2">
+            <div className="h-12 w-12 rounded-2xl bg-primary/10 text-amber-700 dark:text-amber-300 border border-primary/20 flex items-center justify-center mx-auto mb-2">
               <Zap className="h-6 w-6" />
             </div>
             <DialogTitle className="text-center text-xl">
               Mock Payment Gateway
             </DialogTitle>
             <DialogDescription className="text-center text-xs">
-              Simulating payment provider: <strong className="text-slate-900 dark:text-white">{paymentMethod}</strong>
+              Simulating payment provider: <strong className="text-foreground">{paymentMethod}</strong>
             </DialogDescription>
           </DialogHeader>
 
-          <div className="my-5 space-y-3 bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 text-xs">
+          <div className="my-5 space-y-3 bg-muted p-4 rounded-2xl border border-border text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Reference:</span>
-              <span className="font-mono text-slate-900 dark:text-slate-200">{activeTxRef}</span>
+              <span className="text-muted-foreground">Reference:</span>
+              <span className="font-mono text-foreground">{activeTxRef}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Recipient:</span>
-              <span className="font-semibold text-slate-900 dark:text-white">{creator.displayName}</span>
+              <span className="text-muted-foreground">Recipient:</span>
+              <span className="font-semibold text-foreground">{creator.displayName}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Amount:</span>
+              <span className="text-muted-foreground">Amount:</span>
               <span className="font-black text-amber-600 dark:text-amber-400 text-sm">
                 {formatCurrency(currentTipAmount, creator.currency)}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Status:</span>
-              <Badge variant="warning" className="text-[10px]">
+              <span className="text-muted-foreground">Status:</span>
+              <Badge variant="default" className="text-[10px]">
                 PENDING CONFIRMATION
               </Badge>
             </div>
@@ -687,7 +687,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
           <div className="space-y-2.5">
             <Button
               type="button"
-              variant="emerald"
+              variant="default"
               size="lg"
               disabled={isVerifying}
               onClick={() => handleCompletePayment("SUCCESS")}
@@ -722,32 +722,32 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
       <Dialog open={successModalOpen} onOpenChange={setSuccessModalOpen}>
         <DialogContent onClose={() => setSuccessModalOpen(false)} className="max-w-md text-center">
           <DialogHeader className="text-center items-center">
-            <div className="h-14 w-14 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center justify-center mx-auto mb-3">
-              <CheckCircle2 className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+            <div className="h-14 w-14 rounded-2xl bg-primary/10 text-amber-700 dark:text-amber-300 border border-primary/20 flex items-center justify-center mx-auto mb-3">
+              <CheckCircle2 className="h-8 w-8 text-amber-600 dark:text-amber-400" />
             </div>
-            <DialogTitle className="text-2xl font-black text-slate-900 dark:text-white">
+            <DialogTitle className="text-2xl font-black text-foreground">
               Thank You for Supporting!
             </DialogTitle>
             <DialogDescription className="text-sm">
-              Your tip to <strong className="text-slate-900 dark:text-white">{creator.displayName}</strong> has been received.
+              Your tip to <strong className="text-foreground">{creator.displayName}</strong> has been received.
             </DialogDescription>
           </DialogHeader>
 
           {successData && (
-            <div className="my-5 p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-left space-y-2.5">
+            <div className="my-5 p-5 rounded-2xl bg-muted border border-border text-left space-y-2.5">
               <div className="flex justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400">Amount Sent:</span>
-                <span className="font-extrabold text-emerald-600 dark:text-emerald-400 text-base">
+                <span className="text-muted-foreground">Amount Sent:</span>
+                <span className="font-extrabold text-amber-600 dark:text-amber-400 text-base">
                   {formatCurrency(successData.amount, successData.currency)}
                 </span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400">Transaction ID:</span>
-                <span className="font-mono text-slate-700 dark:text-slate-300 text-[11px]">{successData.transactionReference}</span>
+                <span className="text-muted-foreground">Transaction ID:</span>
+                <span className="font-mono text-foreground text-[11px]">{successData.transactionReference}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400">Date:</span>
-                <span className="text-slate-700 dark:text-slate-300">{new Date(successData.paidAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                <span className="text-muted-foreground">Date:</span>
+                <span className="text-foreground">{new Date(successData.paidAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
               </div>
             </div>
           )}

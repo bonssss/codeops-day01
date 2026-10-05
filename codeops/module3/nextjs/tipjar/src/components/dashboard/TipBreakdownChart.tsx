@@ -39,9 +39,9 @@ export function TipBreakdownChart({ data }: { data: DistributionPoint[] }) {
   }
 
   const isDark = resolvedTheme === "dark";
-  const primaryBarColor = isDark ? "#f59e0b" : "#d97706";
-  const gridColor = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
-  const textColor = isDark ? "#94a3b8" : "#64748b";
+  const primaryBarColor = isDark ? "#FBBF24" : "#F59E0B";
+  const gridColor = isDark ? "rgba(168, 162, 158, 0.15)" : "rgba(28, 25, 23, 0.08)";
+  const textColor = isDark ? "#A8A29E" : "#78716C";
 
   return (
     <div className="h-[280px] w-full pt-2">
@@ -67,9 +67,9 @@ export function TipBreakdownChart({ data }: { data: DistributionPoint[] }) {
               if (active && payload && payload.length) {
                 const item = payload[0].payload as DistributionPoint;
                 return (
-                  <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 shadow-lg text-xs space-y-1">
-                    <p className="font-bold text-slate-900 dark:text-white">{item.range}</p>
-                    <p className="text-amber-600 dark:text-amber-400 font-bold">{item.count} tips</p>
+                  <div className="rounded-xl border border-border bg-card p-3 shadow-lg text-xs space-y-1">
+                    <p className="font-bold text-card-foreground">{item.range}</p>
+                    <p className="text-primary font-bold">{item.count} tips</p>
                   </div>
                 );
               }

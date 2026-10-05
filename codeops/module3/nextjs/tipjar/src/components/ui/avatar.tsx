@@ -30,7 +30,7 @@ export function Avatar({
   return (
     <div
       className={cn(
-        "relative flex shrink-0 overflow-hidden rounded-full border border-white/10 bg-neutral-800 font-semibold items-center justify-center text-neutral-200 select-none",
+        "relative flex shrink-0 overflow-hidden rounded-full border border-border bg-muted font-semibold items-center justify-center text-foreground select-none",
         sizeMap[size],
         className
       )}
@@ -45,7 +45,7 @@ export function Avatar({
           className="aspect-square h-full w-full object-cover"
         />
       ) : (
-        <span className="font-bold text-amber-400">{getInitials(name)}</span>
+        <span className="font-bold text-amber-700 dark:text-amber-400">{getInitials(name)}</span>
       )}
     </div>
   );

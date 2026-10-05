@@ -30,7 +30,7 @@ export function QRCodeDialog({
         width: 320,
         margin: 2,
         color: {
-          dark: "#0a0a0c",
+          dark: "#1C1917",
           light: "#ffffff",
         },
       })
@@ -53,7 +53,7 @@ export function QRCodeDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent onClose={() => onOpenChange(false)} className="max-w-sm text-center sm:text-center p-5 sm:p-6">
         <DialogHeader className="text-center items-center mb-2">
-          <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-500 mb-1.5">
+          <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 border border-primary/20 text-primary mb-1.5 shadow-sm">
             <QrIcon className="h-5 w-5" />
           </div>
           <DialogTitle className="text-lg font-bold">Scan to Tip {creatorName}</DialogTitle>
@@ -63,12 +63,12 @@ export function QRCodeDialog({
         </DialogHeader>
 
         <div className="my-3 flex flex-col items-center justify-center">
-          <div className="rounded-2xl bg-white p-3 shadow-md border-2 border-amber-500/30">
+          <div className="rounded-2xl bg-white p-3 shadow-md border-2 border-primary/20">
             {dataUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={dataUrl} alt={`QR Code for ${creatorName}`} className="h-44 w-44 sm:h-48 sm:w-48 rounded-lg" />
             ) : (
-              <div className="h-44 w-44 sm:h-48 sm:w-48 animate-pulse bg-slate-200 rounded-lg flex items-center justify-center text-slate-500 text-xs">
+              <div className="h-44 w-44 sm:h-48 sm:w-48 animate-pulse bg-muted rounded-lg flex items-center justify-center text-muted-foreground text-xs">
                 Generating QR...
               </div>
             )}

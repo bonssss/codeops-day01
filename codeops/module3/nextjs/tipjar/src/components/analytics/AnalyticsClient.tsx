@@ -36,7 +36,7 @@ interface PieDataPoint {
   [key: string]: unknown;
 }
 
-const PIE_COLORS = ["#f59e0b", "#10b981", "#06b6d4", "#8b5cf6", "#ec4899"];
+const PIE_COLORS = ["#F59E0B", "#FBBF24", "#D97706", "#78716C", "#E8E2D8"];
 
 export function AnalyticsClient({
   dailyData,
@@ -60,7 +60,7 @@ export function AnalyticsClient({
   }, []);
 
   if (!mounted) {
-    return <div className="h-96 w-full animate-pulse bg-neutral-900/50 rounded-3xl" />;
+    return <div className="h-96 w-full animate-pulse bg-muted rounded-3xl" />;
   }
 
   return (
@@ -81,16 +81,16 @@ export function AnalyticsClient({
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={dailyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-border opacity-50" vertical={false} />
-                <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
+                <XAxis dataKey="date" stroke="#A8A29E" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#A8A29E" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip
                   content={({ active, payload, label }) => {
                     if (active && payload && payload.length) {
                       const item = payload[0].payload as TimeDataPoint;
                       return (
                         <div className="rounded-xl border border-border bg-card p-3 shadow-lg text-xs space-y-1">
-                          <p className="font-bold text-card-foreground">{label}</p>
-                          <p className="text-amber-500 dark:text-amber-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
+                          <p className="font-bold text-foreground">{label}</p>
+                          <p className="text-amber-600 dark:text-amber-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
                           <p className="text-muted-foreground">{item.count} tips received</p>
                         </div>
                       );
@@ -98,7 +98,7 @@ export function AnalyticsClient({
                     return null;
                   }}
                 />
-                <Area type="monotone" dataKey="amount" stroke="#f59e0b" strokeWidth={2.5} fill="#f59e0b" fillOpacity={0.15} />
+                <Area type="monotone" dataKey="amount" stroke="#D97706" strokeWidth={2.5} fill="#F59E0B" fillOpacity={0.15} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -118,16 +118,16 @@ export function AnalyticsClient({
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-border opacity-50" vertical={false} />
-                <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
+                <XAxis dataKey="date" stroke="#A8A29E" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#A8A29E" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip
                   content={({ active, payload, label }) => {
                     if (active && payload && payload.length) {
                       const item = payload[0].payload as TimeDataPoint;
                       return (
                         <div className="rounded-xl border border-border bg-card p-3 shadow-lg text-xs space-y-1">
-                          <p className="font-bold text-card-foreground">{label}</p>
-                          <p className="text-emerald-600 dark:text-emerald-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
+                          <p className="font-bold text-foreground">{label}</p>
+                          <p className="text-amber-600 dark:text-amber-400 font-extrabold">{formatCurrency(item.amount, currency)}</p>
                           <p className="text-muted-foreground">{item.count} tips</p>
                         </div>
                       );
@@ -135,7 +135,7 @@ export function AnalyticsClient({
                     return null;
                   }}
                 />
-                <Bar dataKey="amount" fill="#10b981" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="amount" fill="#F59E0B" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -155,16 +155,16 @@ export function AnalyticsClient({
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={distributionData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-border opacity-50" vertical={false} />
-                <XAxis dataKey="range" stroke="#94a3b8" fontSize={10} tickLine={false} axisLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} allowDecimals={false} />
+                <XAxis dataKey="range" stroke="#94A3B8" fontSize={10} tickLine={false} axisLine={false} />
+                <YAxis stroke="#94A3B8" fontSize={11} tickLine={false} axisLine={false} allowDecimals={false} />
                 <Tooltip
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       const item = payload[0].payload as DistributionPoint;
                       return (
                         <div className="rounded-xl border border-border bg-card p-3 shadow-lg text-xs space-y-1">
-                          <p className="font-bold text-card-foreground">{item.range}</p>
-                          <p className="text-amber-500 dark:text-amber-400 font-extrabold">{item.count} tips</p>
+                          <p className="font-bold text-foreground">{item.range}</p>
+                          <p className="text-amber-600 dark:text-amber-400 font-extrabold">{item.count} tips</p>
                         </div>
                       );
                     }
@@ -210,8 +210,8 @@ export function AnalyticsClient({
                       const item = payload[0].payload as PieDataPoint;
                       return (
                         <div className="rounded-xl border border-border bg-card p-2.5 shadow-lg text-xs">
-                          <p className="font-bold text-card-foreground">{item.name}</p>
-                          <p className="text-amber-500 dark:text-amber-400 font-semibold">{item.value} tips</p>
+                          <p className="font-bold text-foreground">{item.name}</p>
+                          <p className="text-amber-600 dark:text-amber-400 font-semibold">{item.value} tips</p>
                         </div>
                       );
                     }
@@ -253,8 +253,8 @@ export function AnalyticsClient({
                       const item = payload[0].payload as PieDataPoint;
                       return (
                         <div className="rounded-xl border border-border bg-card p-2.5 shadow-lg text-xs">
-                          <p className="font-bold text-card-foreground">{item.name}</p>
-                          <p className="text-emerald-600 dark:text-emerald-400 font-semibold">{item.value} payments</p>
+                          <p className="font-bold text-foreground">{item.name}</p>
+                          <p className="text-amber-600 dark:text-amber-400 font-semibold">{item.value} payments</p>
                         </div>
                       );
                     }

@@ -15,13 +15,13 @@ const ThemeContext = React.createContext<ThemeContextType | undefined>(undefined
 
 export function ThemeProvider({
   children,
-  defaultTheme = "dark",
+  defaultTheme = "light",
 }: {
   children: React.ReactNode;
   defaultTheme?: Theme;
 }) {
   const [theme, setTheme] = React.useState<Theme>(defaultTheme);
-  const [resolvedTheme, setResolvedTheme] = React.useState<"dark" | "light">("dark");
+  const [resolvedTheme, setResolvedTheme] = React.useState<"dark" | "light">("light");
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {

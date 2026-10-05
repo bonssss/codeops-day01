@@ -3,7 +3,7 @@
 import * as React from "react";
 
 interface ScrollRevealProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   className?: string;
   delay?: number; // ms
   direction?: "up" | "down" | "left" | "right" | "none";

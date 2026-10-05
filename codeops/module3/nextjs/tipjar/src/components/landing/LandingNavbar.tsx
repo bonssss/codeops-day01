@@ -71,30 +71,30 @@ export function LandingNavbar({
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-200 border-b ${
         isScrolled
-          ? "border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md shadow-sm"
-          : "border-slate-200/40 dark:border-slate-800/40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-sm"
+          ? "border-border bg-background/95 backdrop-blur-md shadow-sm"
+          : "border-transparent bg-background/80 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="h-9 w-9 rounded-xl bg-amber-600 dark:bg-amber-500 flex items-center justify-center text-white dark:text-slate-950 font-bold shadow-sm transition-transform duration-200 group-hover:scale-105">
+          <div className="h-9 w-9 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold shadow-sm transition-transform duration-200 group-hover:scale-105">
             <Coffee className="h-5 w-5" />
           </div>
-          <span className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">
+          <span className="font-extrabold text-xl tracking-tight text-foreground">
             Tip<span className="text-amber-600 dark:text-amber-400">Jar</span>
           </span>
         </Link>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-slate-100/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50 text-xs font-semibold text-slate-600 dark:text-slate-300">
+        <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-muted/70 border border-border text-xs font-semibold text-muted-foreground">
           <a
             href="#how-it-works"
             onClick={(e) => handleNavClick(e, "how-it-works")}
             className={`px-3.5 py-1.5 rounded-full transition-all duration-200 ${
               activeSection === "how-it-works"
-                ? "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 shadow-sm"
-                : "hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-slate-800/50"
+                ? "bg-primary text-primary-foreground font-bold shadow-sm"
+                : "hover:text-foreground hover:bg-background/80"
             }`}
           >
             How It Works
@@ -105,8 +105,8 @@ export function LandingNavbar({
             onClick={(e) => handleNavClick(e, "features")}
             className={`px-3.5 py-1.5 rounded-full transition-all duration-200 ${
               activeSection === "features"
-                ? "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 shadow-sm"
-                : "hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-slate-800/50"
+                ? "bg-primary text-primary-foreground font-bold shadow-sm"
+                : "hover:text-foreground hover:bg-background/80"
             }`}
           >
             Features
@@ -117,8 +117,8 @@ export function LandingNavbar({
             onClick={(e) => handleNavClick(e, "creators")}
             className={`px-3.5 py-1.5 rounded-full transition-all duration-200 ${
               activeSection === "creators"
-                ? "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 shadow-sm"
-                : "hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-slate-800/50"
+                ? "bg-primary text-primary-foreground font-bold shadow-sm"
+                : "hover:text-foreground hover:bg-background/80"
             }`}
           >
             Featured Creators
@@ -126,10 +126,10 @@ export function LandingNavbar({
 
           <Link
             href="/tip/bonsa"
-            className="px-3 py-1.5 rounded-full text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded-full text-amber-700 dark:text-amber-300 hover:text-amber-800 transition-colors flex items-center gap-1.5"
           >
             <span>Live Demo</span>
-            <span className="text-[9px] bg-amber-500/20 text-amber-700 dark:text-amber-300 px-1.5 py-0.2 rounded-full font-mono">
+            <span className="text-[9px] bg-primary/20 text-amber-800 dark:text-amber-200 px-1.5 py-0.2 rounded-full font-mono font-bold">
               @bonsa
             </span>
           </Link>
@@ -175,15 +175,15 @@ export function LandingNavbar({
 
       {/* Mobile Slide-Down Navigation Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 px-4 pt-3 pb-6 space-y-3 shadow-lg">
+        <div className="md:hidden border-t border-border bg-background/98 px-4 pt-3 pb-6 space-y-3 shadow-lg">
           <nav className="flex flex-col space-y-1">
             <a
               href="#how-it-works"
               onClick={(e) => handleNavClick(e, "how-it-works")}
               className={`px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
                 activeSection === "how-it-works"
-                  ? "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 font-bold"
-                  : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  ? "bg-primary text-primary-foreground font-bold"
+                  : "text-foreground hover:bg-muted"
               }`}
             >
               How It Works
@@ -193,8 +193,8 @@ export function LandingNavbar({
               onClick={(e) => handleNavClick(e, "features")}
               className={`px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
                 activeSection === "features"
-                  ? "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 font-bold"
-                  : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  ? "bg-primary text-primary-foreground font-bold"
+                  : "text-foreground hover:bg-muted"
               }`}
             >
               Features
@@ -204,8 +204,8 @@ export function LandingNavbar({
               onClick={(e) => handleNavClick(e, "creators")}
               className={`px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
                 activeSection === "creators"
-                  ? "bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 font-bold"
-                  : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  ? "bg-primary text-primary-foreground font-bold"
+                  : "text-foreground hover:bg-muted"
               }`}
             >
               Featured Creators
@@ -213,13 +213,13 @@ export function LandingNavbar({
             <Link
               href="/tip/bonsa"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-xl text-sm font-semibold text-amber-600 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="px-3 py-2 rounded-xl text-sm font-semibold text-amber-700 dark:text-amber-300 hover:bg-muted"
             >
               View Live Demo (@bonsa)
             </Link>
           </nav>
 
-          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+          <div className="pt-3 border-t border-border flex gap-2">
             {user ? (
               <Link href="/dashboard" className="w-full" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="default" className="w-full">

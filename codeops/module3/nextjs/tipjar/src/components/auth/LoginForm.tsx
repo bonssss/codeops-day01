@@ -57,7 +57,7 @@ export function LoginForm() {
       <div className="rounded-3xl border border-border bg-card p-8 shadow-xl space-y-6">
         <div className="text-center space-y-2">
           <Link href="/" className="inline-flex items-center gap-2 mb-2 group">
-            <div className="h-10 w-10 rounded-2xl bg-amber-500 text-neutral-950 flex items-center justify-center font-black">
+            <div className="h-10 w-10 rounded-2xl bg-primary text-primary-foreground shadow-md shadow-primary/25 flex items-center justify-center font-black group-hover:scale-105 transition-transform">
               <Coffee className="h-5 w-5" />
             </div>
           </Link>
@@ -116,27 +116,27 @@ export function LoginForm() {
         {/* Demo Fast Login Pills */}
         <div className="pt-4 border-t border-border space-y-2">
           <span className="text-[11px] text-muted-foreground font-medium block text-center">
-            Or test with seeded demo accounts (password: <code className="text-amber-500 font-semibold">password123</code>):
+            Or test with seeded demo accounts (password: <code className="text-primary font-semibold">password123</code>):
           </span>
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
               onClick={() => handleFillDemo("bonsa@tipjar.io")}
-              className="px-2 py-1.5 rounded-lg bg-muted hover:bg-muted/80 text-[11px] text-amber-500 border border-border font-mono truncate"
+              className="px-2 py-1.5 rounded-lg bg-muted hover:bg-primary/10 text-[11px] text-primary hover:border-primary/40 border border-border font-mono truncate transition-colors"
             >
               @bonsa
             </button>
             <button
               type="button"
               onClick={() => handleFillDemo("sara@tipjar.io")}
-              className="px-2 py-1.5 rounded-lg bg-muted hover:bg-muted/80 text-[11px] text-amber-500 border border-border font-mono truncate"
+              className="px-2 py-1.5 rounded-lg bg-muted hover:bg-primary/10 text-[11px] text-primary hover:border-primary/40 border border-border font-mono truncate transition-colors"
             >
               @sarab
             </button>
             <button
               type="button"
               onClick={() => handleFillDemo("abel@tipjar.io")}
-              className="px-2 py-1.5 rounded-lg bg-muted hover:bg-muted/80 text-[11px] text-amber-500 border border-border font-mono truncate"
+              className="px-2 py-1.5 rounded-lg bg-muted hover:bg-primary/10 text-[11px] text-primary hover:border-primary/40 border border-border font-mono truncate transition-colors"
             >
               @abelt
             </button>
@@ -145,7 +145,7 @@ export function LoginForm() {
 
         <div className="text-center text-xs text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-amber-500 hover:underline font-semibold">
+          <Link href="/register" className="text-primary hover:underline font-semibold">
             Create your TipJar free
           </Link>
         </div>

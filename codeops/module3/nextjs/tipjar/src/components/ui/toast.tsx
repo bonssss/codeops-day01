@@ -52,9 +52,9 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             key={t.id}
             className={cn(
               "pointer-events-auto flex items-start gap-3 rounded-2xl border p-4 shadow-lg transition-all duration-200",
-              t.type === "success" && "border-emerald-200 bg-white text-emerald-800 dark:border-emerald-800 dark:bg-slate-900 dark:text-emerald-300",
-              t.type === "error" && "border-red-200 bg-white text-red-800 dark:border-red-800 dark:bg-slate-900 dark:text-red-300",
-              t.type === "info" && "border-slate-200 bg-white text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
+              t.type === "success" && "border-emerald-200 bg-card text-emerald-800 dark:border-emerald-800/60 dark:text-emerald-300",
+              t.type === "error" && "border-red-200 bg-card text-red-800 dark:border-red-800/60 dark:text-red-300",
+              t.type === "info" && "border-border bg-card text-foreground"
             )}
           >
             {t.type === "success" && <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />}
@@ -62,13 +62,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             {t.type === "info" && <Info className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />}
 
             <div className="flex-1 text-sm">
-              {t.title && <div className="font-semibold text-slate-900 dark:text-white mb-0.5">{t.title}</div>}
-              <div className="text-slate-600 dark:text-slate-300 leading-snug">{t.description}</div>
+              {t.title && <div className="font-semibold text-foreground mb-0.5">{t.title}</div>}
+              <div className="text-muted-foreground leading-snug">{t.description}</div>
             </div>
 
             <button
               onClick={() => removeToast(t.id)}
-              className="text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="text-muted-foreground hover:text-foreground p-1 rounded-lg hover:bg-muted"
             >
               <X className="h-4 w-4" />
             </button>

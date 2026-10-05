@@ -143,7 +143,7 @@ export function GoalsManagerClient({
       {/* Goals Grid */}
       {goals.length === 0 ? (
         <div className="rounded-2xl border border-border bg-card p-12 text-center space-y-4">
-          <div className="h-16 w-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-500 flex items-center justify-center mx-auto text-2xl">
+          <div className="h-16 w-16 rounded-2xl bg-primary/10 border border-primary/20 text-amber-700 dark:text-amber-300 flex items-center justify-center mx-auto text-2xl">
             🎯
           </div>
           <div className="space-y-1">
@@ -169,7 +169,7 @@ export function GoalsManagerClient({
             return (
               <div
                 key={goal.id}
-                className="rounded-2xl border border-border bg-card p-6 relative flex flex-col justify-between hover:border-amber-500/40 transition-colors shadow-sm"
+                className="rounded-2xl border border-border bg-card p-6 relative flex flex-col justify-between hover:border-primary/40 transition-colors shadow-sm"
               >
                 <div className="space-y-4">
                   <div className="flex items-start justify-between gap-3">
@@ -195,7 +195,7 @@ export function GoalsManagerClient({
                         )}
                         {goal.deadline && (
                           <span className="text-[11px] text-muted-foreground flex items-center gap-1">
-                            <Calendar className="h-3 w-3 text-amber-500" />
+                            <Calendar className="h-3 w-3 text-amber-600 dark:text-amber-400" />
                             {new Date(goal.deadline).toLocaleDateString()}
                           </span>
                         )}
@@ -229,7 +229,7 @@ export function GoalsManagerClient({
                   {/* Progress info */}
                   <div className="space-y-2 pt-2">
                     <div className="flex justify-between text-xs">
-                      <span className="font-bold text-amber-500 dark:text-amber-400">
+                      <span className="font-bold text-amber-600 dark:text-amber-400">
                         {formatCurrency(goal.currentAmount, goal.currency)}
                       </span>
                       <span className="text-muted-foreground">
@@ -260,7 +260,7 @@ export function GoalsManagerClient({
 
           <form onSubmit={handleSubmit} className="space-y-4 my-2">
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">Goal Title *</label>
+              <label className="text-xs font-medium text-foreground">Goal Title *</label>
               <Input
                 required
                 placeholder="e.g. 🎯 New M3 MacBook Pro for Coding"
@@ -270,7 +270,7 @@ export function GoalsManagerClient({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">Description</label>
+              <label className="text-xs font-medium text-foreground">Description</label>
               <Textarea
                 placeholder="Why is this goal important? How will it help your work?"
                 value={description}
@@ -281,7 +281,7 @@ export function GoalsManagerClient({
 
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-neutral-300">
+                <label className="text-xs font-medium text-foreground">
                   Target Amount ({currency}) *
                 </label>
                 <Input
@@ -296,7 +296,7 @@ export function GoalsManagerClient({
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-neutral-300">Target Deadline</label>
+                <label className="text-xs font-medium text-foreground">Target Deadline</label>
                 <Input
                   type="date"
                   value={deadline}
@@ -306,11 +306,11 @@ export function GoalsManagerClient({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-neutral-300">Status</label>
+              <label className="text-xs font-medium text-foreground">Status</label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="h-11 w-full rounded-xl border border-white/10 bg-neutral-900 px-3 text-xs text-neutral-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                className="h-11 w-full rounded-xl border border-input bg-card px-3 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 <option value="ACTIVE">Active (Shown on Tip Page)</option>
                 <option value="COMPLETED">Completed</option>
