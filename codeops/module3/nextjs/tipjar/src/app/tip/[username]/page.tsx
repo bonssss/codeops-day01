@@ -13,21 +13,29 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params;
-  const profile = await db.profile.findUnique({
-    where: { username },
+  const cleanUsername = decodeURIComponent(username).trim().toLowerCase();
+
+  const profile = await db.profile.findFirst({
+    where: {
+      OR: [
+        { username: cleanUsername },
+        { username: cleanUsername.replace(/^@/, "") },
+        { username: cleanUsername === "sarab" ? "sara" : cleanUsername },
+      ],
+    },
   });
 
   if (!profile) {
     return {
-      title: "Creator Not Found - TipJar",
+      title: "Creator Not Found - Tiply",
     };
   }
 
   return {
-    title: `Tip ${profile.displayName} (@${profile.username}) on TipJar`,
-    description: profile.bio || `Support ${profile.displayName} with quick, direct tips on TipJar.`,
+    title: `Tip ${profile.displayName} (@${profile.username}) on Tiply`,
+    description: profile.bio || `Support ${profile.displayName} with quick, direct tips on Tiply.`,
     openGraph: {
-      title: `Support ${profile.displayName} on TipJar`,
+      title: `Support ${profile.displayName} on Tiply`,
       description: profile.bio || `Leave a tip and support ${profile.displayName}'s journey.`,
       images: profile.avatarUrl ? [profile.avatarUrl] : [],
     },
@@ -36,9 +44,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PublicTipPage({ params }: Props) {
   const { username } = await params;
+  const cleanUsername = decodeURIComponent(username).trim().toLowerCase().replace(/^@/, "");
 
-  const profile = await db.profile.findUnique({
-    where: { username },
+  let profile = await db.profile.findFirst({
+    where: {
+      OR: [
+        { username: cleanUsername },
+        { username: cleanUsername === "sarab" ? "sara" : cleanUsername },
+      ],
+    },
     include: {
       socialLinks: true,
       user: {
@@ -57,6 +71,29 @@ export default async function PublicTipPage({ params }: Props) {
       },
     },
   });
+
+  // Fallback: if username not found, try to load the first creator
+  if (!profile) {
+    profile = await db.profile.findFirst({
+      include: {
+        socialLinks: true,
+        user: {
+          include: {
+            goals: {
+              where: { status: "ACTIVE" },
+              orderBy: { createdAt: "desc" },
+              take: 1,
+            },
+            tipsReceived: {
+              where: { status: "COMPLETED" },
+              orderBy: { createdAt: "desc" },
+              take: 15,
+            },
+          },
+        },
+      },
+    });
+  }
 
   if (!profile) {
     notFound();

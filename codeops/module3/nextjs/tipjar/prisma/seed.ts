@@ -57,33 +57,33 @@ async function main() {
     include: { profile: true },
   });
 
-  // 2. Creator 2: Sara Bekele (@sarab) - Digital Artist & UX Designer
+  // 2. Creator 2: Sara Ahmed (@sara) - Content Creator & Writer
   const user2 = await prisma.user.create({
     data: {
-      email: "sara@tipjar.io",
-      name: "Sara Bekele",
+      email: "sara@tiply.io",
+      name: "Sara Ahmed",
       passwordHash: defaultPasswordHash,
       profile: {
         create: {
-          username: "sarab",
-          displayName: "Sara Bekele",
-          avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=80",
-          bio: "🎨 Digital Illustrator & UI/UX Designer. Sharing free Figma kits, Ethiopian cultural digital art, and graphic design tutorials.",
-          location: "Hawassa, Ethiopia",
-          website: "https://sarab-art.com",
-          github: "sarabekele",
-          linkedin: "sarabekele",
-          twitter: "sara_designs",
+          username: "sara",
+          displayName: "Sara Ahmed",
+          avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
+          bio: "Creating content, sharing ideas, and building a kinder internet. 💚",
+          location: "Addis Ababa, Ethiopia",
+          website: "https://sara.tiply.io",
+          github: "sara-ahmed",
+          linkedin: "sara-ahmed",
+          twitter: "sara_content",
           currency: "ETB",
-          customTipMessage: "Thank you for buying me a coffee/tea! Your support helps me create more free digital assets & illustrations.",
-          suggestedAmounts: "100,250,500,1000",
+          customTipMessage: "Thank you so much for supporting my content! Your generosity keeps me inspired and creating every day.",
+          suggestedAmounts: "50,100,200,500",
           allowAnonymous: true,
           showSupporterWall: true,
           socialLinks: {
             create: [
-              { platform: "website", url: "https://sarab-art.com", label: "Art Portfolio" },
-              { platform: "twitter", url: "https://x.com/sara_designs", label: "Twitter Art" },
-              { platform: "instagram", url: "https://instagram.com/sara_illustrations", label: "Instagram" },
+              { platform: "website", url: "https://sara.tiply.io", label: "My Portfolio" },
+              { platform: "twitter", url: "https://x.com/sara_content", label: "X / Twitter" },
+              { platform: "instagram", url: "https://instagram.com/sara_content", label: "Instagram" },
             ],
           },
         },
@@ -92,30 +92,29 @@ async function main() {
     include: { profile: true },
   });
 
-  // 3. Creator 3: Abel Tadesse (@abelt) - Indie Musician & Audio Producer
+  // 3. Creator 3: Mina Tadesse (@mina) - Digital Artist & Designer
   const user3 = await prisma.user.create({
     data: {
-      email: "abel@tipjar.io",
-      name: "Abel Tadesse",
+      email: "mina@tiply.io",
+      name: "Mina Tadesse",
       passwordHash: defaultPasswordHash,
       profile: {
         create: {
-          username: "abelt",
-          displayName: "Abel Tadesse",
-          avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
-          bio: "🎵 Indie Musician & Sound Engineer. Creating Ethio-Jazz lo-fi beats, sample packs, and music production guides.",
+          username: "mina",
+          displayName: "Mina Tadesse",
+          avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=80",
+          bio: "🎨 Digital Artist & Designer. Creating free UI kits and African digital art assets.",
           location: "Addis Ababa, Ethiopia",
-          website: "https://abelsound.com",
-          twitter: "abel_beats",
+          website: "https://mina.art",
+          twitter: "mina_art",
           currency: "ETB",
-          customTipMessage: "Much love for tuning in and supporting indie sound production! 🎧",
+          customTipMessage: "Much love for appreciating and supporting digital art! 🎨",
           suggestedAmounts: "50,150,300,750",
           allowAnonymous: true,
           showSupporterWall: true,
           socialLinks: {
             create: [
-              { platform: "youtube", url: "https://youtube.com/@abelbeats", label: "YouTube Channel" },
-              { platform: "twitter", url: "https://x.com/abel_beats", label: "X Beatmaking" },
+              { platform: "twitter", url: "https://x.com/mina_art", label: "X / Twitter" },
             ],
           },
         },
