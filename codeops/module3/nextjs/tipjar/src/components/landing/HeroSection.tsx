@@ -7,24 +7,18 @@ export function HeroSection() {
   return (
     <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-24 overflow-hidden">
       {/* Soft Ambient Background Mesh */}
-      <div 
+      <div
         className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-emerald-500/10 dark:bg-emerald-500/5 rounded-full blur-3xl -z-10 pointer-events-none"
         aria-hidden="true"
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
-          
+
           {/* Hero Left Content */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+
             
-            {/* Tag / Pill */}
-            <ScrollReveal direction="down">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">
-                <Sparkles className="h-3.5 w-3.5 text-emerald-600 animate-pulse" />
-                <span>The simplest way to support creators & builders</span>
-              </div>
-            </ScrollReveal>
 
             {/* Main Headline */}
             <ScrollReveal direction="up" delay={100}>
@@ -46,14 +40,8 @@ export function HeroSection() {
             {/* Highlights Grid */}
             <ScrollReveal direction="up" delay={300}>
               <div className="pt-4 border-t border-border grid grid-cols-2 sm:grid-cols-3 gap-4 text-left">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                  <span className="text-xs text-muted-foreground font-medium">0% Platform Fee</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                  <span className="text-xs text-muted-foreground font-medium">Instant Settlements</span>
-                </div>
+
+
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <span className="text-xs text-muted-foreground font-medium">QR Codes Built-In</span>

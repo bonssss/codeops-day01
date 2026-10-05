@@ -23,12 +23,10 @@ export function HeroPreviewCard() {
             <div className="flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
               <span className="text-[10px] font-bold tracking-widest text-emerald-600 dark:text-emerald-400 uppercase">
-                Instant Pay
+              Tiply
               </span>
             </div>
-            <div className="px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
-              0% Fee
-            </div>
+         
           </div>
 
           {/* Central QR Hologram with Scanning Ray */}
@@ -70,7 +68,7 @@ export function HeroPreviewCard() {
             <div className="h-4 w-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
               <Check className="h-2.5 w-2.5 stroke-[3]" />
             </div>
-            <span>Instant Settlement</span>
+            <span>Instant Tipping</span>
           </div>
         </div>
 
@@ -82,8 +80,7 @@ export function HeroPreviewCard() {
           <div className="flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 text-white shadow-xl shadow-emerald-600/30">
             <Zap className="h-4 w-4 fill-current text-emerald-200" />
             <div className="flex flex-col">
-              <span className="text-[9px] uppercase tracking-wider font-bold text-emerald-100">Live Support</span>
-              <span className="text-xs font-black tracking-tight">100% Direct</span>
+              <span className="text-[9px] uppercase tracking-wider font-semibold text-emerald-100">Direct Tipping</span>
             </div>
           </div>
         </div>
