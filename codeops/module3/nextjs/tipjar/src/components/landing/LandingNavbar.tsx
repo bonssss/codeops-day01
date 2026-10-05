@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { TiplyLogo } from "@/components/shared/tiply-logo";
@@ -70,11 +70,18 @@ export function LandingNavbar({
             How it works
           </a>
           <a
-            href="#pricing"
-            onClick={(e) => handleNavClick(e, "how-it-works")}
+            href="#features"
+            onClick={(e) => handleNavClick(e, "features")}
             className="hover:text-foreground transition-colors cursor-pointer"
           >
-            Pricing
+            Features
+          </a>
+          <a
+            href="#creators"
+            onClick={(e) => handleNavClick(e, "creators")}
+            className="hover:text-foreground transition-colors cursor-pointer"
+          >
+            Creators
           </a>
         </nav>
 
@@ -85,7 +92,7 @@ export function LandingNavbar({
           {user ? (
             <Link href="/dashboard">
               <Button variant="default" size="sm" className="rounded-lg font-medium px-4 h-9">
-                Go to Dashboard
+                Dashboard
               </Button>
             </Link>
           ) : (
@@ -131,11 +138,18 @@ export function LandingNavbar({
               How it works
             </a>
             <a
-              href="#pricing"
-              onClick={(e) => handleNavClick(e, "how-it-works")}
+              href="#features"
+              onClick={(e) => handleNavClick(e, "features")}
               className="px-3 py-2 rounded-lg hover:bg-muted text-foreground transition-colors"
             >
-              Pricing
+              Features
+            </a>
+            <a
+              href="#creators"
+              onClick={(e) => handleNavClick(e, "creators")}
+              className="px-3 py-2 rounded-lg hover:bg-muted text-foreground transition-colors"
+            >
+              Creators
             </a>
           </nav>
 

@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { Check, Heart, Edit3, ArrowRight } from "lucide-react";
+import { Edit3 } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 
 const PRESET_AMOUNTS = [1, 5, 10];
 
@@ -12,26 +10,16 @@ export function HeroPreviewCard() {
   const [selectedAmount, setSelectedAmount] = useState<number>(5);
   const [isCustom, setIsCustom] = useState<boolean>(false);
   const [customValue, setCustomValue] = useState<string>("25");
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
-  const activeAmount = isCustom ? Number(customValue) || 1 : selectedAmount;
-
-  const handleSimulateTip = () => {
-    setIsSuccess(true);
-    setTimeout(() => {
-      setIsSuccess(false);
-    }, 4000);
-  };
 
   return (
     <div className="relative mx-auto max-w-sm w-full">
-      {/* Background Soft Shadow / Glow */}
+      {/* Background Soft Shadow */}
       <div
         className="absolute -inset-2 sm:-inset-4 bg-gradient-to-b from-emerald-500/10 to-transparent rounded-3xl blur-xl -z-10 opacity-70"
         aria-hidden="true"
       />
 
-      {/* Main Tiply Profile Card */}
+      {/* Main Tiply Profile Card Matching Design Screenshot */}
       <div className="relative rounded-2xl border border-border/80 bg-card p-6 shadow-sm space-y-6">
         
         {/* Creator Header */}
@@ -91,9 +79,9 @@ export function HeroPreviewCard() {
               <button
                 type="button"
                 onClick={() => setIsCustom(false)}
-                className="text-xs text-muted-foreground hover:text-foreground px-2 py-1"
+                className="text-xs text-muted-foreground hover:text-foreground px-2 py-1 cursor-pointer"
               >
-                Cancel
+                Done
               </button>
             </div>
           ) : (
@@ -105,26 +93,6 @@ export function HeroPreviewCard() {
               <Edit3 className="h-3.5 w-3.5" />
               <span>Custom amount</span>
             </button>
-          )}
-        </div>
-
-        {/* Action Button & Confirmation */}
-        <div className="pt-1">
-          {isSuccess ? (
-            <div className="py-2.5 px-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-center text-xs font-semibold flex items-center justify-center gap-2 animate-in fade-in duration-200">
-              <Check className="h-4 w-4 stroke-[2.5]" />
-              <span>Tip of ${activeAmount} simulated! Thank you!</span>
-            </div>
-          ) : (
-            <Link href={`/tip/sara`}>
-              <Button
-                type="button"
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm h-10 rounded-lg shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>Send ${activeAmount} Tip</span>
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
           )}
         </div>
 
