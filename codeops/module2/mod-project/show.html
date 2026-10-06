@@ -3,35 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Details | TV Shows</title>
+    <title>Show Details — Showly</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="navbar" aria-label="Main navigation">
-        <h2>TV Shows</h2>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#shows">Shows</a></li>
-            <li><a href="index.html#favorites">Favorites</a></li>
-        </ul>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar" aria-label="Main Navigation">
+        <div class="navbar-inner">
+            <div class="navbar-left">
+                <a href="index.html#home" class="brand" aria-label="Showly Home">
+                    <span class="brand-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="15" rx="3" ry="3"></rect>
+                            <polyline points="17 2 12 7 7 2"></polyline>
+                        </svg>
+                    </span>
+                    Showly
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="index.html#browse" class="nav-link">Browse</a></li>
+                    <li><a href="index.html#watchlist" class="nav-link">Watchlist</a></li>
+                </ul>
+            </div>
+            <div class="navbar-right">
+                <a href="index.html#browse" class="icon-btn" title="Search shows">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </a>
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="User profile" class="user-avatar" title="Profile">
+            </div>
+        </div>
     </nav>
 
-    <main>
-        <div class="main-container">
-            <a class="back-link" href="index.html">&larr; Back to shows</a>
-            <p id="details-status" class="detail-status" role="status" aria-live="polite">Loading show details...</p>
-            <article id="show-details" class="show-detail" hidden>
-                <div id="detail-poster-container"></div>
-                <div class="detail-copy">
-                    <h1 id="detail-title"></h1>
-                    <p id="detail-tagline" class="detail-tagline"></p>
-                    <p id="detail-summary" class="detail-summary"></p>
-                    <dl id="detail-facts" class="detail-facts"></dl>
-                    <a id="detail-site" class="official-site" target="_blank" rel="noopener noreferrer" hidden>Visit official site</a>
-                </div>
-            </article>
+    <main class="view-container">
+        <div class="back-btn-wrap">
+            <a href="index.html#browse" class="btn-back" id="back-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to search
+            </a>
+        </div>
+
+        <div id="details-container">
+            <div class="loading-spinner-wrap" id="loading-state">
+                <div class="spinner"></div>
+                <p>Loading show details...</p>
+            </div>
         </div>
     </main>
+
+    <!-- Toast Notification Banner -->
+    <div id="toast" class="toast-notification" role="status" aria-live="polite">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span id="toast-message">Show updated</span>
+    </div>
+
     <script src="show-details.js"></script>
 </body>
 </html>

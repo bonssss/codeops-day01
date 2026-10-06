@@ -3,43 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tv Shows</title>
+    <title>Showly — Find your next show</title>
+    <meta name="description" content="Search for your favorite TV shows, explore new ones, and build your watchlist — all in one place.">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="navbar" aria-label="Main navigation">
-        <h2>Tv Shows</h2>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#shows">Shows</a></li>
-            <li><a href="#favorites">Favorites</a></li>
-        </ul>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar" aria-label="Main Navigation">
+        <div class="navbar-inner">
+            <div class="navbar-left">
+                <a href="#home" class="brand" id="brand-logo" aria-label="Showly Home">
+                    <span class="brand-icon">
+                        <!-- TV Icon matching design -->
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="15" rx="3" ry="3"></rect>
+                            <polyline points="17 2 12 7 7 2"></polyline>
+                        </svg>
+                    </span>
+                    Showly
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link active" id="nav-home" data-view="home-view">Home</a></li>
+                    <li><a href="#browse" class="nav-link" id="nav-browse" data-view="browse-view">Browse</a></li>
+                    <li><a href="#watchlist" class="nav-link" id="nav-watchlist" data-view="watchlist-view">Watchlist</a></li>
+                </ul>
+            </div>
+            <div class="navbar-right">
+                <button class="icon-btn" id="nav-search-trigger" title="Quick Search" aria-label="Search shows">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="User profile" class="user-avatar" id="user-avatar-btn" title="Profile">
+            </div>
+        </div>
     </nav>
 
-    <header class="page-header">
-        <h1>Tv Shows</h1>
-        <p>Welcome to our tv shows database!</p>
-    </header>
+    <main class="view-container">
+        <!-- ============================================================
+             1. HOME VIEW
+             ============================================================ -->
+        <section id="home-view" class="view-section active-view">
+            <div class="hero">
+                <div class="badge-pill">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    Discover great TV shows
+                </div>
+                <h1>Find your next show</h1>
+                <p>Search for your favorite TV shows, explore new ones, and build your watchlist — all in one place.</p>
+                
+                <form id="hero-search-form" class="search-wrapper">
+                    <span class="search-icon-inside">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </span>
+                    <input type="text" id="hero-search-input" placeholder="Search for a show (e.g. Breaking Bad, Friends, etc.)" aria-label="Search for a show">
+                    <button type="submit" class="btn-primary" id="hero-search-submit">Search</button>
+                </form>
+            </div>
 
-    <main>
-        <div class="main-container">
-            <form id="search-form" class="search-form">
-                <input id="search-input" type="search" placeholder="Search shows..." aria-label="Search shows">
-                <button id="search-button" type="submit">Search</button>
-                <output id="search-results" class="search-status" aria-live="polite"></output>
-            </form>
+            <div class="popular-section">
+                <div class="section-header">
+                    <h2 class="section-title">Popular shows</h2>
+                    <a href="#browse" class="view-all-link" id="home-view-all-btn">
+                        View all
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+                <div class="shows-grid" id="popular-shows-grid">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+        </section>
 
-            <section class="show-section" id="shows">
-                <h2>Popular Shows</h2>
-                <div class="grid" id="shows-container"></div>
-            </section>
+        <!-- ============================================================
+             2. BROWSE / SEARCH RESULTS VIEW
+             ============================================================ -->
+        <section id="browse-view" class="view-section">
+            <div class="browse-top-bar">
+                <form id="browse-search-form" class="search-wrapper">
+                    <span class="search-icon-inside">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </span>
+                    <input type="text" id="browse-search-input" placeholder="Search for shows..." aria-label="Search shows">
+                    <button type="button" class="clear-search-btn" id="browse-clear-search" style="display: none;" title="Clear search" aria-label="Clear search">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                    <button type="submit" class="btn-primary">Search</button>
+                </form>
+            </div>
 
-            <section class="show-section" id="favorites">
-                <h2>Favorites</h2>
-                <div class="grid" id="favorites-container"></div>
-            </section>
-        </div>
+            <div class="search-results-info-bar">
+                <div class="results-count-text" id="browse-results-count">
+                    <span>Explore shows</span>
+                </div>
+                <div class="browse-filters-wrap">
+                    <label class="custom-select-label">
+                        Genre:
+                        <select id="browse-genre-filter" class="custom-select" aria-label="Filter by genre">
+                            <option value="all">All Genres</option>
+                        </select>
+                    </label>
+                    <label class="custom-select-label">
+                        Sort by:
+                        <select id="browse-sort-order" class="custom-select" aria-label="Sort by">
+                            <option value="relevance">Relevance</option>
+                            <option value="rating">Top Rated</option>
+                            <option value="title">Title A–Z</option>
+                            <option value="newest">Newest</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="browse-cards-grid" id="browse-shows-container">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- ============================================================
+             3. SHOW DETAILS VIEW
+             ============================================================ -->
+        <section id="show-details-view" class="view-section">
+            <div class="back-btn-wrap">
+                <button class="btn-back" id="details-back-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to search
+                </button>
+            </div>
+
+            <div id="show-details-content">
+                <!-- Dynamically filled with poster, title, meta, buttons, sidebar, similar shows -->
+            </div>
+        </section>
+
+        <!-- ============================================================
+             4. WATCHLIST VIEW
+             ============================================================ -->
+        <section id="watchlist-view" class="view-section">
+            <div class="watchlist-layout">
+                <!-- Left navigation sidebar matching design -->
+                <aside class="watchlist-sidebar">
+                    <div class="sidebar-nav-group">
+                        <button class="sidebar-nav-item active" data-view="watchlist-view">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            Watchlist
+                        </button>
+                        <button class="sidebar-nav-item" data-view="browse-view">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            Browse
+                        </button>
+                        <button class="sidebar-nav-item" id="watchlist-profile-link">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Profile
+                        </button>
+                    </div>
+
+                    <div class="sidebar-nav-group" style="margin-top: auto;">
+                        <button class="sidebar-nav-item" id="watchlist-settings-link">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                            Settings
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Right Main Content -->
+                <div class="watchlist-main-content">
+                    <div class="watchlist-header-row">
+                        <div class="watchlist-header-text">
+                            <h2>My Watchlist</h2>
+                            <p>Your saved shows, all in one place.</p>
+                        </div>
+                        <button class="btn-primary" id="watchlist-add-show-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add show
+                        </button>
+                    </div>
+
+                    <div class="watchlist-list" id="watchlist-container">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <!-- Toast Notification Banner -->
+    <div id="toast" class="toast-notification" role="status" aria-live="polite">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span id="toast-message">Show updated</span>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
