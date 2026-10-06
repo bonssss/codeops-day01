@@ -7,83 +7,39 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Main navigation">
         <h2>Tv Shows</h2>
-        
         <ul>
-            <li><a href="#home">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="#shows">Shows</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="#favorites">Favorites</a></li>
         </ul>
     </nav>
 
-    <header>
+    <header class="page-header">
         <h1>Tv Shows</h1>
         <p>Welcome to our tv shows database!</p>
-        
     </header>
 
-    
-
     <main>
+        <div class="main-container">
+            <form id="search-form" class="search-form">
+                <input id="search-input" type="search" placeholder="Search shows..." aria-label="Search shows">
+                <button id="search-button" type="submit">Search</button>
+                <output id="search-results" class="search-status" aria-live="polite"></output>
+            </form>
 
-    <div class="main-container">
- <form action="" id="search-form" class="form">
-        <input type="text" placeholder="Search shows...">
-        <button type="submit">Search</button>
+            <section class="show-section" id="shows">
+                <h2>Popular Shows</h2>
+                <div class="grid" id="shows-container"></div>
+            </section>
 
-    </form>
-    
-   
-    <article>
-        <h2>Popular Shows</h2>
-            <div class="grid" id="grid">
-                <div class="Card">
-                    <img src="" alt=" Show Image">
-                    <h2>Show Title</h2>
-                    <p>Show Description</p>
-                    <button>View Details</button>
-                    <button>Add to Favorites</button>
-                </div>
-                <div class="Card">
-                    <img src="" alt=" Show Image">
-                    <h2>Show Title</h2>
-                    <p>Show Description</p>
-                    <button>View Details</button>
-                    <button>Add to Favorites</button>
-                </div>
-                <div class="Card">
-                    <img src="" alt=" Show Image">
-                    <h2>Show Title</h2>
-                    <p>Show Description</p>
-                    <button>View Details</button>
-                    <button>Add to Favorites</button>
-                </div>
-                <div class="Card">
-                    <img src="" alt=" Show Image">
-                    <h2>Show Title</h2>
-                    <p>Show Description</p>
-                    <button>View Details</button>
-                    <button>Add to Favorites</button>
-                </div>
-            </div>
-        
-    </article>
-    <article>
-        <h2>Favorites</h2>
-        <div class="grid" id="favorites-grid">
-            <div class="Card">
-                <img src="" alt=" Show Image">
-                <h2>Show Title</h2>
-                <p>Show Description</p>
-                <button>View Details</button>
-                <button>Remove from Favorites</button>
-            </div>
+            <section class="show-section" id="favorites">
+                <h2>Favorites</h2>
+                <div class="grid" id="favorites-container"></div>
+            </section>
         </div>
-    </article>
-
     </main>
-    
     <script src="script.js"></script>
 </body>
 </html>

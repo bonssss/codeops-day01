@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Details | TV Shows</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar" aria-label="Main navigation">
+        <h2>TV Shows</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#shows">Shows</a></li>
+            <li><a href="index.html#favorites">Favorites</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="main-container">
+            <a class="back-link" href="index.html">&larr; Back to shows</a>
+            <p id="details-status" class="detail-status" role="status" aria-live="polite">Loading show details...</p>
+            <article id="show-details" class="show-detail" hidden>
+                <div id="detail-poster-container"></div>
+                <div class="detail-copy">
+                    <h1 id="detail-title"></h1>
+                    <p id="detail-tagline" class="detail-tagline"></p>
+                    <p id="detail-summary" class="detail-summary"></p>
+                    <dl id="detail-facts" class="detail-facts"></dl>
+                    <a id="detail-site" class="official-site" target="_blank" rel="noopener noreferrer" hidden>Visit official site</a>
+                </div>
+            </article>
+        </div>
+    </main>
+    <script src="show-details.js"></script>
+</body>
+</html>
