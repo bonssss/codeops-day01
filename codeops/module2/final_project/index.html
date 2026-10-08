@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Recipes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1 id="home-link">Food Recipes</h1>
+            <button class="fav" type="button">Favorites</button>
+        </div>
+    </header>
+    <main>
+        <div class="main-container">
+            <form id="searchForm">
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search for a recipe..."
+                />
+                <button type="submit">Search</button>
+            </form>
+            <p id="search-results" aria-live="polite"></p>
+        </div>
+
+        <div class="content-layout">
+            <section class="recipes-section" aria-labelledby="recipes-heading">
+                <h2 id="recipes-heading">Main Recipes</h2>
+                <div class="grid" id="recipe-grid">
+                    <!-- Recipe cards will be dynamically added here -->                        
+                </div>
+            </section>
+
+            <aside>
+                <h2>Favorites</h2>
+                <ul id="favorites-list">
+                    <!-- Favorite recipes will be dynamically added here -->
+                </ul>
+            </aside>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Food Recipes. All rights reserved.</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

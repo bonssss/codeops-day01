@@ -147,7 +147,31 @@ export function getOrders(sessionId = null) {
 }
 
 export function getOrderById(id) {
-  return globalThis.__ordersStore.find((order) => order.id === id) || null;
+  const order = globalThis.__ordersStore.find((order) => order.id === id);
+  if (!order) return null;
+
+  // Realistic status progression simulation for SWR polling demonstration
+  if (order.status !== "cancelled") {
+    const elapsedSec = (Date.now() - new Date(order.createdAt).getTime()) / 1000;
+    if (elapsedSec > 40) {
+      order.status = "delivered";
+    } else if (elapsedSec > 20) {
+      order.status = "out_for_delivery";
+    } else if (elapsedSec > 7) {
+      order.status = "preparing";
+    } else {
+      order.status = "confirmed";
+    }
+  }
+
+  return { ...order };
+}
+
+export function updateOrderStatus(orderId, newStatus) {
+  const order = globalThis.__ordersStore.find((order) => order.id === orderId);
+  if (!order) return null;
+  order.status = newStatus;
+  return { ...order };
 }
 
 export function cancelOrderRecord(orderId, sessionId) {
