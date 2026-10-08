@@ -53,28 +53,29 @@ export default function Cart() {
           {cart.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between p-5 bg-white border border-stone-200/80 rounded-3xl shadow-xs"
+              className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 bg-white border border-stone-200/80 rounded-3xl shadow-xs gap-3 sm:gap-4"
             >
-              <div className="flex items-center gap-4">
-                <span className="text-3xl p-3 bg-orange-50 border border-orange-100 rounded-2xl">
+              <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                <span className="text-3xl p-2.5 sm:p-3 bg-orange-50 border border-orange-100 rounded-2xl shrink-0">
                   {item.emoji || "🍲"}
                 </span>
-                <div>
-                  <h3 className="font-bold text-stone-900 text-base">
+                <div className="min-w-0">
+                  <h3 className="font-bold text-stone-900 text-sm sm:text-base truncate">
                     {item.name}
                   </h3>
-                  <span className="text-sm font-black text-orange-600 block mt-0.5">
+                  <span className="text-xs sm:text-sm font-black text-orange-600 block mt-0.5">
                     ${(typeof item.price === "number" ? item.price : parseFloat(String(item.price).replace(/[^0-9.]/g, "")) || 0).toFixed(2)}
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-stone-100">
                 {/* Quantity Controls */}
                 <div className="flex items-center border border-stone-200 rounded-xl bg-stone-50 p-0.5">
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     className="w-8 h-8 flex items-center justify-center font-bold text-stone-700 hover:bg-white rounded-lg transition cursor-pointer"
+                    aria-label="Decrease quantity"
                   >
                     -
                   </button>
@@ -84,6 +85,7 @@ export default function Cart() {
                   <button
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     className="w-8 h-8 flex items-center justify-center font-bold text-stone-700 hover:bg-white rounded-lg transition cursor-pointer"
+                    aria-label="Increase quantity"
                   >
                     +
                   </button>
@@ -92,8 +94,9 @@ export default function Cart() {
                 {/* Remove button */}
                 <button
                   onClick={() => removeFromCart(item.id)}
-                  className="text-stone-400 hover:text-red-500 p-1.5 text-sm transition cursor-pointer"
+                  className="text-stone-400 hover:text-red-500 p-2 text-sm transition cursor-pointer rounded-lg hover:bg-stone-50"
                   title="Remove item"
+                  aria-label="Remove item"
                 >
                   ✕
                 </button>

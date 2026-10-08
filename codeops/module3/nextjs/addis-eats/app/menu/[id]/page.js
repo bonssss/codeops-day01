@@ -63,7 +63,7 @@ export default async function MenuItemPage({ params }) {
         </div>
 
         {/* Info Pills */}
-        <div className="grid grid-cols-3 gap-3 my-6 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6 text-center">
           <div className="p-4 bg-orange-50/50 rounded-2xl border border-orange-100">
             <span className="text-xs text-stone-500 font-medium block">Spice Level</span>
             <span className="text-sm font-bold text-stone-800 mt-0.5 block">{dish.spice}</span>

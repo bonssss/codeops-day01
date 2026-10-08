@@ -7,7 +7,7 @@ export default function MenuLayout({ children }) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
       <div className="flex flex-col lg:flex-row gap-8 items-start">
         {/* Category Sidebar */}
-        <aside className="w-full lg:w-64 shrink-0 bg-white border border-stone-200/80 rounded-3xl p-5 shadow-xs sticky top-20">
+        <aside className="w-full lg:w-64 shrink-0 bg-white border border-stone-200/80 rounded-3xl p-5 shadow-xs lg:sticky lg:top-20">
           <div className="mb-4">
             <h2 className="text-xs font-black uppercase tracking-wider text-stone-400">
               Menu Categories

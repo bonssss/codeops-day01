@@ -3,7 +3,8 @@
 import { useActionState, useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
-import { placeOrderAction, cancelOrderAction } from "../actions/orders";
+import { placeOrderAction } from "../actions/orders";
+import OrderStatusScreen from "../order-status/OrderStatusScreen";
 
 export default function CheckoutForm({ initialPromo, session }) {
   const { cart, subtotal, clearCart } = useCart();
@@ -12,20 +13,12 @@ export default function CheckoutForm({ initialPromo, session }) {
   const [phone, setPhone] = useState("+251 91 123 4567");
   const [name, setName] = useState("Abebe Kebede");
 
-  // React 19 Server Action State (Exercises 5 & 6)
+  // React 19 Server Action State
   const [formState, formAction, isPending] = useActionState(placeOrderAction, {
     success: false,
     error: null,
     fieldErrors: null,
     order: null
-  });
-
-  // Cancellation State (Exercise 7)
-  const [cancellationState, setCancellationState] = useState({
-    isCancelling: false,
-    cancelled: false,
-    error: null,
-    message: null
   });
 
   const deliveryFee = cart.length > 0 ? 2.5 : 0;
@@ -38,134 +31,17 @@ export default function CheckoutForm({ initialPromo, session }) {
     }
   }, [formState?.success, formState?.order, clearCart]);
 
-  const handleCancelOrder = async (orderId) => {
-    setCancellationState({ isCancelling: true, cancelled: false, error: null, message: null });
-    const res = await cancelOrderAction(orderId);
-    if (res.success) {
-      setCancellationState({
-        isCancelling: false,
-        cancelled: true,
-        error: null,
-        message: res.message || `Order ${orderId} has been successfully cancelled.`
-      });
-    } else {
-      setCancellationState({
-        isCancelling: false,
-        cancelled: false,
-        error: res.error || "Failed to cancel order.",
-        message: null
-      });
-    }
-  };
-
-  // Order Confirmed Success Screen
+  // Order Confirmed Success Screen -> Rendered via SWR-powered OrderStatusScreen
   if (formState?.success && formState?.order) {
-    const order = formState.order;
-    const isCancelled = cancellationState.cancelled || order.status === "cancelled";
-
     return (
-      <div className="flex flex-col flex-1 items-center justify-center min-h-[65vh] px-4 py-12 text-center max-w-lg mx-auto">
-        <div className={`w-20 h-20 rounded-full flex items-center justify-center text-4xl mb-4 border ${
-          isCancelled
-            ? "bg-rose-50 border-rose-200 text-rose-600"
-            : "bg-emerald-50 border-emerald-200 animate-bounce"
-        }`}>
-          {isCancelled ? "❌" : "🎉"}
-        </div>
-
-        <span className={`text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full mb-3 border ${
-          isCancelled
-            ? "text-rose-700 bg-rose-50 border-rose-200"
-            : "text-emerald-700 bg-emerald-50 border-emerald-200"
-        }`}>
-          {isCancelled ? "Order Cancelled" : "Order Placed Successfully!"}
-        </span>
-
-        <h1 className="text-3xl font-black text-stone-900 mb-2">
-          {isCancelled ? "Order Cancelled" : `Thank You, ${order.name.split(" ")[0]}!`}
-        </h1>
-
-        <p className="text-sm text-stone-600 mb-6">
-          {isCancelled ? (
-            <span>Your order <strong className="text-stone-800 font-mono">{order.id}</strong> has been cancelled.</span>
-          ) : (
-            <span>Your order <strong className="text-orange-600 font-mono">{order.id}</strong> is received and currently simmering in our kitchen.</span>
-          )}
-        </p>
-
-        {/* Cancellation feedback banner */}
-        {cancellationState.message && (
-          <div className="w-full p-3.5 mb-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-semibold">
-            ℹ️ {cancellationState.message}
-          </div>
-        )}
-        {cancellationState.error && (
-          <div className="w-full p-3.5 mb-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
-            ⚠️ {cancellationState.error}
-          </div>
-        )}
-
-        <div className="w-full bg-white border border-stone-200/80 rounded-3xl p-6 mb-6 text-left text-xs space-y-3 shadow-xs">
-          <div className="flex justify-between items-center pb-2 border-b border-stone-100">
-            <span className="text-stone-500 font-medium">Order Status:</span>
-            <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase ${
-              isCancelled ? "bg-rose-100 text-rose-700" : "bg-emerald-100 text-emerald-700"
-            }`}>
-              {isCancelled ? "Cancelled" : "Confirmed"}
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-stone-500 font-medium">Estimated Delivery:</span>
-            <span className="font-bold text-stone-900">{isCancelled ? "N/A" : "25 - 35 Mins"}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-stone-500 font-medium">Delivery Address:</span>
-            <span className="font-bold text-stone-900 text-right max-w-[220px] truncate">{order.address}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-stone-500 font-medium">Payment Method:</span>
-            <span className="font-bold text-stone-900 uppercase">{order.paymentMethod}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-stone-500 font-medium">Total Amount:</span>
-            <span className="font-black text-orange-600 text-sm">${order.total?.toFixed(2)}</span>
-          </div>
-          {order.sessionId && (
-            <div className="flex justify-between text-stone-400 text-[10px] pt-2 border-t border-stone-100">
-              <span>Owner Session:</span>
-              <span className="font-mono truncate max-w-[180px]">{order.sessionId}</span>
-            </div>
-          )}
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
-          {!isCancelled && (
-            <button
-              onClick={() => handleCancelOrder(order.id)}
-              disabled={cancellationState.isCancelling}
-              className="px-5 py-3.5 bg-stone-100 hover:bg-rose-50 text-rose-700 border border-stone-200 hover:border-rose-200 font-bold rounded-2xl transition cursor-pointer text-xs disabled:opacity-50"
-            >
-              {cancellationState.isCancelling ? "Cancelling..." : "Cancel Order 🚫"}
-            </button>
-          )}
-
-          <Link
-            href="/menu"
-            className="px-6 py-3.5 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-2xl shadow-md shadow-orange-600/25 transition text-center text-xs flex items-center justify-center gap-1.5"
-          >
-            Order More Dishes 🍲
-          </Link>
-          <Link
-            href="/"
-            className="px-6 py-3.5 bg-stone-100 text-stone-800 font-bold rounded-2xl hover:bg-stone-200 transition text-center text-xs flex items-center justify-center"
-          >
-            Return to Home
-          </Link>
-        </div>
-      </div>
+      <OrderStatusScreen
+        orderId={formState.order.id}
+        fallbackData={formState.order}
+      />
     );
   }
+
+
 
   // If cart is empty on checkout
   if (cart.length === 0) {
@@ -303,7 +179,7 @@ export default function CheckoutForm({ initialPromo, session }) {
             <h2 className="text-base font-bold text-stone-900 mb-4 flex items-center gap-2">
               <span>💳</span> Payment Option
             </h2>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
                 type="button"
                 onClick={() => setPaymentMethod("telebirr")}

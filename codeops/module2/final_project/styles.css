@@ -1,0 +1,120 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.5;
+}
+header{
+    background-color: #ff6347;
+    color: white;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+}
+.header-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+main{
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+.main-container{
+    margin-bottom: 1.5rem;
+}
+#searchForm{
+    display: flex;
+    gap: 0.5rem;
+    max-width: 90%;
+}
+input[type="text"]{
+    flex: 1;
+    min-width: 0;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 3rem;
+}
+button{
+    padding: 0.5rem 1rem;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.fav{
+    background-color: #b83618;
+}
+.content-layout{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 1.5rem;
+    align-items: start;
+}
+.recipes-section > h2,
+aside > h2{
+    margin-bottom: 1rem;
+}
+.grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+.recipe-card,
+aside{
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+}
+.recipe-card{
+    overflow: hidden;
+}
+.recipe-image{
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+.recipe-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.recipe-details{
+    padding: 1rem;
+}
+.recipe-details h3{
+    margin-bottom: 0.5rem;
+}
+.recipe-details p{
+    margin-bottom: 1rem;
+}
+aside{
+    padding: 1rem;
+}
+#favorites-list{
+    padding-left: 1.25rem;
+}
+footer{
+    margin-top: 2rem;
+    padding: 1rem;
+    text-align: center;
+    background: #e9e9e9;
+}
+@media (max-width: 760px){
+    .content-layout{
+        grid-template-columns: 1fr;
+    }
+}
+
