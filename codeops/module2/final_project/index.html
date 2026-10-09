@@ -3,49 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Recipes</title>
+    <meta name="theme-color" content="#fbf8f2">
+    <meta name="description" content="Find your next favorite meal with easy-to-follow recipes for every occasion.">
+    <title>Gather &amp; Graze — Recipes worth sharing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
+    <header class="site-header">
         <div class="header-container">
-            <h1 id="home-link">Food Recipes</h1>
-            <button class="fav" type="button">Favorites</button>
+            <a class="brand" id="home-link" href="#" aria-label="Gather and Graze home">
+                <span class="brand-mark" aria-hidden="true">g<span>.</span></span>
+                <span>gather<span class="brand-amp">&amp;</span>graze</span>
+            </a>
+            <nav class="header-nav" aria-label="Main navigation">
+                <a href="#recipes-heading">Explore recipes</a>
+                <button class="fav" type="button"><span aria-hidden="true">♡</span> Favorites</button>
+            </nav>
         </div>
     </header>
+
     <main>
-        <div class="main-container">
-            <form id="searchForm">
-                <input
-                    id="searchInput"
-                    type="text"
-                    placeholder="Search for a recipe..."
-                />
-                <button type="submit">Search</button>
-            </form>
-            <p id="search-results" aria-live="polite"></p>
-        </div>
+        <section class="hero" aria-labelledby="hero-heading">
+            <div class="hero-copy">
+                <p class="eyebrow"><span></span> GOOD FOOD, GOOD MOOD</p>
+                <h1 id="hero-heading">A little inspiration<br>for your <em>next meal.</em></h1>
+                <p class="hero-description">Find something delicious, make it your own, and bring everyone to the table.</p>
+                <form id="searchForm" role="search">
+                    <label class="sr-only" for="searchInput">Search recipes, ingredients, and cuisines</label>
+                    <span class="search-icon" aria-hidden="true">⌕</span>
+                    <input id="searchInput" type="search" placeholder="Try “pasta”, “quick”, or “vegetarian”" autocomplete="off">
+                    <button type="submit">Find a recipe <span aria-hidden="true">→</span></button>
+                </form>
+                <p id="search-results" aria-live="polite"></p>
+                <div class="hero-note"><span aria-hidden="true">✳</span> Fresh ideas for everyday cooking</div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="hero-image"></div>
+                <div class="hero-sticker">made<br>with <span>love</span> <b>♥</b></div>
+                <div class="hero-caption"><span>01 / 04</span><span>Something lovely is cooking</span></div>
+            </div>
+        </section>
 
-        <div class="content-layout">
-            <section class="recipes-section" aria-labelledby="recipes-heading">
-                <h2 id="recipes-heading">Main Recipes</h2>
-                <div class="grid" id="recipe-grid">
-                    <!-- Recipe cards will be dynamically added here -->                        
+        <section class="recipes-section" aria-labelledby="recipes-heading">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">A GOOD PLACE TO START</p>
+                    <h2 id="recipes-heading">Recipes to fall for<span>.</span></h2>
+                    <p class="section-subtitle">Keep it simple or try something new. There’s a plate for every plan.</p>
                 </div>
-            </section>
+                <span id="recipe-count" class="recipe-count" aria-live="polite"></span>
+            </div>
 
-            <aside>
-                <h2>Favorites</h2>
-                <ul id="favorites-list">
-                    <!-- Favorite recipes will be dynamically added here -->
-                </ul>
-            </aside>
-        </div>
+            <div class="filter-bar" aria-label="Recipe filters">
+                <label class="filter-select">
+                    <span class="sr-only">Filter by cuisine</span>
+                    <select id="cuisineFilter"><option value="">All cuisines</option></select>
+                    <span aria-hidden="true">⌄</span>
+                </label>
+                <label class="filter-select">
+                    <span class="sr-only">Sort recipes</span>
+                    <select id="sortSelect">
+                        <option value="popular">Most loved</option>
+                        <option value="rating">Highest rated</option>
+                        <option value="quickest">Quickest</option>
+                        <option value="name">A to Z</option>
+                    </select>
+                    <span aria-hidden="true">⌄</span>
+                </label>
+            </div>
+
+            <div class="grid" id="recipe-grid" aria-live="polite"></div>
+        </section>
+
+        <section class="favorites-section" id="favorites-section" aria-labelledby="favorites-heading">
+            <div class="favorites-intro">
+                <p class="eyebrow">YOUR LITTLE COLLECTION</p>
+                <h2 id="favorites-heading">Saved with love<span>.</span></h2>
+                <p>Keep your favorite recipes close for the next time inspiration strikes.</p>
+            </div>
+            <ul id="favorites-list" aria-live="polite"></ul>
+        </section>
     </main>
+
     <footer>
-        <p>&copy; 2023 Food Recipes. All rights reserved.</p>
+        <a class="brand footer-brand" href="#home-link"><span class="brand-mark">g<span>.</span></span><span>gather<span class="brand-amp">&amp;</span>graze</span></a>
+        <p>Made for the love of good food. <span aria-hidden="true">♥</span></p>
+        <a href="#home-link">Back to top ↑</a>
     </footer>
-    
-    <script src="script.js"></script>
+
+    <dialog id="recipe-dialog" aria-labelledby="dialog-title">
+        <div id="recipe-dialog-content"></div>
+    </dialog>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>
