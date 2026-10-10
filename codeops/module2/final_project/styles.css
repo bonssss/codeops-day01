@@ -232,7 +232,17 @@ main { width: min(1160px, calc(100% - 64px)); margin: auto; }
     cursor: pointer;
     font-size: 11px;
 }
-.filter-select > span:last-child { position: absolute; top: 7px; right: 12px; color: #7e8176; pointer-events: none; }
+.filter-select > .select-chevron {
+    position: absolute;
+    top: 13px;
+    right: 14px;
+    width: 7px;
+    height: 7px;
+    border-right: 1.5px solid #7e8176;
+    border-bottom: 1.5px solid #7e8176;
+    transform: rotate(45deg);
+    pointer-events: none;
+}
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .recipe-card {
     overflow: hidden;
