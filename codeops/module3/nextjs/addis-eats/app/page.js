@@ -1,6 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 
+export const metadata = {
+  title: "Authentic Ethiopian Food Delivery in Addis Ababa",
+  description:
+    "Order handcrafted Doro Wat, sizzling beef Tibs, rich Shiro, and organic vegetarian combos delivered hot to your door in Addis Ababa in under 35 minutes.",
+};
+
 export default function Home() {
   const highlights = [
     {

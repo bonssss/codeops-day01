@@ -3,8 +3,9 @@ import OrderStatusScreen from "./OrderStatusScreen";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Order Status | Addis Eats",
-  description: "Track your food delivery order in real-time."
+  title: "Track Your Order Live",
+  description:
+    "Follow your Addis Eats food order live from kitchen simmering to packaging and doorstep delivery across Addis Ababa.",
 };
 
 /**

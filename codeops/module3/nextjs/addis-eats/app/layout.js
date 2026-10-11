@@ -13,9 +13,23 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata = {
-  title: "Addis Eats | Authentic Ethiopian Food Delivery",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "https://addiseats.com"
+  ),
+  title: {
+    default: "Addis Eats | Authentic Ethiopian Food Delivery",
+    template: "%s | Addis Eats",
+  },
   description:
     "Experience the rich and authentic flavors of Ethiopian cuisine delivered right to your door in Addis Ababa.",
+  openGraph: {
+    title: "Addis Eats | Authentic Ethiopian Food Delivery",
+    description:
+      "Experience the rich and authentic flavors of Ethiopian cuisine delivered right to your door in Addis Ababa.",
+    siteName: "Addis Eats",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }) {

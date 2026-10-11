@@ -5,6 +5,12 @@ import Link from "next/link";
 
 export const revalidate = 60;
 
+export const metadata = {
+  title: "Explore Our Ethiopian Menu",
+  description:
+    "Discover authentic Addis Ababa dishes prepared with traditional spices, from fiery berbere stews to fresh vegetarian fasting plates served with injera.",
+};
+
 function DishListSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mx-auto my-6 animate-pulse">
