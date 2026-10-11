@@ -1,5 +1,7 @@
 "use client";
 
+import { etb } from "@/lib/format";
+
 export default function RevenueBarChart({ dailyData = [], currency = "ETB" }) {
   if (!dailyData || dailyData.length === 0) {
     return (
@@ -79,7 +81,7 @@ export default function RevenueBarChart({ dailyData = [], currency = "ETB" }) {
                   fontWeight="600"
                   fontFamily="sans-serif"
                 >
-                  {tickVal.toLocaleString()} {currency}
+                  {etb(tickVal)}
                 </text>
               </g>
             );
@@ -125,7 +127,7 @@ export default function RevenueBarChart({ dailyData = [], currency = "ETB" }) {
                   fontWeight="700"
                   className="opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                  {item.revenue.toLocaleString()} {currency}
+                  {etb(item.revenue)}
                 </text>
                 {/* X-axis Day label */}
                 <text
