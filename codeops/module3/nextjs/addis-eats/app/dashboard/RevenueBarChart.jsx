@@ -106,7 +106,13 @@ export default function RevenueBarChart({ dailyData = [], currency = "ETB" }) {
             const barY = chartHeight - paddingBottom - barH;
 
             return (
-              <g key={item.date} className="group cursor-pointer">
+              <g
+                key={item.date}
+                tabIndex={0}
+                role="graphics-symbol"
+                aria-label={`${item.label}: ${etb(item.revenue)}`}
+                className="group cursor-pointer focus:outline-hidden"
+              >
                 {/* Bar */}
                 <rect
                   x={barX}
@@ -115,9 +121,9 @@ export default function RevenueBarChart({ dailyData = [], currency = "ETB" }) {
                   height={barH}
                   rx="4"
                   fill="url(#orangeGradient)"
-                  className="transition-all duration-200 hover:brightness-110"
+                  className="transition-all duration-200 hover:brightness-110 group-focus-visible:stroke-2 group-focus-visible:stroke-orange-600"
                 />
-                {/* Hover value label */}
+                {/* Value label - visible on hover AND on keyboard focus */}
                 <text
                   x={xCenter}
                   y={barY - 5}
@@ -125,7 +131,7 @@ export default function RevenueBarChart({ dailyData = [], currency = "ETB" }) {
                   fill="#EA580C"
                   fontSize="9"
                   fontWeight="700"
-                  className="opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity"
                 >
                   {etb(item.revenue)}
                 </text>

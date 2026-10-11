@@ -37,7 +37,7 @@ export default function CategoryBar() {
             <button
               key={cat.name}
               onClick={() => handleSelect(cat.value)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-bold transition-all duration-200 cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-full text-sm font-bold transition-all duration-200 cursor-pointer ${
                 isActive
                   ? "bg-orange-600 text-white shadow-md shadow-orange-600/25 scale-105"
                   : "bg-white text-stone-700 border border-stone-200/80 hover:bg-orange-50 hover:border-orange-300 hover:text-orange-700 shadow-2xs"

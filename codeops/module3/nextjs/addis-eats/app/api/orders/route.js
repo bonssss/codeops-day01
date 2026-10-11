@@ -17,6 +17,30 @@ export async function POST(request) {
     );
   }
 
+  // Idempotency guard: Double tap returns the existing order (handles in-flight concurrent requests)
+  globalThis.__idempotencyStore = globalThis.__idempotencyStore || new Map();
+  const idempotencyKey = body.idempotencyKey || request.headers.get("x-idempotency-key");
+  let resolvePending;
+
+  if (idempotencyKey) {
+    if (globalThis.__idempotencyStore.has(idempotencyKey)) {
+      const existing = await globalThis.__idempotencyStore.get(idempotencyKey);
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Order placed successfully (idempotent replay)",
+          order: existing
+        },
+        { status: 200 }
+      );
+    }
+    // Set in-flight lock promise for parallel requests
+    const inFlightPromise = new Promise((resolve) => {
+      resolvePending = resolve;
+    });
+    globalThis.__idempotencyStore.set(idempotencyKey, inFlightPromise);
+  }
+
   const result = orderSchema.safeParse(body);
 
   if (!result.success) {
@@ -52,6 +76,13 @@ export async function POST(request) {
     },
     sessionId
   );
+
+  if (idempotencyKey) {
+    globalThis.__idempotencyStore.set(idempotencyKey, newOrder);
+    if (resolvePending) {
+      resolvePending(newOrder);
+    }
+  }
 
   return NextResponse.json(
     {

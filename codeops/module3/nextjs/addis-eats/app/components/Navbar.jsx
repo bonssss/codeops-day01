@@ -16,6 +16,18 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }
 
+  // Requirement 2: Close on Escape key
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Menu", href: "/menu" },
@@ -27,7 +39,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 backdrop-blur-md bg-white/95 border-b border-stone-200/70 shadow-2xs transition-colors">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2 group shrink-0">
+        <Link href="/" className="flex items-center gap-2 group shrink-0 min-h-[44px]">
           <span className="text-2xl transform group-hover:scale-110 transition-transform">
             🍲
           </span>
@@ -49,7 +61,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`px-3.5 py-1.5 text-sm font-semibold rounded-xl transition ${
+                className={`px-3.5 py-2 min-h-[44px] flex items-center text-sm font-semibold rounded-xl transition ${
                   isActive
                     ? "text-orange-600 bg-orange-50 font-bold"
                     : "text-stone-600 hover:text-orange-600 hover:bg-orange-50/80"
@@ -62,13 +74,13 @@ export default function Navbar() {
           <NavbarCartBadge />
         </nav>
 
-        {/* Mobile Header Actions: Cart Badge + Hamburger Toggle */}
+        {/* Mobile Header Actions: Cart Badge + Hamburger Toggle (44px min touch target) */}
         <div className="flex md:hidden items-center gap-2">
           <NavbarCartBadge />
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-stone-700 hover:text-orange-600 hover:bg-stone-100 transition focus:outline-none"
+            className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl text-stone-700 hover:text-orange-600 hover:bg-stone-100 transition flex items-center justify-center cursor-pointer"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >

@@ -12,6 +12,19 @@ import { createOrderRecord, cancelOrderRecord, getOrderById } from "@/lib/data";
  */
 export async function placeOrderAction(prevState, formData) {
   try {
+    // Idempotency check: Confirm a double tap places exactly one order
+    globalThis.__idempotencyStore = globalThis.__idempotencyStore || new Map();
+    const idempotencyKey = formData.get("idempotencyKey");
+    if (idempotencyKey && globalThis.__idempotencyStore.has(idempotencyKey)) {
+      const existing = globalThis.__idempotencyStore.get(idempotencyKey);
+      return {
+        success: true,
+        order: existing,
+        fieldErrors: null,
+        error: null,
+      };
+    }
+
     const rawItems = formData.get("items");
     let items = [];
     try {
@@ -68,6 +81,10 @@ export async function placeOrderAction(prevState, formData) {
       },
       sessionId
     );
+
+    if (idempotencyKey) {
+      globalThis.__idempotencyStore.set(idempotencyKey, newOrder);
+    }
 
     // Revalidate paths after successful write (Exercise 6)
     revalidatePath("/checkout");
