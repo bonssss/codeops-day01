@@ -11,6 +11,28 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const dish = getDishById(id);
+
+  if (!dish) {
+    return {
+      title: "Dish Not Found",
+      description: "The requested Ethiopian dish could not be found.",
+    };
+  }
+
+  return {
+    title: `${dish.name} (${dish.formattedPrice})`,
+    description: dish.description,
+    openGraph: {
+      title: `${dish.name} - ${dish.formattedPrice} | Addis Eats`,
+      description: dish.description,
+      type: "article",
+    },
+  };
+}
+
 export default async function MenuItemPage({ params }) {
   const { id } = await params;
   const dish = getDishById(id);
@@ -27,8 +49,35 @@ export default async function MenuItemPage({ params }) {
     category: dish.category
   };
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "MenuItem",
+    name: dish.name,
+    description: dish.description,
+    image: `https://addiseats.com${dish.image || "/images/doro-wat.svg"}`,
+    offers: {
+      "@type": "Offer",
+      price: String(dish.price),
+      priceCurrency: "USD"
+    },
+    suitableForDiet:
+      dish.category === "Vegetarian"
+        ? "https://schema.org/VegetarianDiet"
+        : undefined,
+    menuAddOn: dish.ingredients?.map((ing) => ({
+      "@type": "MenuItem",
+      name: ing
+    }))
+  };
+
   return (
     <div className="flex flex-col flex-1 px-4 sm:px-6 lg:px-8 py-10 max-w-4xl mx-auto w-full">
+      {/* Schema.org MenuItem JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-2 text-xs font-semibold text-stone-500 mb-6">
         <Link href="/" className="hover:text-orange-600 transition">Home</Link>
