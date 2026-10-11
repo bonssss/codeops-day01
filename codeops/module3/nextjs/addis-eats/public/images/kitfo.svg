@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="kitfo-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#312e81" />
+      <stop offset="100%" stop-color="#09090b" />
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#kitfo-bg)" />
+  <circle cx="300" cy="200" r="160" fill="#27272a" stroke="#6366f1" stroke-width="2" />
+  <circle cx="300" cy="200" r="145" fill="#e7dcce" />
+  <circle cx="270" cy="200" r="80" fill="#991b1b" stroke="#7f1d1d" stroke-width="3" />
+  <circle cx="270" cy="195" r="65" fill="#b91c1c" opacity="0.9" />
+  <ellipse cx="265" cy="190" rx="40" ry="25" fill="#fbbf24" opacity="0.45" />
+  <circle cx="250" cy="185" r="2" fill="#f87171" />
+  <circle cx="275" cy="195" r="2" fill="#f87171" />
+  <circle cx="285" cy="180" r="2.5" fill="#f87171" />
+  <circle cx="370" cy="165" r="35" fill="#ffffff" stroke="#e4e4e7" stroke-width="2" />
+  <circle cx="365" cy="160" r="20" fill="#f4f4f5" />
+  <circle cx="365" cy="240" r="35" fill="#14532d" stroke="#166534" stroke-width="2" />
+  <circle cx="360" cy="235" r="22" fill="#15803d" />
+</svg>

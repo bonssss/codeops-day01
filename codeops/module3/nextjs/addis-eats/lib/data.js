@@ -11,6 +11,7 @@ export const dishes = [
     time: "30-40 min",
     servings: "1-2 People",
     emoji: "🍗",
+    image: "/images/doro-wat.svg",
     ingredients: [
       "Free-range Chicken",
       "Ethiopian Berbere",
@@ -30,6 +31,7 @@ export const dishes = [
     time: "20-25 min",
     servings: "1 Person",
     emoji: "🍲",
+    image: "/images/shiro-wat.svg",
     ingredients: [
       "Roasted Chickpea Flour",
       "Garlic & Ginger",
@@ -49,6 +51,7 @@ export const dishes = [
     time: "25 min",
     servings: "1-2 People",
     emoji: "🥩",
+    image: "/images/beef-tibs.svg",
     ingredients: [
       "Prime Beef Tenderloin",
       "Fresh Rosemary",
@@ -68,6 +71,7 @@ export const dishes = [
     time: "15 min",
     servings: "1 Person",
     emoji: "🥘",
+    image: "/images/kitfo.svg",
     ingredients: [
       "Minced Lean Beef",
       "Clarified Spiced Butter (Niter Kibbeh)",
@@ -87,6 +91,7 @@ export const dishes = [
     time: "25 min",
     servings: "1 Person",
     emoji: "🥣",
+    image: "/images/misir-wot.svg",
     ingredients: [
       "Organic Red Lentils",
       "Ethiopian Berbere",
