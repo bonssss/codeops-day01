@@ -15,8 +15,9 @@ export const metadata = {
  */
 export default async function OrderStatusIndexPage({ searchParams }) {
   const resolvedSearchParams = await searchParams;
-  const orderId = resolvedSearchParams?.id || "AE-10001";
-  const initialOrder = getOrderById(orderId) || getOrders()[0] || null;
+  const firstOrder = getOrders()[0];
+  const orderId = resolvedSearchParams?.id || firstOrder?.id || "AE-10025";
+  const initialOrder = getOrderById(orderId) || firstOrder || null;
 
   return (
     <div className="flex flex-col flex-1">

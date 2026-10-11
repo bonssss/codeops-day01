@@ -119,7 +119,7 @@ const initialOrdersSeed = [
   { id: "AE-10014", name: "Ermias Negash", address: "Gotera, Condominium Gate 2", phone: "+251 94 567 8904", paymentMethod: "telebirr", items: [{ id: 4, name: "Kitfo Special", quantity: 1, price: 850 }, { id: 1, name: "Doro Wat", quantity: 1, price: 650 }], deliveryFee: 50, total: 1550, status: "delivered", createdAt: "2026-10-07T20:10:00.000Z" },
   { id: "AE-10013", name: "Rahel Mengistu", address: "Summit, Fiyel Bet", phone: "+251 95 678 9015", paymentMethod: "cash", items: [{ id: 5, name: "Misir Wot", quantity: 2, price: 400 }], deliveryFee: 50, total: 850, status: "delivered", createdAt: "2026-10-07T12:35:00.000Z" },
   { id: "AE-10012", name: "Biniyam Tesfaye", address: "Bole Atlas, Desalegn Hotel", phone: "+251 96 789 0126", paymentMethod: "telebirr", items: [{ id: 1, name: "Doro Wat", quantity: 2, price: 650 }], deliveryFee: 50, total: 1350, status: "delivered", createdAt: "2026-10-06T19:00:00.000Z" },
-  { id: "AE-10011", name: "Tigist Hailu", address: "Lideta, Balcha Hospital Area", phone: "+251 97 890 1237", paymentMethod: "cbe_birr", items: [{ id: 3, name: "Special Beef Tibs", quantity: 2, price: 750 }], deliveryFee: 50, total: 1550, status: "delivered", createdAt: "2026-10-06T13:15:00.000Z" },
+  { id: "AE-10011", name: 'Tigist "Tigi" Hailu', address: 'Lideta, Near "Balcha" Hospital Area', phone: "+251 97 890 1237", paymentMethod: "cbe_birr", items: [{ id: 3, name: 'Special "Chef\'s" Beef Tibs', quantity: 2, price: 750 }], deliveryFee: 50, total: 1550, status: "delivered", createdAt: "2026-10-06T13:15:00.000Z" },
   { id: "AE-10010", name: "Henok Berhanu", address: "Goro, Sefera Square", phone: "+251 98 901 2348", paymentMethod: "telebirr", items: [{ id: 2, name: "Shiro Wat", quantity: 1, price: 350 }, { id: 4, name: "Kitfo Special", quantity: 1, price: 850 }], deliveryFee: 50, total: 1250, status: "delivered", createdAt: "2026-10-05T18:40:00.000Z" },
   { id: "AE-10009", name: "Liya Seyoum", address: "Bole Rwanda, Embassy St", phone: "+251 91 345 6789", paymentMethod: "cash", items: [{ id: 1, name: "Doro Wat", quantity: 1, price: 650 }], deliveryFee: 50, total: 700, status: "delivered", createdAt: "2026-10-04T19:30:00.000Z" },
   { id: "AE-10008", name: "Natnael Fikru", address: "Arat Kilo, University Gate", phone: "+251 92 456 7891", paymentMethod: "telebirr", items: [{ id: 3, name: "Special Beef Tibs", quantity: 2, price: 750 }, { id: 5, name: "Misir Wot", quantity: 1, price: 400 }], deliveryFee: 50, total: 1950, status: "delivered", createdAt: "2026-10-03T18:15:00.000Z" },
@@ -128,9 +128,10 @@ const initialOrdersSeed = [
 ];
 
 // Global in-memory order store (simulated DB across requests)
-if (!globalThis.__ordersStore || globalThis.__ordersStore.length < initialOrdersSeed.length) {
-  globalThis.__ordersStore = [...initialOrdersSeed];
-}
+globalThis.__ordersStore = initialOrdersSeed.map((seedOrder) => {
+  const existing = (globalThis.__ordersStore || []).find((o) => o.id === seedOrder.id);
+  return existing ? { ...existing, ...seedOrder } : seedOrder;
+});
 
 export function getDishes() {
   return dishes;

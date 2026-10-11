@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { etb, when } from "@/lib/format";
 
 export default function OrderTable({
   orders = [],
@@ -40,11 +41,25 @@ export default function OrderTable({
             Interactive table with server-side sorting, pagination, and real semantic markup.
           </p>
         </div>
-        <div className="text-xs text-stone-500 flex items-center gap-1.5">
-          <span>Active Sort:</span>
-          <span className="font-semibold text-stone-800 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">
-            {sortBy} ({sortOrder})
-          </span>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="text-xs text-stone-500 flex items-center gap-1.5">
+            <span>Active Sort:</span>
+            <span className="font-semibold text-stone-800 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">
+              {sortBy} ({sortOrder})
+            </span>
+          </div>
+
+          {/* Requirement 7: CSV export button */}
+          <a
+            href="/api/orders/export"
+            download="addis-eats-orders.csv"
+            id="export-csv-btn"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-stone-900 rounded-lg hover:bg-orange-600 shadow-2xs transition"
+            title="Download full orders dataset as RFC 4180 compliant CSV"
+          >
+            <span>📥</span>
+            <span>Export CSV</span>
+          </a>
         </div>
       </div>
 
@@ -218,7 +233,7 @@ export default function OrderTable({
                     </td>
 
                     <td className="px-4 py-3 text-xs text-stone-500 whitespace-nowrap">
-                      {dateStr}
+                      {when(order.createdAt)}
                     </td>
 
                     <td className="px-4 py-3 text-xs text-stone-600 max-w-xs truncate" title={itemsLabel}>
@@ -238,7 +253,7 @@ export default function OrderTable({
                       className="px-4 py-3 text-right font-mono font-bold text-stone-900 whitespace-nowrap"
                       style={{ textAlign: "right" }}
                     >
-                      {Number(order.total).toLocaleString()} ETB
+                      {etb(order.total)}
                     </td>
                   </tr>
                 );

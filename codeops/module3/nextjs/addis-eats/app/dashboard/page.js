@@ -1,4 +1,5 @@
 import { getOrdersSummary, getPaginatedOrders } from "@/lib/data";
+import { etb } from "@/lib/format";
 import RevenueBarChart from "./RevenueBarChart";
 import OrdersLineChart from "./OrdersLineChart";
 import ChartDataTable from "./ChartDataTable";
@@ -162,7 +163,7 @@ export default async function DashboardPage(props) {
                   Total Gross Revenue
                 </span>
                 <div className="text-2xl sm:text-3xl font-black text-stone-900 mt-1 font-mono">
-                  {summary.totalRevenue.toLocaleString()} {summary.currency}
+                  {etb(summary.totalRevenue)}
                 </div>
                 <div className="text-xs text-emerald-600 font-medium mt-1">
                   100% Ethiopian Birr (ETB)
@@ -186,7 +187,7 @@ export default async function DashboardPage(props) {
                   Average Order Value
                 </span>
                 <div className="text-2xl sm:text-3xl font-black text-amber-600 mt-1 font-mono">
-                  {summary.averageOrderValue.toLocaleString()} {summary.currency}
+                  {etb(summary.averageOrderValue)}
                 </div>
                 <div className="text-xs text-stone-500 font-medium mt-1">
                   Per customer transaction

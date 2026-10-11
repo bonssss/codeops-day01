@@ -1,3 +1,5 @@
+import { etb } from "@/lib/format";
+
 export default function ChartDataTable({
   dailyData = [],
   currency = "ETB",
@@ -62,7 +64,7 @@ export default function ChartDataTable({
                   {row.count}
                 </td>
                 <td className="px-4 py-2.5 text-right font-mono font-semibold text-stone-900">
-                  {row.revenue.toLocaleString()} {currency}
+                  {etb(row.revenue)}
                 </td>
               </tr>
             ))}
@@ -76,7 +78,7 @@ export default function ChartDataTable({
                 {totalOrders}
               </td>
               <td className="px-4 py-3 text-right font-mono text-orange-600">
-                {totalRevenue.toLocaleString()} {currency}
+                {etb(totalRevenue)}
               </td>
             </tr>
           </tfoot>
