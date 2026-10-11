@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "../context/CartContext";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -227,21 +228,31 @@ export default function DishList() {
               className="group flex flex-col justify-between bg-white border border-stone-200/80 rounded-3xl p-6 shadow-xs hover:shadow-lg hover:border-orange-300 transition-all duration-300 transform hover:-translate-y-1"
             >
               <div>
+                {/* Dish Visual with real dimensions and honest sizes attribute */}
+                <div className="relative w-full h-44 sm:h-48 rounded-2xl overflow-hidden mb-4 bg-stone-100 border border-stone-100">
+                  <Image
+                    src={dish.image || "/images/doro-wat.svg"}
+                    alt={dish.name}
+                    width={600}
+                    height={400}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span className="absolute top-3 left-3 text-2xl p-2 bg-white/90 backdrop-blur-xs rounded-xl shadow-xs">
+                    {dish.emoji}
+                  </span>
+                  <span className="absolute top-3 right-3 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-xs text-stone-700 shadow-xs">
+                    {dish.category}
+                  </span>
+                </div>
+
                 <div className="flex items-start justify-between gap-4 mb-3">
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl p-3 bg-orange-50 border border-orange-100 rounded-2xl">
-                      {dish.emoji}
-                    </span>
-                    <div>
-                      <span className="text-[11px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-600">
-                        {dish.category}
-                      </span>
-                      <h3 className="text-xl font-bold text-stone-900 mt-1 group-hover:text-orange-600 transition">
-                        {dish.name}
-                      </h3>
-                    </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-stone-900 group-hover:text-orange-600 transition">
+                      {dish.name}
+                    </h3>
                   </div>
-                  <span className="text-lg font-black text-orange-600 bg-orange-50 px-3 py-1 rounded-2xl border border-orange-100">
+                  <span className="text-lg font-black text-orange-600 bg-orange-50 px-3 py-1 rounded-2xl border border-orange-100 shrink-0">
                     {dish.formattedPrice}
                   </span>
                 </div>

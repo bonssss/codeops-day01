@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="sh-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#431407" />
+      <stop offset="100%" stop-color="#18181b" />
+    </radialGradient>
+    <radialGradient id="shiro-simmer" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="60%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#92400e" />
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#sh-bg)" />
+  <circle cx="300" cy="200" r="165" fill="#451a03" stroke="#78350f" stroke-width="5" />
+  <circle cx="300" cy="200" r="148" fill="url(#shiro-simmer)" />
+  <circle cx="270" cy="180" r="14" fill="#f59e0b" stroke="#d97706" stroke-width="2" />
+  <circle cx="330" cy="210" r="16" fill="#f59e0b" stroke="#d97706" stroke-width="2" />
+  <circle cx="290" cy="230" r="11" fill="#f59e0b" stroke="#d97706" stroke-width="2" />
+  <circle cx="340" cy="170" r="9" fill="#f59e0b" />
+  <circle cx="300" cy="195" r="15" fill="#16a34a" stroke="#15803d" stroke-width="2" />
+  <circle cx="300" cy="195" r="6" fill="#bbf7d0" />
+  <ellipse cx="275" cy="190" rx="22" ry="12" fill="#fde047" opacity="0.6" />
+</svg>

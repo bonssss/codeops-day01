@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import AddToCartButton from "./AddToCartButton";
 import { getDishes, getDishById } from "@/lib/data";
@@ -39,11 +40,24 @@ export default async function MenuItemPage({ params }) {
 
       {/* Main Detail Card */}
       <div className="bg-white border border-stone-200/80 rounded-3xl p-6 sm:p-10 shadow-lg">
+        {/* Dish Hero Image with real dimensions, honest sizes, and route-specific priority */}
+        <div className="relative w-full h-64 sm:h-80 rounded-3xl overflow-hidden mb-8 bg-stone-100 border border-stone-100 shadow-sm">
+          <Image
+            src={dish.image || "/images/doro-wat.svg"}
+            alt={dish.name}
+            width={800}
+            height={500}
+            sizes="(max-width: 768px) 100vw, 768px"
+            priority
+            className="w-full h-full object-cover"
+          />
+          <span className="absolute top-4 left-4 text-3xl p-3 bg-white/95 backdrop-blur-xs rounded-2xl shadow-sm">
+            {dish.emoji}
+          </span>
+        </div>
+
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-stone-100">
           <div className="flex items-center gap-4">
-            <span className="text-5xl sm:text-6xl p-4 bg-orange-50 border border-orange-100 rounded-3xl shadow-2xs">
-              {dish.emoji}
-            </span>
             <div>
               <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-800">
                 {dish.category}

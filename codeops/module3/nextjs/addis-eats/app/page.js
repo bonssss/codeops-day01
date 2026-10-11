@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   const highlights = [
@@ -59,6 +60,19 @@ export default function Home() {
               <span>🛒</span>
               <span>View Shopping Cart</span>
             </Link>
+          </div>
+
+          {/* Hero Ethiopian Feast Visual (Largest Above-the-Fold Image with priority) */}
+          <div className="relative w-full max-w-3xl mx-auto mt-12 rounded-3xl overflow-hidden shadow-xl border border-stone-200/80 bg-stone-900 group">
+            <Image
+              src="/images/hero-feast.svg"
+              alt="Authentic Addis Ababa Ethiopian Feast"
+              width={1200}
+              height={800}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 768px"
+              priority
+              className="w-full h-auto object-cover group-hover:scale-102 transition-transform duration-500"
+            />
           </div>
         </div>
       </section>

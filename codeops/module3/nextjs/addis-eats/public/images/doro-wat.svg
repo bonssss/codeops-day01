@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="dw-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#450a0a" />
+      <stop offset="100%" stop-color="#18181b" />
+    </radialGradient>
+    <radialGradient id="sauce" cx="45%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#b91c1c" />
+      <stop offset="70%" stop-color="#7f1d1d" />
+      <stop offset="100%" stop-color="#450a0a" />
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#dw-bg)" />
+  <circle cx="300" cy="200" r="160" fill="#27272a" stroke="#ea580c" stroke-width="3" />
+  <circle cx="300" cy="200" r="145" fill="url(#sauce)" />
+  <path d="M230 190 Q270 140 330 170 Q370 200 340 230 Q280 250 230 190 Z" fill="#991b1b" stroke="#7f1d1d" stroke-width="3" />
+  <rect x="340" y="200" width="45" height="16" rx="8" fill="#fef3c7" stroke="#fde047" stroke-width="1.5" transform="rotate(35 340 200)" />
+  <circle cx="380" cy="230" r="9" fill="#fef3c7" />
+  <circle cx="370" cy="240" r="9" fill="#fef3c7" />
+  <ellipse cx="250" cy="240" rx="28" ry="34" fill="#ffffff" stroke="#fef08a" stroke-width="2" />
+  <circle cx="250" cy="240" r="16" fill="#eab308" />
+  <circle cx="280" cy="170" r="3" fill="#22c55e" />
+  <circle cx="310" cy="220" r="2.5" fill="#22c55e" />
+  <circle cx="270" cy="210" r="3" fill="#ef4444" />
+</svg>

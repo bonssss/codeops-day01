@@ -1,7 +1,16 @@
 import Link from "next/link";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { CartProvider } from "./context/CartContext";
 import Navbar from "./components/Navbar";
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 export const metadata = {
   title: "Addis Eats | Authentic Ethiopian Food Delivery",
@@ -11,9 +20,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="h-full bg-[#faf8f5]" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`h-full bg-[#faf8f5] ${plusJakartaSans.variable}`}
+      suppressHydrationWarning
+    >
       <body
-        className="min-h-screen flex flex-col bg-[#faf8f5] text-stone-800 antialiased selection:bg-orange-500 selection:text-white"
+        className={`min-h-screen flex flex-col bg-[#faf8f5] text-stone-800 antialiased font-sans selection:bg-orange-500 selection:text-white`}
         suppressHydrationWarning
       >
         <CartProvider>
@@ -52,7 +65,23 @@ export default function RootLayout({ children }) {
             </div>
           </footer>
         </CartProvider>
+
+        {/* Third-party Analytics / Telemetry loaded via next/script with lazy strategy */}
+        <Script
+          id="addis-analytics-telemetry"
+          strategy="lazyOnload"
+          src="https://www.googletagmanager.com/gtag/js?id=G-ADDIS12345"
+        />
+        <Script id="addis-analytics-config" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-ADDIS12345', { page_path: window.location.pathname });
+          `}
+        </Script>
       </body>
     </html>
+
   );
 }
