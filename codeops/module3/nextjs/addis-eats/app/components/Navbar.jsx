@@ -20,6 +20,7 @@ export default function Navbar() {
     { name: "Home", href: "/" },
     { name: "Menu", href: "/menu" },
     { name: "Track Order", href: "/order-status" },
+    { name: "Analytics", href: "/dashboard" },
   ];
 
   return (
