@@ -4,7 +4,9 @@
 
 const STORAGE_KEYS = {
   FAVORITES: 'skillhub_favorites_v1',
-  THEME: 'skillhub_theme_v1'
+  THEME: 'skillhub_theme_v1',
+  PROGRESS: 'skillhub_progress_v1',
+  LAST_ACTIVE: 'skillhub_last_active_v1'
 };
 
 export const getStoredItem = (key, defaultValue = null) => {

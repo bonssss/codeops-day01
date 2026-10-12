@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { LayoutGrid, List, Sparkles } from 'lucide-react';
+import { useSearchParams, Link } from 'react-router-dom';
+import { LayoutGrid, List, Sparkles, Compass, ArrowRight } from 'lucide-react';
 import SearchBar from '../components/SearchBar';
 import FilterBar from '../components/FilterBar';
 import ResourceGrid from '../components/ResourceGrid';
@@ -149,16 +149,12 @@ const Explore = () => {
 
   return (
     <div className="container" style={{ paddingTop: '2rem' }}>
-      <div style={{ marginBottom: '2.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary-light)', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
-          <Sparkles size={16} />
-          <span>Curated Tech Catalog</span>
-        </div>
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>
-          Explore Learning Resources
+      <div style={{ marginBottom: '1.75rem' }}>
+        <h1 style={{ fontSize: '2.25rem', marginBottom: '0.4rem', fontWeight: 800 }}>
+          Free Library
         </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '680px' }}>
-          Search and filter across courses, tutorials, documentations, and books to find the perfect learning material.
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.98rem', margin: 0 }}>
+          Verified documentation, courses, and tutorials across modern tech stacks.
         </p>
       </div>
 

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import {
+  Compass,
   Search,
-  Grid,
   Heart,
+  Trophy,
   Menu,
   X,
   Sun,
@@ -11,11 +12,13 @@ import {
 } from 'lucide-react';
 import { useFavorites } from '../context/FavoritesContext';
 import { useTheme } from '../context/ThemeContext';
+import { useProgress } from '../hooks/useProgress';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { favoritesCount } = useFavorites();
-  const { theme, toggleTheme, isDark } = useTheme();
+  const { toggleTheme, isDark } = useTheme();
+  const { overallStats } = useProgress();
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -26,42 +29,52 @@ const Navbar = () => {
           {/* Brand Logo */}
           <Link to="/" className="brand-logo" onClick={closeMobileMenu}>
             <div className="brand-badge-box">S</div>
-            <span>SkillHub</span>
+            <div className="brand-text-group">
+              <span className="brand-name">skiilhub</span>
+              <span className="brand-free-pill">100% Free</span>
+            </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links - Clean, uncluttered essential links */}
           <nav>
             <ul className="nav-links">
               <li>
-                <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                  Overview
+                <NavLink to="/roadmaps" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                  <Compass size={15} />
+                  <span>Roadmaps</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/explore" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
                   <Search size={14} />
-                  Explore
+                  <span>Library</span>
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/categories" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                  <Grid size={14} />
-                  Categories
+                <NavLink to="/tracker" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                  <Trophy size={15} />
+                  <span>Tracker</span>
+                  {overallStats.completedTopicsCount > 0 && (
+                    <span className="nav-badge emerald">{overallStats.completedTopicsCount}</span>
+                  )}
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/favorites" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                  <Heart size={14} fill={favoritesCount > 0 ? '#f43f5e' : 'none'} color={favoritesCount > 0 ? '#f43f5e' : 'currentColor'} />
-                  Bookmarks
+                  <Heart
+                    size={14}
+                    fill={favoritesCount > 0 ? '#f43f5e' : 'none'}
+                    color={favoritesCount > 0 ? '#f43f5e' : 'currentColor'}
+                  />
+                  <span>Bookmarks</span>
                   {favoritesCount > 0 && <span className="nav-badge">{favoritesCount}</span>}
                 </NavLink>
               </li>
             </ul>
           </nav>
 
-          {/* Right Controls: Theme Toggle & Search CTA */}
+          {/* Right Controls: Theme Toggle */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            {/* Theme Toggle Button */}
             <button
               type="button"
               className="theme-toggle-btn"
@@ -71,10 +84,6 @@ const Navbar = () => {
             >
               {isDark ? <Sun size={17} /> : <Moon size={17} />}
             </button>
-
-            <Link to="/explore" className="btn btn-primary btn-sm nav-cta-btn">
-              Search Catalog
-            </Link>
 
             <button
               type="button"
@@ -97,7 +106,15 @@ const Navbar = () => {
             className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
             onClick={closeMobileMenu}
           >
-            Overview
+            Home
+          </NavLink>
+          <NavLink
+            to="/roadmaps"
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+            onClick={closeMobileMenu}
+          >
+            <Compass size={15} />
+            <span>Roadmaps</span>
           </NavLink>
           <NavLink
             to="/explore"
@@ -105,15 +122,15 @@ const Navbar = () => {
             onClick={closeMobileMenu}
           >
             <Search size={14} />
-            Explore All
+            <span>Library</span>
           </NavLink>
           <NavLink
-            to="/categories"
+            to="/tracker"
             className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
             onClick={closeMobileMenu}
           >
-            <Grid size={14} />
-            Categories
+            <Trophy size={15} />
+            <span>Tracker ({overallStats.completedTopicsCount})</span>
           </NavLink>
           <NavLink
             to="/favorites"
@@ -121,7 +138,7 @@ const Navbar = () => {
             onClick={closeMobileMenu}
           >
             <Heart size={14} />
-            Bookmarks ({favoritesCount})
+            <span>Bookmarks ({favoritesCount})</span>
           </NavLink>
 
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.75rem', marginTop: '0.5rem', borderTop: '1px solid var(--border-subtle)' }}>
