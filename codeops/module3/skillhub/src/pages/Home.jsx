@@ -1,116 +1,138 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Layers, Flame, CheckCircle, Compass } from 'lucide-react';
+import {
+  Compass,
+  ArrowRight,
+  CheckCircle2,
+  Layers,
+  BookOpen,
+  FolderGit2,
+  Trophy
+} from 'lucide-react';
 import Hero from '../components/Hero';
-import CategoryCard from '../components/CategoryCard';
+import RoadmapCard from '../components/RoadmapCard';
 import ResourceCard from '../components/ResourceCard';
-import { CATEGORIES, RESOURCES } from '../data/resources';
+import { ROADMAPS } from '../data/roadmaps';
+import { RESOURCES } from '../data/resources';
+import { useProgress } from '../hooks/useProgress';
 
 const Home = () => {
-  const trendingResources = useMemo(() => {
-    return RESOURCES.filter((r) => r.featured || r.popularity >= 95).slice(0, 6);
+  const { overallStats, lastActiveRoadmapId } = useProgress();
+
+  const featuredRoadmaps = useMemo(() => {
+    const priorityIds = [
+      'frontend-development',
+      'backend-development',
+      'fullstack-development',
+      'devops-cloud',
+      'cybersecurity',
+      'ai-machine-learning'
+    ];
+    return ROADMAPS.filter((r) => priorityIds.includes(r.id));
   }, []);
 
-  const freeResources = useMemo(() => {
-    return RESOURCES.filter((r) => r.isFree || r.price === 'Free').slice(0, 3);
-  }, []);
-
-  const categoryCounts = useMemo(() => {
-    const counts = {};
-    RESOURCES.forEach((r) => {
-      counts[r.category] = (counts[r.category] || 0) + 1;
-    });
-    return counts;
+  const featuredFreeResources = useMemo(() => {
+    return RESOURCES.filter((r) => r.featured).slice(0, 4);
   }, []);
 
   return (
     <div className="home-page">
-      {/* Hero */}
       <Hero />
 
-      {/* Categories */}
-      <section style={{ padding: '3.5rem 0' }}>
+      {/* Progress Resume Banner */}
+      {overallStats.completedTopicsCount > 0 && (
+        <section className="container" style={{ marginTop: '-0.5rem', marginBottom: '2rem' }}>
+          <div className="tracker-snapshot-banner compact">
+            <div className="snapshot-left">
+              <Trophy size={20} className="snapshot-sparkle" />
+              <div>
+                <span className="snapshot-heading">
+                  <strong>{overallStats.completedTopicsCount}</strong> topics completed
+                </span>
+                <span className="snapshot-text"> · Keep your momentum going</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <Link to={`/roadmap/${lastActiveRoadmapId}`} className="btn btn-primary btn-sm">
+                Resume <ArrowRight size={13} />
+              </Link>
+              <Link to="/tracker" className="btn btn-secondary btn-sm">
+                Tracker
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Featured Roadmaps */}
+      <section style={{ padding: '2.5rem 0' }}>
         <div className="container">
           <div className="section-header">
             <div>
-              <div className="section-label">Disciplines</div>
-              <h2 className="section-title">Browse by Technical Domain</h2>
+              <h2 className="section-title">Career Roadmaps</h2>
+              <p className="section-subtitle">Choose a path from fundamentals to production.</p>
             </div>
-            <Link to="/categories" className="btn btn-secondary btn-sm">
-              All 8 Tracks <ArrowRight size={14} />
+            <Link to="/roadmaps" className="btn btn-secondary btn-sm">
+              All 11 Tracks <ArrowRight size={14} />
             </Link>
           </div>
 
-          <div className="categories-grid">
-            {CATEGORIES.map((cat) => (
-              <CategoryCard
-                key={cat.id}
-                category={cat}
-                resourceCount={categoryCounts[cat.slug] || 0}
-              />
+          <div className="roadmaps-grid">
+            {featuredRoadmaps.map((roadmap) => (
+              <RoadmapCard key={roadmap.id} roadmap={roadmap} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Trending Resources */}
-      <section style={{ padding: '3.5rem 0', background: 'var(--bg-surface)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+      {/* Clean 3-Pillar Value Strip */}
+      <section style={{ padding: '3rem 0', background: 'var(--bg-surface)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+        <div className="container">
+          <div className="pillars-grid compact">
+            <div className="pillar-item-card compact">
+              <div className="pillar-icon-box compact">
+                <CheckCircle2 size={20} color="var(--emerald)" />
+              </div>
+              <h4>100% Free Resources</h4>
+              <p>MDN, freeCodeCamp, CS50, and official documentation without paywalls.</p>
+            </div>
+
+            <div className="pillar-item-card compact">
+              <div className="pillar-icon-box compact">
+                <Layers size={20} color="var(--accent)" />
+              </div>
+              <h4>Structured Sequence</h4>
+              <p>Step-by-step topics with clear prerequisites so you always know what's next.</p>
+            </div>
+
+            <div className="pillar-item-card compact">
+              <div className="pillar-icon-box compact">
+                <FolderGit2 size={20} color="var(--amber)" />
+              </div>
+              <h4>Real Projects</h4>
+              <p>Hands-on coding challenges and capstone systems to build an authentic portfolio.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Curated Free Resources */}
+      <section style={{ padding: '3rem 0' }}>
         <div className="container">
           <div className="section-header">
             <div>
-              <div className="section-label" style={{ color: 'var(--amber)' }}>Trending</div>
-              <h2 className="section-title">Popular Learning Materials</h2>
+              <h2 className="section-title">Free Library Spotlight</h2>
+              <p className="section-subtitle">Vetted open materials from Harvard, Mozilla, and official projects.</p>
             </div>
             <Link to="/explore" className="btn btn-secondary btn-sm">
-              Explore All {RESOURCES.length} Resources <ArrowRight size={14} />
+              Browse Library <ArrowRight size={14} />
             </Link>
           </div>
 
           <div className="resource-grid">
-            {trendingResources.map((res) => (
+            {featuredFreeResources.map((res) => (
               <ResourceCard key={res.id} resource={res} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Free Resources Section */}
-      <section style={{ padding: '3.5rem 0' }}>
-        <div className="container">
-          <div className="section-header">
-            <div>
-              <div className="section-label" style={{ color: 'var(--emerald)' }}>Open Access</div>
-              <h2 className="section-title">Recommended Free Resources</h2>
-            </div>
-            <Link to="/explore?price=free" className="btn btn-secondary btn-sm">
-              View All Free <ArrowRight size={14} />
-            </Link>
-          </div>
-
-          <div className="resource-grid">
-            {freeResources.map((res) => (
-              <ResourceCard key={res.id} resource={res} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Call To Action Box */}
-      <section className="container">
-        <div className="cta-box">
-          <h2 style={{ fontSize: '1.85rem', marginBottom: '0.75rem' }}>
-            Start discovering verified learning tracks today.
-          </h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.98rem', maxWidth: '540px', margin: '0 auto 1.75rem' }}>
-            Filter across difficulty levels, formats, and verified platforms to streamline your learning journey.
-          </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <Link to="/explore" className="btn btn-primary">
-              Explore Catalog
-            </Link>
-            <Link to="/categories" className="btn btn-secondary">
-              Browse Categories
-            </Link>
           </div>
         </div>
       </section>

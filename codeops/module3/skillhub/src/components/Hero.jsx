@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Terminal } from 'lucide-react';
-import SearchBar from './SearchBar';
+import { useNavigate, Link } from 'react-router-dom';
+import { ArrowRight, Search } from 'lucide-react';
 
-const QUICK_TOPICS = [
-  'React',
-  'Next.js',
-  'Python',
-  'Docker',
-  'Deep Learning',
-  'Figma',
-  'PostgreSQL',
-  'Kubernetes'
+const POPULAR_TRACKS = [
+  { label: 'Frontend', path: '/roadmap/frontend-development' },
+  { label: 'Backend', path: '/roadmap/backend-development' },
+  { label: 'Full-Stack', path: '/roadmap/fullstack-development' },
+  { label: 'DevOps', path: '/roadmap/devops-cloud' },
+  { label: 'AI / ML', path: '/roadmap/ai-machine-learning' },
+  { label: 'Cybersecurity', path: '/roadmap/cybersecurity' },
+  { label: 'QA', path: '/roadmap/qa-test-automation' }
 ];
 
 const Hero = () => {
@@ -21,87 +19,65 @@ const Hero = () => {
   const handleSearchSubmit = (e) => {
     if (e) e.preventDefault();
     if (query.trim()) {
-      navigate(`/explore?search=${encodeURIComponent(query.trim())}`);
+      navigate(`/roadmaps?search=${encodeURIComponent(query.trim())}`);
     } else {
-      navigate('/explore');
+      navigate('/roadmaps');
     }
-  };
-
-  const handleTagClick = (tag) => {
-    navigate(`/explore?search=${encodeURIComponent(tag)}`);
   };
 
   return (
     <section className="hero-section">
       <div className="container">
-        {/* Status Tag */}
-        <div className="hero-tagline-chip">
-          <span className="hero-tagline-dot" />
-          <span>Curated Index of Technical Learning Resources</span>
-        </div>
-
         {/* Headline */}
         <h1 className="hero-title">
-          Learn. Build. Grow.
+          Developer Roadmaps. <span className="gradient-text">100% Free.</span>
         </h1>
 
-        {/* Subtitle */}
+        {/* Crisp Subtitle */}
         <p className="hero-subtitle">
-          An open discovery directory for developers and engineers. Find battle-tested courses, official docs, tutorials, and books across modern software stacks.
+          Step-by-step learning paths, verified free resources, and practical projects from beginner to job-ready.
         </p>
 
-        {/* Search Bar Form */}
+        {/* Clean Search Bar */}
         <form onSubmit={handleSearchSubmit} className="hero-search-wrapper">
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <div style={{ flex: 1 }}>
-              <SearchBar
-                value={query}
-                onChange={setQuery}
-                onClear={() => setQuery('')}
-                placeholder="Search by skill, framework, or topic (e.g. React, Python, Docker)..."
-              />
-            </div>
-            <button type="submit" className="btn btn-primary" style={{ padding: '0.85rem 1.4rem' }}>
-              <span>Search</span>
-              <ArrowRight size={15} />
+          <div className="hero-search-input-box">
+            <Search size={18} className="hero-search-icon" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search tech stack, skill, or tool (e.g. React, Docker, Python)..."
+              className="hero-search-field"
+            />
+            <button type="submit" className="btn btn-primary btn-sm hero-search-btn">
+              <span>Explore</span>
+              <ArrowRight size={14} />
             </button>
           </div>
         </form>
 
-        {/* Quick Topic Pills */}
+        {/* Clean Quick Tracks */}
         <div className="hero-pills-row">
-          <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginRight: '0.25rem' }}>
-            Quick index:
-          </span>
-          {QUICK_TOPICS.map((topic) => (
-            <button
-              key={topic}
-              type="button"
-              className="pill-item"
-              onClick={() => handleTagClick(topic)}
-            >
-              {topic}
-            </button>
+          {POPULAR_TRACKS.map((track) => (
+            <Link key={track.label} to={track.path} className="pill-item">
+              {track.label}
+            </Link>
           ))}
         </div>
 
-        {/* Structured Metrics Grid */}
-        <div className="metrics-strip">
+        {/* Compact stats bar */}
+        <div className="metrics-strip compact">
           <div className="metric-cell">
-            <div className="metric-val">500+</div>
-            <div className="metric-label">Verified Tech Resources</div>
+            <span className="metric-val">11</span>
+            <span className="metric-label">Roadmaps</span>
           </div>
           <div className="metric-cell">
-            <div className="metric-val">8</div>
-            <div className="metric-label">Engineering Domains</div>
+            <span className="metric-val">30+</span>
+            <span className="metric-label">Projects</span>
           </div>
           <div className="metric-cell">
-            <div className="metric-val" style={{ color: 'var(--emerald)' }}>100%</div>
-            <div className="metric-label">Free & Paid Transparency</div>
-          </div>
-          <div className="metric-cell">
-            <div className="metric-val">4.9/5</div>
-            <div className="metric-label">Average Community Score</div>
+            <span className="metric-val" style={{ color: 'var(--emerald)' }}>Free</span>
+            <span className="metric-label">No Paywalls</span>
           </div>
         </div>
       </div>

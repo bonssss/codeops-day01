@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, ArrowRight } from 'lucide-react';
+import { Grid, ArrowRight, Compass, BookOpen } from 'lucide-react';
 import CategoryCard from '../components/CategoryCard';
 import { CATEGORIES, RESOURCES } from '../data/resources';
 
@@ -14,29 +14,43 @@ const Categories = () => {
   }, []);
 
   return (
-    <div className="container" style={{ paddingTop: '2rem' }}>
+    <div className="container" style={{ paddingTop: '2.5rem', paddingBottom: '4rem' }}>
       <div style={{ marginBottom: '3rem', textAlign: 'center' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--primary-light)', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
-          <Grid size={16} />
-          <span>Curated Tech Tracks</span>
+        <div className="section-label-chip" style={{ display: 'inline-flex', marginBottom: '0.5rem' }}>
+          <Grid size={15} />
+          <span>Technical Disciplines</span>
         </div>
-        <h1 style={{ fontSize: '2.75rem', marginBottom: '1rem' }}>
-          Explore by <span className="gradient-text">Category</span>
+        <h1 className="page-hero-title">
+          Explore by <span className="gradient-text">Engineering Discipline</span>
         </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '640px', margin: '0 auto' }}>
-          Dive into structured learning tracks covering frontend, cloud systems, deep learning, mobile architecture, security, and design.
+        <p className="page-hero-subtitle">
+          Discover structured learning roadmaps, verified free resources, and practical projects across all major tech specializations.
         </p>
       </div>
 
-      <div className="categories-grid" style={{ marginBottom: '4rem' }}>
+      <div className="categories-grid" style={{ marginBottom: '3.5rem' }}>
         {CATEGORIES.map((cat) => (
-          <div key={cat.id} style={{ display: 'flex', flexDirection: 'column' }}>
+          <div key={cat.id} className="category-wrapper-block">
             <CategoryCard
               category={cat}
               resourceCount={categoryCounts[cat.slug] || 0}
             />
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.75rem' }}>
+            {cat.roadmapId && (
+              <div style={{ marginTop: '0.6rem', padding: '0 0.25rem' }}>
+                <Link
+                  to={`/roadmap/${cat.roadmapId}`}
+                  className="btn btn-primary btn-xs w-full"
+                  style={{ justifyContent: 'center' }}
+                >
+                  <Compass size={13} />
+                  <span>Open {cat.name} Roadmap</span>
+                  <ArrowRight size={12} />
+                </Link>
+              </div>
+            )}
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.6rem' }}>
               {cat.featuredTech?.map((tech) => (
                 <Link
                   key={tech}
@@ -54,13 +68,13 @@ const Categories = () => {
 
       <div className="cta-banner" style={{ marginTop: '2rem' }}>
         <h3 style={{ fontSize: '1.75rem', marginBottom: '0.75rem' }}>
-          Looking for Something Specific?
+          Want to follow a structured roadmap instead?
         </h3>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', maxWidth: '520px', margin: '0 auto 1.5rem' }}>
-          Use our multi-parameter filter to search by price, experience level, formats, and platforms.
+          Follow our 11 step-by-step career roadmaps complete with 100% free learning resources and real-world projects.
         </p>
-        <Link to="/explore" className="btn btn-primary btn-lg">
-          Browse All Learning Materials <ArrowRight size={18} />
+        <Link to="/roadmaps" className="btn btn-primary btn-lg">
+          Browse All Learning Roadmaps <ArrowRight size={18} />
         </Link>
       </div>
     </div>

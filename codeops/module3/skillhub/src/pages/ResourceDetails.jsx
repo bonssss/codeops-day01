@@ -312,7 +312,7 @@ const ResourceDetails = () => {
             </div>
 
             <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center' }}>
-              SkillHub connects you directly to official platform hosts with no intermediary markups.
+              skiilhub connects you directly to official platform hosts with no intermediary markups.
             </p>
           </div>
         </div>
