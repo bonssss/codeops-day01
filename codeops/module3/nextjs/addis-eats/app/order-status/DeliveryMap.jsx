@@ -17,8 +17,12 @@ const NEIGHBORHOOD_COORDS = {
   "cmc": { x: 380, y: 130, name: "CMC" },
   "gotera": { x: 190, y: 220, name: "Gotera" },
   "lideta": { x: 120, y: 130, name: "Lideta" },
+  "mexico": { x: 160, y: 160, name: "Mexico Square" },
   "old airport": { x: 110, y: 220, name: "Old Airport" },
   "bisrate gabriel": { x: 100, y: 200, name: "Bisrate Gabriel" },
+  "piassa": { x: 150, y: 70, name: "Piassa" },
+  "ayat": { x: 410, y: 110, name: "Ayat" },
+  "summit": { x: 430, y: 140, name: "Summit" },
   "default": { x: 250, y: 160, name: "Bole Sub-City" },
 };
 

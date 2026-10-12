@@ -78,8 +78,10 @@ export function relative(date) {
   return when(date, { month: "short", day: "numeric", year: "numeric" });
 }
 
-export default {
+const formatUtils = {
   etb,
   when,
   relative,
 };
+
+export default formatUtils;

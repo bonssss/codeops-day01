@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="juice-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </radialGradient>
+    <linearGradient id="avocado-layer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4d7c0f" />
+      <stop offset="50%" stop-color="#65a30d" />
+      <stop offset="100%" stop-color="#84cc16" />
+    </linearGradient>
+    <linearGradient id="mango-layer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+    <linearGradient id="papaya-layer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#dc2626" />
+      <stop offset="50%" stop-color="#ea580c" />
+      <stop offset="100%" stop-color="#f97316" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#juice-bg)" />
+  <!-- Table surface shadow -->
+  <ellipse cx="300" cy="345" rx="100" ry="20" fill="#000000" opacity="0.4" />
+  
+  <!-- Clear Tall Parfait/Sundae Glass -->
+  <!-- Glass Base & Stem -->
+  <ellipse cx="300" cy="340" rx="45" ry="12" fill="#94a3b8" opacity="0.7" />
+  <rect x="294" y="295" width="12" height="45" rx="3" fill="#cbd5e1" opacity="0.6" />
+  
+  <!-- Glass Bowl Outline -->
+  <!-- Bottom Avocado Layer (Green) -->
+  <path d="M255 250 L260 295 Q300 305 340 295 L345 250 Z" fill="url(#avocado-layer)" />
+  
+  <!-- Middle Mango Layer (Golden Yellow) -->
+  <path d="M250 190 L255 250 Q300 258 345 250 L350 190 Z" fill="url(#mango-layer)" />
+
+  <!-- Top Papaya Layer (Rich Orange/Red) -->
+  <path d="M245 120 L250 190 Q300 198 350 190 L355 120 Z" fill="url(#papaya-layer)" />
+  
+  <!-- Glass Top Rim -->
+  <ellipse cx="300" cy="120" rx="55" ry="12" fill="none" stroke="#e2e8f0" stroke-width="3" />
+  <!-- Glass Highlight Reflections -->
+  <path d="M252 130 L258 285" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.5" />
+  <path d="M260 135 L264 240" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.6" />
+
+  <!-- Striped Drinking Straw -->
+  <line x1="285" y1="280" x2="340" y2="50" stroke="#ef4444" stroke-width="7" stroke-linecap="round" />
+  <line x1="285" y1="280" x2="340" y2="50" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="10 10" />
+
+  <!-- Fresh Lime Wedge Garnish on the rim -->
+  <path d="M345 110 A 30 30 0 0 1 375 140 Z" fill="#84cc16" stroke="#4d7c0f" stroke-width="2" transform="rotate(-20 345 110)" />
+  <path d="M348 113 A 25 25 0 0 1 372 138 Z" fill="#bef264" transform="rotate(-20 345 110)" />
+
+  <!-- Fresh Mint Sprig -->
+  <ellipse cx="265" cy="115" rx="14" ry="7" fill="#15803d" stroke="#166534" transform="rotate(-35 265 115)" />
+  <ellipse cx="275" cy="110" rx="12" ry="6" fill="#22c55e" transform="rotate(25 275 110)" />
+</svg>

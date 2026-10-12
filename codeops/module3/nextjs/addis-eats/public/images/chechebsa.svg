@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="chechebsa-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#262626" />
+      <stop offset="100%" stop-color="#0a0a0a" />
+    </radialGradient>
+    <linearGradient id="honey-butter" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="60%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#chechebsa-bg)" />
+  <!-- Ceramic breakfast bowl -->
+  <circle cx="300" cy="205" r="160" fill="#f5f5f4" stroke="#d6d3d1" stroke-width="4" />
+  <circle cx="300" cy="205" r="145" fill="#fafaf9" />
+  <!-- Golden buttery warm honey sauce base -->
+  <circle cx="300" cy="205" r="130" fill="url(#honey-butter)" opacity="0.85" />
+  <!-- Shredded crisp flatbread bites (Kita pieces) with berbere spiced butter sheen -->
+  <rect x="230" y="150" width="35" height="24" rx="6" fill="#fef08a" stroke="#ca8a04" stroke-width="2" transform="rotate(22 230 150)" />
+  <rect x="280" y="140" width="38" height="26" rx="6" fill="#fde047" stroke="#b45309" stroke-width="2" transform="rotate(-15 280 140)" />
+  <rect x="335" y="155" width="36" height="25" rx="6" fill="#fef08a" stroke="#ca8a04" stroke-width="2" transform="rotate(35 335 155)" />
+  <rect x="210" y="195" width="40" height="28" rx="6" fill="#fde047" stroke="#b45309" stroke-width="2" transform="rotate(-10 210 195)" />
+  <rect x="265" y="190" width="42" height="30" rx="7" fill="#fef08a" stroke="#d97706" stroke-width="2" transform="rotate(12 265 190)" />
+  <rect x="325" y="195" width="38" height="26" rx="6" fill="#fde047" stroke="#b45309" stroke-width="2" transform="rotate(-20 325 195)" />
+  <rect x="235" y="240" width="36" height="25" rx="6" fill="#fef08a" stroke="#ca8a04" stroke-width="2" transform="rotate(18 235 240)" />
+  <rect x="290" y="235" width="40" height="28" rx="6" fill="#fde047" stroke="#b45309" stroke-width="2" transform="rotate(-8 290 235)" />
+  <rect x="345" y="230" width="35" height="24" rx="6" fill="#fef08a" stroke="#d97706" stroke-width="2" transform="rotate(25 345 230)" />
+  <!-- Drizzles of dark amber forest honey -->
+  <path d="M210 160 Q260 210 320 180 T390 220" stroke="#92400e" stroke-width="4.5" fill="none" stroke-linecap="round" />
+  <path d="M250 250 Q290 220 350 245" stroke="#92400e" stroke-width="3.5" fill="none" stroke-linecap="round" />
+  <!-- Side dollop of mild fresh yogurt (Ergo) -->
+  <circle cx="395" cy="155" r="28" fill="#ffffff" stroke="#f5f5f4" stroke-width="3" />
+  <circle cx="395" cy="155" r="22" fill="#fafaf9" />
+</svg>

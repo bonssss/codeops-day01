@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="shekla-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#1c1917" />
+      <stop offset="100%" stop-color="#0c0a09" />
+    </radialGradient>
+    <radialGradient id="fire-glow" cx="50%" cy="60%" r="45%">
+      <stop offset="0%" stop-color="#ea580c" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#dc2626" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="clay-pot" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#9a3412" />
+      <stop offset="50%" stop-color="#7c2d12" />
+      <stop offset="100%" stop-color="#431407" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#shekla-bg)" />
+  <!-- Clay Pot Base with glowing embers -->
+  <ellipse cx="300" cy="270" rx="140" ry="40" fill="url(#fire-glow)" />
+  <path d="M220 270 Q210 320 250 330 L350 330 Q390 320 380 270 Z" fill="#431407" stroke="#7c2d12" stroke-width="3" />
+  <!-- Glowing Embers in lower chamber -->
+  <circle cx="270" cy="300" r="8" fill="#f97316" filter="blur(1px)" />
+  <circle cx="330" cy="305" r="7" fill="#ef4444" filter="blur(1px)" />
+  <circle cx="300" cy="310" r="9" fill="#fbbf24" filter="blur(1px)" />
+  <!-- Main Shekla (Clay Dish Top) -->
+  <ellipse cx="300" cy="210" rx="170" ry="75" fill="url(#clay-pot)" stroke="#ea580c" stroke-width="4" />
+  <ellipse cx="300" cy="205" rx="155" ry="60" fill="#292524" />
+  <!-- Sizzling Beef Tibs Cubes -->
+  <rect x="230" y="180" width="45" height="32" rx="8" fill="#78350f" stroke="#451a03" stroke-width="2" transform="rotate(15 230 180)" />
+  <rect x="290" y="175" width="48" height="35" rx="8" fill="#854d0e" stroke="#451a03" stroke-width="2" transform="rotate(-12 290 175)" />
+  <rect x="345" y="185" width="44" height="30" rx="8" fill="#78350f" stroke="#451a03" stroke-width="2" transform="rotate(20 345 185)" />
+  <rect x="250" y="215" width="46" height="32" rx="8" fill="#92400e" stroke="#451a03" stroke-width="2" transform="rotate(-8 250 215)" />
+  <rect x="310" y="210" width="50" height="34" rx="8" fill="#78350f" stroke="#451a03" stroke-width="2" transform="rotate(8 310 210)" />
+  <!-- Fresh Rosemary Sprigs -->
+  <path d="M220 220 Q270 175 320 160" stroke="#15803d" stroke-width="3.5" fill="none" stroke-linecap="round" />
+  <path d="M270 230 Q320 200 370 180" stroke="#16a34a" stroke-width="3" fill="none" stroke-linecap="round" />
+  <line x1="280" y1="185" x2="270" y2="175" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="300" y1="172" x2="310" y2="162" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" />
+  <!-- Sautéed Jalapeño / Karia Pepper Slices -->
+  <ellipse cx="270" cy="195" rx="16" ry="7" fill="#22c55e" stroke="#15803d" stroke-width="2" transform="rotate(-25 270 195)" />
+  <ellipse cx="340" cy="225" rx="15" ry="6" fill="#22c55e" stroke="#15803d" stroke-width="2" transform="rotate(30 340 225)" />
+  <!-- Purple Onion Rings -->
+  <path d="M245 170 Q265 155 285 175" stroke="#c084fc" stroke-width="3.5" fill="none" stroke-linecap="round" />
+  <path d="M325 195 Q350 180 370 200" stroke="#c084fc" stroke-width="3" fill="none" stroke-linecap="round" />
+  <!-- Rising Steam / Aroma Waves -->
+  <path d="M270 145 Q260 115 280 85" stroke="#f43f5e" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6" />
+  <path d="M305 135 Q325 105 310 75" stroke="#fb923c" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7" />
+  <path d="M340 140 Q330 110 350 80" stroke="#fdba74" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6" />
+</svg>

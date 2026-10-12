@@ -19,15 +19,21 @@ export const orderSchema = z.object({
     .string({ required_error: "Delivery address is required" })
     .trim()
     .min(5, "Delivery address must be at least 5 characters long"),
+  deliveryZone: z.string().optional().nullable(),
   phone: z
     .string({ required_error: "Phone number is required" })
     .trim()
-    .min(9, "Phone number must be at least 9 characters"),
-  paymentMethod: z.enum(["telebirr", "cbe", "cash"], {
-    errorMap: () => ({ message: "Payment method must be telebirr, cbe, or cash" })
+    .min(9, "Phone number must be at least 9 characters")
+    .regex(
+      /^(?:\+251|0)?[79]\d{8}$|^[\d+\-\s()]{9,18}$/,
+      "Please enter a valid Ethiopian phone number (e.g. +251 91 123 4567 or 0911234567)"
+    ),
+  paymentMethod: z.enum(["telebirr", "cbe", "cbe_birr", "awash", "cash"], {
+    errorMap: () => ({ message: "Payment method must be Telebirr, CBE Birr, AwashBirr, or Cash" })
   }),
   items: z
     .array(orderItemSchema)
     .min(1, "Your cart cannot be empty. Please select at least one dish."),
-  promoCode: z.string().optional().nullable()
+  promoCode: z.string().optional().nullable(),
+  notes: z.string().optional().nullable(),
 });

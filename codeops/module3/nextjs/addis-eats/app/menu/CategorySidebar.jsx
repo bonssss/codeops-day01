@@ -4,10 +4,13 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 const categories = [
-  { name: "All Dishes", icon: "🍽️", value: "All", href: "/menu" },
-  { name: "Traditional Stews", icon: "🍗", value: "Traditional", href: "/menu?category=Traditional" },
-  { name: "Vegetarian Delights", icon: "🌱", value: "Vegetarian", href: "/menu?category=Vegetarian" },
-  { name: "Sautéed Specialties", icon: "🥩", value: "Sautéed", href: "/menu?category=Sautéed" },
+  { name: "All Dishes", amharic: "ሁሉም", icon: "🍽️", value: "All", href: "/menu" },
+  { name: "Traditional Stews", amharic: "ወጥ", icon: "🍗", value: "Traditional", href: "/menu?category=Traditional" },
+  { name: "Sautéed / Tibs", amharic: "ጥብስ", icon: "🥩", value: "Sautéed", href: "/menu?category=Sautéed" },
+  { name: "Delicacies & Kitfo", amharic: "ክትፎ", icon: "🥘", value: "Delicacies", href: "/menu?category=Delicacies" },
+  { name: "Vegetarian / Fasting", amharic: "የጾም", icon: "🌱", value: "Vegetarian", href: "/menu?category=Vegetarian" },
+  { name: "Breakfast Specials", amharic: "ቁርስ", icon: "🥞", value: "Breakfast", href: "/menu?category=Breakfast" },
+  { name: "Drinks & Ceremony", amharic: "መጠጥ", icon: "☕", value: "Beverages", href: "/menu?category=Beverages" },
 ];
 
 export default function CategorySidebar() {
@@ -34,11 +37,13 @@ export default function CategorySidebar() {
                 : "text-stone-700 hover:bg-orange-50 hover:text-orange-700 border border-transparent hover:border-orange-200"
             }`}
           >
-            <div className="flex items-center gap-2.5">
-              <span className="text-base">{cat.icon}</span>
-              <span>{cat.name}</span>
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="text-base shrink-0">{cat.icon}</span>
+              <span className="truncate">{cat.name}</span>
             </div>
-            {isActive && <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full">Active</span>}
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full shrink-0 ${isActive ? "bg-white/20 text-white" : "bg-stone-100 text-stone-500"}`}>
+              {cat.amharic}
+            </span>
           </Link>
         );
       })}

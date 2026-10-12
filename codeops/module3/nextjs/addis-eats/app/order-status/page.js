@@ -25,8 +25,8 @@ export default async function OrderStatusIndexPage({ searchParams }) {
       <div className="max-w-xl mx-auto w-full px-4 pt-4 flex items-center justify-between text-xs text-stone-500">
         <span className="font-semibold">Tracking Order: <span className="font-mono text-stone-800">{orderId}</span></span>
         <div className="flex gap-2">
-          <Link href="/order-status?id=AE-10001" className="hover:text-orange-600 underline">
-            Demo Order
+          <Link href="/order-status?id=AE-10025" className="hover:text-orange-600 underline">
+            Latest Order (AE-10025)
           </Link>
           <span>•</span>
           <Link href="/menu" className="hover:text-orange-600 underline">
