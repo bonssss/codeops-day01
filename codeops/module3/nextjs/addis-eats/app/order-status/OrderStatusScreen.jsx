@@ -33,28 +33,23 @@ const STATUS_STEPS = [
 export default function OrderStatusScreen({ orderId, fallbackData }) {
   // Requirement 4: Seeded from the server (fallbackData)
   const [order, setOrder] = useState(fallbackData);
+  const [prevFallback, setPrevFallback] = useState(fallbackData);
+  if (fallbackData !== prevFallback) {
+    setPrevFallback(fallbackData);
+    setOrder(fallbackData);
+  }
+
   const [connectionStatus, setConnectionStatus] = useState("connecting");
   const [isCancelling, setIsCancelling] = useState(false);
   const [cancelMessage, setCancelMessage] = useState(null);
 
-  // Sync state if fallbackData updates from server
-  useEffect(() => {
-    if (fallbackData) {
-      setOrder(fallbackData);
-    }
-  }, [fallbackData]);
+  const isDeliveredOrCancelled = order?.status === "delivered" || order?.status === "cancelled";
+  const activeConnectionStatus = isDeliveredOrCancelled ? "delivered_closed" : connectionStatus;
 
   // Requirements 3, 4, 5: Consume SSE via EventSource, close on unmount, close on delivery
   useEffect(() => {
-    if (!orderId) return;
+    if (!orderId || isDeliveredOrCancelled) return;
 
-    // If order is already delivered or cancelled, close stream deliberately
-    if (order?.status === "delivered" || order?.status === "cancelled") {
-      setConnectionStatus("delivered_closed");
-      return;
-    }
-
-    setConnectionStatus("connecting");
     const eventSource = new EventSource(`/api/orders/${encodeURIComponent(orderId)}/stream`);
 
     eventSource.onopen = () => {
@@ -97,7 +92,7 @@ export default function OrderStatusScreen({ orderId, fallbackData }) {
     return () => {
       eventSource.close();
     };
-  }, [orderId, order?.status]);
+  }, [orderId, isDeliveredOrCancelled]);
 
   const handleCancel = async (id) => {
     setIsCancelling(true);
@@ -150,30 +145,30 @@ export default function OrderStatusScreen({ orderId, fallbackData }) {
         <div
           data-testid="connection-indicator"
           className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border font-medium ${
-            connectionStatus === "connected"
+            activeConnectionStatus === "connected"
               ? "bg-emerald-50 border-emerald-200 text-emerald-800"
-              : connectionStatus === "delivered_closed"
+              : activeConnectionStatus === "delivered_closed"
               ? "bg-stone-100 border-stone-200 text-stone-600"
-              : connectionStatus === "reconnecting"
+              : activeConnectionStatus === "reconnecting"
               ? "bg-amber-50 border-amber-200 text-amber-800"
               : "bg-blue-50 border-blue-200 text-blue-800"
           }`}
         >
           <span
             className={`w-2 h-2 rounded-full ${
-              connectionStatus === "connected"
+              activeConnectionStatus === "connected"
                 ? "bg-emerald-500 animate-pulse"
-                : connectionStatus === "delivered_closed"
+                : activeConnectionStatus === "delivered_closed"
                 ? "bg-stone-400"
                 : "bg-amber-500 animate-ping"
             }`}
           />
           <span className="font-semibold">
-            {connectionStatus === "connected" && "SSE Stream Connected (Live)"}
-            {connectionStatus === "connecting" && "SSE Connecting..."}
-            {connectionStatus === "delivered_closed" && "Stream Closed on Delivery"}
-            {connectionStatus === "reconnecting" && "SSE Reconnecting..."}
-            {connectionStatus === "closed" && "SSE Stream Inactive"}
+            {activeConnectionStatus === "connected" && "SSE Stream Connected (Live)"}
+            {activeConnectionStatus === "connecting" && "SSE Connecting..."}
+            {activeConnectionStatus === "delivered_closed" && "Stream Closed on Delivery"}
+            {activeConnectionStatus === "reconnecting" && "SSE Reconnecting..."}
+            {activeConnectionStatus === "closed" && "SSE Stream Inactive"}
           </span>
         </div>
 
@@ -300,6 +295,27 @@ export default function OrderStatusScreen({ orderId, fallbackData }) {
           </div>
 
           <div className="flex justify-between">
+            <span className="text-stone-500 font-medium">Payment Option:</span>
+            <span className="font-semibold text-stone-900 uppercase">
+              {order.paymentMethod === "cbe_birr" ? "CBE Birr" : order.paymentMethod}
+            </span>
+          </div>
+
+          {order.items && order.items.length > 0 && (
+            <div className="pt-2 border-t border-stone-200/60">
+              <span className="text-stone-500 font-medium block mb-1.5">Ordered Dishes:</span>
+              <div className="space-y-1">
+                {order.items.map((it, idx) => (
+                  <div key={idx} className="flex justify-between text-stone-700">
+                    <span>{it.quantity}x {it.name}</span>
+                    <span className="font-bold">{etb(it.price * it.quantity)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="flex justify-between">
             <span className="text-stone-500 font-medium">Timestamp:</span>
             <span className="font-medium text-stone-700">
               {when(order.createdAt)} ({relative(order.createdAt)})
@@ -308,7 +324,6 @@ export default function OrderStatusScreen({ orderId, fallbackData }) {
 
           <div className="pt-2 border-t border-stone-200/80 flex justify-between items-center text-sm">
             <span className="font-bold text-stone-800">Total Charged:</span>
-            {/* Requirement 6: Use etb formatter */}
             <span className="font-mono font-black text-orange-600 text-base">
               {etb(order.total)}
             </span>
@@ -341,8 +356,8 @@ export default function OrderStatusScreen({ orderId, fallbackData }) {
         <DeliveryMap
           orderStatus={order.status}
           customerAddress={order.address}
-          courierName="Kidus"
-          courierPhone="+251 91 234 5678"
+          courierName="Dawit (TVS AA-2-45891)"
+          courierPhone="+251 91 188 9900"
         />
       )}
     </div>

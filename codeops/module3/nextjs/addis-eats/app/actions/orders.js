@@ -3,10 +3,10 @@
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { orderSchema } from "@/lib/schemas";
-import { createOrderRecord, cancelOrderRecord, getOrderById } from "@/lib/data";
+import { createOrderRecord, cancelOrderRecord, getOrderById, DELIVERY_ZONES, PROMO_CODES } from "@/lib/data";
 
 /**
- * Server Action for placing an order using useActionState (Exercises 5 & 6)
+ * Server Action for placing an order using useActionState
  * @param {object} prevState - previous form state
  * @param {FormData} formData - submitted form data
  */
@@ -33,12 +33,17 @@ export async function placeOrderAction(prevState, formData) {
       items = [];
     }
 
+    const deliveryZoneKey = formData.get("deliveryZone") || "bole";
+    const promoCodeKey = (formData.get("promoCode") || "").trim().toUpperCase();
+
     const payload = {
       name: formData.get("name") || "",
       address: formData.get("address") || "",
+      deliveryZone: deliveryZoneKey,
       phone: formData.get("phone") || "",
       paymentMethod: formData.get("paymentMethod") || "telebirr",
-      promoCode: formData.get("promoCode") || null,
+      promoCode: promoCodeKey || null,
+      notes: formData.get("notes") || null,
       items: items.map((item) => ({
         id: item.id,
         name: item.name,
@@ -47,14 +52,14 @@ export async function placeOrderAction(prevState, formData) {
       }))
     };
 
-    // Validate using Day 33 Zod Schema
+    // Validate using Zod Schema
     const result = orderSchema.safeParse(payload);
 
     if (!result.success) {
       const flattened = result.error.flatten();
       return {
         success: false,
-        error: "Validation failed. Please check the fields below.",
+        error: "Validation failed. Please verify your delivery details.",
         fieldErrors: flattened.fieldErrors,
         data: payload
       };
@@ -64,20 +69,39 @@ export async function placeOrderAction(prevState, formData) {
     const cookieStore = await cookies();
     const sessionId = cookieStore.get("session_id")?.value || "demo-session-user";
 
-    // Pricing calculation
+    // Pricing calculation in ETB
     const subtotal = validData.items.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     );
-    const deliveryFee = validData.items.length > 0 ? 2.5 : 0;
-    const total = Number((subtotal + deliveryFee).toFixed(2));
+
+    // Dynamic zone delivery fee
+    const matchedZone = DELIVERY_ZONES.find((z) => z.id === validData.deliveryZone);
+    const deliveryFee = validData.items.length > 0 ? (matchedZone ? matchedZone.fee : 50) : 0;
+
+    // Promo calculation
+    let discount = 0;
+    if (validData.promoCode && PROMO_CODES[validData.promoCode]) {
+      const promo = PROMO_CODES[validData.promoCode];
+      if (subtotal >= promo.minOrder) {
+        if (promo.discountType === "fixed") {
+          discount = Math.min(subtotal, promo.amount);
+        } else if (promo.discountType === "percent") {
+          discount = Math.round((subtotal * promo.amount) / 100);
+        }
+      }
+    }
+
+    const total = Math.max(0, subtotal - discount + deliveryFee);
 
     const newOrder = createOrderRecord(
       {
         ...validData,
         subtotal,
         deliveryFee,
-        total
+        discount,
+        total,
+        currency: "ETB"
       },
       sessionId
     );
@@ -86,10 +110,11 @@ export async function placeOrderAction(prevState, formData) {
       globalThis.__idempotencyStore.set(idempotencyKey, newOrder);
     }
 
-    // Revalidate paths after successful write (Exercise 6)
+    // Revalidate paths after successful write
     revalidatePath("/checkout");
     revalidatePath("/menu");
     revalidatePath("/cart");
+    revalidatePath("/dashboard");
 
     return {
       success: true,
@@ -107,7 +132,7 @@ export async function placeOrderAction(prevState, formData) {
 }
 
 /**
- * Server Action for cancelling an order (Exercise 7)
+ * Server Action for cancelling an order
  * Verifies session and record ownership before cancellation
  * @param {string|FormData} orderIdOrFormData - ID of the order or FormData
  */
@@ -121,51 +146,26 @@ export async function cancelOrderAction(orderIdOrFormData) {
     }
 
     if (!orderId) {
-      return {
-        success: false,
-        error: "Order ID is required",
-        status: 400
-      };
+      return { success: false, error: "Order ID is required to cancel." };
     }
 
     const cookieStore = await cookies();
-    const currentSessionId = cookieStore.get("session_id")?.value || "demo-session-user";
+    const sessionId = cookieStore.get("session_id")?.value;
 
-    // Check session and record ownership
-    const cancellationResult = cancelOrderRecord(orderId, currentSessionId);
-
-    if (!cancellationResult.success) {
-      return {
-        success: false,
-        error: cancellationResult.error,
-        status: cancellationResult.status
-      };
+    const result = cancelOrderRecord(orderId, sessionId);
+    if (!result.success) {
+      return result;
     }
 
-    // Revalidate path after successful cancellation
-    revalidatePath("/checkout");
+    revalidatePath(`/order-status/${orderId}`);
+    revalidatePath("/order-status");
+    revalidatePath("/dashboard");
 
-    return {
-      success: true,
-      message: `Order ${orderId} was successfully cancelled.`,
-      order: cancellationResult.order
-    };
+    return { success: true, order: result.order };
   } catch (err) {
     return {
       success: false,
-      error: err.message || "Failed to cancel order",
-      status: 500
+      error: err.message || "Failed to cancel order"
     };
   }
-}
-
-/**
- * Helper Server Action to fetch an order by ID (e.g., for viewing status)
- */
-export async function fetchOrderAction(orderId) {
-  const order = getOrderById(orderId);
-  if (!order) {
-    return { success: false, error: "Order not found" };
-  }
-  return { success: true, order };
 }

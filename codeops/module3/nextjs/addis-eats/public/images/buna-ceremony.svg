@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="buna-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#271c14" />
+      <stop offset="100%" stop-color="#0c0906" />
+    </radialGradient>
+    <linearGradient id="jebena-clay" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#292524" />
+      <stop offset="40%" stop-color="#1c1917" />
+      <stop offset="100%" stop-color="#0c0a09" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#buna-bg)" />
+  <!-- Traditional Grass Mat (Rekebot Area) -->
+  <ellipse cx="300" cy="330" rx="220" ry="40" fill="#15803d" opacity="0.6" />
+  <line x1="120" y1="330" x2="480" y2="330" stroke="#16a34a" stroke-width="4" stroke-linecap="round" />
+  <!-- Straw support ring for Jebena -->
+  <ellipse cx="230" cy="295" rx="50" ry="16" fill="#ca8a04" stroke="#a16207" stroke-width="3" />
+  
+  <!-- Classic Black Clay Jebena -->
+  <!-- Bulbous Body -->
+  <circle cx="230" cy="240" r="60" fill="url(#jebena-clay)" stroke="#44403c" stroke-width="3" />
+  <!-- Decorative neck engravings -->
+  <ellipse cx="230" cy="180" rx="18" ry="8" fill="#ca8a04" />
+  <path d="M218 180 L220 120 L240 120 L242 180 Z" fill="url(#jebena-clay)" stroke="#44403c" stroke-width="2.5" />
+  <!-- Straw stopper / top cap -->
+  <polygon points="230,105 220,120 240,120" fill="#d97706" />
+  <!-- Spout -->
+  <path d="M265 210 Q305 170 310 160 Q315 155 310 152 Q300 155 260 195 Z" fill="url(#jebena-clay)" stroke="#44403c" stroke-width="2.5" />
+  <!-- Handle -->
+  <path d="M175 225 Q145 200 170 170 Q195 145 220 165" stroke="url(#jebena-clay)" stroke-width="12" fill="none" stroke-linecap="round" />
+
+  <!-- Traditional Small Handleless Cups (Cini) on Rekebot -->
+  <!-- Cup 1 -->
+  <path d="M370 270 L365 305 Q375 312 390 312 Q405 312 415 305 L410 270 Z" fill="#ffffff" stroke="#e5e5e5" stroke-width="2" />
+  <ellipse cx="390" cy="270" rx="20" ry="7" fill="#1c1917" stroke="#e5e5e5" stroke-width="1.5" />
+  <!-- Gold filigree band on cup -->
+  <path d="M366 285 Q390 292 414 285" stroke="#f59e0b" stroke-width="2" fill="none" />
+
+  <!-- Cup 2 -->
+  <path d="M430 250 L426 280 Q435 285 448 285 Q460 285 469 280 L465 250 Z" fill="#ffffff" stroke="#e5e5e5" stroke-width="2" />
+  <ellipse cx="448" cy="250" rx="17" ry="6" fill="#1c1917" stroke="#e5e5e5" stroke-width="1.5" />
+  <path d="M427 262 Q448 268 468 262" stroke="#f59e0b" stroke-width="2" fill="none" />
+
+  <!-- Small Bowl of Fresh Popcorn (Fendisha) -->
+  <ellipse cx="330" cy="315" rx="35" ry="16" fill="#d6d3d1" stroke="#a8a29e" stroke-width="2" />
+  <circle cx="320" cy="310" r="6" fill="#fef08a" stroke="#fef9c3" />
+  <circle cx="330" cy="308" r="7" fill="#ffffff" />
+  <circle cx="342" cy="311" r="6" fill="#fef08a" />
+  <circle cx="335" cy="315" r="5" fill="#fef9c3" />
+
+  <!-- Aromatic Incense & Buna Steam Waves -->
+  <path d="M305 145 Q315 110 295 80 Q280 55 300 30" stroke="#fef3c7" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.65" />
+  <path d="M390 260 Q400 230 385 200 Q375 180 395 155" stroke="#fef3c7" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5" />
+</svg>

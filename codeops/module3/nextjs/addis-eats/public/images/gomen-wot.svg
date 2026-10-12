@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="gomen-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#14532d" />
+      <stop offset="100%" stop-color="#052e16" />
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#gomen-bg)" />
+  <circle cx="300" cy="200" r="160" fill="#1c1917" stroke="#16a34a" stroke-width="3" />
+  <circle cx="300" cy="200" r="145" fill="#15803d" />
+  <!-- Braised Collard greens layered leaves and texture -->
+  <path d="M220 180 Q250 140 310 160 Q360 170 340 220 Q280 260 210 210 Z" fill="#166534" stroke="#14532d" stroke-width="2" />
+  <path d="M260 190 Q300 160 350 190 Q370 230 310 250 Q250 240 260 190 Z" fill="#15803d" stroke="#166534" stroke-width="2" />
+  <!-- Ginger, Garlic, and Jalapeño diced flecks -->
+  <circle cx="270" cy="180" r="4" fill="#fef08a" />
+  <circle cx="330" cy="195" r="4.5" fill="#fef08a" />
+  <circle cx="295" cy="225" r="3.5" fill="#fef08a" />
+  <circle cx="320" cy="165" r="5" fill="#22c55e" />
+  <circle cx="260" cy="215" r="4.5" fill="#22c55e" />
+  <circle cx="350" cy="210" r="4" fill="#22c55e" />
+  <!-- Yellow Ayib (Ethiopian cottage cheese) garnish on side -->
+  <ellipse cx="230" cy="240" rx="22" ry="16" fill="#fef9c3" stroke="#fef08a" stroke-width="1.5" />
+</svg>

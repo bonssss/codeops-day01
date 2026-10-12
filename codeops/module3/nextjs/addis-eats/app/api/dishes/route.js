@@ -27,6 +27,7 @@ export async function GET(request) {
     allDishes = allDishes.filter(
       (dish) =>
         dish.name.toLowerCase().includes(q) ||
+        (dish.amharicName && dish.amharicName.toLowerCase().includes(q)) ||
         dish.description.toLowerCase().includes(q) ||
         dish.category.toLowerCase().includes(q) ||
         (dish.ingredients && dish.ingredients.some((ing) => ing.toLowerCase().includes(q)))

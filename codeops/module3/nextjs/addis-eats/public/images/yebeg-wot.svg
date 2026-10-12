@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="yebeg-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#3b1d11" />
+      <stop offset="100%" stop-color="#18181b" />
+    </radialGradient>
+    <radialGradient id="stew-sauce" cx="45%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#b45309" />
+      <stop offset="60%" stop-color="#7c2d12" />
+      <stop offset="100%" stop-color="#451a03" />
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#yebeg-bg)" />
+  <circle cx="300" cy="200" r="160" fill="#27272a" stroke="#ca8a04" stroke-width="3" />
+  <circle cx="300" cy="200" r="145" fill="url(#stew-sauce)" />
+  <!-- Tender Succulent Braised Lamb Chunks on Bone -->
+  <path d="M230 185 Q260 145 310 165 Q350 180 340 220 Q300 245 240 225 Z" fill="#78350f" stroke="#451a03" stroke-width="2.5" />
+  <path d="M300 205 Q340 185 370 215 Q360 250 320 255 Z" fill="#92400e" stroke="#451a03" stroke-width="2" />
+  <!-- Bone ring marrow detail -->
+  <ellipse cx="255" cy="175" rx="14" ry="10" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
+  <circle cx="255" cy="175" r="5" fill="#78350f" />
+  <!-- Cardamom pods and Nigella seed spices -->
+  <ellipse cx="280" cy="235" rx="6" ry="3" fill="#15803d" transform="rotate(30 280 235)" />
+  <ellipse cx="340" cy="170" rx="5" ry="3" fill="#15803d" transform="rotate(-40 340 170)" />
+  <circle cx="290" cy="190" r="2.5" fill="#1c1917" />
+  <circle cx="320" cy="225" r="2.5" fill="#1c1917" />
+  <circle cx="270" cy="210" r="2" fill="#1c1917" />
+  <!-- Green Pepper Karia slice garnish -->
+  <ellipse cx="360" cy="200" rx="16" ry="7" fill="#22c55e" stroke="#16a34a" stroke-width="2" transform="rotate(45 360 200)" />
+</svg>

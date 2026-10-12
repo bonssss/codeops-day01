@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="kik-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#422006" />
+      <stop offset="100%" stop-color="#1c1917" />
+    </radialGradient>
+    <radialGradient id="kik-sauce" cx="45%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#facc15" />
+      <stop offset="70%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#ca8a04" />
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#kik-bg)" />
+  <circle cx="300" cy="200" r="160" fill="#292524" stroke="#eab308" stroke-width="3" />
+  <circle cx="300" cy="200" r="145" fill="url(#kik-sauce)" />
+  <!-- Split pea lentils stew texture -->
+  <circle cx="250" cy="180" r="14" fill="#fde047" stroke="#ca8a04" stroke-width="1.5" />
+  <circle cx="280" cy="165" r="15" fill="#facc15" stroke="#ca8a04" stroke-width="1.5" />
+  <circle cx="320" cy="175" r="16" fill="#fde047" stroke="#ca8a04" stroke-width="1.5" />
+  <circle cx="350" cy="190" r="14" fill="#facc15" stroke="#ca8a04" stroke-width="1.5" />
+  <circle cx="240" cy="215" r="15" fill="#fde047" stroke="#ca8a04" stroke-width="1.5" />
+  <circle cx="275" cy="225" r="16" fill="#facc15" stroke="#ca8a04" stroke-width="1.5" />
+  <circle cx="310" cy="220" r="15" fill="#fde047" stroke="#ca8a04" stroke-width="1.5" />
+  <circle cx="345" cy="230" r="14" fill="#facc15" stroke="#ca8a04" stroke-width="1.5" />
+  <!-- Sautéed onions and garlic pieces -->
+  <ellipse cx="260" cy="195" rx="8" ry="4" fill="#fef9c3" transform="rotate(25 260 195)" />
+  <ellipse cx="330" cy="205" rx="9" ry="4" fill="#fef9c3" transform="rotate(-30 330 205)" />
+  <ellipse cx="295" cy="190" rx="8" ry="4" fill="#fef9c3" transform="rotate(10 295 190)" />
+  <!-- Green Jalapeño ring -->
+  <circle cx="300" cy="200" r="16" fill="none" stroke="#22c55e" stroke-width="5" />
+</svg>

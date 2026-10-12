@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="beyaynetu-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#1c1917" />
+      <stop offset="100%" stop-color="#0c0a09" />
+    </radialGradient>
+    <radialGradient id="injera-texture" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d6c5b0" />
+      <stop offset="80%" stop-color="#c2b09a" />
+      <stop offset="100%" stop-color="#a69480" />
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#beyaynetu-bg)" />
+  <!-- Large Traditional Mesob / Gebeta Round Platter -->
+  <circle cx="300" cy="200" r="170" fill="#292524" stroke="#d97706" stroke-width="4" />
+  <!-- Injera Base Platter with eyes/bubbles -->
+  <circle cx="300" cy="200" r="155" fill="url(#injera-texture)" />
+  <circle cx="270" cy="180" r="2" fill="#8c7864" opacity="0.6" />
+  <circle cx="330" cy="220" r="2.5" fill="#8c7864" opacity="0.6" />
+  <circle cx="310" cy="170" r="2" fill="#8c7864" opacity="0.6" />
+  
+  <!-- Center Mound: Shiro Tegabino (Golden Spiced Chickpea) -->
+  <ellipse cx="300" cy="200" rx="36" ry="32" fill="#d97706" stroke="#b45309" stroke-width="2" />
+  <circle cx="295" cy="195" r="5" fill="#f59e0b" />
+
+  <!-- Top Mound: Misir Wot (Red Lentil Stew) -->
+  <ellipse cx="300" cy="115" rx="34" ry="28" fill="#b91c1c" stroke="#991b1b" stroke-width="2" />
+  <circle cx="305" cy="110" r="4" fill="#ef4444" />
+
+  <!-- Bottom Mound: Kik Alicha (Yellow Split Peas) -->
+  <ellipse cx="300" cy="285" rx="34" ry="28" fill="#eab308" stroke="#ca8a04" stroke-width="2" />
+  <circle cx="295" cy="280" r="4" fill="#facc15" />
+
+  <!-- Left Mound: Gomen (Braised Ethiopian Collard Greens) -->
+  <ellipse cx="195" cy="200" rx="32" ry="35" fill="#15803d" stroke="#166534" stroke-width="2" />
+  <path d="M185 190 Q200 180 205 205" stroke="#22c55e" stroke-width="2" fill="none" />
+
+  <!-- Right Mound: Atkilt Wot (Carrots, Cabbage & Potatoes) -->
+  <ellipse cx="405" cy="200" rx="32" ry="35" fill="#ea580c" stroke="#c2410c" stroke-width="2" />
+  <circle cx="410" cy="195" r="5" fill="#f97316" />
+  <circle cx="395" cy="205" r="4" fill="#facc15" />
+
+  <!-- Top-Right: Timatim Fitfit / Salata (Fresh Tomato, Onion, Jalapeño) -->
+  <ellipse cx="375" cy="135" rx="28" ry="25" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
+  <circle cx="370" cy="130" r="3" fill="#22c55e" />
+  <circle cx="380" cy="140" r="3" fill="#c084fc" />
+
+  <!-- Bottom-Left: Fosolia (Green Beans and Carrots) -->
+  <ellipse cx="225" cy="265" rx="28" ry="25" fill="#16a34a" stroke="#15803d" stroke-width="1.5" />
+  <line x1="215" y1="260" x2="235" y2="270" stroke="#f97316" stroke-width="3" stroke-linecap="round" />
+
+  <!-- Rolled Injera Spirals along the edge -->
+  <ellipse cx="140" cy="120" rx="14" ry="24" fill="#c2b09a" stroke="#8c7864" stroke-width="2" transform="rotate(-30 140 120)" />
+  <ellipse cx="460" cy="120" rx="14" ry="24" fill="#c2b09a" stroke="#8c7864" stroke-width="2" transform="rotate(30 460 120)" />
+  <ellipse cx="140" cy="280" rx="14" ry="24" fill="#c2b09a" stroke="#8c7864" stroke-width="2" transform="rotate(30 140 280)" />
+  <ellipse cx="460" cy="280" rx="14" ry="24" fill="#c2b09a" stroke="#8c7864" stroke-width="2" transform="rotate(-30 460 280)" />
+</svg>

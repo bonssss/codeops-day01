@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="derek-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#262626" />
+      <stop offset="100%" stop-color="#0a0a0a" />
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#derek-bg)" />
+  <circle cx="300" cy="200" r="160" fill="#18181b" stroke="#71717a" stroke-width="4" />
+  <circle cx="300" cy="200" r="145" fill="#27272a" />
+  <!-- Crispy well-done pan seared beef cubes -->
+  <rect x="220" y="160" width="45" height="35" rx="8" fill="#451a03" stroke="#291002" stroke-width="2.5" transform="rotate(18 220 160)" />
+  <rect x="280" y="150" width="50" height="38" rx="8" fill="#581c87" stroke="#3b0764" stroke-width="2" transform="rotate(-10 280 150)" />
+  <rect x="345" y="165" width="46" height="34" rx="8" fill="#451a03" stroke="#291002" stroke-width="2.5" transform="rotate(25 345 165)" />
+  <rect x="215" y="215" width="48" height="36" rx="8" fill="#78350f" stroke="#451a03" stroke-width="2" transform="rotate(-15 215 215)" />
+  <rect x="275" y="210" width="52" height="38" rx="8" fill="#451a03" stroke="#291002" stroke-width="2.5" transform="rotate(8 275 210)" />
+  <rect x="340" y="215" width="48" height="35" rx="8" fill="#78350f" stroke="#451a03" stroke-width="2" transform="rotate(-12 340 215)" />
+  <!-- Crisp toasted edges and caramelized onions -->
+  <path d="M235 185 Q265 170 290 200" stroke="#f59e0b" stroke-width="3" fill="none" stroke-linecap="round" />
+  <path d="M310 190 Q340 175 365 205" stroke="#f59e0b" stroke-width="3" fill="none" stroke-linecap="round" />
+  <!-- Green Karia slices and Awaze dipping dollop -->
+  <circle cx="290" cy="260" r="24" fill="#b91c1c" stroke="#991b1b" stroke-width="2" />
+  <circle cx="290" cy="260" r="16" fill="#dc2626" />
+  <circle cx="240" cy="180" r="10" fill="none" stroke="#22c55e" stroke-width="4" />
+  <circle cx="360" cy="190" r="10" fill="none" stroke="#22c55e" stroke-width="4" />
+  <!-- Mitmita orange chili dust -->
+  <circle cx="370" cy="250" r="2.5" fill="#f97316" />
+  <circle cx="380" cy="245" r="2" fill="#f97316" />
+  <circle cx="375" cy="255" r="3" fill="#f97316" />
+  <circle cx="365" cy="260" r="2" fill="#f97316" />
+</svg>
