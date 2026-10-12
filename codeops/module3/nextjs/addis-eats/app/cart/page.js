@@ -70,31 +70,34 @@ export default function Cart() {
               </div>
 
               <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-stone-100">
-                {/* Quantity Controls */}
+                {/* Quantity Controls (44px min touch targets) */}
                 <div className="flex items-center border border-stone-200 rounded-xl bg-stone-50 p-0.5">
                   <button
+                    type="button"
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    className="w-8 h-8 flex items-center justify-center font-bold text-stone-700 hover:bg-white rounded-lg transition cursor-pointer"
+                    className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center font-bold text-stone-700 hover:bg-white rounded-lg transition cursor-pointer"
                     aria-label="Decrease quantity"
                   >
                     -
                   </button>
-                  <span className="w-8 text-center font-extrabold text-xs text-stone-900">
+                  <span className="w-9 text-center font-extrabold text-xs text-stone-900">
                     {item.quantity}
                   </span>
                   <button
+                    type="button"
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    className="w-8 h-8 flex items-center justify-center font-bold text-stone-700 hover:bg-white rounded-lg transition cursor-pointer"
+                    className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center font-bold text-stone-700 hover:bg-white rounded-lg transition cursor-pointer"
                     aria-label="Increase quantity"
                   >
                     +
                   </button>
                 </div>
 
-                {/* Remove button */}
+                {/* Remove button (44px min touch target) */}
                 <button
+                  type="button"
                   onClick={() => removeFromCart(item.id)}
-                  className="text-stone-400 hover:text-red-500 p-2 text-sm transition cursor-pointer rounded-lg hover:bg-stone-50"
+                  className="min-w-[44px] min-h-[44px] flex items-center justify-center text-stone-400 hover:text-red-500 p-2 text-sm transition cursor-pointer rounded-lg hover:bg-stone-50"
                   title="Remove item"
                   aria-label="Remove item"
                 >

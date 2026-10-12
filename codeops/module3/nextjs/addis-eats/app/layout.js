@@ -44,11 +44,18 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning
       >
         <CartProvider>
+          {/* Skip to Main Content Link for Keyboard Accessibility */}
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
+
           {/* Responsive Header */}
           <Navbar />
 
           {/* Main Content */}
-          <main className="flex-1 flex flex-col">{children}</main>
+          <main id="main-content" tabIndex={-1} className="flex-1 flex flex-col focus:outline-hidden">
+            {children}
+          </main>
 
           {/* Footer */}
           <footer className="border-t border-stone-200/80 bg-white py-8 mt-12 transition-colors">

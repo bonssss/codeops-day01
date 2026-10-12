@@ -54,7 +54,7 @@ export default function OrderTable({
             href="/api/orders/export"
             download="addis-eats-orders.csv"
             id="export-csv-btn"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-stone-900 rounded-lg hover:bg-orange-600 shadow-2xs transition"
+            className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] text-xs font-bold text-white bg-stone-900 rounded-xl hover:bg-orange-600 shadow-2xs transition"
             title="Download full orders dataset as RFC 4180 compliant CSV"
           >
             <span>📥</span>
@@ -80,11 +80,11 @@ export default function OrderTable({
               <th
                 scope="col"
                 aria-sort={getAriaSort("id")}
-                className="px-4 py-3 hover:bg-stone-100 transition-colors"
+                className="px-4 py-1 hover:bg-stone-100 transition-colors"
               >
                 <Link
                   href={getSortHref("id")}
-                  className="flex items-center gap-1.5 text-stone-700 hover:text-orange-600 focus:outline-hidden"
+                  className="flex items-center gap-1.5 min-h-[44px] text-stone-700 hover:text-orange-600"
                   title="Sort by Order ID"
                 >
                   <span>Order ID</span>
@@ -97,11 +97,11 @@ export default function OrderTable({
               <th
                 scope="col"
                 aria-sort={getAriaSort("name")}
-                className="px-4 py-3 hover:bg-stone-100 transition-colors"
+                className="px-4 py-1 hover:bg-stone-100 transition-colors"
               >
                 <Link
                   href={getSortHref("name")}
-                  className="flex items-center gap-1.5 text-stone-700 hover:text-orange-600 focus:outline-hidden"
+                  className="flex items-center gap-1.5 min-h-[44px] text-stone-700 hover:text-orange-600"
                   title="Sort by Customer Name"
                 >
                   <span>Customer</span>
@@ -114,11 +114,11 @@ export default function OrderTable({
               <th
                 scope="col"
                 aria-sort={getAriaSort("createdAt")}
-                className="px-4 py-3 hover:bg-stone-100 transition-colors"
+                className="px-4 py-1 hover:bg-stone-100 transition-colors"
               >
                 <Link
                   href={getSortHref("createdAt")}
-                  className="flex items-center gap-1.5 text-stone-700 hover:text-orange-600 focus:outline-hidden"
+                  className="flex items-center gap-1.5 min-h-[44px] text-stone-700 hover:text-orange-600"
                   title="Sort by Order Date"
                 >
                   <span>Date & Time</span>
@@ -128,18 +128,18 @@ export default function OrderTable({
                 </Link>
               </th>
 
-              <th scope="col" className="px-4 py-3">
-                Items Summary
+              <th scope="col" className="px-4 py-1">
+                <span className="min-h-[44px] flex items-center">Items Summary</span>
               </th>
 
               <th
                 scope="col"
                 aria-sort={getAriaSort("status")}
-                className="px-4 py-3 hover:bg-stone-100 transition-colors"
+                className="px-4 py-1 hover:bg-stone-100 transition-colors"
               >
                 <Link
                   href={getSortHref("status")}
-                  className="flex items-center gap-1.5 text-stone-700 hover:text-orange-600 focus:outline-hidden"
+                  className="flex items-center gap-1.5 min-h-[44px] text-stone-700 hover:text-orange-600"
                   title="Sort by Status"
                 >
                   <span>Status</span>
@@ -153,12 +153,12 @@ export default function OrderTable({
               <th
                 scope="col"
                 aria-sort={getAriaSort("total")}
-                className="px-4 py-3 text-right hover:bg-stone-100 transition-colors"
+                className="px-4 py-1 text-right hover:bg-stone-100 transition-colors"
                 style={{ textAlign: "right" }}
               >
                 <Link
                   href={getSortHref("total")}
-                  className="inline-flex items-center justify-end gap-1.5 text-stone-700 hover:text-orange-600 focus:outline-hidden"
+                  className="inline-flex items-center justify-end gap-1.5 min-h-[44px] text-stone-700 hover:text-orange-600"
                   title="Sort by Total Amount"
                 >
                   <span>Total (ETB)</span>

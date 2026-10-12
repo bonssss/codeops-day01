@@ -141,11 +141,22 @@ export default function DishList() {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search dishes by name or ingredients (debounced SWR)..."
-            className="w-full pl-11 pr-24 py-3.5 bg-white border border-stone-200/90 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition shadow-2xs text-stone-900 placeholder:text-stone-400"
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                setSearchTerm("");
+                setDebouncedTerm("");
+                const params = new URLSearchParams(searchParams.toString());
+                params.delete("search");
+                params.delete("page");
+                router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+              }
+            }}
+            placeholder="Search dishes by name or ingredients (press Esc to clear)..."
+            className="w-full pl-11 pr-24 py-3.5 min-h-[44px] bg-white border border-stone-200/90 rounded-2xl text-sm transition shadow-2xs text-stone-900 placeholder:text-stone-400"
           />
           {searchTerm && (
             <button
+              type="button"
               onClick={() => {
                 setSearchTerm("");
                 setDebouncedTerm("");
@@ -154,7 +165,8 @@ export default function DishList() {
                 params.delete("page");
                 router.replace(`${pathname}?${params.toString()}`, { scroll: false });
               }}
-              className="absolute inset-y-0 right-3 my-auto h-7 px-2.5 text-xs text-stone-500 hover:text-stone-800 bg-stone-100 hover:bg-stone-200 rounded-lg transition"
+              className="absolute inset-y-0 right-2 my-auto min-h-[44px] min-w-[44px] px-3 flex items-center justify-center text-xs font-semibold text-stone-600 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 rounded-xl transition cursor-pointer"
+              aria-label="Clear search input"
             >
               Clear ✕
             </button>
@@ -271,8 +283,9 @@ export default function DishList() {
 
                 <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
                   <button
+                    type="button"
                     onClick={() => handleQuickAdd(dish)}
-                    className={`flex-1 sm:flex-initial px-3.5 py-2 text-xs font-bold rounded-xl border transition cursor-pointer flex items-center justify-center gap-1 ${
+                    className={`flex-1 sm:flex-initial px-4 py-2.5 min-h-[44px] text-xs font-bold rounded-xl border transition cursor-pointer flex items-center justify-center gap-1 ${
                       addedMap[dish.id]
                         ? "bg-emerald-600 border-emerald-600 text-white shadow-xs"
                         : "bg-orange-50 border-orange-200 text-orange-800 hover:bg-orange-100 hover:border-orange-300"
@@ -282,7 +295,7 @@ export default function DishList() {
                   </button>
                   <Link
                     href={`/menu/${dish.id}`}
-                    className="inline-flex items-center justify-center gap-1 px-3.5 py-2 bg-stone-900 text-white text-xs font-bold rounded-xl hover:bg-orange-600 transition shadow-xs"
+                    className="inline-flex items-center justify-center gap-1 px-4 py-2.5 min-h-[44px] bg-stone-900 text-white text-xs font-bold rounded-xl hover:bg-orange-600 transition shadow-xs"
                   >
                     Details &rarr;
                   </Link>
@@ -303,18 +316,20 @@ export default function DishList() {
 
           <div className="flex items-center gap-1.5">
             <button
+              type="button"
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage <= 1}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 disabled:opacity-40 disabled:cursor-not-allowed transition"
+              className="px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center justify-center"
             >
               &larr; Prev
             </button>
 
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
               <button
+                type="button"
                 key={p}
                 onClick={() => handlePageChange(p)}
-                className={`w-9 h-9 rounded-xl text-xs font-bold transition ${
+                className={`min-w-[44px] min-h-[44px] w-11 h-11 rounded-xl text-xs font-bold transition flex items-center justify-center ${
                   currentPage === p
                     ? "bg-orange-600 text-white shadow-sm"
                     : "bg-white border border-stone-200 text-stone-700 hover:bg-stone-50"
@@ -325,9 +340,10 @@ export default function DishList() {
             ))}
 
             <button
+              type="button"
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage >= totalPages}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 disabled:opacity-40 disabled:cursor-not-allowed transition"
+              className="px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center justify-center"
             >
               Next &rarr;
             </button>

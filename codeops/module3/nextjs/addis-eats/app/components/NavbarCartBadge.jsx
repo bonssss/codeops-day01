@@ -9,7 +9,7 @@ export default function NavbarCartBadge() {
   return (
     <Link
       href="/cart"
-      className="relative px-4 py-2 text-sm font-bold text-orange-950 bg-orange-50 border border-orange-200/90 rounded-full hover:bg-orange-100 hover:border-orange-300 transition shadow-xs flex items-center gap-1.5"
+      className="relative px-4 py-2 min-h-[44px] text-sm font-bold text-orange-950 bg-orange-50 border border-orange-200/90 rounded-full hover:bg-orange-100 hover:border-orange-300 transition shadow-xs flex items-center gap-1.5"
     >
       <span>🛒</span>
       <span>Cart</span>

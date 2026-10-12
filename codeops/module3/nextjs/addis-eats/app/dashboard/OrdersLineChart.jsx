@@ -135,7 +135,13 @@ export default function OrdersLineChart({
 
           {/* Data Points and X labels */}
           {points.map((pt) => (
-            <g key={pt.date} className="group cursor-pointer">
+            <g
+              key={pt.date}
+              tabIndex={0}
+              role="graphics-symbol"
+              aria-label={`${pt.label}: ${pt.count} orders`}
+              className="group cursor-pointer focus:outline-hidden"
+            >
               {/* Highlight Circle */}
               <circle
                 cx={pt.x}
@@ -144,9 +150,9 @@ export default function OrdersLineChart({
                 fill="#FFFFFF"
                 stroke="#2563EB"
                 strokeWidth="2.5"
-                className="transition-transform duration-200 group-hover:scale-125"
+                className="transition-transform duration-200 group-hover:scale-125 group-focus-visible:scale-125 group-focus-visible:stroke-orange-500"
               />
-              {/* Hover Value */}
+              {/* Value - visible on hover AND on keyboard focus */}
               <text
                 x={pt.x}
                 y={pt.y - 8}
@@ -154,7 +160,7 @@ export default function OrdersLineChart({
                 fill="#1D4ED8"
                 fontSize="9.5"
                 fontWeight="700"
-                className="opacity-0 group-hover:opacity-100 transition-opacity"
+                className="opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity"
               >
                 {pt.count} orders
               </text>

@@ -12,6 +12,7 @@ export default function CheckoutForm({ initialPromo, session }) {
   const [address, setAddress] = useState("Bole Sub-City, Near Edna Mall, Addis Ababa");
   const [phone, setPhone] = useState("+251 91 123 4567");
   const [name, setName] = useState("Abebe Kebede");
+  const [idempotencyKey] = useState(() => `idemp_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`);
 
   // React 19 Server Action State
   const [formState, formAction, isPending] = useActionState(placeOrderAction, {
@@ -100,6 +101,7 @@ export default function CheckoutForm({ initialPromo, session }) {
         <input type="hidden" name="items" value={JSON.stringify(cart)} />
         <input type="hidden" name="promoCode" value={initialPromo || ""} />
         <input type="hidden" name="paymentMethod" value={paymentMethod} />
+        <input type="hidden" name="idempotencyKey" value={idempotencyKey} />
 
         {/* Form Details */}
         <div className="lg:col-span-2 space-y-6">
