@@ -25,6 +25,7 @@ const RoadmapDetails = () => {
     getRoadmapProgress,
     resetRoadmapProgress,
     markStageCompleted,
+    isTopicCompleted,
     setLastActiveRoadmapId
   } = useProgress();
 

@@ -20,9 +20,32 @@ const Footer = () => {
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', maxWidth: '340px', lineHeight: 1.6, marginBottom: '1.25rem' }}>
               Free, community-accessible learning roadmaps and curated materials for developers, data analysts, security specialists, and engineers worldwide.
             </p>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--emerald)', fontSize: '0.85rem', fontWeight: 600 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--emerald)', fontSize: '0.85rem', fontWeight: 600, marginBottom: '1rem' }}>
               <ShieldCheck size={16} />
               <span>100% Free Verified Resources</span>
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <a
+                href="https://github.com/bonssss/codeops-day01"
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-outline btn-xs"
+                aria-label="GitHub Repository"
+                title="GitHub Repository"
+              >
+                <Github size={13} />
+                <span>GitHub</span>
+                <ExternalLink size={11} />
+              </a>
+
+              <Link
+                to="/tracker"
+                className="btn btn-outline btn-xs"
+                title="Backup or sync progress across devices"
+              >
+                <span>Sync Devices</span>
+              </Link>
             </div>
           </div>
 
@@ -43,6 +66,7 @@ const Footer = () => {
           <div>
             <h4 className="footer-col-title">Learning Tools</h4>
             <ul className="footer-links-list">
+              <li><Link to="/roadmaps" className="footer-link-item">All Roadmaps Catalog</Link></li>
               <li><Link to="/tracker" className="footer-link-item">My Progress Tracker</Link></li>
               <li><Link to="/explore" className="footer-link-item">Free Resource Library</Link></li>
               <li><Link to="/categories" className="footer-link-item">Browse Disciplines</Link></li>
@@ -54,11 +78,11 @@ const Footer = () => {
           <div>
             <h4 className="footer-col-title">Free Providers</h4>
             <ul className="footer-links-list">
-              <li><a href="https://developer.mozilla.org" target="_blank" rel="noreferrer" className="footer-link-item">Mozilla MDN <ExternalLink size={12} style={{ display: 'inline' }} /></a></li>
-              <li><a href="https://www.freecodecamp.org" target="_blank" rel="noreferrer" className="footer-link-item">freeCodeCamp <ExternalLink size={12} style={{ display: 'inline' }} /></a></li>
-              <li><a href="https://www.theodinproject.com" target="_blank" rel="noreferrer" className="footer-link-item">The Odin Project <ExternalLink size={12} style={{ display: 'inline' }} /></a></li>
-              <li><a href="https://cs50.harvard.edu" target="_blank" rel="noreferrer" className="footer-link-item">Harvard CS50 <ExternalLink size={12} style={{ display: 'inline' }} /></a></li>
-              <li><a href="https://fullstackopen.com/en/" target="_blank" rel="noreferrer" className="footer-link-item">Full Stack Open <ExternalLink size={12} style={{ display: 'inline' }} /></a></li>
+              <li><a href="https://developer.mozilla.org" target="_blank" rel="noreferrer" className="footer-link-item">Mozilla MDN <ExternalLink size={11} style={{ display: 'inline', marginLeft: '0.2rem' }} /></a></li>
+              <li><a href="https://www.freecodecamp.org" target="_blank" rel="noreferrer" className="footer-link-item">freeCodeCamp <ExternalLink size={11} style={{ display: 'inline', marginLeft: '0.2rem' }} /></a></li>
+              <li><a href="https://www.theodinproject.com" target="_blank" rel="noreferrer" className="footer-link-item">The Odin Project <ExternalLink size={11} style={{ display: 'inline', marginLeft: '0.2rem' }} /></a></li>
+              <li><a href="https://cs50.harvard.edu" target="_blank" rel="noreferrer" className="footer-link-item">Harvard CS50 <ExternalLink size={11} style={{ display: 'inline', marginLeft: '0.2rem' }} /></a></li>
+              <li><a href="https://fullstackopen.com/en/" target="_blank" rel="noreferrer" className="footer-link-item">Full Stack Open <ExternalLink size={11} style={{ display: 'inline', marginLeft: '0.2rem' }} /></a></li>
             </ul>
           </div>
         </div>
@@ -66,9 +90,14 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="footer-bottom">
           <span>&copy; {new Date().getFullYear()} skiilhub — 100% Free Open Technical Education.</span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            Empowering self-taught developers everywhere <Heart size={14} color="#f43f5e" fill="#f43f5e" />
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+            <Link to="/roadmaps" className="footer-link-item" style={{ fontSize: '0.8rem' }}>Roadmaps</Link>
+            <Link to="/explore" className="footer-link-item" style={{ fontSize: '0.8rem' }}>Library</Link>
+            <Link to="/tracker" className="footer-link-item" style={{ fontSize: '0.8rem' }}>Tracker</Link>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: 'var(--text-dim)', fontSize: '0.8rem' }}>
+              Built for self-taught developers <Heart size={13} color="#f43f5e" fill="#f43f5e" />
+            </span>
+          </div>
         </div>
       </div>
     </footer>
