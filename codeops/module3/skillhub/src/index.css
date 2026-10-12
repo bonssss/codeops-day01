@@ -256,9 +256,8 @@ button, input, select, textarea {
   border-radius: var(--radius-full);
 }
 
-/* Theme Toggle & Mobile Nav Button */
-.theme-toggle-btn,
-.mobile-nav-toggle {
+/* Theme Toggle Button */
+.theme-toggle-btn {
   background: #161f30;
   border: 1px solid #3b4866;
   color: #f1f5f9;
@@ -272,21 +271,51 @@ button, input, select, textarea {
   transition: all 140ms ease;
 }
 
-.theme-toggle-btn:hover,
+.theme-toggle-btn:hover {
+  color: #60a5fa;
+  background: #1f2a40;
+  border-color: #60a5fa;
+}
+
+[data-theme="light"] .theme-toggle-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+[data-theme="light"] .theme-toggle-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+/* Mobile Nav Toggle (Hidden on big screen devices) */
+.mobile-nav-toggle {
+  display: none;
+  background: #161f30;
+  border: 1px solid #3b4866;
+  color: #f1f5f9;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+
 .mobile-nav-toggle:hover {
   color: #60a5fa;
   background: #1f2a40;
   border-color: #60a5fa;
 }
 
-[data-theme="light"] .theme-toggle-btn,
 [data-theme="light"] .mobile-nav-toggle {
   background: #ffffff;
   border: 1px solid #cbd5e1;
   color: #334155;
 }
 
-[data-theme="light"] .theme-toggle-btn:hover,
 [data-theme="light"] .mobile-nav-toggle:hover {
   background: #f1f5f9;
   border-color: #94a3b8;
