@@ -156,6 +156,37 @@ export const ProgressProvider = ({ children }) => {
     };
   }, [completedTopicIds]);
 
+  const exportProgressData = useCallback(() => {
+    const data = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      completedTopicIds,
+      lastActiveRoadmapId
+    };
+    return JSON.stringify(data);
+  }, [completedTopicIds, lastActiveRoadmapId]);
+
+  const importProgressData = useCallback((rawString) => {
+    try {
+      if (!rawString || typeof rawString !== 'string') {
+        throw new Error('Empty payload');
+      }
+      const data = JSON.parse(rawString.trim());
+      if (Array.isArray(data.completedTopicIds)) {
+        setCompletedTopicIds(data.completedTopicIds);
+        if (data.lastActiveRoadmapId) {
+          setLastActiveRoadmapId(data.lastActiveRoadmapId);
+        }
+        showProgressNotification(`Restored ${data.completedTopicIds.length} completed topics! 🚀`, 'success');
+        return true;
+      }
+      throw new Error('Invalid format');
+    } catch (e) {
+      showProgressNotification('Invalid sync code or backup format.', 'error');
+      return false;
+    }
+  }, []);
+
   return (
     <ProgressContext.Provider
       value={{
@@ -169,7 +200,9 @@ export const ProgressProvider = ({ children }) => {
         resetRoadmapProgress,
         getRoadmapProgress,
         overallStats,
-        progressToast
+        progressToast,
+        exportProgressData,
+        importProgressData
       }}
     >
       {children}

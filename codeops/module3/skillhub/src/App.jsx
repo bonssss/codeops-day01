@@ -15,6 +15,7 @@ import NotFound from './pages/NotFound';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { ProgressProvider } from './context/ProgressContext';
 import { ThemeProvider } from './context/ThemeContext';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
@@ -22,12 +23,14 @@ function App() {
       <FavoritesProvider>
         <ProgressProvider>
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <ScrollToTop />
             <Navbar />
             <main className="main-content">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/roadmaps" element={<Roadmaps />} />
                 <Route path="/roadmap/:id" element={<RoadmapDetails />} />
+                <Route path="/roadmaps/:id" element={<RoadmapDetails />} />
                 <Route path="/tracker" element={<ProgressDashboard />} />
                 <Route path="/explore" element={<Explore />} />
                 <Route path="/categories" element={<Categories />} />
