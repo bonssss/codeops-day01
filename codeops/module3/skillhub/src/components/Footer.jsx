@@ -101,7 +101,6 @@ const Footer = () => {
               >
                 Bonsa
               </a>
-              <Heart size={12} color="#f43f5e" fill="#f43f5e" />
             </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
