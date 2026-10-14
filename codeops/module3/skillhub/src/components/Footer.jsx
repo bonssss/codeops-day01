@@ -89,14 +89,25 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="footer-bottom">
-          <span>&copy; {new Date().getFullYear()} skiilhub — 100% Free Open Technical Education.</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+            <span>&copy; {new Date().getFullYear()} skiilhub — 100% Free Open Technical Education.</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+              Developed by{' '}
+              <a
+                href="https://github.com/bonssss"
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: 'var(--accent)', fontWeight: 600, textDecoration: 'none' }}
+              >
+                Bonsa
+              </a>
+              <Heart size={12} color="#f43f5e" fill="#f43f5e" />
+            </span>
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
             <Link to="/roadmaps" className="footer-link-item" style={{ fontSize: '0.8rem' }}>Roadmaps</Link>
             <Link to="/explore" className="footer-link-item" style={{ fontSize: '0.8rem' }}>Library</Link>
             <Link to="/tracker" className="footer-link-item" style={{ fontSize: '0.8rem' }}>Tracker</Link>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: 'var(--text-dim)', fontSize: '0.8rem' }}>
-              Built for self-taught developers <Heart size={13} color="#f43f5e" fill="#f43f5e" />
-            </span>
           </div>
         </div>
       </div>
