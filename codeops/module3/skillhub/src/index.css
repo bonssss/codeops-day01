@@ -2573,6 +2573,14 @@ button, input, select, textarea {
   flex-shrink: 0;
 }
 
+.topic-resource-card.is-video .resource-icon-badge {
+  color: #ef4444;
+}
+
+[data-theme="light"] .topic-resource-card.is-video .resource-icon-badge {
+  color: #dc2626;
+}
+
 .resource-meta-info {
   flex: 1;
   min-width: 0;
@@ -2698,6 +2706,22 @@ button, input, select, textarea {
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 700;
+}
+
+.badge-format-video {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+[data-theme="light"] .badge-format-video {
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+  border-color: rgba(220, 38, 38, 0.2);
 }
 
 .project-description {

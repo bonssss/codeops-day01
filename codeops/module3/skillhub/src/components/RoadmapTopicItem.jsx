@@ -12,23 +12,17 @@ import {
 import { useProgress } from '../hooks/useProgress';
 
 const getResourceIcon = (type) => {
-  switch (type?.toLowerCase()) {
-    case 'video':
-    case 'video course':
-    case 'video series':
-      return <Video size={13} />;
-    case 'interactive':
-    case 'interactive sandbox':
-    case 'hands-on wargame':
-    case 'hands-on challenges':
-      return <Code size={13} />;
-    case 'documentation':
-    case 'book':
-    case 'official book':
-      return <FileText size={13} />;
-    default:
-      return <BookOpen size={13} />;
+  const t = type?.toLowerCase() || '';
+  if (t.includes('video') || t.includes('youtube')) {
+    return <Video size={13} />;
   }
+  if (t.includes('interactive') || t.includes('sandbox') || t.includes('wargame') || t.includes('challenge')) {
+    return <Code size={13} />;
+  }
+  if (t.includes('documentation') || t.includes('book') || t.includes('guide')) {
+    return <FileText size={13} />;
+  }
+  return <BookOpen size={13} />;
 };
 
 const RoadmapTopicItem = ({ topic, topicIndex }) => {
@@ -84,17 +78,19 @@ const RoadmapTopicItem = ({ topic, topicIndex }) => {
           {/* Curated Free Resources */}
           {topic.freeResources && topic.freeResources.length > 0 && (
             <div className="topic-resources-grid">
-              {topic.freeResources.map((res, rIdx) => (
-                <a
-                  key={rIdx}
-                  href={res.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="topic-resource-card"
-                >
-                  <div className="resource-icon-badge">
-                    {getResourceIcon(res.type)}
-                  </div>
+              {topic.freeResources.map((res, rIdx) => {
+                const isVideo = res.type?.toLowerCase().includes('video') || res.type?.toLowerCase().includes('youtube');
+                return (
+                  <a
+                    key={rIdx}
+                    href={res.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`topic-resource-card ${isVideo ? 'is-video' : ''}`}
+                  >
+                    <div className="resource-icon-badge">
+                      {getResourceIcon(res.type)}
+                    </div>
                   <div className="resource-meta-info">
                     <div className="resource-title-row">
                       <span className="resource-title-name">{res.title}</span>
@@ -112,7 +108,8 @@ const RoadmapTopicItem = ({ topic, topicIndex }) => {
                     </div>
                   </div>
                 </a>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

@@ -66,6 +66,14 @@ export const ROADMAPS = [
                 url: "https://web.dev/learn/accessibility",
                 duration: "8 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: HTML5 & Accessibility Full Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=kUMe1FH4CHE",
+                duration: "4 hrs",
+                isFree: true
               }
             ]
           },
@@ -131,6 +139,14 @@ export const ROADMAPS = [
                 url: "https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript",
                 duration: "40 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: JavaScript Programming Full Beginner Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=PkZNo7MFNFg",
+                duration: "8 hrs",
+                isFree: true
               }
             ]
           },
@@ -154,6 +170,14 @@ export const ROADMAPS = [
                 type: "Interactive Course",
                 url: "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/",
                 duration: "40 hrs",
+                isFree: true
+              },
+              {
+                title: "Traversy Media: Asynchronous JavaScript (Promises, Async/Await & Fetch)",
+                provider: "Traversy Media (YouTube)",
+                type: "Video Tutorial",
+                url: "https://www.youtube.com/watch?v=PoRJizFvM7s",
+                duration: "3 hrs",
                 isFree: true
               }
             ]
@@ -188,6 +212,14 @@ export const ROADMAPS = [
                 url: "https://scrimba.com/learn/learnreact",
                 duration: "18 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: React 18 Full Course for Beginners",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=bMknfKXIFA8",
+                duration: "12 hrs",
+                isFree: true
               }
             ]
           },
@@ -211,6 +243,14 @@ export const ROADMAPS = [
                 type: "Interactive Tutorial",
                 url: "https://www.totaltypescript.com/tutorials/beginners-typescript",
                 duration: "6 hrs",
+                isFree: true
+              },
+              {
+                title: "The Net Ninja: TypeScript Tutorial for Beginners",
+                provider: "The Net Ninja (YouTube)",
+                type: "Video Series",
+                url: "https://www.youtube.com/playlist?list=PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI",
+                duration: "5 hrs",
                 isFree: true
               }
             ]
@@ -245,6 +285,14 @@ export const ROADMAPS = [
                 url: "https://tanstack.com/query/latest/docs/framework/react/overview",
                 duration: "8 hrs",
                 isFree: true
+              },
+              {
+                title: "Web Dev Simplified: React Router v6 & State Management Complete Guide",
+                provider: "Web Dev Simplified (YouTube)",
+                type: "Video Tutorial",
+                url: "https://www.youtube.com/watch?v=Ul3y1LXxzdU",
+                duration: "4 hrs",
+                isFree: true
               }
             ]
           },
@@ -268,6 +316,14 @@ export const ROADMAPS = [
                 type: "Documentation",
                 url: "https://web.dev/explore/fast",
                 duration: "10 hrs",
+                isFree: true
+              },
+              {
+                title: "freeCodeCamp: Testing React Apps with Jest & React Testing Library",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=7d43px1ki4A",
+                duration: "4 hrs",
                 isFree: true
               }
             ]
@@ -386,6 +442,14 @@ export const ROADMAPS = [
                 url: "https://missing.csail.mit.edu/",
                 duration: "20 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Linux Command Line & Shell Fundamentals Full Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=wBp0Rb-ZJak",
+                duration: "6 hrs",
+                isFree: true
               }
             ]
           }
@@ -419,6 +483,14 @@ export const ROADMAPS = [
                 url: "https://fullstackopen.com/en/part3",
                 duration: "25 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Node.js and Express.js Full Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=Oe421EPjeBE",
+                duration: "8 hrs",
+                isFree: true
               }
             ]
           },
@@ -442,6 +514,14 @@ export const ROADMAPS = [
                 type: "Interactive Course",
                 url: "https://www.freecodecamp.org/learn/information-security/",
                 duration: "30 hrs",
+                isFree: true
+              },
+              {
+                title: "Web Dev Simplified: Complete JWT & Backend Authentication Course",
+                provider: "Web Dev Simplified (YouTube)",
+                type: "Video Tutorial",
+                url: "https://www.youtube.com/watch?v=mbsmsi7l3r4",
+                duration: "3 hrs",
                 isFree: true
               }
             ]
@@ -476,6 +556,14 @@ export const ROADMAPS = [
                 url: "https://sqlbolt.com/",
                 duration: "6 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: PostgreSQL & Relational Database Full Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=qw--VYLpxG4",
+                duration: "4 hrs",
+                isFree: true
               }
             ]
           },
@@ -491,6 +579,14 @@ export const ROADMAPS = [
                 type: "Documentation",
                 url: "https://www.prisma.io/docs/getting-started",
                 duration: "10 hrs",
+                isFree: true
+              },
+              {
+                title: "Traversy Media: Prisma ORM Crash Course",
+                provider: "Traversy Media (YouTube)",
+                type: "Video Tutorial",
+                url: "https://www.youtube.com/watch?v=CYH04BLM-5o",
+                duration: "2 hrs",
                 isFree: true
               }
             ]
@@ -517,6 +613,14 @@ export const ROADMAPS = [
                 url: "https://university.redis.io/",
                 duration: "15 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Redis Crash Course & Caching Architecture",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=jgpVdJB2sKQ",
+                duration: "3 hrs",
+                isFree: true
               }
             ]
           },
@@ -532,6 +636,14 @@ export const ROADMAPS = [
                 type: "Documentation",
                 url: "https://docs.docker.com/get-started/",
                 duration: "10 hrs",
+                isFree: true
+              },
+              {
+                title: "TechWorld with Nana: Docker Tutorial for Node.js & Microservices",
+                provider: "TechWorld with Nana (YouTube)",
+                type: "Video Tutorial",
+                url: "https://www.youtube.com/watch?v=9zUHg7xjIqQ",
+                duration: "3 hrs",
                 isFree: true
               }
             ]
@@ -618,6 +730,14 @@ export const ROADMAPS = [
                 url: "https://www.theodinproject.com/paths/foundations/courses/foundations",
                 duration: "30 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Full Stack Web Development for Beginners",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=nu_pCVPKzTk",
+                duration: "7 hrs",
+                isFree: true
               }
             ]
           }
@@ -642,6 +762,14 @@ export const ROADMAPS = [
                 type: "University Course",
                 url: "https://fullstackopen.com/en/",
                 duration: "60 hrs",
+                isFree: true
+              },
+              {
+                title: "freeCodeCamp: Node.js & PostgreSQL Full Backend Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=7S_tz1z_5bA",
+                duration: "5 hrs",
                 isFree: true
               }
             ]
@@ -668,6 +796,14 @@ export const ROADMAPS = [
                 url: "https://nextjs.org/learn",
                 duration: "20 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Next.js 14 Full Stack App Router Master Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=wm5gMKuwSYk",
+                duration: "10 hrs",
+                isFree: true
               }
             ]
           }
@@ -692,6 +828,14 @@ export const ROADMAPS = [
                 type: "Documentation",
                 url: "https://docs.github.com/en/actions/quickstart",
                 duration: "6 hrs",
+                isFree: true
+              },
+              {
+                title: "freeCodeCamp: GitHub Actions CI/CD Full Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=R8_veQiYBjI",
+                duration: "3 hrs",
                 isFree: true
               }
             ]
@@ -810,6 +954,14 @@ export const ROADMAPS = [
                 url: "https://docs.expo.dev/tutorial/introduction/",
                 duration: "6 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: React Native Mobile Development Full Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=0-S5a0eXPoc",
+                duration: "7 hrs",
+                isFree: true
               }
             ]
           }
@@ -835,6 +987,14 @@ export const ROADMAPS = [
                 url: "https://docs.flutter.dev/data-and-backend/state-mgmt/intro",
                 duration: "10 hrs",
                 isFree: true
+              },
+              {
+                title: "Academind: React Native & Device Features (Camera, Maps, Location)",
+                provider: "Academind (YouTube)",
+                type: "Video Tutorial",
+                url: "https://www.youtube.com/watch?v=kghs4sKjMVs",
+                duration: "4 hrs",
+                isFree: true
               }
             ]
           }
@@ -859,6 +1019,14 @@ export const ROADMAPS = [
                 type: "Documentation",
                 url: "https://developer.android.com/guide",
                 duration: "20 hrs",
+                isFree: true
+              },
+              {
+                title: "freeCodeCamp: Deploying React Native & Expo to Google Play & App Store",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Tutorial",
+                url: "https://www.youtube.com/watch?v=v0n6vR3VpG8",
+                duration: "3 hrs",
                 isFree: true
               }
             ]
@@ -953,6 +1121,14 @@ export const ROADMAPS = [
                 url: "https://linuxsurvival.com/",
                 duration: "6 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Bash Scripting & Linux Command Line Tutorial",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=tK9Oc6AEnR4",
+                duration: "4 hrs",
+                isFree: true
               }
             ]
           }
@@ -1043,6 +1219,14 @@ export const ROADMAPS = [
                 url: "https://docs.github.com/en/actions",
                 duration: "10 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Terraform Course - Automate AWS Cloud Infrastructure",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=SLB_c_amRCA",
+                duration: "4 hrs",
+                isFree: true
               }
             ]
           }
@@ -1075,6 +1259,14 @@ export const ROADMAPS = [
                 type: "Documentation",
                 url: "https://prometheus.io/docs/introduction/overview/",
                 duration: "8 hrs",
+                isFree: true
+              },
+              {
+                title: "TechWorld with Nana: Prometheus & Grafana Monitoring Tutorial",
+                provider: "TechWorld with Nana (YouTube)",
+                type: "Video Tutorial",
+                url: "https://www.youtube.com/watch?v=h4Sl21AKiDg",
+                duration: "3 hrs",
                 isFree: true
               }
             ]
@@ -1202,6 +1394,14 @@ export const ROADMAPS = [
                 url: "https://owasp.org/www-project-juice-shop/",
                 duration: "15 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Web Security & OWASP Top 10 Full Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=2_lswM1S264",
+                duration: "5 hrs",
+                isFree: true
               }
             ]
           }
@@ -1234,6 +1434,14 @@ export const ROADMAPS = [
                 type: "Hands-on Challenges",
                 url: "https://cryptohack.org/",
                 duration: "15 hrs",
+                isFree: true
+              },
+              {
+                title: "freeCodeCamp: Cryptography for Beginners - Encryption & Hashes",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=jhXCTbFnK8o",
+                duration: "3 hrs",
                 isFree: true
               }
             ]
@@ -1328,6 +1536,14 @@ export const ROADMAPS = [
                 url: "https://sqlzoo.net/",
                 duration: "10 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Advanced SQL for Data Analytics & Window Functions",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=7mz73uXD9DA",
+                duration: "4 hrs",
+                isFree: true
               }
             ]
           }
@@ -1360,6 +1576,14 @@ export const ROADMAPS = [
                 type: "Full Course",
                 url: "https://www.py4e.com/",
                 duration: "25 hrs",
+                isFree: true
+              },
+              {
+                title: "Corey Schafer: Python Pandas Full Course & Data Analysis",
+                provider: "Corey Schafer (YouTube)",
+                type: "Video Series",
+                url: "https://www.youtube.com/playlist?list=PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS",
+                duration: "6 hrs",
                 isFree: true
               }
             ]
@@ -1487,6 +1711,14 @@ export const ROADMAPS = [
                 url: "https://github.com/DataTalksClub/data-engineering-zoomcamp",
                 duration: "50 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Data Engineering & Data Warehousing with dbt",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=8bLpkhiZ8-o",
+                duration: "3 hrs",
+                isFree: true
               }
             ]
           }
@@ -1511,6 +1743,14 @@ export const ROADMAPS = [
                 type: "Documentation",
                 url: "https://spark.apache.org/docs/latest/api/python/",
                 duration: "15 hrs",
+                isFree: true
+              },
+              {
+                title: "freeCodeCamp: PySpark & Big Data Processing Master Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=_C8kWso4ne4",
+                duration: "4 hrs",
                 isFree: true
               }
             ]
@@ -1671,6 +1911,14 @@ export const ROADMAPS = [
                 url: "https://www.kaggle.com/learn/intro-to-machine-learning",
                 duration: "12 hrs",
                 isFree: true
+              },
+              {
+                title: "StatQuest with Josh Starmer: Machine Learning Fundamentals",
+                provider: "StatQuest (YouTube)",
+                type: "Video Series",
+                url: "https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF",
+                duration: "10 hrs",
+                isFree: true
               }
             ]
           }
@@ -1703,6 +1951,14 @@ export const ROADMAPS = [
                 type: "Interactive Tutorial",
                 url: "https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html",
                 duration: "5 hrs",
+                isFree: true
+              },
+              {
+                title: "freeCodeCamp: PyTorch for Deep Learning Full Course - Zero to Mastery",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=V_xro1bcAuA",
+                duration: "24 hrs",
                 isFree: true
               }
             ]
@@ -1822,6 +2078,14 @@ export const ROADMAPS = [
                 url: "https://softwaretestingfundamentals.com/",
                 duration: "10 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: Software Testing & QA Fundamentals Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=goA_5bQxviQ",
+                duration: "4 hrs",
+                isFree: true
               }
             ]
           }
@@ -1846,6 +2110,14 @@ export const ROADMAPS = [
                 type: "Interactive Course",
                 url: "https://learning.postman.com/",
                 duration: "12 hrs",
+                isFree: true
+              },
+              {
+                title: "freeCodeCamp: Postman API Testing for Beginners Full Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=VywxIQ2ZXw4",
+                duration: "3 hrs",
                 isFree: true
               }
             ]
@@ -1879,6 +2151,14 @@ export const ROADMAPS = [
                 type: "Interactive Course",
                 url: "https://learn.cypress.io/",
                 duration: "12 hrs",
+                isFree: true
+              },
+              {
+                title: "freeCodeCamp: Playwright End-to-End Testing Full Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=Xz6lhEzgI5I",
+                duration: "4 hrs",
                 isFree: true
               }
             ]
@@ -1998,6 +2278,14 @@ export const ROADMAPS = [
                 url: "https://serverlessland.com/",
                 duration: "12 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: AWS Serverless & Lambda Full Course",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=w_b6Kj2T5vU",
+                duration: "4 hrs",
+                isFree: true
               }
             ]
           }
@@ -2077,6 +2365,14 @@ export const ROADMAPS = [
                 url: "https://beej.us/guide/bgc/",
                 duration: "15 hrs",
                 isFree: true
+              },
+              {
+                title: "freeCodeCamp: C Programming Tutorial for Beginners",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=KJgsSFOSQv0",
+                duration: "4 hrs",
+                isFree: true
               }
             ]
           }
@@ -2109,6 +2405,14 @@ export const ROADMAPS = [
                 type: "Hands-on Exercises",
                 url: "https://github.com/rust-lang/rustlings",
                 duration: "15 hrs",
+                isFree: true
+              },
+              {
+                title: "freeCodeCamp: Rust Programming Course for Beginners",
+                provider: "freeCodeCamp (YouTube)",
+                type: "Video Course",
+                url: "https://www.youtube.com/watch?v=MsocPEZBd-M",
+                duration: "5 hrs",
                 isFree: true
               }
             ]
