@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search, Filter, Compass } from 'lucide-react';
 import RoadmapCard from '../components/RoadmapCard';
+import { RoadmapCardSkeleton } from '../components/LoadingSpinner';
 import { ROADMAPS, ROADMAP_CATEGORIES } from '../data/roadmaps';
 
 const Roadmaps = () => {
@@ -14,6 +15,15 @@ const Roadmaps = () => {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [selectedLevel, setSelectedLevel] = useState(initialLevel);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [selectedCategory, searchQuery, selectedLevel]);
 
   const updateFilters = (newParams) => {
     const updated = new URLSearchParams(searchParams);
@@ -159,7 +169,13 @@ const Roadmaps = () => {
       </div>
 
       {/* Roadmaps Grid */}
-      {filteredRoadmaps.length === 0 ? (
+      {isLoading ? (
+        <div className="roadmaps-grid">
+          {[1, 2, 3, 4, 5, 6].map((n) => (
+            <RoadmapCardSkeleton key={n} />
+          ))}
+        </div>
+      ) : filteredRoadmaps.length === 0 ? (
         <div className="empty-results-box">
           <Compass size={36} className="empty-icon" />
           <h4>No roadmaps found</h4>

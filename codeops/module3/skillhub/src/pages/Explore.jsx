@@ -23,6 +23,15 @@ const Explore = () => {
   const [contentType, setContentType] = useState(initialType);
   const [sortBy, setSortBy] = useState(initialSort);
   const [viewMode, setViewMode] = useState('grid');
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [category, level, priceType, contentType, sortBy, searchQuery]);
 
   useEffect(() => {
     setSearchQuery(searchParams.get('search') || '');
@@ -213,6 +222,7 @@ const Explore = () => {
 
       <ResourceGrid
         resources={filteredResources}
+        isLoading={isLoading}
         viewMode={viewMode}
         onResetFilters={handleResetAll}
       />
