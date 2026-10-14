@@ -1468,17 +1468,16 @@ button, input, select, textarea {
   width: 58px;
   height: 58px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  background: var(--text-main);
+  color: var(--bg-app);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
   font-weight: 800;
   font-size: 1.6rem;
   font-family: var(--font-display);
-  box-shadow: 0 0 25px rgba(99, 102, 241, 0.45);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   margin-bottom: 1.5rem;
-  animation: pulse-glow 2s infinite ease-in-out;
 }
 
 .page-loader-ring {
@@ -1489,19 +1488,16 @@ button, input, select, textarea {
   bottom: -7px;
   border-radius: 22px;
   border: 2px solid transparent;
-  border-top-color: #60a5fa;
-  border-right-color: #818cf8;
+  border-top-color: var(--accent);
   animation: spin 1s linear infinite;
 }
 
 @keyframes pulse-glow {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
   }
   50% {
-    transform: scale(1.05);
-    box-shadow: 0 0 35px rgba(99, 102, 241, 0.75);
+    transform: scale(1.03);
   }
 }
 
@@ -1560,16 +1556,15 @@ button, input, select, textarea {
   width: 68px;
   height: 68px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  background: var(--text-main);
+  color: var(--bg-app);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
   font-size: 2rem;
   font-weight: 800;
   font-family: var(--font-display);
-  box-shadow: 0 0 35px rgba(99, 102, 241, 0.45);
-  animation: pulse-glow 2s infinite ease-in-out;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
 }
 
 .splash-logo-spinner {
@@ -1577,8 +1572,7 @@ button, input, select, textarea {
   inset: -8px;
   border-radius: 26px;
   border: 2px solid transparent;
-  border-top-color: #60a5fa;
-  border-right-color: #a855f7;
+  border-top-color: var(--accent);
   animation: spin 1.2s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
 }
 
