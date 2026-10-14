@@ -309,7 +309,9 @@ const RoadmapDetails = () => {
                       <span className="table-provider-pill">{res.provider}</span>
                     </td>
                     <td>
-                      <span className="badge badge-level-beginner">{res.type}</span>
+                      <span className={`badge ${res.type?.toLowerCase().includes('video') ? 'badge-format-video' : 'badge-level-beginner'}`}>
+                        {res.type}
+                      </span>
                     </td>
                     <td className="table-topic-cell">{res.topicTitle}</td>
                     <td>{res.duration || 'Self-paced'}</td>
