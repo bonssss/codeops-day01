@@ -52,13 +52,31 @@ export async function createTipAction(data: unknown) {
       }
     }
 
+    // Resolve supporter identity (never default to recipient creator if self-testing)
+    const isSelfTipping = session?.id === recipientProfile.userId;
+    const finalSupporterName = isAnonymous
+      ? "Anonymous"
+      : supporterName && supporterName.trim().length > 0
+      ? supporterName.trim()
+      : session && !isSelfTipping
+      ? session.name
+      : "Supporter";
+
+    const finalSupporterEmail = isAnonymous
+      ? null
+      : supporterEmail && supporterEmail.trim().length > 0
+      ? supporterEmail.trim()
+      : session && !isSelfTipping
+      ? session.email
+      : null;
+
     // Create pending tip
     const tip = await db.tip.create({
       data: {
         recipientId: recipientProfile.userId,
-        senderId: session ? session.id : null,
-        supporterName: isAnonymous ? "Anonymous" : supporterName || (session ? session.name : "Supporter"),
-        supporterEmail: supporterEmail || (session ? session.email : null),
+        senderId: isSelfTipping ? null : (session ? session.id : null),
+        supporterName: finalSupporterName,
+        supporterEmail: finalSupporterEmail,
         amount,
         currency,
         message: message?.trim() || null,
