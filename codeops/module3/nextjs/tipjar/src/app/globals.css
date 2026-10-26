@@ -35,6 +35,8 @@
     --accent-foreground: #047857;
     --destructive: #EF4444;
     --destructive-foreground: #FFFFFF;
+    --font-geist-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-geist-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 
   .dark {
