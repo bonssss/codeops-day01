@@ -548,18 +548,29 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                   </div>
                 </div>
 
-                {/* Supporter Name & Anonymous Switch */}
+                {/* Supporter Name & Email Inputs */}
                 <div className="space-y-3 pt-1">
                   {!isAnonymous && (
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-foreground">Your Name (Optional)</label>
-                      <Input
-                        type="text"
-                        placeholder="e.g. Dawit Alemayehu"
-                        value={supporterName}
-                        onChange={(e) => setSupporterName(e.target.value)}
-                        icon={<User className="h-4 w-4" />}
-                      />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-foreground">Your Name (Optional)</label>
+                        <Input
+                          type="text"
+                          placeholder="e.g. Dawit Alemayehu"
+                          value={supporterName}
+                          onChange={(e) => setSupporterName(e.target.value)}
+                          icon={<User className="h-4 w-4" />}
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-foreground">Your Email (Optional)</label>
+                        <Input
+                          type="email"
+                          placeholder="supporter@example.com"
+                          value={supporterEmail}
+                          onChange={(e) => setSupporterEmail(e.target.value)}
+                        />
+                      </div>
                     </div>
                   )}
 
