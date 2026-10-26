@@ -250,22 +250,31 @@ export async function syncPendingTransactionsAction(): Promise<{
       orderBy: { createdAt: "desc" },
     });
 
-    let updatedCount = 0;
-    const updatedRefs: string[] = [];
-
-    for (const payment of pendingPayments) {
+    // Parallelize verification of all pending payments simultaneously
+    const checkPromises = pendingPayments.map(async (payment) => {
       try {
         const provider = getPaymentProvider(payment.provider);
         const result = await provider.verifyPayment({
           transactionReference: payment.transactionReference,
         });
-
-        if (result.success && result.status === "COMPLETED") {
-          updatedCount++;
-          updatedRefs.push(payment.transactionReference);
-        }
+        return {
+          ref: payment.transactionReference,
+          isCompleted: result.success && result.status === "COMPLETED",
+        };
       } catch (e) {
         console.warn(`Failed to verify ${payment.transactionReference}:`, e);
+        return { ref: payment.transactionReference, isCompleted: false };
+      }
+    });
+
+    const settled = await Promise.allSettled(checkPromises);
+    let updatedCount = 0;
+    const updatedRefs: string[] = [];
+
+    for (const outcome of settled) {
+      if (outcome.status === "fulfilled" && outcome.value.isCompleted) {
+        updatedCount++;
+        updatedRefs.push(outcome.value.ref);
       }
     }
 

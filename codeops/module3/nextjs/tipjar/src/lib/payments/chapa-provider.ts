@@ -51,12 +51,18 @@ function chapaLookup(hostname: string, options: any, callback: any) {
   dns.lookup(hostname, options, callback);
 }
 
+const chapaAgent = new https.Agent({
+  keepAlive: true,
+  keepAliveMsecs: 20000,
+  maxSockets: 25,
+});
+
 function requestChapaV2<T>(
   path: string,
   method: "GET" | "POST",
   secretKey: string,
   body?: Record<string, unknown>,
-  timeoutMs: number = 8000
+  timeoutMs: number = 5000
 ): Promise<T> {
   return new Promise((resolve, reject) => {
     const payload = body ? JSON.stringify(body) : undefined;
@@ -65,6 +71,7 @@ function requestChapaV2<T>(
         hostname: "api.chapa.global",
         path,
         method,
+        agent: chapaAgent,
         headers: {
           Authorization: `Bearer ${secretKey}`,
           ...(payload

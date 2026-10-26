@@ -21,6 +21,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { formatCurrency, formatDateTime } from "@/lib/utils";
 import { processPaymentAction, syncPendingTransactionsAction } from "@/actions/tips";
 
+import { useRouter } from "next/navigation";
+
 interface TipTransaction {
   id: string;
   transactionRef: string;
@@ -41,6 +43,7 @@ export function TipsHistoryClient({
   tips: TipTransaction[];
   currency: string;
 }) {
+  const router = useRouter();
   const [tipsList, setTipsList] = React.useState<TipTransaction[]>(tips);
   const [searchTerm, setSearchTerm] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("ALL");
@@ -53,6 +56,55 @@ export function TipsHistoryClient({
   React.useEffect(() => {
     setTipsList(tips);
   }, [tips]);
+
+  const hasPending = React.useMemo(() => {
+    return tipsList.some((t) => t.status.toUpperCase() === "PENDING");
+  }, [tipsList]);
+
+  // Fast automatic sync runner
+  const runAutoSync = React.useCallback(async () => {
+    try {
+      const res = await syncPendingTransactionsAction();
+      if (res.success && res.updatedRefs && res.updatedRefs.length > 0) {
+        setTipsList((prev) =>
+          prev.map((t) =>
+            res.updatedRefs.includes(t.transactionRef)
+              ? { ...t, status: "COMPLETED" }
+              : t
+          )
+        );
+        if (selectedTip && res.updatedRefs.includes(selectedTip.transactionRef)) {
+          setSelectedTip((prev) => (prev ? { ...prev, status: "COMPLETED" } : null));
+        }
+        setSyncMessage(`⚡ Auto-confirmed ${res.updatedCount} transaction${res.updatedCount > 1 ? "s" : ""}!`);
+        router.refresh();
+      }
+    } catch {
+      // Silently ignore background polling errors
+    }
+  }, [router, selectedTip]);
+
+  // Fast auto-sync triggers: on mount, on window focus, and periodic 4-second polling while pending
+  React.useEffect(() => {
+    if (hasPending) {
+      // Immediate sync on load
+      runAutoSync();
+
+      const interval = setInterval(() => {
+        runAutoSync();
+      }, 4000);
+
+      const handleFocus = () => runAutoSync();
+      window.addEventListener("focus", handleFocus);
+      document.addEventListener("visibilitychange", handleFocus);
+
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener("focus", handleFocus);
+        document.removeEventListener("visibilitychange", handleFocus);
+      };
+    }
+  }, [hasPending, runAutoSync]);
 
   const handleVerifyTip = async (transactionRef: string, forceSuccess: boolean = false) => {
     setIsVerifying(true);
@@ -71,6 +123,7 @@ export function TipsHistoryClient({
         if (selectedTip && selectedTip.transactionRef === transactionRef) {
           setSelectedTip((prev) => (prev ? { ...prev, status: "COMPLETED" } : null));
         }
+        router.refresh();
       } else {
         alert(res.message || "Payment has not been completed on Chapa yet.");
       }
@@ -93,6 +146,7 @@ export function TipsHistoryClient({
                 : t
             )
           );
+          router.refresh();
         }
         setSyncMessage(res.message || "Synced successfully");
       } else {
@@ -222,8 +276,8 @@ export function TipsHistoryClient({
             disabled={isSyncing}
             className="gap-1.5 text-xs border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 font-medium"
           >
-            <RefreshCw className={`h-3.5 w-3.5 ${isSyncing ? "animate-spin text-emerald-600 dark:text-emerald-400" : ""}`} />
-            <span>{isSyncing ? "Checking..." : "Sync with Chapa"}</span>
+            <RefreshCw className={`h-3.5 w-3.5 ${isSyncing || hasPending ? "animate-spin text-emerald-600 dark:text-emerald-400" : ""}`} />
+            <span>{isSyncing ? "Checking..." : hasPending ? "Auto-Syncing..." : "Sync with Chapa"}</span>
           </Button>
 
           {/* Export CSV */}

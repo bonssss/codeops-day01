@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
+import { DashboardAutoSync } from "@/components/dashboard/DashboardAutoSync";
 
 export const dynamic = "force-dynamic";
 
@@ -19,6 +20,7 @@ export default async function DashboardLayout({
     <div className="flex min-h-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100">
       <DashboardSidebar user={session} />
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <DashboardAutoSync />
         {children}
       </div>
     </div>
