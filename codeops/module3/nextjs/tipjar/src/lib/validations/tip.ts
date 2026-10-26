@@ -9,15 +9,16 @@ export const CreateTipSchema = z.object({
   message: z.string().max(500, "Message cannot exceed 500 characters").optional().or(z.literal("")).nullable(),
   isAnonymous: z.boolean().default(false),
   goalId: z.string().optional().or(z.literal("")).nullable(),
-  paymentMethod: z.string().default("Telebirr"),
+  paymentMethod: z.string().default("Chapa"),
 });
 
 export type CreateTipInput = z.infer<typeof CreateTipSchema>;
 
 export const ProcessPaymentSchema = z.object({
-  tipId: z.string().min(1),
+  tipId: z.string().optional(),
   transactionReference: z.string().min(1),
-  simulateOutcome: z.enum(["SUCCESS", "FAILED"]).default("SUCCESS"),
+  simulateOutcome: z.enum(["SUCCESS", "FAILED"]).optional(),
+  provider: z.string().optional(),
 });
 
 export type ProcessPaymentInput = z.infer<typeof ProcessPaymentSchema>;

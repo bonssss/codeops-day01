@@ -1,18 +1,25 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import {
   Search,
   Filter,
   Eye,
   Download,
   CreditCard,
+  CheckCircle2,
+  RefreshCw,
+  ShieldCheck,
+  ExternalLink,
+  Sparkles,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { formatCurrency, formatDateTime } from "@/lib/utils";
+import { processPaymentAction, syncPendingTransactionsAction } from "@/actions/tips";
 
 interface TipTransaction {
   id: string;
@@ -34,13 +41,73 @@ export function TipsHistoryClient({
   tips: TipTransaction[];
   currency: string;
 }) {
+  const [tipsList, setTipsList] = React.useState<TipTransaction[]>(tips);
   const [searchTerm, setSearchTerm] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string>("ALL");
   const [sortBy, setSortBy] = React.useState<"newest" | "oldest" | "highest" | "lowest">("newest");
   const [selectedTip, setSelectedTip] = React.useState<TipTransaction | null>(null);
+  const [isVerifying, setIsVerifying] = React.useState(false);
+  const [isSyncing, setIsSyncing] = React.useState(false);
+  const [syncMessage, setSyncMessage] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    setTipsList(tips);
+  }, [tips]);
+
+  const handleVerifyTip = async (transactionRef: string, forceSuccess: boolean = false) => {
+    setIsVerifying(true);
+    try {
+      const res = await processPaymentAction({
+        transactionReference: transactionRef,
+        simulateOutcome: forceSuccess ? "SUCCESS" : undefined,
+      });
+
+      if (res.success && res.status === "COMPLETED") {
+        setTipsList((prev) =>
+          prev.map((t) =>
+            t.transactionRef === transactionRef ? { ...t, status: "COMPLETED" } : t
+          )
+        );
+        if (selectedTip && selectedTip.transactionRef === transactionRef) {
+          setSelectedTip((prev) => (prev ? { ...prev, status: "COMPLETED" } : null));
+        }
+      } else {
+        alert(res.message || "Payment has not been completed on Chapa yet.");
+      }
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
+  const handleSyncAll = async () => {
+    setIsSyncing(true);
+    setSyncMessage(null);
+    try {
+      const res = await syncPendingTransactionsAction();
+      if (res.success) {
+        if (res.updatedRefs && res.updatedRefs.length > 0) {
+          setTipsList((prev) =>
+            prev.map((t) =>
+              res.updatedRefs.includes(t.transactionRef)
+                ? { ...t, status: "COMPLETED" }
+                : t
+            )
+          );
+        }
+        setSyncMessage(res.message || "Synced successfully");
+      } else {
+        setSyncMessage(res.error || "Failed to sync transactions");
+      }
+    } catch {
+      setSyncMessage("Error communicating with payment gateway");
+    } finally {
+      setIsSyncing(false);
+      setTimeout(() => setSyncMessage(null), 5000);
+    }
+  };
 
   const filteredTips = React.useMemo(() => {
-    return tips
+    return tipsList
       .filter((t) => {
         const matchesSearch =
           t.supporterName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -67,7 +134,7 @@ export function TipsHistoryClient({
         }
         return 0;
       });
-  }, [tips, searchTerm, statusFilter, sortBy]);
+  }, [tipsList, searchTerm, statusFilter, sortBy]);
 
   const exportCSV = () => {
     const headers = ["Transaction ID,Supporter,Amount,Currency,Status,Payment Method,Message,Date"];
@@ -96,6 +163,14 @@ export function TipsHistoryClient({
 
   return (
     <div className="space-y-6">
+      {/* Sync Status Banner */}
+      {syncMessage && (
+        <div className="flex items-center gap-2 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+          <CheckCircle2 className="h-4 w-4 shrink-0" />
+          <span>{syncMessage}</span>
+        </div>
+      )}
+
       {/* Search & Filter Controls */}
       <div className="rounded-2xl border border-border bg-card p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
         {/* Search */}
@@ -108,7 +183,7 @@ export function TipsHistoryClient({
           />
         </div>
 
-        {/* Filters */}
+        {/* Filters & Actions */}
         <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
           {/* Status Tabs */}
           <div className="flex items-center bg-muted rounded-xl p-1 border border-border text-xs">
@@ -138,6 +213,18 @@ export function TipsHistoryClient({
             <option value="highest">Highest Amount</option>
             <option value="lowest">Lowest Amount</option>
           </select>
+
+          {/* Sync with Chapa */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleSyncAll}
+            disabled={isSyncing}
+            className="gap-1.5 text-xs border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 font-medium"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${isSyncing ? "animate-spin text-emerald-600 dark:text-emerald-400" : ""}`} />
+            <span>{isSyncing ? "Checking..." : "Sync with Chapa"}</span>
+          </Button>
 
           {/* Export CSV */}
           <Button
@@ -198,14 +285,28 @@ export function TipsHistoryClient({
                     </td>
                     <td className="py-3.5 px-3">
                       {tip.status === "COMPLETED" && (
-                        <Badge variant="default" className="text-[10px]">
+                        <Badge variant="default" className="text-[10px] bg-emerald-600 text-white font-semibold">
                           Completed
                         </Badge>
                       )}
                       {tip.status === "PENDING" && (
-                        <Badge variant="secondary" className="text-[10px]">
-                          Pending
-                        </Badge>
+                        <div className="flex items-center gap-1.5">
+                          <Badge variant="secondary" className="text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                            Pending
+                          </Badge>
+                          <button
+                            type="button"
+                            title="Check payment status on Chapa"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleVerifyTip(tip.transactionRef);
+                            }}
+                            disabled={isVerifying}
+                            className="p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                          >
+                            <RefreshCw className={`h-3 w-3 ${isVerifying ? "animate-spin text-emerald-600" : ""}`} />
+                          </button>
+                        </div>
                       )}
                       {tip.status === "FAILED" && (
                         <Badge variant="destructive" className="text-[10px]">
@@ -259,11 +360,15 @@ export function TipsHistoryClient({
                 <span className="text-muted-foreground">Status:</span>
                 <span className="font-bold">
                   {selectedTip.status === "COMPLETED" ? (
-                    <span className="text-emerald-600 dark:text-emerald-400">Completed</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                      <CheckCircle2 className="h-3.5 w-3.5" /> Completed
+                    </span>
                   ) : selectedTip.status === "FAILED" ? (
                     <span className="text-red-600 dark:text-red-400">Failed</span>
                   ) : (
-                    <span className="text-muted-foreground">Pending</span>
+                    <span className="text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                      <RefreshCw className="h-3.5 w-3.5" /> Pending Confirmation
+                    </span>
                   )}
                 </span>
               </div>
@@ -295,17 +400,73 @@ export function TipsHistoryClient({
               )}
             </div>
 
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setSelectedTip(null)}
-              className="w-full"
-            >
-              Close
-            </Button>
+            {/* Pending actions */}
+            {selectedTip.status === "PENDING" && (
+              <div className="mb-4 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs space-y-3">
+                <div className="flex items-center gap-2 font-semibold text-amber-800 dark:text-amber-300">
+                  <RefreshCw className="h-4 w-4 shrink-0" />
+                  <span>Verify or Confirm Payment</span>
+                </div>
+                <p className="text-muted-foreground text-[11px] leading-relaxed">
+                  If the supporter completed payment on Chapa, click below to query Chapa’s gateway or manually confirm this tip.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="default"
+                    disabled={isVerifying}
+                    onClick={() => handleVerifyTip(selectedTip.transactionRef, false)}
+                    className="flex-1 text-xs gap-1.5 font-semibold bg-emerald-600 hover:bg-emerald-500 text-white"
+                  >
+                    <RefreshCw className={`h-3.5 w-3.5 ${isVerifying ? "animate-spin" : ""}`} />
+                    <span>{isVerifying ? "Verifying..." : "Verify with Chapa"}</span>
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    disabled={isVerifying}
+                    onClick={() => handleVerifyTip(selectedTip.transactionRef, true)}
+                    className="flex-1 text-xs gap-1.5 font-semibold"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <span>Confirm Paid</span>
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Receipt and Close buttons */}
+            <div className="space-y-2">
+              <Link
+                href={`/tip/callback?tx_ref=${selectedTip.transactionRef}`}
+                target="_blank"
+                className="w-full block"
+              >
+                <Button
+                  type="button"
+                  variant={selectedTip.status === "COMPLETED" ? "default" : "outline"}
+                  className="w-full gap-2 font-semibold text-xs"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  <span>View Official Printable Receipt</span>
+                </Button>
+              </Link>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setSelectedTip(null)}
+                className="w-full text-xs"
+              >
+                Close
+              </Button>
+            </div>
           </DialogContent>
         )}
       </Dialog>
     </div>
   );
 }
+
