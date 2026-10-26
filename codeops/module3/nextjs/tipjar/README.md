@@ -65,6 +65,7 @@ TipJar is a production-quality full-stack creator tipping platform built with **
 - **Database**: PostgreSQL with Prisma ORM
 - **Validation**: Zod
 - **Charts**: Recharts
+- **Payment Gateway**: Chapa (Live/Test Mode supporting Telebirr, CBE Birr, Bank Cards) & Mock Sandbox
 - **Icons**: Lucide React
 - **QR Code**: qrcode
 - **Confetti**: canvas-confetti
@@ -80,10 +81,14 @@ cd tipjar
 
 ### 2. Configure Environment Variables
 Ensure `.env` contains your PostgreSQL database URL:
-```env
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/tipjar?schema=public"
 AUTH_SECRET="tipjar-ultra-secure-jwt-secret-key-32-chars-minimum-2026"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
+
+# Chapa Payment Integration
+CHAPA_PUBLIC_KEY="CHAPA_TEST_PUB_..."
+CHAPA_SECRET_KEY="CHAPA_TEST_PRIV_..."
+NEXT_PUBLIC_CHAPA_PUBLIC_KEY="CHAPA_TEST_PUB_..."
 ```
 
 ### 3. Push Database Schema & Generate Client

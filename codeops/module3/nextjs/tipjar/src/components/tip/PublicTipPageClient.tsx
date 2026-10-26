@@ -111,7 +111,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
   const [supporterEmail, setSupporterEmail] = React.useState("");
   const [message, setMessage] = React.useState("");
   const [isAnonymous, setIsAnonymous] = React.useState(false);
-  const [paymentMethod, setPaymentMethod] = React.useState("Telebirr");
+  const [paymentMethod, setPaymentMethod] = React.useState("Chapa");
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [paymentModalOpen, setPaymentModalOpen] = React.useState(false);
@@ -177,6 +177,11 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
           description: res.error || "Failed to initiate tip",
           type: "error",
         });
+        return;
+      }
+
+      if (res.checkoutUrl) {
+        window.location.href = res.checkoutUrl;
         return;
       }
 
@@ -584,29 +589,35 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                   />
                 </div>
 
-                {/* Payment Method Selector */}
-                <div className="space-y-2">
-                  <label className="text-xs font-medium text-foreground">Payment Method</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { id: "Telebirr", name: "Telebirr", icon: "📱" },
-                      { id: "CBE Birr", name: "CBE Birr", icon: "🏦" },
-                      { id: "Chapa", name: "Chapa / Card", icon: "💳" },
-                    ].map((m) => (
-                      <button
-                        key={m.id}
-                        type="button"
-                        onClick={() => setPaymentMethod(m.id)}
-                        className={`p-2.5 rounded-xl border text-xs font-medium flex flex-col items-center gap-1 transition-colors ${
-                          paymentMethod === m.id
-                            ? "border-primary bg-primary/10 text-amber-800 dark:text-amber-200 font-bold"
-                            : "border-border bg-muted text-muted-foreground hover:border-muted-foreground"
-                        }`}
-                      >
-                        <span className="text-base">{m.icon}</span>
-                        <span>{m.name}</span>
-                      </button>
-                    ))}
+                {/* Payment Method - Chapa Only */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <label className="font-semibold text-foreground">Payment Method</label>
+                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Chapa Gateway
+                    </span>
+                  </div>
+                  <div className="p-3.5 rounded-2xl border-2 border-emerald-500/40 bg-emerald-500/5 dark:bg-emerald-950/20 flex items-center justify-between shadow-xs">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm shadow-sm">
+                        C
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                          <span>Chapa Payments</span>
+                          <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-emerald-600/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20">
+                            Official
+                          </span>
+                        </p>
+                        <p className="text-[11px] text-muted-foreground">
+                          Telebirr &bull; CBE Birr &bull; Awash &bull; Cards &bull; Mobile Banking
+                        </p>
+                      </div>
+                    </div>
+                    <Badge variant="default" className="text-[10px] bg-emerald-600 text-white font-semibold">
+                      Selected
+                    </Badge>
                   </div>
                 </div>
 
@@ -624,13 +635,13 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                     variant="default"
                     size="lg"
                     disabled={isSubmitting || currentTipAmount <= 0}
-                    className="w-full text-base font-bold gap-2 h-12"
+                    className="w-full text-base font-bold gap-2 h-12 bg-emerald-600 hover:bg-emerald-500 text-white shadow-md hover:shadow-lg transition-all"
                   >
                     {isSubmitting ? (
-                      "Initiating Tip..."
+                      "Connecting to Chapa..."
                     ) : (
                       <>
-                        <span>Support {creator.displayName.split(" ")[0]}</span>
+                        <span>Pay with Chapa</span>
                         <ArrowRight className="h-4 w-4" />
                       </>
                     )}
@@ -640,7 +651,7 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
 
               <div className="mt-4 flex items-center justify-center gap-2 text-[11px] text-muted-foreground">
                 <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-                <span>Simulated instant checkout &bull; 100% Secure</span>
+                <span>Chapa 256-bit encrypted checkout &bull; 100% Secure</span>
               </div>
             </div>
           </div>
@@ -750,6 +761,20 @@ export function PublicTipPageClient({ creator }: { creator: CreatorData }) {
                 <span className="text-muted-foreground">Date:</span>
                 <span className="text-foreground">{new Date(successData.paidAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
               </div>
+            </div>
+          )}
+
+          {successData && (
+            <div className="pt-1 pb-3">
+              <a
+                href={`/tip/callback?tx_ref=${successData.transactionReference}`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline flex items-center justify-center gap-1 font-semibold"
+              >
+                <ExternalLink className="h-3.5 w-3.5" />
+                <span>View Official Printable Receipt</span>
+              </a>
             </div>
           )}
 

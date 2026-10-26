@@ -265,18 +265,18 @@ export function SettingsClient({ initialSettings }: { initialSettings: SettingsD
       {activeSection === "payment" && (
         <div className="rounded-2xl border border-border bg-card p-6 shadow-xs space-y-4 animate-in fade-in duration-200">
           <div className="flex items-center justify-between border-b border-border pb-3">
-            <h3 className="font-bold text-base text-foreground">Payment Methods</h3>
-            <span className="text-xs text-emerald-600 font-semibold">Active Engine: Mock / Telebirr</span>
+            <h3 className="font-bold text-base text-foreground">Payment Gateway</h3>
+            <span className="text-xs text-emerald-600 font-semibold">Active Engine: Chapa Global</span>
           </div>
           <p className="text-xs text-muted-foreground">
-            Supporters can tip you using Card, Telebirr, CBE Birr, or Chapa. Simulated transactions are verified instantly.
+            Supporters can tip you directly via Chapa using Telebirr, CBE Birr, Awash, or Card payments.
           </p>
           <div className="p-4 rounded-xl bg-muted/60 border border-border flex items-center justify-between">
             <div className="flex items-center gap-3">
               <CreditCard className="h-5 w-5 text-emerald-600" />
               <div>
-                <p className="text-xs font-bold text-foreground">Instant Payment Simulator</p>
-                <p className="text-[11px] text-muted-foreground">Default development & demo mode</p>
+                <p className="text-xs font-bold text-foreground">Chapa Global v2 Engine</p>
+                <p className="text-[11px] text-muted-foreground">Live hosted checkout with real-time verification</p>
               </div>
             </div>
             <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-lg">Connected</span>
